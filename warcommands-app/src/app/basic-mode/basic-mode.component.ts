@@ -21,7 +21,7 @@ export class BasicModeComponent implements OnInit {
     ngOnInit() {
 
         const viewContainerRef = this.basicModeGraphicsWrapper.viewContainerRef;
-        
+
         this.gameEngine.setViewContainerRef(viewContainerRef);
         this.gameService.initialize(this.gameEngine);
         this.gameService.start();

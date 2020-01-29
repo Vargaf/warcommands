@@ -4,6 +4,7 @@ import { MapGeneratorService } from '../gameEngine/domain/maps/services/map-gene
 import { TileComponent } from 'src/app/basic-mode/graphics/tile/tile.component';
 import { MinionComponent } from 'src/app/basic-mode/graphics/minion/minion.component';
 import { MinionEntity } from '../gameEngine/domain/minion/model/minion.entity';
+import { StatsService } from './infrastructure/stats.service';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class BasicModeGameEngineService extends GameEngineService {
 
     constructor(
         private ngZone: NgZone,
+        private statsService: StatsService,
         private componentFactoryResolver: ComponentFactoryResolver,
         private mapGenerator: MapGeneratorService
     ) {
@@ -72,5 +74,7 @@ export class BasicModeGameEngineService extends GameEngineService {
         requestAnimationFrame(() => {
             this.render();
         });
+
+        this.statsService.update();
     }
 }
