@@ -1,0 +1,30 @@
+
+.game-loop-content {
+    padding: 25px;
+}
+
+.game-loop-start {
+    display: inline-block;
+    background-color: red;
+    border-radius: 10px 10px 10px 0;
+    padding: 10px;
+    inline-size: max-content;
+}
+
+.game-loop-body {
+    background-color: red;
+    padding-left: 20px;
+}
+
+.game-loop-body-content {
+    background-color: #424242;
+    border-radius: 10px 0 0 10px;
+    padding: 10px;
+}
+
+.game-loop-end {
+    background-color: red;
+    border-radius: 0 10px 10px 10px;
+    padding: 10px;
+    text-align: center;
+}

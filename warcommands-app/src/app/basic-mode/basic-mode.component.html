@@ -1,10 +1,16 @@
-<app-stats></app-stats>
-<div>
-    <div class="basic-mode-content">
-        <ng-template basic-mode-component-directive></ng-template>
-    </div>
-</div>
-
-<div>
-    Basic mode content
-</div>
+<mat-sidenav-container class="side-nav-container">
+    <mat-sidenav #sidenav mode="over" position="end" opened="false">
+        <app-commands-panel></app-commands-panel>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <app-stats></app-stats>
+        <div class="show-pannel-icon">
+            <mat-icon (click)="sidenav.toggle()">add_circle</mat-icon>
+        </div>
+        <div>
+            <div class="basic-mode-content">
+                <ng-template basic-mode-component-directive></ng-template>
+            </div>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

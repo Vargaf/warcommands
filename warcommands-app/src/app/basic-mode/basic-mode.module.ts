@@ -2,12 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BasicModeComponent } from './basic-mode.component';
 import { BasicModeRoutingModule } from './basic-mode-routing.module';
-import { GameService } from 'src/warcommands/gameEngine/domain/game.service';
 import { GraphicsModule } from './graphics/graphics.module';
-import { BasicModeGameEngineService } from 'src/warcommands/basic-mode/game-engine-basic-mode.service';
-import { MapGeneratorService } from 'src/warcommands/gameEngine/domain/maps/services/map-generator.service';
 import { StatsComponent } from './stats/stats.component';
-import { StatsService } from 'src/warcommands/basic-mode/infrastructure/stats.service';
+import { StoreModule } from '@ngrx/store';
+import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
+import { MaterialModule } from '../share/material/material.module';
+import * as BasicModeGameEngineStore from '../../ngrx/basic-mode/reducer-map';
+import { DomElementInjectorService } from 'src/warcommands/basic-mode/infrastructure/angular/dom-element-injector.service';
+import { DomElementComponentFactoryService } from 'src/warcommands/basic-mode/infrastructure/angular/dom-element-component-factory.service';
+import { GAME_ENGINE_BASIC_MODE_CONFIGURATION, GAME_CONFIG } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
+import { BasicModeOnMemoryModule } from '../share/basic-mode-on-memory/basic-mode-on-memory.module';
 
 
 
@@ -17,12 +21,20 @@ import { StatsService } from 'src/warcommands/basic-mode/infrastructure/stats.se
     StatsComponent
   ],
   imports: [
+    CommandsPanelModule,
     CommonModule,
     BasicModeRoutingModule,
-    GraphicsModule
+    GraphicsModule,
+    MaterialModule,
+    BasicModeOnMemoryModule,
+    //StoreModule.forFeature(RequestFrameAnimationStore.RequestAnimationFrameKey, RequestFrameAnimationStore.reducer)
+    StoreModule.forFeature(BasicModeGameEngineStore.GameEngineBasicModeStoreKey, BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN),
   ],
   providers: [
-    { provide: GameService, useClass: GameService },
+    DomElementInjectorService,
+    DomElementComponentFactoryService,
+    { provide: GAME_CONFIG, useValue: GAME_ENGINE_BASIC_MODE_CONFIGURATION },
+    { provide: BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN, useFactory: BasicModeGameEngineStore.reducers }
   ]
 })
 export class BasicModeModule { }

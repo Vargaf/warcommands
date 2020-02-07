@@ -6,3 +6,15 @@
     overflow: scroll;
     
 }
+
+.side-nav-container {
+    height: 100%;
+}
+
+.show-pannel-icon {
+    position: relative;
+    float: right;
+    padding: 7px;
+    z-index: 10;
+    color: black;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GameService } from 'src/warcommands/gameEngine/domain/game.service';
 import { BasicModeComponentDirective } from './basic-mode.directive';
 import { BasicModeGameEngineService } from 'src/warcommands/basic-mode/game-engine-basic-mode.service';
@@ -15,7 +15,7 @@ export class BasicModeComponent implements OnInit {
 
     constructor(
         private gameService: GameService,
-        private gameEngine: BasicModeGameEngineService
+        private gameEngine: BasicModeGameEngineService,
     ) { }
 
     ngOnInit() {

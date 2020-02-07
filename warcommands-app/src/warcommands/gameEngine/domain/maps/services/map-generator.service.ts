@@ -1,31 +1,37 @@
-import { BasicMapConfiguration } from '../model/basic-map-configuration';
 import { MapEntity } from '../model/map.entity';
 import { TileEntity } from '../model/tile.entity';
 import { TileType } from '../model/tileType.enum';
+import { MapConfiguration } from '../model/map-configuration.interface';
 
 export class MapGeneratorService {
 
-    generateBasicMap(): MapEntity {
-        const basicMapConfiguration = BasicMapConfiguration;
-
-        const basicMap: MapEntity = {
-            tiles: []
+    generateMap(mapConfiguration: MapConfiguration): MapEntity {
+        const tiles = this.buildTiles(mapConfiguration);
+        return {
+            tiles,
+            size: {
+                width: mapConfiguration.size.width,
+                height: mapConfiguration.size.height
+            }
         };
+    }
 
-        for (let y = 0; y < basicMapConfiguration.length; y++) {
-            for (let x = 0; x < basicMapConfiguration[y].length; x++) {
-                const tileType: TileType = basicMapConfiguration[y][x];
+    private buildTiles(mapConfiguration: MapConfiguration): TileEntity[] {
+        const tileList: TileEntity[] = [];
+
+        for (let y = 0; y < mapConfiguration.tiles.length; y++) {
+            for (let x = 0; x < mapConfiguration.tiles[y].length; x++) {
+                const tileType: TileType = mapConfiguration.tiles[y][x];
                 const tile: TileEntity = {
                     xCoordinate: x,
                     yCoordinate: y,
                     type: tileType
                 };
 
-                basicMap.tiles.push(tile);
+                tileList.push(tile);
             }
         }
 
-        return basicMap;
+        return tileList;
     }
-
 }
