@@ -1,19 +1,21 @@
 
 .game-loop-content {
-    padding: 25px;
+
 }
 
 .game-loop-start {
-    display: inline-block;
     background-color: red;
     border-radius: 10px 10px 10px 0;
     padding: 10px;
-    inline-size: max-content;
+
+    .game-loop-label {
+        min-width: max-content;
+    }
 }
 
 .game-loop-body {
     background-color: red;
-    padding-left: 20px;
+    padding-left: 5px;
 }
 
 .game-loop-body-content {
