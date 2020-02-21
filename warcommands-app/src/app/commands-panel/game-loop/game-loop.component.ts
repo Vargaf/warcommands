@@ -1,29 +1,45 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { CommandDirective } from '../command.directive';
-import { CreateMinionComponent } from '../create-minion/create-minion.component';
+import { Component, OnInit } from '@angular/core';
+import { PageRepositoryService } from 'src/warcommands/commands/domain/page/services/PageRepository.service';
+import { v4 as uuid } from 'uuid';
+import { PageDTO } from 'src/warcommands/commands/domain/page/model/page.dto';
+import { MouseDragDropHelperService } from 'src/warcommands/commands/domain/command-panel/services/mouse-drag-drop-helper.service';
 
 @Component({
-  selector: 'app-game-loop',
-  templateUrl: './game-loop.component.html',
-  styleUrls: ['./game-loop.component.scss']
+    selector: 'app-game-loop',
+    templateUrl: './game-loop.component.html',
+    styleUrls: ['./game-loop.component.scss']
 })
 export class GameLoopComponent implements OnInit {
 
-  @ViewChild(CommandDirective, { static: true })
-  public commandContainer: CommandDirective;
+    gameLoopId: string;
+    pageId: string;
 
-  constructor(
-    public componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+    constructor(
+        private readonly pageRepository: PageRepositoryService,
+        private readonly mouseHelperService: MouseDragDropHelperService
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
 
-  addCommand() {
-    const viewContainerRef = this.commandContainer.viewContainerRef;
+        this.gameLoopId = uuid();
+        this.pageId = uuid();
+        this.createInitialPage();
+    }
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CreateMinionComponent);
-    viewContainerRef.createComponent(componentFactory);
-  }
+    private createInitialPage(): void {
 
+        const firstPage: PageDTO = {
+            id: this.pageId,
+            pageNumber: 0,
+            name: 'Page 1',
+            commandContainerId: this.gameLoopId
+        };
+        this.pageRepository.savePage(firstPage);
+    }
+
+    onMouseMove(event: MouseEvent) {
+
+        this.mouseHelperService.saveActiveCommandContainer(event);
+
+    }
 }

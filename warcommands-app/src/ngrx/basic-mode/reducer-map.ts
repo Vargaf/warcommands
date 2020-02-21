@@ -8,7 +8,7 @@ interface State {
     [BaseReducer.GameEngineBasicModeBaseStoreKey]: BaseReducer.BaseState;
 }
 
-export const BASIC_MODE_REDUCER_MAP_TOKEN = new InjectionToken<ActionReducerMap<State>>('Basi mode reducers');
+export const BASIC_MODE_REDUCER_MAP_TOKEN = new InjectionToken<ActionReducerMap<State>>('Basic mode reducers');
 
 export function reducers(): ActionReducerMap<State> {
     // To work with AOT

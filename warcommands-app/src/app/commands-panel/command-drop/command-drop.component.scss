@@ -1,0 +1,16 @@
+.commands-drop-container {
+    min-width: 100px;
+    border:dashed 1px #ccc;
+    padding: 5px 10px;
+    min-height:50px;
+    border-radius:10px;
+    overflow:hidden;
+
+    &:hover {
+        background-color: #575555;
+    }
+
+    .command {
+        padding: 5px 0px;
+    }
+}

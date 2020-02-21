@@ -3,12 +3,9 @@
         <div class="game-loop-label">gameLoop ( game )</div>
     </div>
     <div class="game-loop-body">
-        <div class="game-loop-body-content">
-            <ng-template command-directive></ng-template>
-            <mat-icon (click)="addCommand()">add_circle</mat-icon>
+        <div class="game-loop-body-content" (mouseover)="onMouseMove($event)">
+            <app-command-drop [commandContainerId]="gameLoopId" [pageId]="pageId"></app-command-drop>
         </div>
     </div>
-    <div class="game-loop-end">
-        
-    </div>
+    <div class="game-loop-end"></div>
 </div>

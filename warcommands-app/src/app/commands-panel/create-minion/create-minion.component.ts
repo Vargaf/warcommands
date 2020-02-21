@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CreateMinionCommandEntity } from 'src/warcommands/commands/domain/command/model/create-minion-command.entity';
 
 @Component({
   selector: 'app-create-minion',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateMinionComponent implements OnInit {
 
+  @Input() commandData: CreateMinionCommandEntity;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

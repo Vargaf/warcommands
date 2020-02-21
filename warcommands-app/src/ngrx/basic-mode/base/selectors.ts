@@ -8,9 +8,10 @@ export interface BaseFeatureState {
     };
 }
 
-export const selectBaseFeature = createFeatureSelector<BaseFeatureState, BaseState>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
+export const selectBaseFeatureSelector =
+    createFeatureSelector<BaseFeatureState, BaseState>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
 
-export const selectBaseStateFeature = createSelector(
-    selectBaseFeature,
+export const selectBaseListSelector = createSelector(
+    selectBaseFeatureSelector,
     (state: BaseState) => state.baseList
 );

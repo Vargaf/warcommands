@@ -1,0 +1,14 @@
+<div #commandsDropContainer 
+    class="commands-drop-container"
+    id="{{ commandContainerId }}"
+    [attr.pageId]="pageId"
+    [attr.MouseHelperDetectorCommandContainerId]="commandContainerId">
+    <div *ngFor="let command of commandList"
+        class="command"
+        [attr.dirty]="true"
+        [attr.itemId] = "command.itemId"
+        [attr.currentIndex] = "command.currentIndex"
+    >
+        <ng-template command-directive></ng-template>
+    </div>
+</div>

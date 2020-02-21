@@ -1,11 +1,31 @@
 <div class="commands-panel-content">
-    <div fxLayout="row" fxLayout.lt-md="column">
-        <div fxFlex="100" fxFlex.gt-sm="50" class="commands-panel">
-            <app-game-loop></app-game-loop>
-        </div>
-        <div fxFlex="100" fxFlex.gt-sm="50" class="commands-list">
-            <app-create-minion></app-create-minion>
+    <div cdkDropListGroup>
+        <div fxLayout="row" fxLayout.lt-md="column">
+            <div fxFlex="100" fxFlex.gt-sm="50" class="commands-panel">
+                <app-game-loop></app-game-loop>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="commands-list">
+                <div #commandsList>
+                    <div #minionCommand class="dragable-item">
+                        <app-create-minion></app-create-minion>
+                        <div #noPreviewDiv>
+                            <ng-template #noPreview></ng-template>
+                        </div>
+                    </div>
+                    <div #variableCommand class="dragable-item">
+                        <app-variable></app-variable>
+                    </div>
+                    <div #setVariableCommand class="dragable-item">
+                        <app-set-variable></app-set-variable>
+                    </div>
+                    <div #ifThenCommand class="dragable-item">
+                        <app-if-then></app-if-then>
+                    </div>
+                    <div #ifThenElseCommand class="dragable-item">
+                        <app-if-then-else></app-if-then-else>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-

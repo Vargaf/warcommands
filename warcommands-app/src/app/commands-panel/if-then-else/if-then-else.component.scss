@@ -1,0 +1,46 @@
+.if-then-start {
+    background-color: red;
+    border-radius: 10px 10px 10px 0;
+    padding: 10px;
+
+    .if-then-label {
+        min-width: max-content;
+    }
+}
+
+.if-then-body {
+    background-color: red;
+    padding-left: 5px;
+}
+
+.if-then-body-content {
+    background-color: #424242;
+    border-radius: 10px 0 0 10px;
+    padding: 10px 10px 7px 7px;
+
+    .commands-drop-container {
+        min-width: 100px;
+        border:dashed 1px #ccc;
+        padding: 5px 10px;
+        min-height:25px;
+        border-radius:10px;
+        overflow:hidden;
+    }
+}
+
+.if-then-end {
+    background-color: red;
+    border-radius: 0 10px 10px 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.if-then-else-start {
+    background-color: red;
+    border-radius: 0px 10px 10px 0;
+    padding: 10px;
+
+    .if-then-else-label {
+        min-width: max-content;
+    }
+}
