@@ -15,7 +15,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
     commandContainerId: string;
 
     @Input()
-    pageId: string;
+    fileId: string;
 
     @ViewChild('commandsDropContainer', { static: true })
     public commandsDropContainer: ElementRef<HTMLDivElement>;
@@ -34,11 +34,11 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
 
-        if (this.pageId) {
+        if (this.fileId) {
 
             const commandContainer: CommandContainerDTO = {
                 id: this.commandContainerId,
-                pageId: this.pageId,
+                fileId: this.fileId,
                 commands: []
             };
             this.commandContainerDragDropService.createCommandDropContainer(

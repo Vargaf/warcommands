@@ -1,7 +1,7 @@
 
-export interface PageDTO {
+export interface FileDTO {
     id: string;
-    pageNumber: number;
+    fileNumber: number;
     name: string;
     commandContainerId: string;
 }

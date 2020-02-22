@@ -8,8 +8,8 @@ import { CreateMinionComponent } from './create-minion/create-minion.component';
 import { CommandDirective } from './command.directive';
 import { StoreModule } from '@ngrx/store';
 import * as CommandsPanelStore from 'src/ngrx/commands-panel/reducer-map';
-import { PageRepositoryService } from 'src/warcommands/commands/domain/page/services/PageRepository.service';
-import { PageNgrxRepositoryService } from 'src/warcommands/commands/infrastructure/ngrx/page/page-ngrx-repository.service';
+import { FileRepositoryService } from 'src/warcommands/commands/domain/file/services/FileRepository.service';
+import { FileNgrxRepositoryService } from 'src/warcommands/commands/infrastructure/ngrx/file/file-ngrx-repository.service';
 import { AddCommandComponentService } from 'src/warcommands/commands/domain/command-panel/services/add-command-component.service';
 import { CommandsComponentFactory } from 'src/warcommands/commands/domain/command-panel/services/commands-component-factory.service';
 import { VariableComponent } from './variable/variable.component';
@@ -28,6 +28,7 @@ import { CommandDragDropService } from 'src/warcommands/commands/domain/command-
 import { CommandDataDragDropService } from 'src/warcommands/commands/domain/command-panel/services/command-data-drag-drop.service';
 import { CommandDataFactory } from 'src/warcommands/commands/domain/command-panel/services/command-data.factory';
 import { MouseDragDropHelperService } from 'src/warcommands/commands/domain/command-panel/services/mouse-drag-drop-helper.service';
+import { FilesComponent } from './files/files.component';
 
 
 
@@ -42,19 +43,20 @@ import { MouseDragDropHelperService } from 'src/warcommands/commands/domain/comm
     IfThenElseComponent,
     SetVariableComponent,
     CommandDropComponent,
+    FilesComponent,
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     MaterialModule,
-    StoreModule.forFeature(CommandsPanelStore.CommandsPanelStoreKey, CommandsPanelStore.COMMANDS_PAGE_REDUCER_MAP_TOKEN),
+    StoreModule.forFeature(CommandsPanelStore.CommandsPanelStoreKey, CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN),
   ],
   exports: [
     CommandsPanelComponent
   ],
   providers: [
-    { provide: CommandsPanelStore.COMMANDS_PAGE_REDUCER_MAP_TOKEN, useFactory: CommandsPanelStore.reducers },
-    { provide: PageRepositoryService, useClass: PageNgrxRepositoryService },
+    { provide: CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN, useFactory: CommandsPanelStore.reducers },
+    { provide: FileRepositoryService, useClass: FileNgrxRepositoryService },
     { provide: CommandContainerRepositoryService, useClass: CommandContainerNgrxRepositoryService },
     { provide: CommandRepositoryService, useClass: CommandNgrxRepositoryService },
     AddCommandComponentService,

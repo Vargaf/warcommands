@@ -23,7 +23,7 @@ export class CommandDataFactory {
                     id: commandDropped.itemId,
                     type: CommandType.CreateMinion,
                     commandContainerId: commandDropped.containerId,
-                    pageId: commandDropped.pageId
+                    fileId: commandDropped.fileId
                 };
                 break;
             }
@@ -32,7 +32,7 @@ export class CommandDataFactory {
                     id: commandDropped.itemId,
                     type: CommandType.Variable,
                     commandContainerId: commandDropped.containerId,
-                    pageId: commandDropped.pageId
+                    fileId: commandDropped.fileId
                 };
                 break;
             }
@@ -41,7 +41,7 @@ export class CommandDataFactory {
                     id: commandDropped.itemId,
                     type: CommandType.SetVariable,
                     commandContainerId: commandDropped.containerId,
-                    pageId: commandDropped.pageId
+                    fileId: commandDropped.fileId
                 };
                 break;
             }
@@ -51,7 +51,7 @@ export class CommandDataFactory {
                     type: CommandType.IfThen,
                     commandContainerId: commandDropped.containerId,
                     thenCommandContainerId: uuid(),
-                    pageId: commandDropped.pageId
+                    fileId: commandDropped.fileId
                 };
                 break;
             }
@@ -62,7 +62,7 @@ export class CommandDataFactory {
                     commandContainerId: commandDropped.containerId,
                     thenCommandContainerId: uuid(),
                     elseCommandContainerId: uuid(),
-                    pageId: commandDropped.pageId
+                    fileId: commandDropped.fileId
                 };
                 break;
             }

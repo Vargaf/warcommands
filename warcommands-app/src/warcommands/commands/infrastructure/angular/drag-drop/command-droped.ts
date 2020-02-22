@@ -4,7 +4,7 @@ import { DropType } from './drop-type.enum';
 export interface CommandDroppedInterface {
     containerId: string;
     previousContainerId?: string;
-    pageId: string;
+    fileId: string;
     itemId: string;
     previousIndex: number;
     currentIndex: number;

@@ -31,7 +31,7 @@ export class CommandDragDropService {
             this.commandDataDragDropService.getCommand(commandDropped.itemId).subscribe((currentCommandData) => {
                 commandData = { ...currentCommandData };
                 commandData.commandContainerId = commandDropped.containerId;
-                commandData.pageId = commandDropped.pageId;
+                commandData.fileId = commandDropped.fileId;
             }).unsubscribe();
 
             this.addCommand(commandData, viewContainerRef, commandDropped);

@@ -115,7 +115,7 @@ export class CommandContainerDragDropService {
 
                 commandDroppedData.containerId = (event.container.element as any).getAttribute('id');
                 commandDroppedData.previousContainerId = (event.previousContainer.element as any).getAttribute('id');
-                commandDroppedData.pageId = (event.previousContainer.element as any).getAttribute('pageId');
+                commandDroppedData.fileId = (event.previousContainer.element as any).getAttribute('fileId');
                 commandDroppedData.previousIndex = event.previousIndex;
                 commandDroppedData.currentIndex = event.currentIndex;
 
@@ -142,7 +142,7 @@ export class CommandContainerDragDropService {
         const commandDroppedData: CommandDroppedInterface = {
             containerId: (event.container.element as any).getAttribute('id'),
             previousContainerId: (event.previousContainer.element as any).getAttribute('id'),
-            pageId: (event.container.element as any).getAttribute('pageId'),
+            fileId: (event.container.element as any).getAttribute('fileId'),
             itemId: uuid(),
             previousIndex: event.previousIndex,
             currentIndex: event.currentIndex,

@@ -2,7 +2,7 @@ import { CommandInterface } from '../../command/model/command.interface';
 
 export interface CommandContainerDTO {
     id: string;
-    pageId: string;
+    fileId: string;
     commands: Array<CommandInterface>;
 }
 
