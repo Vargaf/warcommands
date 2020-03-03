@@ -3,5 +3,7 @@ import { CommandType } from './command-type.enum';
 
 export interface GameLoopCommandEntity extends CommandInterface {
     type: CommandType.GameLoop;
-    innerCommandContainerId: string;
+    innerCommandContainerIdList: {
+        commandContainerId: string
+    };
 }

@@ -3,6 +3,8 @@ import { CommandType } from './command-type.enum';
 
 export interface IfThenElseCommandEntity extends CommandInterface {
     type: CommandType.IfThenElse;
-    thenCommandContainerId: string;
-    elseCommandContainerId: string;
+    innerCommandContainerIdList: {
+        thenCommandContainerId: string,
+        elseCommandContainerId: string
+    };
 }

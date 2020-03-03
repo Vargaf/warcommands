@@ -1,4 +1,4 @@
-import { CommandContainerDTO } from '../model/command-container.dto';
+import { CommandContainerDTO, CommandContainerListDTO } from '../model/command-container.dto';
 import { Observable } from 'rxjs';
 import { CommandInterface } from '../../command/model/command.interface';
 
@@ -13,4 +13,6 @@ export abstract class CommandContainerRepositoryService {
     abstract moveCommandSameContainer(commandContainerId: string, previousIndex: number, currentIndex: number): void;
 
     abstract removeCommandFromCommandContainer(commandContainerId: string, commandId: string): void;
+
+    abstract getCommandContainerOnPage(pageId: string): Observable<CommandContainerListDTO>;
 }

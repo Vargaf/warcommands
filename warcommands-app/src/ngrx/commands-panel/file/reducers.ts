@@ -16,7 +16,14 @@ const FileReducer = createReducer(
     initialState,
     on(FileActions.addFile, (state, { file }) => {
         return {
+            ...state,
             fileList: [ ...state.fileList, file ]
+        };
+    }),
+    on(FileActions.loadFiles, (state, { fileList }) => {
+        return {
+            ...state,
+            fileList: [ ...state.fileList, ...fileList ]
         };
     })
 );

@@ -5,6 +5,7 @@ import { VariableComponent } from 'src/app/commands-panel/variable/variable.comp
 import { SetVariableComponent } from 'src/app/commands-panel/set-variable/set-variable.component';
 import { IfThenComponent } from 'src/app/commands-panel/if-then/if-then.component';
 import { IfThenElseComponent } from 'src/app/commands-panel/if-then-else/if-then-else.component';
+import { GameLoopComponent } from 'src/app/commands-panel/game-loop/game-loop.component';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +34,10 @@ export class CommandsComponentFactory {
             }
             case CommandType.IfThenElse: {
                 component = IfThenElseComponent;
+                break;
+            }
+            case CommandType.GameLoop: {
+                component = GameLoopComponent;
                 break;
             }
             default: {

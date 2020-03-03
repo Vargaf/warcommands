@@ -1,6 +1,6 @@
 import { Injectable, QueryList, ViewContainerRef } from '@angular/core';
 import { DropListRef, DragRef, moveItemInArray } from '@angular/cdk/drag-drop';
-import { CommandDroppedInterface } from './command-droped';
+import { CommandWrapperDTO } from './command-wrapper.dto';
 import { Subscription } from 'rxjs';
 
 interface DropItem {
@@ -11,8 +11,8 @@ interface DragItem {
     [id: string]: DragRef[];
 }
 
-interface CommandContainerItem {
-    [id: string]: CommandDroppedInterface[];
+interface CommandWrapperItem {
+    [id: string]: CommandWrapperDTO[];
 }
 
 interface CommandContainerSubscriptionItem {
@@ -28,10 +28,9 @@ interface CommandViewContainerItem {
 })
 export class CommandsDragDropRepositoy {
 
-    // private dropItemList: DropItem[] = [];
     private dropItemList: DropListRef[] = [];
     private dragItemList: DragItem[][] = [];
-    private commandConainterList: CommandContainerItem[] = [];
+    private commandWrapperList: CommandWrapperItem[] = [];
     private CommandContainerSubscriptionList: CommandContainerSubscriptionItem[] = [];
     private commandViewContainerList: CommandViewContainerItem[] = [];
 
@@ -39,8 +38,6 @@ export class CommandsDragDropRepositoy {
         if (this.dragItemList[commandContainerId] === undefined) {
             this.dragItemList[commandContainerId] = [];
         }
-        //this.dropItemList[commandContainerId] = dropItem;
-        //this.dropItemList.unshift(dropItem);
         this.dropItemList.push(dropItem);
     }
 
@@ -55,12 +52,12 @@ export class CommandsDragDropRepositoy {
         return this.dropItemList;
     }
 
-    saveCommandContainerList(commandContainerId: string, commandContainerItem: CommandDroppedInterface[]): void {
-        this.commandConainterList[commandContainerId] = commandContainerItem;
+    saveCommandWrapperList(commandContainerId: string, commandContainerItem: CommandWrapperDTO[]): void {
+        this.commandWrapperList[commandContainerId] = commandContainerItem;
     }
 
-    getCommandContainerList(commandContainerId: string): CommandDroppedInterface[] {
-        return this.commandConainterList[commandContainerId];
+    getCommandWrapperList(commandContainerId: string): CommandWrapperDTO[] {
+        return this.commandWrapperList[commandContainerId];
     }
 
     saveCommandViewContainer(commandContainerId: string, commandViewContainerItem: QueryList<ViewContainerRef>): void {

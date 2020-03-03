@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { FileRepositoryService } from 'src/warcommands/commands/domain/file/services/FileRepository.service';
+import { FileRepositoryService } from 'src/warcommands/commands/domain/file/services/file-repository.service';
 import { Store, select } from '@ngrx/store';
-import * as UserProgramSelectors from 'src/ngrx/commands-panel/file/selectors';
-import * as UserProgramActions from 'src/ngrx/commands-panel/file/actions';
+import * as UserFileSelectors from 'src/ngrx/commands-panel/file/selectors';
+import * as UserFilesActions from 'src/ngrx/commands-panel/file/actions';
 import { FileDTO } from 'src/warcommands/commands/domain/file/model/file.dto';
 import { Observable } from 'rxjs';
 
@@ -12,14 +12,22 @@ import { Observable } from 'rxjs';
 export class FileNgrxRepositoryService implements FileRepositoryService {
 
     constructor(
-        private readonly store: Store<UserProgramSelectors.FileSelectorState>
+        private readonly store: Store<UserFileSelectors.FileSelectorState>
     ) {}
 
-    saveFile(file: FileDTO): void {
-        this.store.dispatch(UserProgramActions.addFile({ file }));
+    addFile(file: FileDTO): void {
+        this.store.dispatch(UserFilesActions.addFile({ file }));
+    }
+
+    loadFiles(fileList: FileDTO[]): void {
+        this.store.dispatch(UserFilesActions.loadFiles({ fileList }));
     }
 
     getFile(fileId: string): Observable<FileDTO> {
-        return this.store.pipe(select(UserProgramSelectors.fileSelector, { fileId }));
+        return this.store.pipe(select(UserFileSelectors.fileSelector, { fileId }));
+    }
+
+    getFileList(): Observable<FileDTO[]> {
+        return this.store.pipe(select(UserFileSelectors.getFileList));
     }
 }

@@ -2,19 +2,19 @@
     <div class="if-then-start">
         <div class="if-then-label">if ( lo que sea )</div>
     </div>
-    <div class="if-then-body" [attr.MouseHelperDetectorCommandContainerId]="commandData?.thenCommandContainerId">
+    <div class="if-then-body" [attr.MouseHelperDetectorCommandContainerId]="thenCommandContainerId">
         <div class="if-then-body-content">
-            <app-command-drop [commandContainerId]="commandData.thenCommandContainerId" [fileId]="commandData?.fileId" *ngIf=commandData?.fileId></app-command-drop>
+            <app-command-drop [commandContainerId]="thenCommandContainerId" [fileId]="commandData?.fileId" *ngIf=commandData?.fileId></app-command-drop>
 
             <div *ngIf="!commandData?.fileId" class="commands-drop-container"></div>
         </div>
     </div>
-    <div class="if-then-else-start" [attr.MouseHelperDetectorCommandContainerId]="commandData?.thenCommandContainerId">
+    <div class="if-then-else-start" [attr.MouseHelperDetectorCommandContainerId]="thenCommandContainerId">
         <div class="if-then-else-label">then</div>
     </div>
-    <div class="if-then-body" [attr.MouseHelperDetectorCommandContainerId]="commandData?.thenCommandContainerId">
+    <div class="if-then-body" [attr.MouseHelperDetectorCommandContainerId]="thenCommandContainerId">
         <div class="if-then-body-content">
-            <app-command-drop [commandContainerId]="commandData.elseCommandContainerId" [fileId]="commandData?.fileId" *ngIf=commandData?.fileId></app-command-drop>
+            <app-command-drop [commandContainerId]="elseCommandContainerId" [fileId]="commandData?.fileId" *ngIf=commandData?.fileId></app-command-drop>
 
             <div *ngIf="!commandData?.fileId" class="commands-drop-container"></div>
         </div>

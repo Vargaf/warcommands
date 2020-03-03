@@ -16,7 +16,6 @@ export class SetVariableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('destroyed');
   }
 
 }

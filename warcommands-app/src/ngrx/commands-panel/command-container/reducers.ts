@@ -25,11 +25,11 @@ const commandContainerReducer = createReducer(
         };
     }),
     on(CommandContainerActions.addCommandToCommandContainer, (state, { command, index }) => {
-        const commands = [ ...state.commandContainerList[command.commandContainerId].commands ];
+        const commands = [ ...state.commandContainerList[command.parentCommandContainerId].commands ];
         commands.splice(index, 0, command);
-        const commandContainer = { ...state.commandContainerList[command.commandContainerId], commands };
+        const commandContainer = { ...state.commandContainerList[command.parentCommandContainerId], commands };
         const commandContainerListItem: CommandContainerListDTO = {
-            [command.commandContainerId]: commandContainer
+            [command.parentCommandContainerId]: commandContainer
         };
         const commandContainerList = { ...state.commandContainerList, ...commandContainerListItem };
 

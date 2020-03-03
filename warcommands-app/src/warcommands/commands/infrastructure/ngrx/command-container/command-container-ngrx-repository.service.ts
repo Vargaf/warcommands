@@ -2,7 +2,7 @@ import { CommandContainerRepositoryService } from 'src/warcommands/commands/doma
 import * as CommandContainerSelectors from 'src/ngrx/commands-panel/command-container/selectors';
 import * as CommandContainerActions from 'src/ngrx/commands-panel/command-container/actions';
 import { Store, select } from '@ngrx/store';
-import { CommandContainerDTO } from 'src/warcommands/commands/domain/command-container/model/command-container.dto';
+import { CommandContainerDTO, CommandContainerListDTO } from 'src/warcommands/commands/domain/command-container/model/command-container.dto';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { CommandInterface } from 'src/warcommands/commands/domain/command/model/command.interface';
@@ -34,5 +34,9 @@ export class CommandContainerNgrxRepositoryService implements CommandContainerRe
 
     removeCommandFromCommandContainer(commandContainerId: string, commandId: string): void {
         this.store.dispatch(CommandContainerActions.removeCommandFromCommandContainer({ commandContainerId, commandId }));
+    }
+
+    getCommandContainerOnPage(fileId: string): Observable<CommandContainerListDTO> {
+        return this.store.pipe(select(CommandContainerSelectors.getCommandContainersOnPage, { fileId }));
     }
 }

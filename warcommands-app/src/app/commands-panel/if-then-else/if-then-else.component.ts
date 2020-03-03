@@ -10,9 +10,16 @@ export class IfThenElseComponent implements OnInit {
 
   @Input() commandData: IfThenElseCommandEntity;
 
+  thenCommandContainerId: string;
+  elseCommandContainerId: string;
+
   constructor() { }
 
   ngOnInit() {
+    if (this.commandData) {
+      this.thenCommandContainerId = this.commandData.innerCommandContainerIdList.thenCommandContainerId;
+      this.elseCommandContainerId = this.commandData.innerCommandContainerIdList.elseCommandContainerId;
+    }
   }
 
 }

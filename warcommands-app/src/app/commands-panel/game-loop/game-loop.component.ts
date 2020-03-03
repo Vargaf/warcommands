@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FileRepositoryService } from 'src/warcommands/commands/domain/file/services/FileRepository.service';
-import { v4 as uuid } from 'uuid';
-import { FileDTO } from 'src/warcommands/commands/domain/file/model/file.dto';
-import { MouseDragDropHelperService } from 'src/warcommands/commands/domain/command-panel/services/mouse-drag-drop-helper.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { GameLoopCommandEntity } from 'src/warcommands/commands/domain/command/model/game-loop-command.enntity';
 
 @Component({
     selector: 'app-game-loop',
@@ -11,35 +8,14 @@ import { MouseDragDropHelperService } from 'src/warcommands/commands/domain/comm
 })
 export class GameLoopComponent implements OnInit {
 
-    gameLoopId: string;
-    fileId: string;
+    @Input() commandData: GameLoopCommandEntity;
 
-    constructor(
-        private readonly fileRepository: FileRepositoryService,
-        private readonly mouseHelperService: MouseDragDropHelperService
-    ) { }
+    commandContainerId: string;
+
+    constructor() {
+    }
 
     ngOnInit() {
-
-        this.gameLoopId = uuid();
-        this.fileId = uuid();
-        this.createInitialFile();
-    }
-
-    private createInitialFile(): void {
-
-        const firstFile: FileDTO = {
-            id: this.fileId,
-            fileNumber: 0,
-            name: 'File 1',
-            commandContainerId: this.gameLoopId
-        };
-        this.fileRepository.saveFile(firstFile);
-    }
-
-    onMouseMove(event: MouseEvent) {
-
-        this.mouseHelperService.saveActiveCommandContainer(event);
-
+        this.commandContainerId = this.commandData.innerCommandContainerIdList.commandContainerId;
     }
 }

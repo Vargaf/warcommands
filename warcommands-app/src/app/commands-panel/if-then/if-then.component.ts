@@ -10,9 +10,14 @@ export class IfThenComponent implements OnInit {
 
   @Input() commandData: IfThenCommandEntity;
 
+  thenCommandContainerId: string = undefined;
+
   constructor() {
    }
 
   ngOnInit() {
+    if (this.commandData) {
+      this.thenCommandContainerId = this.commandData.innerCommandContainerIdList.thenCommandContainerId;
+    }
   }
 }

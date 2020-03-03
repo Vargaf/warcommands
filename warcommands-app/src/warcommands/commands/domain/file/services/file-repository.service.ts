@@ -3,8 +3,12 @@ import { FileDTO } from '../model/file.dto';
 
 export abstract class FileRepositoryService {
 
-    abstract saveFile(file: FileDTO): void;
+    abstract addFile(file: FileDTO): void;
+
+    abstract loadFiles(fileList: FileDTO[]): void;
 
     abstract getFile(fileId: string): Observable<FileDTO>;
+
+    abstract getFileList(): Observable<FileDTO[]>;
 
 }

@@ -1,7 +1,7 @@
 
 export interface FileDTO {
     id: string;
-    fileNumber: number;
+    isMain: boolean;
     name: string;
     commandContainerId: string;
 }

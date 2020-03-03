@@ -2,5 +2,6 @@
 export enum DropType {
     New,
     MoveSameList,
-    MoveAnotherList
+    MoveAnotherList,
+    FromFile
 }

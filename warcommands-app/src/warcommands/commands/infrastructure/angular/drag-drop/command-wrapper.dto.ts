@@ -1,7 +1,7 @@
 import { CommandType } from 'src/warcommands/commands/domain/command/model/command-type.enum';
 import { DropType } from './drop-type.enum';
 
-export interface CommandDroppedInterface {
+export interface CommandWrapperDTO {
     containerId: string;
     previousContainerId?: string;
     fileId: string;

@@ -3,8 +3,8 @@
         <div class="game-loop-label">gameLoop ( game )</div>
     </div>
     <div class="game-loop-body">
-        <div class="game-loop-body-content" (mouseover)="onMouseMove($event)">
-            <app-command-drop [commandContainerId]="gameLoopId" [fileId]="fileId"></app-command-drop>
+        <div class="game-loop-body-content">
+            <app-command-drop [commandContainerId]="commandContainerId" [fileId]="commandData.fileId"></app-command-drop>
         </div>
     </div>
     <div class="game-loop-end"></div>

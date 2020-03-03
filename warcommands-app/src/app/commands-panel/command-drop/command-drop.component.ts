@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, ViewContainerRef, QueryList, Input, AfterViewInit } from '@angular/core';
 import { CommandDirective } from '../command.directive';
-import { CommandDroppedInterface } from 'src/warcommands/commands/infrastructure/angular/drag-drop/command-droped';
+import { CommandWrapperDTO } from 'src/warcommands/commands/infrastructure/angular/drag-drop/command-wrapper.dto';
 import { CommandContainerDragDropService } from 'src/warcommands/commands/domain/command-panel/services/command-container-drag-drop.service';
 import { CommandContainerDTO } from 'src/warcommands/commands/domain/command-container/model/command-container.dto';
+import { CommandContainerRepositoryService } from 'src/warcommands/commands/domain/command-container/services/command-container-repository.service';
 
 @Component({
     selector: 'app-command-drop',
@@ -21,32 +22,30 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
     public commandsDropContainer: ElementRef<HTMLDivElement>;
 
     @ViewChildren(CommandDirective, {read: ViewContainerRef})
-    public commandContainer: QueryList<ViewContainerRef>;
+    public commandContainerView: QueryList<ViewContainerRef>;
 
-    public commandList: CommandDroppedInterface[] = [];
+    public commandList: CommandWrapperDTO[] = [];
+
+    public commandContainerDTO: CommandContainerDTO;
 
     constructor(
-        private readonly commandContainerDragDropService: CommandContainerDragDropService
+        private readonly commandContainerDragDropService: CommandContainerDragDropService,
+        private readonly commandContainerRepository: CommandContainerRepositoryService,
     ) { }
 
     ngOnInit() {
+        this.commandContainerRepository.getCommandContainer(this.commandContainerId).subscribe((commandContainer) => {
+            this.commandContainerDTO = commandContainer;
+        });
     }
 
     ngAfterViewInit() {
 
-        if (this.fileId) {
-
-            const commandContainer: CommandContainerDTO = {
-                id: this.commandContainerId,
-                fileId: this.fileId,
-                commands: []
-            };
-            this.commandContainerDragDropService.createCommandDropContainer(
-                commandContainer,
-                this.commandsDropContainer,
-                this.commandContainer,
-                this.commandList
-            );
-        }
+        this.commandContainerDragDropService.createCommandDropContainer(
+            this.commandContainerDTO,
+            this.commandsDropContainer,
+            this.commandContainerView,
+            this.commandList
+        );
     }
 }

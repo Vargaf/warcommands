@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
 import { CommandContainerRepositoryService } from '../../command-container/services/command-container-repository.service';
 import { CommandInterface } from '../../command/model/command.interface';
-import { CommandDroppedInterface } from 'src/warcommands/commands/infrastructure/angular/drag-drop/command-droped';
+import { CommandWrapperDTO } from 'src/warcommands/commands/infrastructure/angular/drag-drop/command-wrapper.dto';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -24,11 +24,11 @@ export class CommandDataDragDropService {
         return this.commandRepositoryService.getCommand(commandId);
     }
 
-    moveSameList(data: CommandDroppedInterface): void {
+    moveSameList(data: CommandWrapperDTO): void {
         this.commandContainerRepositoryService.moveCommandSameContainer(data.containerId, data.previousIndex, data.currentIndex);
     }
 
-    removeCommandDataFromContainerList(data: CommandDroppedInterface): void {
+    removeCommandDataFromContainerList(data: CommandWrapperDTO): void {
         this.commandContainerRepositoryService.removeCommandFromCommandContainer(data.previousContainerId, data.itemId);
     }
 

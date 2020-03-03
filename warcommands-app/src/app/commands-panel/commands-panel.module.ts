@@ -8,8 +8,6 @@ import { CreateMinionComponent } from './create-minion/create-minion.component';
 import { CommandDirective } from './command.directive';
 import { StoreModule } from '@ngrx/store';
 import * as CommandsPanelStore from 'src/ngrx/commands-panel/reducer-map';
-import { FileRepositoryService } from 'src/warcommands/commands/domain/file/services/FileRepository.service';
-import { FileNgrxRepositoryService } from 'src/warcommands/commands/infrastructure/ngrx/file/file-ngrx-repository.service';
 import { AddCommandComponentService } from 'src/warcommands/commands/domain/command-panel/services/add-command-component.service';
 import { CommandsComponentFactory } from 'src/warcommands/commands/domain/command-panel/services/commands-component-factory.service';
 import { VariableComponent } from './variable/variable.component';
@@ -29,6 +27,14 @@ import { CommandDataDragDropService } from 'src/warcommands/commands/domain/comm
 import { CommandDataFactory } from 'src/warcommands/commands/domain/command-panel/services/command-data.factory';
 import { MouseDragDropHelperService } from 'src/warcommands/commands/domain/command-panel/services/mouse-drag-drop-helper.service';
 import { FilesComponent } from './files/files.component';
+import { SaveFileRepositoryService } from 'src/warcommands/commands/domain/file/services/save-file-repository.service';
+import { SaveFileLocalStorageRepositorySerice } from 'src/warcommands/commands/infrastructure/local-storage/file/save-file-local-storage-repository.service';
+import { FromJsonFileToFileDTOGeneratorService } from 'src/warcommands/commands/infrastructure/local-storage/file/from-json-file-to-file-dto-generator.service';
+import { LocalFileManagerModule } from './file-manager/local-file-manager.module';
+import { FileComponent } from './file/file.component';
+import { CreateCommandComponentService } from 'src/warcommands/commands/domain/command-panel/services/create-command-component.service';
+import { CommandDropContainerManager } from 'src/warcommands/commands/domain/command-panel/services/command-drop-container-manager.service';
+import { CommandDropedHelperService } from 'src/warcommands/commands/domain/command-panel/services/command-droped-helper.service';
 
 
 
@@ -44,11 +50,13 @@ import { FilesComponent } from './files/files.component';
     SetVariableComponent,
     CommandDropComponent,
     FilesComponent,
+    FileComponent,
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     MaterialModule,
+    LocalFileManagerModule,
     StoreModule.forFeature(CommandsPanelStore.CommandsPanelStoreKey, CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN),
   ],
   exports: [
@@ -56,9 +64,9 @@ import { FilesComponent } from './files/files.component';
   ],
   providers: [
     { provide: CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN, useFactory: CommandsPanelStore.reducers },
-    { provide: FileRepositoryService, useClass: FileNgrxRepositoryService },
     { provide: CommandContainerRepositoryService, useClass: CommandContainerNgrxRepositoryService },
     { provide: CommandRepositoryService, useClass: CommandNgrxRepositoryService },
+    { provide: SaveFileRepositoryService, useClass: SaveFileLocalStorageRepositorySerice },
     AddCommandComponentService,
     CommandsComponentFactory,
     CommandsDragDropRepositoy,
@@ -67,14 +75,19 @@ import { FilesComponent } from './files/files.component';
     CommandDataDragDropService,
     CommandDataFactory,
     MouseDragDropHelperService,
-    CommandListDragDropService
+    CommandListDragDropService,
+    FromJsonFileToFileDTOGeneratorService,
+    CreateCommandComponentService,
+    CommandDropContainerManager,
+    CommandDropedHelperService
   ],
   entryComponents: [
     CreateMinionComponent,
     VariableComponent,
     SetVariableComponent,
     IfThenComponent,
-    IfThenElseComponent
+    IfThenElseComponent,
+    GameLoopComponent
   ]
 })
 export class CommandsPanelModule { }
