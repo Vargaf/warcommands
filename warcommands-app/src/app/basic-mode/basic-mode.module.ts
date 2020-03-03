@@ -5,7 +5,6 @@ import { BasicModeRoutingModule } from './basic-mode-routing.module';
 import { GraphicsModule } from './graphics/graphics.module';
 import { StatsComponent } from './stats/stats.component';
 import { StoreModule } from '@ngrx/store';
-import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
 import { MaterialModule } from '../share/material/material.module';
 import * as BasicModeGameEngineStore from '../../ngrx/basic-mode/reducer-map';
 import { DomElementInjectorService } from 'src/warcommands/basic-mode/infrastructure/angular/dom-element-injector.service';
@@ -21,13 +20,11 @@ import { BasicModeOnMemoryModule } from '../share/basic-mode-on-memory/basic-mod
     StatsComponent
   ],
   imports: [
-    CommandsPanelModule,
     CommonModule,
     BasicModeRoutingModule,
     GraphicsModule,
     MaterialModule,
     BasicModeOnMemoryModule,
-    //StoreModule.forFeature(RequestFrameAnimationStore.RequestAnimationFrameKey, RequestFrameAnimationStore.reducer)
     StoreModule.forFeature(BasicModeGameEngineStore.GameEngineBasicModeStoreKey, BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN),
   ],
   providers: [
