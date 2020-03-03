@@ -11,6 +11,7 @@ import { DomElementInjectorService } from 'src/warcommands/basic-mode/infrastruc
 import { DomElementComponentFactoryService } from 'src/warcommands/basic-mode/infrastructure/angular/dom-element-component-factory.service';
 import { GAME_ENGINE_BASIC_MODE_CONFIGURATION, GAME_CONFIG } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
 import { BasicModeOnMemoryModule } from '../share/basic-mode-on-memory/basic-mode-on-memory.module';
+import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
 
 
 
@@ -21,6 +22,7 @@ import { BasicModeOnMemoryModule } from '../share/basic-mode-on-memory/basic-mod
   ],
   imports: [
     CommonModule,
+    CommandsPanelModule,
     BasicModeRoutingModule,
     GraphicsModule,
     MaterialModule,
