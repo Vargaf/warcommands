@@ -8,12 +8,12 @@
 </div>
 
 <mat-tab-group #filesTabGroup dynamicHeight>
-    <mat-tab>
+    <mat-tab *ngFor="let file of fileList">
         <ng-template mat-tab-label>
-            File 1
+            {{ file.name }}
         </ng-template>
         <div class="file-content">
-            <app-file></app-file>
+            <app-file [fileData]="file"></app-file>
         </div>
     </mat-tab>
     <mat-tab>

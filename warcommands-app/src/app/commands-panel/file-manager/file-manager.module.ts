@@ -4,6 +4,8 @@ import { FileManagerComponent } from './file-manager.component';
 import { FileComponent } from './file/file.component';
 import { MaterialModule } from 'src/app/share/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FileManagerService } from 'src/warcommands/commands-panel/domain/file/services/file-manager.service';
+import { FileManagerLocalStorageModule } from './file-manager-local-storege.module';
 
 
 
@@ -15,7 +17,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     imports: [
         CommonModule,
         MaterialModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        FileManagerLocalStorageModule
+    ],
+    providers: [
+        FileManagerService
     ],
     exports: [
         FileManagerComponent
