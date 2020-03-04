@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.dto';
 import { FileManagerService } from 'src/warcommands/commands-panel/domain/file/services/file-manager.service';
+import { FileManagerEvents } from 'src/warcommands/commands-panel/domain/file/services/file-manager.events';
 
 @Component({
     selector: 'app-file-manager',
@@ -16,11 +17,21 @@ export class FileManagerComponent implements OnInit {
     fileList: FileDTO[] = [];
 
     constructor(
-        private readonly fileManagerService: FileManagerService
+        private readonly fileManagerService: FileManagerService,
+        private readonly fileManagerEvents: FileManagerEvents
     ) { }
 
     ngOnInit() {
-        this.fileList = this.fileManagerService.loadOpennedFiles();
+        this.fileManagerEvents.fileLoadedListener().subscribe((file) => {
+            this.addFile(file);
+        });
+
+        this.fileManagerService.loadOpennedFiles();
+
+    }
+
+    private addFile(file: FileDTO): void {
+        this.fileList.push(file);
     }
 
 }

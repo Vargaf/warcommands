@@ -6,6 +6,7 @@ import { MaterialModule } from 'src/app/share/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FileManagerService } from 'src/warcommands/commands-panel/domain/file/services/file-manager.service';
 import { FileManagerLocalStorageModule } from './file-manager-local-storege.module';
+import { FileEventListeners } from 'src/warcommands/commands-panel/infrastructure/ngrx/file-event-listeners';
 
 
 
@@ -27,4 +28,10 @@ import { FileManagerLocalStorageModule } from './file-manager-local-storege.modu
         FileManagerComponent
     ]
 })
-export class FileManagerModule { }
+export class FileManagerModule {
+
+    constructor(private readonly fileEventListeners: FileEventListeners) {
+
+    }
+
+}
