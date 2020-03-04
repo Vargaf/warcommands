@@ -3,6 +3,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.dto';
 import { FileManagerService } from 'src/warcommands/commands-panel/domain/file/services/file-manager.service';
 import { FileManagerEvents } from 'src/warcommands/commands-panel/domain/file/services/file-manager.events';
+import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
 
 @Component({
     selector: 'app-file-manager',
@@ -17,7 +18,7 @@ export class FileManagerComponent implements OnInit {
     fileList: FileDTO[] = [];
 
     constructor(
-        private readonly fileManagerService: FileManagerService,
+        private readonly commandsPanelManagerService: CommandsPanelManagerService,
         private readonly fileManagerEvents: FileManagerEvents
     ) { }
 
@@ -26,7 +27,7 @@ export class FileManagerComponent implements OnInit {
             this.addFile(file);
         });
 
-        this.fileManagerService.loadOpennedFiles();
+        this.commandsPanelManagerService.loadOpennedFiles();
 
     }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
 
 @Component({
   selector: 'app-commands-panel',

@@ -11,7 +11,9 @@ export class FileEventListeners {
     constructor(
         private readonly fileNgrxRepositoryService: FileNgrxRepositoryService,
         private readonly fileManagerEvents: FileManagerEvents
-    ) {
+    ) {}
+
+    initialize(): void {
         this.fileManagerEvents.fileLoadedListener().subscribe((file) => {
             this.loadFile(file);
         });

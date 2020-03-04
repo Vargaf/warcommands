@@ -13,7 +13,7 @@ export class FileManagerService {
         private readonly fileManagerEvents: FileManagerEvents
     ) {}
 
-    loadOpennedFiles(): FileDTO[] {
+    loadOpennedFiles(): void {
         let files: FileDTO[];
 
         if (this.isInitializationNeeded()) {
@@ -22,8 +22,6 @@ export class FileManagerService {
             files = this.fileRepositoryService.getOpennedFiles();
             this.dispatchLoadedFilesEvent(files);
         }
-
-        return files;
     }
 
     loadFile(fileId: string): FileDTO {
