@@ -5,9 +5,10 @@ import { FileComponent } from './file/file.component';
 import { MaterialModule } from 'src/app/share/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FileManagerService } from 'src/warcommands/commands-panel/domain/file/services/file-manager.service';
-import { FileManagerLocalStorageModule } from './file-manager-local-storege.module';
+import { FileManagerLocalStorageModule } from './file-manager-local-storage.module';
 import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
 import { CommandContainerManagerService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-manager.service';
+import { CommandManagerService } from 'src/warcommands/commands-panel/domain/command/services/command-manager.service';
 
 
 
@@ -26,6 +27,7 @@ import { CommandContainerManagerService } from 'src/warcommands/commands-panel/d
         FileManagerService,
         CommandContainerManagerService,
         CommandsPanelManagerService,
+        CommandManagerService
     ],
     exports: [
         FileManagerComponent

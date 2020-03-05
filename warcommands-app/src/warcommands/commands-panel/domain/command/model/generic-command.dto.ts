@@ -7,3 +7,7 @@ export interface GenericCommandDTO {
     parentCommandContainerId: string;
     innerCommandContainerIdList?: { [index: string]: string };
 }
+
+export interface GenericCommandListDTO {
+    [id: string]: GenericCommandDTO;
+}
