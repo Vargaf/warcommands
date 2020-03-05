@@ -1,27 +1,24 @@
 import { Injectable } from '@angular/core';
-import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.dto';
 import * as LocalStorageHelper from './local-storage-share';
-import { LocalStorageLoadFileService } from './local-storage-load-file.service';
+import { FileJsonDTO } from 'src/warcommands/commands-panel/domain/file/model/file-json.dto';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LocalStorageGetOpennedFilesService {
 
-    constructor(
-        private readonly localStorageLoadFileService: LocalStorageLoadFileService
-    ) {}
+    getOpennedFilesInRaw(): FileJsonDTO[] {
 
-    getOpennedFiles(): FileDTO[] {
         const savedFileList = this.getUserFileList();
-        const rawOpennedFileList = this.fileterOpennedFiles(savedFileList);
+        const opennedFileList = this.fileterOpennedFiles(savedFileList);
+        const rawOpennedFileList: FileJsonDTO[] = [];
 
-        return this.loadFiles(rawOpennedFileList);
-    }
+        for (const userFile of opennedFileList) {
+            const rawFile = JSON.parse(localStorage.getItem(userFile.id));
+            rawOpennedFileList.push(rawFile);
+        }
 
-    private getUserFileList(): LocalStorageHelper.UserFileDTO[] {
-        const fileInJson = localStorage.getItem(LocalStorageHelper.userFileListIndex);
-        return JSON.parse(fileInJson) || [];
+        return rawOpennedFileList;
     }
 
     private fileterOpennedFiles(fileList: LocalStorageHelper.UserFileDTO[]): LocalStorageHelper.UserFileDTO[] {
@@ -30,19 +27,9 @@ export class LocalStorageGetOpennedFilesService {
         });
     }
 
-    private loadFiles(rawOpennedFileList: LocalStorageHelper.UserFileDTO[]): FileDTO[] {
-        const files: FileDTO[] = [];
-
-        for (const userFile of rawOpennedFileList) {
-            const loadedFile = this.loadFile(userFile.id);
-            files.push(loadedFile);
-        }
-
-        return files;
-    }
-
-    loadFile(fileId: string): FileDTO {
-        return this.localStorageLoadFileService.loadFile(fileId);
+    private getUserFileList(): LocalStorageHelper.UserFileDTO[] {
+        const fileInJson = localStorage.getItem(LocalStorageHelper.userFileListIndex);
+        return JSON.parse(fileInJson) || [];
     }
 
 }

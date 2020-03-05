@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as FileSelectors from 'src/ngrx/commands-panel/file/selectors';
 import * as FileActions from 'src/ngrx/commands-panel/file/actions';
-import { FileDTO } from '../../domain/file/model/file.dto';
+import { FileDTO } from '../../../domain/file/model/file.dto';
 import { Observable } from 'rxjs';
 
 @Injectable({

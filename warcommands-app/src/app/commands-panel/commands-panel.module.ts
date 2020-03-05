@@ -6,6 +6,7 @@ import { CommandsModule } from './commands/commands.module';
 import { FileManagerModule } from './file-manager/file-manager.module';
 import { StoreModule } from '@ngrx/store';
 import * as CommandsPanelStore from 'src/ngrx/commands-panel/reducer-map';
+import { StoreListenersModule } from './store-listeners/store-listeners.module';
 
 
 
@@ -18,6 +19,7 @@ import * as CommandsPanelStore from 'src/ngrx/commands-panel/reducer-map';
         FlexLayoutModule,
         CommandsModule,
         FileManagerModule,
+        StoreListenersModule,
         StoreModule.forFeature(CommandsPanelStore.CommandsPanelStoreKey, CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN),
     ],
     providers: [

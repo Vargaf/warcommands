@@ -6,7 +6,7 @@ import { LocalStorageFileRepositoryService } from 'src/warcommands/commands-pane
     declarations: [],
     imports: [],
     providers: [
-        { provide: FileRepositoryService, useClass: LocalStorageFileRepositoryService }
+        { provide: FileRepositoryService, useClass: LocalStorageFileRepositoryService },
     ],
     exports: []
 })

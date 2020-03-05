@@ -7,13 +7,13 @@ import { Observable, Subject } from 'rxjs';
 })
 export class FileManagerEvents {
 
-    readonly fileLoadedSubject: Subject<FileDTO>;
+    private readonly fileLoadedSubject: Subject<FileDTO>;
 
     constructor() {
         this.fileLoadedSubject = new Subject<FileDTO>();
     }
 
-    fileLoadedDispatch(file: FileDTO) {
+    fileLoadedDispatch(file: FileDTO): void {
         this.fileLoadedSubject.next(file);
     }
 

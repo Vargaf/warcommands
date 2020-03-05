@@ -1,11 +1,9 @@
-import { FileDTO } from '../model/file.dto';
+import { FileJsonDTO } from '../model/file-json.dto';
 
 export abstract class FileRepositoryService {
 
-    abstract getOpennedFiles(): FileDTO[];
+    abstract getOpennedFilesInRaw(): FileJsonDTO[];
 
     abstract userHasFiles(): boolean;
-
-    abstract loadFile(fileId: string): FileDTO;
 
 }

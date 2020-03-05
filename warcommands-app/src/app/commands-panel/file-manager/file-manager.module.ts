@@ -6,8 +6,8 @@ import { MaterialModule } from 'src/app/share/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FileManagerService } from 'src/warcommands/commands-panel/domain/file/services/file-manager.service';
 import { FileManagerLocalStorageModule } from './file-manager-local-storege.module';
-import { FileEventListeners } from 'src/warcommands/commands-panel/infrastructure/ngrx/file-event-listeners';
 import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
+import { CommandContainerManagerService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-manager.service';
 
 
 
@@ -23,8 +23,9 @@ import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/doma
         FileManagerLocalStorageModule
     ],
     providers: [
+        FileManagerService,
+        CommandContainerManagerService,
         CommandsPanelManagerService,
-        FileManagerService
     ],
     exports: [
         FileManagerComponent

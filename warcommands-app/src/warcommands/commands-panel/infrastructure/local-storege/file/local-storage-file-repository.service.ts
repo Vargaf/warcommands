@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FileRepositoryService } from 'src/warcommands/commands-panel/domain/file/services/file-repository.service';
-import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.dto';
 import { LocalStorageGetOpennedFilesService } from './local-storage-get-openned-files.service';
 import * as LocalStorageHelper from './local-storage-share';
-import { LocalStorageLoadFileService } from './local-storage-load-file.service';
+import { FileJsonDTO } from 'src/warcommands/commands-panel/domain/file/model/file-json.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -11,21 +10,16 @@ import { LocalStorageLoadFileService } from './local-storage-load-file.service';
 export class LocalStorageFileRepositoryService implements FileRepositoryService {
 
     constructor(
-        private readonly localStorageGetOpennedFilesService: LocalStorageGetOpennedFilesService,
-        private readonly localStorageLoadFileService: LocalStorageLoadFileService
+        private readonly localStorageGetOpennedFilesService: LocalStorageGetOpennedFilesService
     ) {}
 
-    getOpennedFiles(): FileDTO[] {
-        return this.localStorageGetOpennedFilesService.getOpennedFiles();
+    getOpennedFilesInRaw(): FileJsonDTO[] {
+        return this.localStorageGetOpennedFilesService.getOpennedFilesInRaw();
     }
 
     userHasFiles(): boolean {
         const fileInJson = localStorage.getItem(LocalStorageHelper.userFileListIndex);
         return fileInJson ? true : false;
-    }
-
-    loadFile(fileId: string): FileDTO {
-        return this.localStorageLoadFileService.loadFile(fileId);
     }
 
 }
