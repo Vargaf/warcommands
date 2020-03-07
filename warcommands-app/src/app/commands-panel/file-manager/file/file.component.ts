@@ -11,9 +11,12 @@ export class FileComponent implements OnInit {
     @Input()
     fileData: FileDTO;
 
+    commandContainerId: string;
+
     constructor() { }
 
     ngOnInit() {
+        this.commandContainerId = this.fileData.commandContainerId;
     }
 
 }

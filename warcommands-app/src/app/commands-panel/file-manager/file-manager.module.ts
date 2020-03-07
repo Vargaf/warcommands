@@ -9,13 +9,18 @@ import { FileManagerLocalStorageModule } from './file-manager-local-storage.modu
 import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
 import { CommandContainerManagerService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-manager.service';
 import { CommandManagerService } from 'src/warcommands/commands-panel/domain/command/services/command-manager.service';
+import { CommandDropComponent } from '../command-drop/command-drop.component';
+import { CommandContainerNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command-container/command-container-ngrx-repository.service';
+import { CommandDirective } from '../command.directive';
 
 
 
 @NgModule({
     declarations: [
+        CommandDirective,
         FileManagerComponent,
-        FileComponent
+        FileComponent,
+        CommandDropComponent
     ],
     imports: [
         CommonModule,
@@ -27,7 +32,8 @@ import { CommandManagerService } from 'src/warcommands/commands-panel/domain/com
         FileManagerService,
         CommandContainerManagerService,
         CommandsPanelManagerService,
-        CommandManagerService
+        CommandManagerService,
+        CommandContainerNgrxRepositoryService
     ],
     exports: [
         FileManagerComponent

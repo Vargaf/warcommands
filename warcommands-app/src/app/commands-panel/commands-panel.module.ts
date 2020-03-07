@@ -12,7 +12,7 @@ import { StoreListenersModule } from './store-listeners/store-listeners.module';
 
 @NgModule({
     declarations: [
-        CommandsPanelComponent
+        CommandsPanelComponent,
     ],
     imports: [
         CommonModule,
