@@ -16,6 +16,7 @@ import { AngularCommandDraggableElementRepositoryService } from 'src/warcommands
 import { CommandDraggableElementRepositoryService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-draggable-element-repository.service';
 import { CommandComponentManagerService } from 'src/warcommands/commands-panel/domain/command-component/services/command-component-manager.service';
 import { CommandContainerDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-drag-drop-manager.service';
+import { CommandDropModule } from '../command-drop/command-drop.module';
 
 
 
@@ -31,7 +32,8 @@ import { CommandContainerDragDropManagerService } from 'src/warcommands/commands
     ],
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        CommandDropModule
     ],
     providers: [
         CommandDragDropManagerService,
@@ -42,7 +44,7 @@ import { CommandContainerDragDropManagerService } from 'src/warcommands/commands
         { provide: CommandDraggableElementRepositoryService, useClass: AngularCommandDraggableElementRepositoryService }
     ],
     exports: [
-        CommandsComponent
+        CommandsComponent,
     ],
     entryComponents: [
         SetVariableComponent,

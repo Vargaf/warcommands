@@ -2,9 +2,10 @@ import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, ViewChi
 import { CommandContainerNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command-container/command-container-ngrx-repository.service';
 import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service';
-import { CommandDragDropManagerEvents } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager-events';
-import { CommandWrapperDTO } from 'src/warcommands/commands-panel/domain/command-drag-drop/model/command-wrapper.dto';
 import { CommandDirective } from '../command.directive';
+import { CommandCreatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-created-events';
+import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
+import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-moved-events';
 
 @Component({
     selector: 'app-command-drop',
@@ -24,12 +25,13 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
 
     commandContainer: CommandContainerDTO;
 
-    commandWrapperList: CommandWrapperDTO[] = [];
+    commandList: GenericCommandDTO[] = [];
 
     constructor(
         private readonly commandContainerNgrxRepositoryService: CommandContainerNgrxRepositoryService,
         private readonly commandDragDropManagerService: CommandDragDropManagerService,
-        private readonly commandDragDropManagerEvents: CommandDragDropManagerEvents,
+        private readonly commandCreatedEvents: CommandCreatedEvents,
+        private readonly commandMovedEvents: CommandMovedEvents,
     ) { }
 
     ngOnInit() {
@@ -37,8 +39,9 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
             this.commandContainer = commandContainer;
         });
 
-        this.setNewCommandDroppedListener();
-        this.setMoveCommandListener();
+        this.setNewCommandDroppedToContainerListener();
+        this.setMoveCommandFromCommandContainerListener();
+        this.setMoveCommandToCommandContainerListener();
     }
 
     ngAfterViewInit() {
@@ -46,37 +49,35 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
         this.commandContainerView.changes.subscribe((changeEvent) => {
             this.addCommandComponent(changeEvent);
         });
+
+        this.loadCommandList();
     }
 
-    private setNewCommandDroppedListener(): void {
-        this.commandDragDropManagerEvents.newCommandDroppedListener(this.commandContainerId).subscribe((commandWrapperDTO) => {
-            this.addCommandWrapper(commandWrapperDTO);
-            this.synchronizeCommandContainerIndex();
+    private setNewCommandDroppedToContainerListener(): void {
+        this.commandCreatedEvents.commandAddedToCommandContainerListener(this.commandContainerId).subscribe((event) => {
+            this.addCommandWrapper(event.command, event.position);
         });
     }
 
-    private setMoveCommandListener(): void {
-        this.commandDragDropManagerEvents.moveCommandDroppedListener(this.commandContainerId).subscribe((commandWrapperDTO) => {
-            this.removeCommandWrapper(commandWrapperDTO);
-            this.commandDragDropManagerService.removeCommandComponent(commandWrapperDTO);
-            this.addCommandWrapper(commandWrapperDTO);
-            this.synchronizeCommandContainerIndex();
+    private setMoveCommandFromCommandContainerListener(): void {
+        this.commandMovedEvents.commandMovedFromCommandContainerListener(this.commandContainerId).subscribe((event) => {
+            this.removeCommandWrapper(event.fromPosition);
+            this.commandDragDropManagerService.removeCommandComponent(event.command, event.fromContainerId);
         });
     }
 
-    private removeCommandWrapper(commandWrapperDTO: CommandWrapperDTO): void {
-        this.commandWrapperList.splice(commandWrapperDTO.previousIndex, 1);
+    private setMoveCommandToCommandContainerListener(): void {
+        this.commandMovedEvents.commandMovedToCommandContainerListener(this.commandContainerId).subscribe((event) => {
+            this.addCommandWrapper(event.command, event.toPosition);
+        });
     }
 
-    private addCommandWrapper(commandWrapperDTO: CommandWrapperDTO): void {
-        this.commandWrapperList.splice(commandWrapperDTO.currentIndex, 0, commandWrapperDTO);
+    private removeCommandWrapper(position: number): void {
+        this.commandList.splice(position, 1);
     }
 
-    private synchronizeCommandContainerIndex(): void {
-        // tslint:disable-next-line: forin
-        for (const index in this.commandWrapperList) {
-            this.commandWrapperList[index].currentIndex = +index;
-        }
+    private addCommandWrapper(command: GenericCommandDTO, position: number): void {
+        this.commandList.splice(position, 0, command);
     }
 
     private addCommandComponent(changeEvent: QueryList<ViewContainerRef>): void {
@@ -86,16 +87,25 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line: forin
         for (const index in viewContainerRef) {
             const item = viewContainerRef[index];
-            const commandWrapper: CommandWrapperDTO = this.commandWrapperList[index];
 
             if (item.element.nativeElement.parentElement.getAttribute('dirty') === 'true') {
+                const command: GenericCommandDTO = this.commandList[index];
                 item.element.nativeElement.parentElement.removeAttribute('dirty');
 
-                this.commandDragDropManagerService.createCommandComponent(commandWrapper, item);
+                this.commandDragDropManagerService.createCommandComponent(item, command, +index);
 
             }
         }
 
+    }
+
+    private loadCommandList(): void {
+        const commandList: GenericCommandDTO[] = this.commandContainer.commands;
+        // tslint:disable-next-line: forin
+        for (const index in commandList) {
+            const command = commandList[index];
+            this.addCommandWrapper(command, +index);
+        }
     }
 
 }

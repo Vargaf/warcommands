@@ -1,5 +1,5 @@
 import { DragRef } from '@angular/cdk/drag-drop';
-import { CommandWrapperDTO } from '../model/command-wrapper.dto';
+import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 
 export abstract class CommandDraggableElementRepositoryService {
 
@@ -7,6 +7,6 @@ export abstract class CommandDraggableElementRepositoryService {
 
     abstract getDragList(commandContainerId: string): DragRef[];
 
-    abstract removeDragItem(commandWrapperDTO: CommandWrapperDTO): void;
+    abstract removeDragItem(command: GenericCommandDTO, commandContainerId: string): void;
 
 }

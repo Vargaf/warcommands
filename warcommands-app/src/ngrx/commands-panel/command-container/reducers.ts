@@ -34,6 +34,22 @@ const commandContainerReducer = createReducer(
         return {
             commandContainerList
         };
+    }),
+    on(CommandContainerActions.removeCommandFromContainer, (state, { commandId, commandContainerId }) => {
+        const currentCommandContainerCommandsList = [ ...state.commandContainerList[commandContainerId].commands ];
+        const newCommandContainerCommandsList = currentCommandContainerCommandsList.filter((command) => {
+            return commandId !== command.id;
+        });
+
+        const commandContainer = { ...state.commandContainerList[commandContainerId], ...{ commands: newCommandContainerCommandsList } };
+        const commandContainerListItem: CommandContainerListDTO = {
+            [commandContainerId]: commandContainer
+        };
+        const commandContainerList = { ...state.commandContainerList, ...commandContainerListItem };
+
+        return {
+            commandContainerList
+        };
     })
 );
 

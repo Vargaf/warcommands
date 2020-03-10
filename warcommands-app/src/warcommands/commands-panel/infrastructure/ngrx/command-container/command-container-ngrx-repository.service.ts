@@ -27,4 +27,8 @@ export class CommandContainerNgrxRepositoryService {
         this.store.dispatch(CommandContainerActions.addCommandToCommandContainer({ command, index }));
     }
 
+    removeCommandFromContainer(commandId: string, commandContainerId: string): void {
+        this.store.dispatch(CommandContainerActions.removeCommandFromContainer({ commandId, commandContainerId }));
+    }
+
 }

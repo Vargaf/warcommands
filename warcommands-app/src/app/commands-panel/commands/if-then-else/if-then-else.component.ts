@@ -1,15 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { IfThenElseCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/if-then-else-command.entity';
+import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service';
 
 @Component({
-  selector: 'app-if-then-else',
-  templateUrl: './if-then-else.component.html',
-  styleUrls: ['./if-then-else.component.scss']
+    selector: 'app-if-then-else',
+    templateUrl: './if-then-else.component.html',
+    styleUrls: ['./if-then-else.component.scss']
 })
 export class IfThenElseComponent implements OnInit {
 
-  constructor() { }
+    @Input() commandData: IfThenElseCommandEntity;
 
-  ngOnInit() {
-  }
+    thenCommandContainerId: string;
+    elseCommandContainerId: string;
+
+    constructor(
+        private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService
+    ) { }
+
+    ngOnInit() {
+        if (this.commandData) {
+            this.thenCommandContainerId = this.commandData.innerCommandContainerIdList.thenCommandContainerId;
+            this.elseCommandContainerId = this.commandData.innerCommandContainerIdList.elseCommandContainerId;
+            this.commandNgrxRepositoryService.getCommand(this.commandData.id).subscribe((command) => {
+                this.commandData = (command as IfThenElseCommandEntity);
+            });
+        }
+    }
 
 }

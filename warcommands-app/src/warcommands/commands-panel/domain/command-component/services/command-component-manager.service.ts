@@ -27,8 +27,11 @@ export class CommandComponentManagerService {
 
     removeComponent(commandId: string) {
         const component: ComponentRef<any> = this.commandComponentRepositoryService.findByCommandId(commandId);
-        component.destroy();
-        this.commandComponentRepositoryService.remove(commandId);
+
+        if (component) {
+            component.destroy();
+            this.commandComponentRepositoryService.remove(commandId);
+        }
     }
 
 }

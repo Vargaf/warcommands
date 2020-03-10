@@ -5,7 +5,6 @@ import { CommandContainerDTO } from '../../command-container/model/command-conta
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 import { CommandComponentManagerService } from '../../command-component/services/command-component-manager.service';
 import { CommandContainerDragDropManagerService } from '../../command-container/services/command-container-drag-drop-manager.service';
-import { CommandWrapperDTO } from '../model/command-wrapper.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -30,19 +29,21 @@ export class CommandDragDropManagerService {
         this.commandContainerDragDropManager.createCommandContainerDrop(commandContainerDivElement, commandContainer);
     }
 
-    addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, commandWrapper: CommandWrapperDTO): void {
-        this.commandContainerDragDropManager.addDragableElementToCommandContainer(dragableElement, commandWrapper);
+    addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {
+        this.commandContainerDragDropManager.addDragableElementToCommandContainer(dragableElement, command, position);
     }
 
-    createCommandComponent(commandWrapper: CommandWrapperDTO, elementViewContainerRef: ViewContainerRef): void {
-        const component: ComponentRef<any> =
-            this.commandComponentManagerService.createComponent(elementViewContainerRef, commandWrapper.command);
-        this.addDragableElementToCommandContainer(component.location.nativeElement.parentElement, commandWrapper);
+    createCommandComponent(elementViewContainerRef: ViewContainerRef, command: GenericCommandDTO, position: number): void {
+        setTimeout(() => {
+            const component: ComponentRef<any> =
+            this.commandComponentManagerService.createComponent(elementViewContainerRef, command);
+            this.addDragableElementToCommandContainer(component.location.nativeElement.parentElement, command, position);
+        }, 0);
     }
 
-    removeCommandComponent(commandWrapperDTO: CommandWrapperDTO): void {
-        this.commandComponentManagerService.removeComponent(commandWrapperDTO.command.id);
-        this.commandContainerDragDropManager.removeDraggableElementFromCommandContainer(commandWrapperDTO);
+    removeCommandComponent(command: GenericCommandDTO, commandContainerId: string): void {
+        this.commandComponentManagerService.removeComponent(command.id);
+        this.commandContainerDragDropManager.removeDraggableElementFromCommandContainer(command, commandContainerId);
     }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommandDraggableElementRepositoryService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-draggable-element-repository.service';
 import { DragRef } from '@angular/cdk/drag-drop';
-import { CommandWrapperDTO } from 'src/warcommands/commands-panel/domain/command-drag-drop/model/command-wrapper.dto';
+import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 
 interface DragListOnDropContainerItem {
     [index: string]: DragRef[];
@@ -25,11 +25,10 @@ export class AngularCommandDraggableElementRepositoryService implements CommandD
         return this.dragListOnDropContainerList[commandContainerId];
     }
 
-    removeDragItem(commandWrapperDTO: CommandWrapperDTO): void {
-        const commandContainerId = commandWrapperDTO.previousContainerId;
+    removeDragItem(command: GenericCommandDTO, commandContainerId: string): void {
         const currentDragList: DragRef[] = this.getDragList(commandContainerId);
         const newDragList: DragRef[] = currentDragList.filter((dragItem) => {
-            return dragItem.data.id !== commandWrapperDTO.command.id;
+            return dragItem.data.id !== command.id;
         });
 
         this.dragListOnDropContainerList[commandContainerId] = newDragList;

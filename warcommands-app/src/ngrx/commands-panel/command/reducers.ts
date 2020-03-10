@@ -21,6 +21,14 @@ const commandReducer = createReducer(
         return {
             commandList: { ...state.commandList, ...newCommand }
         };
+    }),
+    on(CommandActions.updateCommand, (state, { command }) => {
+        const newCommand: GenericCommandListDTO = {
+            [command.id]: command
+        };
+        return {
+            commandList: { ...state.commandList, ...newCommand }
+        };
     })
 );
 

@@ -6,7 +6,7 @@ import { CommandAddedEventDTO } from '../model/command-added-event.dto';
 @Injectable({
     providedIn: 'root'
 })
-export class CommandEvents {
+export class CommandFromFileLoadEvents {
 
     private readonly commandLoadedSubject: Subject<CommandAddedEventDTO>;
 

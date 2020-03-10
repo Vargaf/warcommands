@@ -9,5 +9,10 @@ export const addCommandContainer =
 
 export const addCommandToCommandContainer =
     createAction(actionNamespace +
-        '[Commands panel command container] Add a command to a command container',
+        ' Add a command to a command container',
         props<{ command: GenericCommandDTO, index: number }>());
+
+export const removeCommandFromContainer =
+    createAction(actionNamespace +
+        ' Remove a command from a command container',
+        props<{ commandId: string, commandContainerId: string }>());

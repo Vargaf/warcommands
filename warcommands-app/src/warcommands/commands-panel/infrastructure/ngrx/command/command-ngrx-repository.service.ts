@@ -17,6 +17,10 @@ export class CommandNgrxRepositoryService {
         this.store.dispatch(CommandActions.addCommand({ command }));
     }
 
+    updateCommand(command: GenericCommandDTO): void {
+        this.store.dispatch(CommandActions.updateCommand({ command }));
+    }
+
     getCommand(commandId: string): Observable<GenericCommandDTO> {
         return this.store.pipe(select(CommandSelectors.commandSelector, { commandId }));
     }

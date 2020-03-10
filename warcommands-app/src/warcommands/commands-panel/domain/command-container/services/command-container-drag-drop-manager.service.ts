@@ -7,9 +7,9 @@ import { CommandWrapperDTO } from '../../command-drag-drop/model/command-wrapper
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 import { CommandDataFromCommandDroppedFactory } from '../../command/services/command-data-from-command-dropped.factory';
 import { DropType } from '../../command-drag-drop/model/drop-type.enum';
-import { CommandDragDropManagerEvents } from '../../command-drag-drop/services/command-drag-drop-manager-events';
-import { CommandType } from '../../command/model/command-type.enum';
 import { CommandDraggableElementRepositoryService } from '../../command-drag-drop/services/command-draggable-element-repository.service';
+import { MouseDragDropHelperService } from '../../command-drag-drop/services/mouse-drag-drop-helper.service';
+import { CommandDragDropManagerEvents } from '../../command-drag-drop/events/command-drag-drop-manager-events';
 
 @Injectable({
     providedIn: 'root'
@@ -22,31 +22,40 @@ export class CommandContainerDragDropManagerService {
         private readonly commandDraggableElementRepositoryService: CommandDraggableElementRepositoryService,
         private readonly commandListDragDropManager: CommandListDragDropManagerService,
         private readonly commandDragDropManagerEvents: CommandDragDropManagerEvents,
+        private readonly mouseHelperService: MouseDragDropHelperService
     ) {}
 
     createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO): void {
         const commandContainerDropRef: DropListRef = this.angularDragDropService.createDropList(commandContainerDivElement);
         commandContainerDropRef.withItems([]);
+        commandContainerDropRef.disabled = true;
+        this.setDropAvailavilityFlagListener(commandContainerDropRef);
         this.commandDropRepositoryService.save(commandContainerDropRef, commandContainer.id);
 
         this.connectAllTheDropLists();
         this.setCommandContainerListDroppedObserver(commandContainerDropRef);
     }
 
-    addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, commandWrapper: CommandWrapperDTO): void {
+    addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {
         const dragRefElement: DragRef = this.angularDragDropService.createDrag(dragableElement);
-        dragRefElement.data = commandWrapper.command;
+        dragRefElement.data = command;
         this.commandDraggableElementRepositoryService.addDraggableItemToDragList(
             dragRefElement,
-            commandWrapper.command.parentCommandContainerId,
-            commandWrapper.currentIndex);
+            command.parentCommandContainerId,
+            position);
 
-        this.updateDropList(commandWrapper.command.parentCommandContainerId);
+        this.updateDropList(command.parentCommandContainerId);
     }
 
-    removeDraggableElementFromCommandContainer(commandWrapperDTO: CommandWrapperDTO): void {
-        this.commandDraggableElementRepositoryService.removeDragItem(commandWrapperDTO);
-        this.updateDropList(commandWrapperDTO.previousContainerId);
+    removeDraggableElementFromCommandContainer(command: GenericCommandDTO, commandContainerId: string): void {
+        this.commandDraggableElementRepositoryService.removeDragItem(command, commandContainerId);
+        this.updateDropList(commandContainerId);
+    }
+
+    private setDropAvailavilityFlagListener(dropList: DropListRef): void {
+        dropList.enterPredicate = (drag, drop) => {
+            return (drop.element as any).getAttribute('id') === this.mouseHelperService.activeContainerId;
+        };
     }
 
     private updateDropList(commandContainerId: string): void {
@@ -74,14 +83,29 @@ export class CommandContainerDragDropManagerService {
         dropList.dropped.subscribe(event => {
             if (this.isANewCommand(event)) {
                 const commandWrapper = this.buildNewCommandWrapper(event);
-                this.commandDragDropManagerEvents.newCommandDroppedDispatch(commandWrapper);
+                this.commandDragDropManagerEvents.commandCreatedDispatch(commandWrapper);
+                this.buildInnerCommandContainers(commandWrapper.command);
             } else {
+                const commandContainerId: string = (event.container.element as any).getAttribute('id');
                 const commandWrapper = this.buildCommandWrapper(event);
-                commandWrapper.command = event.item.data;
+                commandWrapper.command = { ...event.item.data };
+                commandWrapper.command.parentCommandContainerId = commandContainerId;
                 commandWrapper.dropType = DropType.MoveSameList;
-                this.commandDragDropManagerEvents.moveCommandDroppedDispatch(commandWrapper);
+                this.commandDragDropManagerEvents.commandMovedDispatch(commandWrapper);
             }
         });
+    }
+
+    private buildInnerCommandContainers(command: GenericCommandDTO): void {
+        // tslint:disable-next-line: forin
+        for (const innerCommandContainerIndex in command.innerCommandContainerIdList) {
+            const commandContainer: CommandContainerDTO = {
+                id: command.innerCommandContainerIdList[innerCommandContainerIndex],
+                fileId: command.fileId,
+                commands: []
+            };
+            this.commandDragDropManagerEvents.commandContainerCreatedDispatch(commandContainer);
+        }
     }
 
     private buildNewCommandWrapper(event: any): CommandWrapperDTO {

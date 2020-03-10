@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FileJsonDTO, CommandContainerJsonDTO } from '../../file/model/file-json.dto';
 import { CommandDataFromJSONFactory } from './command-data-from-JSON.factory';
-import { CommandEvents } from './command.events';
+import { CommandFromFileLoadEvents } from '../events/command-from-file-load.events';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +9,7 @@ import { CommandEvents } from './command.events';
 export class CommandManagerService {
 
     constructor(
-        private readonly commandEvents: CommandEvents
+        private readonly commandEvents: CommandFromFileLoadEvents
     ) {}
 
     parseCommandsFromRawFile(rawFile: FileJsonDTO): void {

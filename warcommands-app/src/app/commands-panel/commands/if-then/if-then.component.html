@@ -2,9 +2,13 @@
     <div class="if-then-start">
         <div class="if-then-label">if ( lo que sea )</div>
     </div>
-    <div class="if-then-body">
+    <div class="if-then-body" [attr.MouseHelperDetectorCommandContainerId]="thenCommandContainerId">
         <div class="if-then-body-content">
-            <div class="commands-drop-container"></div>
+
+            <app-command-drop  *ngIf="thenCommandContainerId" [commandContainerId]="thenCommandContainerId"></app-command-drop>
+
+            <div *ngIf="!thenCommandContainerId" class="commands-drop-container"></div>
+
         </div>
     </div>
     <div class="if-then-end"></div>
