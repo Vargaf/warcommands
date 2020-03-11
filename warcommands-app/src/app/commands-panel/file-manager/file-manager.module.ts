@@ -13,6 +13,7 @@ import { CommandContainerNgrxRepositoryService } from 'src/warcommands/commands-
 import { CommandDropModule } from '../command-drop/command-drop.module';
 import { MouseDragDropHelperService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/mouse-drag-drop-helper.service';
 import { CommandsModule } from '../commands/commands.module';
+import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
 
 
 
@@ -27,7 +28,8 @@ import { CommandsModule } from '../commands/commands.module';
         FlexLayoutModule,
         FileManagerLocalStorageModule,
         CommandDropModule,
-        CommandsModule
+        CommandsModule,
+        DragPreviewsModule
     ],
     providers: [
         FileManagerService,

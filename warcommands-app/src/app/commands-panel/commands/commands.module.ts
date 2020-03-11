@@ -17,6 +17,7 @@ import { CommandDraggableElementRepositoryService } from 'src/warcommands/comman
 import { CommandComponentManagerService } from 'src/warcommands/commands-panel/domain/command-component/services/command-component-manager.service';
 import { CommandContainerDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-drag-drop-manager.service';
 import { CommandDropModule } from '../command-drop/command-drop.module';
+import { DragCustomPreviewService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/drag-custom-preview.service';
 
 
 
@@ -40,6 +41,7 @@ import { CommandDropModule } from '../command-drop/command-drop.module';
         CommandListDragDropManagerService,
         CommandComponentManagerService,
         CommandContainerDragDropManagerService,
+        DragCustomPreviewService,
         { provide: CommandDropRepository, useClass: AngularCommandDropRepositoryService },
         { provide: CommandDraggableElementRepositoryService, useClass: AngularCommandDraggableElementRepositoryService }
     ],

@@ -8,8 +8,6 @@ import { StoreModule } from '@ngrx/store';
 import * as CommandsPanelStore from 'src/ngrx/commands-panel/reducer-map';
 import { StoreListenersModule } from './store-listeners/store-listeners.module';
 
-
-
 @NgModule({
     declarations: [
         CommandsPanelComponent,

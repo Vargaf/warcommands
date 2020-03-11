@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { CommandType } from '../../command/model/command-type.enum';
 import { CreateMinionComponent } from 'src/app/commands-panel/commands/create-minion/create-minion.component';
 import { VariableComponent } from 'src/app/commands-panel/commands/variable/variable.component';

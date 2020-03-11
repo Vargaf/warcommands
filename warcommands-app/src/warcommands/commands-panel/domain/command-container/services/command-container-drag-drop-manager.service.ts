@@ -10,6 +10,8 @@ import { DropType } from '../../command-drag-drop/model/drop-type.enum';
 import { CommandDraggableElementRepositoryService } from '../../command-drag-drop/services/command-draggable-element-repository.service';
 import { MouseDragDropHelperService } from '../../command-drag-drop/services/mouse-drag-drop-helper.service';
 import { CommandDragDropManagerEvents } from '../../command-drag-drop/events/command-drag-drop-manager-events';
+import { DragCustomPreviewService } from '../../command-drag-drop/services/drag-custom-preview.service';
+import { CommandType } from '../../command/model/command-type.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +24,8 @@ export class CommandContainerDragDropManagerService {
         private readonly commandDraggableElementRepositoryService: CommandDraggableElementRepositoryService,
         private readonly commandListDragDropManager: CommandListDragDropManagerService,
         private readonly commandDragDropManagerEvents: CommandDragDropManagerEvents,
-        private readonly mouseHelperService: MouseDragDropHelperService
+        private readonly mouseHelperService: MouseDragDropHelperService,
+        private readonly dragCustomPreviewService: DragCustomPreviewService
     ) {}
 
     createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO): void {
@@ -39,6 +42,15 @@ export class CommandContainerDragDropManagerService {
     addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {
         const dragRefElement: DragRef = this.angularDragDropService.createDrag(dragableElement);
         dragRefElement.data = command;
+
+        if (command.type !== CommandType.GameLoop) {
+            const previewTemplate = this.dragCustomPreviewService.getDragHelperTemplate(command.type);
+            dragRefElement.withPreviewTemplate(previewTemplate);
+            dragRefElement.withPlaceholderTemplate(previewTemplate);
+        } else {
+            dragRefElement.disabled = true;
+        }
+
         this.commandDraggableElementRepositoryService.addDraggableItemToDragList(
             dragRefElement,
             command.parentCommandContainerId,

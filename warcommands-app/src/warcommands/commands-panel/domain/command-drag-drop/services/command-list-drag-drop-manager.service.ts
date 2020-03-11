@@ -3,6 +3,7 @@ import { DropListRef, DragDrop, DragRef } from '@angular/cdk/drag-drop';
 import { CommandDropRepository } from './command-drop-repository.service';
 import { CommandDraggableElementRepositoryService } from './command-draggable-element-repository.service';
 import { CommandType } from '../../command/model/command-type.enum';
+import { DragCustomPreviewService } from './drag-custom-preview.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ export class CommandListDragDropManagerService {
     constructor(
         private readonly commandDropRepositoryService: CommandDropRepository,
         private readonly commandDraggableElementRepositoryService: CommandDraggableElementRepositoryService,
-        private readonly angularDragDropService: DragDrop
+        private readonly angularDragDropService: DragDrop,
+        private readonly dragCustomPreviewService: DragCustomPreviewService
     ) {}
 
     createCommandListDrop(commandListDivElement: ElementRef<HTMLDivElement>): void {
@@ -29,8 +31,14 @@ export class CommandListDragDropManagerService {
     }
 
     addDraggableItem(dragableElement: ElementRef<HTMLDivElement>, commandType: CommandType, position: number): void {
+
         const dragRefElement: DragRef = this.angularDragDropService.createDrag(dragableElement);
         dragRefElement.data = commandType;
+
+        const previewTemplate = this.dragCustomPreviewService.getDragHelperTemplate(commandType);
+        dragRefElement.withPreviewTemplate(previewTemplate);
+        dragRefElement.withPlaceholderTemplate(previewTemplate);
+
         this.commandDraggableElementRepositoryService.addDraggableItemToDragList(dragRefElement, this.commandListIndex, position);
 
         const dropItem = this.commandDropRepositoryService.getDropItem(this.commandListIndex);
