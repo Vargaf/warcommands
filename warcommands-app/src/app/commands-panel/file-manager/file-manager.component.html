@@ -1,10 +1,14 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-icon-button color="primary" aria-label="Save file" (click)="saveFile()">
-        <mat-icon>save</mat-icon>
-    </button>
-    <button mat-icon-button disabled aria-label="Save file">
-        <mat-icon>delete</mat-icon>
-    </button>
+    <div class="save-button-wrapper">
+        <button mat-icon-button color="primary" aria-label="Save file" (click)="saveFile()">
+            <mat-icon>save</mat-icon>
+        </button>
+    </div>
+    <div #deleteButtonWrapper class="delete-button-wrapper">
+        <button mat-icon-button disabled aria-label="Save file">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
 </div>
 
 <mat-tab-group #filesTabGroup dynamicHeight (mouseover)="onMouseMove($event)">

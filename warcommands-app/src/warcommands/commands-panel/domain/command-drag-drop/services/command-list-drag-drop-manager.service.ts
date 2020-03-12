@@ -20,9 +20,11 @@ export class CommandListDragDropManagerService {
     ) {}
 
     createCommandListDrop(commandListDivElement: ElementRef<HTMLDivElement>): void {
-        const commandListDropRef: DropListRef = this.angularDragDropService.createDropList(commandListDivElement);
+        commandListDivElement.nativeElement.setAttribute('isCommandListDropContainer', 'true');
+        let commandListDropRef: DropListRef = this.angularDragDropService.createDropList(commandListDivElement);
         commandListDropRef.withItems([]);
         commandListDropRef.sortingDisabled = true;
+        commandListDropRef = this.disableDropEvent(commandListDropRef);
 
         const dropItemList = this.commandDropRepositoryService.getDropItemList();
         commandListDropRef.connectedTo(dropItemList);
@@ -50,6 +52,14 @@ export class CommandListDragDropManagerService {
 
     getCommandListDropContainer(): DropListRef {
         return this.commandDropRepositoryService.getDropItem(this.commandListIndex);
+    }
+
+    private disableDropEvent(dropListRef: DropListRef): DropListRef {
+        dropListRef.enterPredicate = (dragItem, dropList) => {
+            return false;
+        };
+
+        return dropListRef;
     }
 
 }

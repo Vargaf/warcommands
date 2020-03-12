@@ -5,6 +5,7 @@ import { CommandContainerDTO } from '../../command-container/model/command-conta
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 import { CommandComponentManagerService } from '../../command-component/services/command-component-manager.service';
 import { CommandContainerDragDropManagerService } from '../../command-container/services/command-container-drag-drop-manager.service';
+import { CommandRemoveManagerService } from '../../command/services/command-remove-manager.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ export class CommandDragDropManagerService {
     constructor(
         private readonly commandListDragDropManager: CommandListDragDropManagerService,
         private readonly commandContainerDragDropManager: CommandContainerDragDropManagerService,
-        private readonly commandComponentManagerService: CommandComponentManagerService
+        private readonly commandComponentManagerService: CommandComponentManagerService,
+        private readonly commandRemoveManager: CommandRemoveManagerService
     ) {}
 
     createCommandListDrop(commandListDivElement: ElementRef<HTMLDivElement>): void {
@@ -27,6 +29,10 @@ export class CommandDragDropManagerService {
 
     createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO): void {
         this.commandContainerDragDropManager.createCommandContainerDrop(commandContainerDivElement, commandContainer);
+    }
+
+    createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>): void {
+        this.commandRemoveManager.createDeleteCommandDropContainer(deleteCommandContainerDivElement);
     }
 
     addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {
