@@ -15,6 +15,5 @@ export interface CommandContainerJsonDTO {
 export interface FileJsonDTO {
     id: string;
     name: string;
-    isMain: boolean;
     commandContainer: CommandContainerJsonDTO;
 }

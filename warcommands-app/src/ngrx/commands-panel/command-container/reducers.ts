@@ -24,7 +24,7 @@ const commandContainerReducer = createReducer(
     }),
     on(CommandContainerActions.addCommandToCommandContainer, (state, { command, index }) => {
         const commands = [ ...state.commandContainerList[command.parentCommandContainerId].commands ];
-        commands.splice(index, 0, command);
+        commands.splice(index, 0, command.id);
         const commandContainer = { ...state.commandContainerList[command.parentCommandContainerId], commands };
         const commandContainerListItem: CommandContainerListDTO = {
             [command.parentCommandContainerId]: commandContainer
@@ -38,7 +38,7 @@ const commandContainerReducer = createReducer(
     on(CommandContainerActions.removeCommandFromContainer, (state, { commandId, commandContainerId }) => {
         const currentCommandContainerCommandsList = [ ...state.commandContainerList[commandContainerId].commands ];
         const newCommandContainerCommandsList = currentCommandContainerCommandsList.filter((command) => {
-            return commandId !== command.id;
+            return commandId !== command;
         });
 
         const commandContainer = { ...state.commandContainerList[commandContainerId], ...{ commands: newCommandContainerCommandsList } };

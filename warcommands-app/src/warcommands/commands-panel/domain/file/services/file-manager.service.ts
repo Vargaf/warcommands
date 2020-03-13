@@ -32,4 +32,8 @@ export class FileManagerService {
         return !this.fileRepositoryService.userHasFiles();
     }
 
+    saveFile(file: FileJsonDTO): void {
+        this.fileRepositoryService.saveFile(file);
+    }
+
 }

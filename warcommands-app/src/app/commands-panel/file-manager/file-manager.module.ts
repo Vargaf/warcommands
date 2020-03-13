@@ -15,6 +15,10 @@ import { MouseDragDropHelperService } from 'src/warcommands/commands-panel/domai
 import { CommandsModule } from '../commands/commands.module';
 import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
 import { InitializeMainPageService } from 'src/warcommands/commands-panel/domain/file/services/initialize-main-page.service';
+import { InMmeoryModule } from '../in-mmeory/in-mmeory.module';
+import { JSONFileGeneratorService } from 'src/warcommands/commands-panel/domain/file/services/json-file-generator.service';
+import { CommandRepositoryListenersService } from 'src/warcommands/commands-panel/domain/command/services/command-repository-listeners.service';
+import { CommandContainerRepositoryListenersService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-repository-listeners.service';
 
 
 
@@ -30,7 +34,8 @@ import { InitializeMainPageService } from 'src/warcommands/commands-panel/domain
         FileManagerLocalStorageModule,
         CommandDropModule,
         CommandsModule,
-        DragPreviewsModule
+        DragPreviewsModule,
+        InMmeoryModule,
     ],
     providers: [
         FileManagerService,
@@ -40,6 +45,9 @@ import { InitializeMainPageService } from 'src/warcommands/commands-panel/domain
         CommandContainerNgrxRepositoryService,
         MouseDragDropHelperService,
         InitializeMainPageService,
+        JSONFileGeneratorService,
+        CommandRepositoryListenersService,
+        CommandContainerRepositoryListenersService
     ],
     exports: [
         FileManagerComponent

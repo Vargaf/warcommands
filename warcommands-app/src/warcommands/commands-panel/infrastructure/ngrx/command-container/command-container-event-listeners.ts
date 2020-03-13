@@ -21,7 +21,6 @@ export class CommandContainerEventListeners {
         private readonly commandMovedEvents: CommandMovedEvents
     ) {
         this.onLoadedCommandContainerAddItToStore();
-        this.onLoadedCommandAddItToCommandContainer();
         this.onNewCommandContainerAddItToStore();
         this.onNewCommandAddItToCommandContainer();
         this.onCommandMovedUpdateStore();
@@ -30,12 +29,6 @@ export class CommandContainerEventListeners {
     private onLoadedCommandContainerAddItToStore(): void {
         this.commandContainerEvents.commandContainerLoadedListener().subscribe((commandContainer) => {
             this.commandContainerNgrxRepositoryService.addCommandContainer(commandContainer);
-        });
-    }
-
-    private onLoadedCommandAddItToCommandContainer(): void {
-        this.commandEvents.commandLoadedListener().subscribe((event) => {
-            this.commandContainerNgrxRepositoryService.addCommandToCommandContainer(event.command, event.position);
         });
     }
 

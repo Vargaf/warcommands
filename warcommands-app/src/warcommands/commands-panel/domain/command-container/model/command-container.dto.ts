@@ -1,9 +1,7 @@
-import { GenericCommandDTO } from '../../command/model/generic-command.dto';
-
 export interface CommandContainerDTO {
     id: string;
     fileId: string;
-    commands: Array<GenericCommandDTO>;
+    commands: Array<string>;
 }
 
 export interface CommandContainerListDTO {

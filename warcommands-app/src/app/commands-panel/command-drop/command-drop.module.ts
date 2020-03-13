@@ -11,7 +11,7 @@ import { CommandDirective } from '../command.directive';
         CommandDirective
     ],
     imports: [
-        CommonModule
+        CommonModule,
     ],
     exports: [
         CommandDropComponent

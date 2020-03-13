@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FileJsonDTO, CommandContainerJsonDTO } from '../../file/model/file-json.dto';
 import { CommandDataFromJSONFactory } from './command-data-from-JSON.factory';
 import { CommandFromFileLoadEvents } from '../events/command-from-file-load.events';
+import { CommandRepositoryService } from './command-repository.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,8 @@ import { CommandFromFileLoadEvents } from '../events/command-from-file-load.even
 export class CommandManagerService {
 
     constructor(
-        private readonly commandEvents: CommandFromFileLoadEvents
+        private readonly commandEvents: CommandFromFileLoadEvents,
+        private readonly commandRepositoryService: CommandRepositoryService
     ) {}
 
     parseCommandsFromRawFile(rawFile: FileJsonDTO): void {
@@ -24,6 +26,7 @@ export class CommandManagerService {
             const command = CommandDataFromJSONFactory.getCommand(rawCommand, fileId, rawCommandContainer.id);
 
             this.commandEvents.commandLoadedDispatch(command, +position);
+            this.commandRepositoryService.save(command);
 
             for (const rawInnerCommandContainer of rawCommand.commandContainerList) {
                 this.loadCommandsFromRawFile(fileId, rawInnerCommandContainer);

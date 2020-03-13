@@ -27,7 +27,7 @@ export class FileManagerComponent implements OnInit {
         private readonly commandsPanelManagerService: CommandsPanelManagerService,
         private readonly fileManagerEvents: FileManagerEvents,
         private readonly mouseDragDropHelperService: MouseDragDropHelperService,
-        private readonly commandDragDropManager: CommandDragDropManagerService
+        private readonly commandDragDropManager: CommandDragDropManagerService,
     ) { }
 
     ngOnInit() {
@@ -46,6 +46,12 @@ export class FileManagerComponent implements OnInit {
 
     onMouseMove(event: MouseEvent): void {
         this.mouseDragDropHelperService.saveActiveCommandContainer(event);
+    }
+
+    saveFile(): void {
+        const selectedFile = this.filesTabGroup.selectedIndex;
+        const file: FileDTO = this.fileList[selectedFile];
+        this.commandsPanelManagerService.saveFile(file);
     }
 
 }

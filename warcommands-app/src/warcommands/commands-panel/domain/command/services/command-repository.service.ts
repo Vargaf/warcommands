@@ -6,4 +6,6 @@ export abstract class CommandRepositoryService {
 
     abstract findById(commandId: string): GenericCommandDTO;
 
+    abstract remove(commandId: string): void;
+
 }

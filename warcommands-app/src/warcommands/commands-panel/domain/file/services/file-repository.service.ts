@@ -6,4 +6,6 @@ export abstract class FileRepositoryService {
 
     abstract userHasFiles(): boolean;
 
+    abstract saveFile(file: FileJsonDTO): void;
+
 }

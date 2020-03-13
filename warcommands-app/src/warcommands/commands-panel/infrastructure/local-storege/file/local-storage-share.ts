@@ -1,4 +1,3 @@
-import { CommandType } from 'src/warcommands/commands-panel/domain/command/model/command-type.enum';
 
 export const userFileListIndex = 'user-files';
 

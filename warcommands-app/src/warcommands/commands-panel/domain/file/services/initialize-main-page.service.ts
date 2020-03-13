@@ -7,6 +7,8 @@ import { CommandType } from '../../command/model/command-type.enum';
 import { FileManagerEvents } from './file-manager.events';
 import { CommandContainerEvents } from '../../command-container/services/command-container.events';
 import { CommandFromFileLoadEvents } from '../../command/events/command-from-file-load.events';
+import { CommandRepositoryService } from '../../command/services/command-repository.service';
+import { CommandContainerRepositoryService } from '../../command-container/services/command-container-repository.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +19,8 @@ export class InitializeMainPageService {
         private readonly fileManagerEvents: FileManagerEvents,
         private readonly commandContainerEvents: CommandContainerEvents,
         private readonly commandEvents: CommandFromFileLoadEvents,
+        private readonly commandRepositoryService: CommandRepositoryService,
+        private readonly commandContainerRepositoryService: CommandContainerRepositoryService
     ) {}
 
     initialize(): FileDTO[] {
@@ -25,12 +29,15 @@ export class InitializeMainPageService {
 
         const commandContainer: CommandContainerDTO = this.createCommandContainer(file);
         this.commandContainerEvents.commandContainerLoadedDispatch(commandContainer);
+        this.commandContainerRepositoryService.save(commandContainer);
 
         const gameLoopCommand: GameLoopCommandEntity = this.createCommand(commandContainer);
         this.commandEvents.commandLoadedDispatch(gameLoopCommand, 0);
+        this.commandRepositoryService.save(gameLoopCommand);
 
         const gameLoopCommandContainer: CommandContainerDTO = this.createInnerCommandContainer(gameLoopCommand);
         this.commandContainerEvents.commandContainerLoadedDispatch(gameLoopCommandContainer);
+        this.commandContainerRepositoryService.save(gameLoopCommandContainer);
 
         return [file];
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, ViewChildren, ViewContainerRef, QueryList } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, ViewChildren, ViewContainerRef, QueryList, OnDestroy } from '@angular/core';
 import { CommandContainerNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command-container/command-container-ngrx-repository.service';
 import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service';
@@ -6,13 +6,16 @@ import { CommandDirective } from '../command.directive';
 import { CommandCreatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-created-events';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-moved-events';
+import { CommandRepositoryService } from 'src/warcommands/commands-panel/domain/command/services/command-repository.service';
+import { CommandContainerRepositoryService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-repository.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-command-drop',
     templateUrl: './command-drop.component.html',
     styleUrls: ['./command-drop.component.scss']
 })
-export class CommandDropComponent implements OnInit, AfterViewInit {
+export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Input()
     commandContainerId: string;
@@ -27,17 +30,22 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
 
     commandList: GenericCommandDTO[] = [];
 
+    private subscribers: Subscription[] = [];
+
     constructor(
         private readonly commandContainerNgrxRepositoryService: CommandContainerNgrxRepositoryService,
         private readonly commandDragDropManagerService: CommandDragDropManagerService,
         private readonly commandCreatedEvents: CommandCreatedEvents,
         private readonly commandMovedEvents: CommandMovedEvents,
+        private readonly commandRepositoryService: CommandRepositoryService,
+        private readonly commandContainerRepositoryService: CommandContainerRepositoryService
     ) { }
 
     ngOnInit() {
-        this.commandContainerNgrxRepositoryService.getCommandContainer(this.commandContainerId).subscribe((commandContainer) => {
+        const subscription = this.commandContainerNgrxRepositoryService.getCommandContainer(this.commandContainerId).subscribe((commandContainer) => {
             this.commandContainer = commandContainer;
         });
+        this.subscribers.push(subscription);
 
         this.setNewCommandDroppedToContainerListener();
         this.setMoveCommandFromCommandContainerListener();
@@ -46,30 +54,41 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.commandDragDropManagerService.createCommandContainerDrop(this.commandsDropContainer, this.commandContainer);
-        this.commandContainerView.changes.subscribe((changeEvent) => {
+        const subscription = this.commandContainerView.changes.subscribe((changeEvent) => {
             this.addCommandComponent(changeEvent);
         });
 
         this.loadCommandList();
+
+        this.subscribers.push(subscription);
+    }
+
+    ngOnDestroy() {
+        for (const subscription of this.subscribers) {
+            subscription.unsubscribe();
+        }
     }
 
     private setNewCommandDroppedToContainerListener(): void {
-        this.commandCreatedEvents.commandAddedToCommandContainerListener(this.commandContainerId).subscribe((event) => {
+        const subscription = this.commandCreatedEvents.commandAddedToCommandContainerListener(this.commandContainerId).subscribe((event) => {
             this.addCommandWrapper(event.command, event.position);
         });
+        this.subscribers.push(subscription);
     }
 
     private setMoveCommandFromCommandContainerListener(): void {
-        this.commandMovedEvents.commandMovedFromCommandContainerListener(this.commandContainerId).subscribe((event) => {
+        const subscription = this.commandMovedEvents.commandMovedFromCommandContainerListener(this.commandContainerId).subscribe((event) => {
             this.removeCommandWrapper(event.fromPosition);
             this.commandDragDropManagerService.removeCommandComponent(event.command, event.fromContainerId);
         });
+        this.subscribers.push(subscription);
     }
 
     private setMoveCommandToCommandContainerListener(): void {
-        this.commandMovedEvents.commandMovedToCommandContainerListener(this.commandContainerId).subscribe((event) => {
+        const subscription = this.commandMovedEvents.commandMovedToCommandContainerListener(this.commandContainerId).subscribe((event) => {
             this.addCommandWrapper(event.command, event.toPosition);
         });
+        this.subscribers.push(subscription);
     }
 
     private removeCommandWrapper(position: number): void {
@@ -100,10 +119,10 @@ export class CommandDropComponent implements OnInit, AfterViewInit {
     }
 
     private loadCommandList(): void {
-        const commandList: GenericCommandDTO[] = this.commandContainer.commands;
+        const commandIdList = this.commandContainer.commands;
         // tslint:disable-next-line: forin
-        for (const index in commandList) {
-            const command = commandList[index];
+        for (const index in commandIdList) {
+            const command = this.commandRepositoryService.findById(commandIdList[index]);
             this.addCommandWrapper(command, +index);
         }
     }
