@@ -1,19 +1,23 @@
 import { createAction, props } from '@ngrx/store';
-import { CommandContainerDTO } from 'src/warcommands/commands/domain/command-container/model/command-container.dto';
-import { CommandInterface } from 'src/warcommands/commands/domain/command/model/command.interface';
+import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
+import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
+
+const actionNamespace = '[Commands panel command container]';
 
 export const addCommandContainer =
-    createAction('[Commands panel command container] Add a command container', props<{ commandContainer: CommandContainerDTO }>());
+    createAction(actionNamespace + ' Add a command container', props<{ commandContainer: CommandContainerDTO }>());
 
 export const addCommandToCommandContainer =
-    createAction(
-        '[Commands panel command container] Add a command to a command container',
-        props<{ command: CommandInterface, index: number }>());
+    createAction(actionNamespace +
+        ' Add a command to a command container',
+        props<{ command: GenericCommandDTO, index: number }>());
 
-export const moveCommandSameContainer =
-    createAction('[Commands panel command container] Move a command on the same command container',
-    props<{ commandContainerId: string, previousIndex: number, currentIndex: number }>());
+export const removeCommandFromContainer =
+    createAction(actionNamespace +
+        ' Remove a command from a command container',
+        props<{ commandId: string, commandContainerId: string }>());
 
-export const removeCommandFromCommandContainer =
-    createAction('[Commands panel command container] Remove a command from a command container',
-    props<{ commandContainerId: string, commandId: string }>());
+export const removeCommandContainer =
+    createAction(actionNamespace +
+        'Remove command container',
+        props<{ commandContainer: CommandContainerDTO}>());

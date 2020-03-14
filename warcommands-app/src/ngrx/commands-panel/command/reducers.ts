@@ -1,25 +1,41 @@
-import { CommandListDTO } from 'src/warcommands/commands/domain/command/model/command-list.dto';
-import * as CommandActions from './actions';
+import { GenericCommandListDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 import { createReducer, on, Action } from '@ngrx/store';
+import * as CommandActions from './actions';
 
 export const CommandStoreKey = 'command';
 
 export interface CommandState {
-    commandList: CommandListDTO;
+    commandList: GenericCommandListDTO;
 }
 
 const initialState: CommandState = {
     commandList: {}
-}
+};
 
 const commandReducer = createReducer(
     initialState,
     on(CommandActions.addCommand, (state, { command }) => {
-        const newCommand: CommandListDTO = {
+        const newCommand: GenericCommandListDTO = {
             [command.id]: command
         };
         return {
             commandList: { ...state.commandList, ...newCommand }
+        };
+    }),
+    on(CommandActions.updateCommand, (state, { command }) => {
+        const newCommand: GenericCommandListDTO = {
+            [command.id]: command
+        };
+        return {
+            commandList: { ...state.commandList, ...newCommand }
+        };
+    }),
+    on(CommandActions.removeCommand, (state, { command }) => {
+        const commandList = { ...state.commandList };
+        delete commandList[command.id];
+
+        return {
+            commandList
         };
     })
 );

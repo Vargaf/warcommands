@@ -16,13 +16,13 @@ export const COMMANDS_FILE_REDUCER_MAP_TOKEN = new InjectionToken<ActionReducerM
 
 export function reducers(): ActionReducerMap<State> {
     // To work with AOT
-    const userProgramKey = FileReducer.FileStoreKey;
+    const fileStoreKey = FileReducer.FileStoreKey;
     const commandContainerKey = CommandContainerReducer.CommandContainerStoreKey;
     const commandKey = CommandReducer.CommandStoreKey;
 
     return {
-        [userProgramKey]: FileReducer.reducer,
+        [fileStoreKey]: FileReducer.reducer,
         [commandContainerKey]: CommandContainerReducer.reducer,
-        [commandKey]: CommandReducer.reducer
+        [commandKey]: CommandReducer.reducer,
     };
 }

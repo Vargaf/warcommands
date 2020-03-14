@@ -1,0 +1,18 @@
+
+<div #commandListDropContainer class="commands-list-content">
+    <div #command class="dragable-command" [attr.commandType]="commandType.CreateMinion">
+        <app-create-minion></app-create-minion>
+    </div>
+    <div #command class="dragable-command" [attr.commandType]="commandType.SetVariable">
+        <app-set-variable></app-set-variable>
+    </div>
+    <div #command class="dragable-command" [attr.commandType]="commandType.Variable">
+        <app-variable></app-variable>
+    </div>
+    <div #command class="dragable-command" [attr.commandType]="commandType.IfThen">
+        <app-if-then></app-if-then>
+    </div>
+    <div #command class="dragable-command" [attr.commandType]="commandType.IfThenElse">
+        <app-if-then-else></app-if-then-else>
+    </div>
+</div>

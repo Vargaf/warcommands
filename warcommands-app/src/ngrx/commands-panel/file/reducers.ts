@@ -1,33 +1,26 @@
-import * as FileActions from './actions';
-import { FileDTO } from 'src/warcommands/commands/domain/file/model/file.dto';
+import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.dto';
 import { createReducer, on, Action } from '@ngrx/store';
+import * as FileActions from './actions';
 
-export const FileStoreKey = 'file';
+export const FileStoreKey = 'files';
 
 export interface FileState {
     fileList: FileDTO[];
 }
 
-const initialState: FileState = {
+const initalState: FileState = {
     fileList: []
 };
 
-const FileReducer = createReducer(
-    initialState,
-    on(FileActions.addFile, (state, { file }) => {
+const fileReducer = createReducer(
+    initalState,
+    on(FileActions.loadFile, (state, { file }) => {
         return {
-            ...state,
             fileList: [ ...state.fileList, file ]
-        };
-    }),
-    on(FileActions.loadFiles, (state, { fileList }) => {
-        return {
-            ...state,
-            fileList: [ ...state.fileList, ...fileList ]
         };
     })
 );
 
 export function reducer(state: FileState | undefined, action: Action) {
-    return FileReducer(state, action);
+    return fileReducer(state, action);
 }

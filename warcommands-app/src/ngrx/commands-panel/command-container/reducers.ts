@@ -1,8 +1,7 @@
-import { CommandContainerListDTO } from 'src/warcommands/commands/domain/command-container/model/command-container.dto';
+import { CommandContainerListDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { createReducer, on, Action } from '@ngrx/store';
 import * as CommandContainerActions from './actions';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { CommandInterface } from 'src/warcommands/commands/domain/command/model/command.interface';
+import { state } from '@angular/animations';
 
 export const CommandContainerStoreKey = 'commandContainer';
 
@@ -26,7 +25,7 @@ const commandContainerReducer = createReducer(
     }),
     on(CommandContainerActions.addCommandToCommandContainer, (state, { command, index }) => {
         const commands = [ ...state.commandContainerList[command.parentCommandContainerId].commands ];
-        commands.splice(index, 0, command);
+        commands.splice(index, 0, command.id);
         const commandContainer = { ...state.commandContainerList[command.parentCommandContainerId], commands };
         const commandContainerListItem: CommandContainerListDTO = {
             [command.parentCommandContainerId]: commandContainer
@@ -37,11 +36,13 @@ const commandContainerReducer = createReducer(
             commandContainerList
         };
     }),
-    on(CommandContainerActions.moveCommandSameContainer, (state, { commandContainerId, previousIndex, currentIndex }) => {
-        const commands = [ ...state.commandContainerList[commandContainerId].commands ];
-        moveItemInArray(commands, previousIndex, currentIndex);
+    on(CommandContainerActions.removeCommandFromContainer, (state, { commandId, commandContainerId }) => {
+        const currentCommandContainerCommandsList = [ ...state.commandContainerList[commandContainerId].commands ];
+        const newCommandContainerCommandsList = currentCommandContainerCommandsList.filter((command) => {
+            return commandId !== command;
+        });
 
-        const commandContainer = { ...state.commandContainerList[commandContainerId], commands };
+        const commandContainer = { ...state.commandContainerList[commandContainerId], ...{ commands: newCommandContainerCommandsList } };
         const commandContainerListItem: CommandContainerListDTO = {
             [commandContainerId]: commandContainer
         };
@@ -51,17 +52,9 @@ const commandContainerReducer = createReducer(
             commandContainerList
         };
     }),
-    on(CommandContainerActions.removeCommandFromCommandContainer, (state, { commandContainerId, commandId }) => {
-        const commands = [ ...state.commandContainerList[commandContainerId].commands ];
-        const newCommands = commands.filter((item: CommandInterface) => {
-            return item.id !== commandId;
-        });
-
-        const commandContainer = { ...state.commandContainerList[commandContainerId], ...{ commands: newCommands } };
-        const commandContainerListItem: CommandContainerListDTO = {
-            [commandContainerId]: commandContainer
-        };
-        const commandContainerList = { ...state.commandContainerList, ...commandContainerListItem };
+    on(CommandContainerActions.removeCommandContainer, (state, { commandContainer }) => {
+        const commandContainerList = { ...state.commandContainerList };
+        delete commandContainerList[commandContainer.id];
 
         return {
             commandContainerList

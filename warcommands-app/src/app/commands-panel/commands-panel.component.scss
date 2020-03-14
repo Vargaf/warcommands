@@ -1,19 +1,12 @@
+
 .commands-panel-content {
     width: 100%;
 }
 
 .commands-panel {
-    margin: 25px;
+    padding: 25px;
 }
 
 .commands-list {
-    margin: 20px 25px;
-
-    .dragable-item {
-        padding: 5px 0px;
-    }
-}
-
-.command-component {
-    padding-bottom: 10px;
+    padding: 20px 25px;
 }
