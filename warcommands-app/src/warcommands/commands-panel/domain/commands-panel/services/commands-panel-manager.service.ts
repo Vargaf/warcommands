@@ -6,8 +6,6 @@ import { CommandManagerService } from '../../command/services/command-manager.se
 import { InitializeMainPageService } from '../../file/services/initialize-main-page.service';
 import { FileDTO } from '../../file/model/file.dto';
 import { JSONFileGeneratorService } from '../../file/services/json-file-generator.service';
-import { CommandRepositoryListenersService } from '../../command/services/command-repository-listeners.service';
-import { CommandContainerRepositoryListenersService } from '../../command-container/services/command-container-repository-listeners.service';
 
 @Injectable({
     providedIn: 'root'
@@ -20,8 +18,6 @@ export class CommandsPanelManagerService {
         private readonly commandManagerService: CommandManagerService,
         private readonly initializeMainPageService: InitializeMainPageService,
         private readonly jsonFileGeneratorService: JSONFileGeneratorService,
-        private readonly commandRepositoryListenersService: CommandRepositoryListenersService,
-        private readonly commandContainerRepositoryListenersService: CommandContainerRepositoryListenersService
     ) {}
 
     loadOpennedFiles(): void {

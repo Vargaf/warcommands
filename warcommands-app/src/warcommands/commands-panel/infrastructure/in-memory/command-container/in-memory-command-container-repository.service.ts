@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CommandContainerRepositoryService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-repository.service';
 import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
+import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 
 interface CommandContainerList {
     [ index: string]: CommandContainerDTO;
@@ -26,6 +27,15 @@ export class InMemoryCommandContainerRepositoryService implements CommandContain
 
     remove(id: string): void {
         delete this.commandContainerList[id];
+    }
+
+    removeCommand(command: GenericCommandDTO): void {
+        const commandContainer = this.findById(command.parentCommandContainerId);
+        const newCommandList: string[] = commandContainer.commands.filter((commandId) => {
+            return commandId !== command.id;
+        });
+        commandContainer.commands = newCommandList;
+        this.save(commandContainer);
     }
     
 }

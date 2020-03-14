@@ -7,8 +7,8 @@ import { CommandCreatedEvents } from 'src/warcommands/commands-panel/domain/comm
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-moved-events';
 import { CommandRepositoryService } from 'src/warcommands/commands-panel/domain/command/services/command-repository.service';
-import { CommandContainerRepositoryService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-repository.service';
 import { Subscription } from 'rxjs';
+import { CommandRemovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-removed-events';
 
 @Component({
     selector: 'app-command-drop',
@@ -37,8 +37,8 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly commandDragDropManagerService: CommandDragDropManagerService,
         private readonly commandCreatedEvents: CommandCreatedEvents,
         private readonly commandMovedEvents: CommandMovedEvents,
+        private readonly commandRemovedEvents: CommandRemovedEvents,
         private readonly commandRepositoryService: CommandRepositoryService,
-        private readonly commandContainerRepositoryService: CommandContainerRepositoryService
     ) { }
 
     ngOnInit() {
@@ -50,6 +50,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setNewCommandDroppedToContainerListener();
         this.setMoveCommandFromCommandContainerListener();
         this.setMoveCommandToCommandContainerListener();
+        this.setRemovedCommandFromContainerListener();
     }
 
     ngAfterViewInit() {
@@ -88,6 +89,22 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         const subscription = this.commandMovedEvents.commandMovedToCommandContainerListener(this.commandContainerId).subscribe((event) => {
             this.addCommandWrapper(event.command, event.toPosition);
         });
+        this.subscribers.push(subscription);
+    }
+
+    private setRemovedCommandFromContainerListener(): void {
+        const subscription = this.commandRemovedEvents.commandRemovedFromCommandContainerListener(this.commandContainerId).subscribe((command) => {
+            let position: number;
+            for (const index in this.commandContainer.commands) {
+                position = +index;
+                if (command.id === this.commandContainer.commands[index]) {
+                    break;
+                }
+            }
+            this.removeCommandWrapper(position);
+            this.commandDragDropManagerService.removeCommandComponent(command, command.parentCommandContainerId);
+        });
+
         this.subscribers.push(subscription);
     }
 

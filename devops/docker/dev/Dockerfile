@@ -7,4 +7,6 @@ RUN mkdir /project
 
 WORKDIR /project
 
+USER node
+
 CMD ng serve --host 0.0.0.0

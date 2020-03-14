@@ -1,6 +1,7 @@
 import { CommandContainerListDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { createReducer, on, Action } from '@ngrx/store';
 import * as CommandContainerActions from './actions';
+import { state } from '@angular/animations';
 
 export const CommandContainerStoreKey = 'commandContainer';
 
@@ -46,6 +47,14 @@ const commandContainerReducer = createReducer(
             [commandContainerId]: commandContainer
         };
         const commandContainerList = { ...state.commandContainerList, ...commandContainerListItem };
+
+        return {
+            commandContainerList
+        };
+    }),
+    on(CommandContainerActions.removeCommandContainer, (state, { commandContainer }) => {
+        const commandContainerList = { ...state.commandContainerList };
+        delete commandContainerList[commandContainer.id];
 
         return {
             commandContainerList

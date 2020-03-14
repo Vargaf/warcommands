@@ -6,3 +6,5 @@ const actionNamespace = '[Commands panel commands]';
 export const addCommand = createAction(actionNamespace + ' Add a command', props<{ command: GenericCommandDTO }>());
 
 export const updateCommand = createAction(actionNamespace + ' Update a command', props<{ command: GenericCommandDTO }>());
+
+export const removeCommand = createAction(actionNamespace + ' Remove command', props<{ command: GenericCommandDTO }>());

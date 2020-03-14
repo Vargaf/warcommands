@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CommandContainerNgrxRepositoryService } from './command-container-ngrx-repository.service';
 import { CommandContainerEvents } from 'src/warcommands/commands-panel/domain/command-container/services/command-container.events';
-import { CommandFromFileLoadEvents } from 'src/warcommands/commands-panel/domain/command/events/command-from-file-load.events';
 import { CommandCreatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-created-events';
 import { CommandContainerCreatedEvents } from 'src/warcommands/commands-panel/domain/command-container/events/command-container-created-events';
 import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-moved-events';
 import { CommandMovedEventDTO } from 'src/warcommands/commands-panel/domain/command/events/command-modeved-event.dto';
+import { CommandRemovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-removed-events';
+import { CommandContainerRemovedEvents } from 'src/warcommands/commands-panel/domain/command-container/events/command-container-removed-events';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +16,11 @@ export class CommandContainerEventListeners {
     constructor(
         private readonly commandContainerNgrxRepositoryService: CommandContainerNgrxRepositoryService,
         private readonly commandContainerEvents: CommandContainerEvents,
-        private readonly commandEvents: CommandFromFileLoadEvents,
         private readonly commandCreatedEvents: CommandCreatedEvents,
         private readonly commandContainerCreatedEvents: CommandContainerCreatedEvents,
-        private readonly commandMovedEvents: CommandMovedEvents
+        private readonly commandMovedEvents: CommandMovedEvents,
+        private readonly commandRemovedEvents: CommandRemovedEvents,
+        private readonly commandContainerRemovedEvents: CommandContainerRemovedEvents,
     ) {
         this.onLoadedCommandContainerAddItToStore();
         this.onNewCommandContainerAddItToStore();
@@ -52,6 +54,18 @@ export class CommandContainerEventListeners {
             this.commandContainerNgrxRepositoryService.addCommandToCommandContainer(
                 event.command,
                 event.toPosition);
+        });
+    }
+
+    private onCommandRemovedUpdateStore(): void {
+        this.commandRemovedEvents.commandRemovedListener().subscribe((command) => {
+            this.commandContainerNgrxRepositoryService.removeCommandFromContainer(command.id, command.parentCommandContainerId);
+        });
+    }
+
+    private onCommandContainerRemovedUpdateStore(): void {
+        this.commandContainerRemovedEvents.commandContainerRemovedListener().subscribe((commandContainer) => {
+            this.commandContainerNgrxRepositoryService.removeCommandContainer(commandContainer);
         });
     }
 }

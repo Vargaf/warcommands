@@ -1,28 +1,30 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { CommandDropRepository } from '../../command-drag-drop/services/command-drop-repository.service';
 import { DragDrop, DropListRef, DragRef } from '@angular/cdk/drag-drop';
+import { CommandRemovalEventChainGeneratorService } from './command-removal-event-chain-generator.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CommandRemoveManagerService {
+export class CommandDropRemoveManagerService {
 
     private readonly deleteCommandDropContianerIndex = 'delete-container';
 
     constructor(
         private readonly commandDropRepositoryService: CommandDropRepository,
         private readonly angularDragDropService: DragDrop,
+        private readonly CcmmandRemovalEventChainGeneratorService: CommandRemovalEventChainGeneratorService
     ) {}
 
-    createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>): void {
+    createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>, deleteButtonDragElement: ElementRef<HTMLDivElement>): void {
+        const buttonDragableElement: DragRef = this.angularDragDropService.createDrag(deleteButtonDragElement);
+        buttonDragableElement.disabled = true;
+        
         let deleteCommandDropListRef: DropListRef = this.angularDragDropService.createDropList(deleteCommandContainerDivElement);
-        deleteCommandDropListRef.withItems([]);
+        deleteCommandDropListRef.withItems([buttonDragableElement]);
         deleteCommandDropListRef.withOrientation('horizontal');
-        deleteCommandDropListRef.withDirection('ltr');
         deleteCommandDropListRef = this.disableDropEventToCommandList(deleteCommandDropListRef);
-        deleteCommandDropListRef = this.onEnterdEvent(deleteCommandDropListRef);
-        deleteCommandDropListRef = this.onExited(deleteCommandDropListRef);
-
+        
         const dropItemList = this.commandDropRepositoryService.getDropItemList();
         deleteCommandDropListRef.connectedTo(dropItemList);
 
@@ -36,7 +38,7 @@ export class CommandRemoveManagerService {
 
     private setDeleteCommandDropContainerDroppedObserver(dropListRef: DropListRef): void {
         dropListRef.dropped.subscribe(event => {
-            console.log(event);
+            this.CcmmandRemovalEventChainGeneratorService.generateCommandRemovalEventChain(event.item.data.id);
         });
     }
 
@@ -44,23 +46,6 @@ export class CommandRemoveManagerService {
         dropListRef.enterPredicate = (dragItem: DragRef, dropList: DropListRef) => {
             return !(dragItem as any)._initialContainer.element.hasAttribute('iscommandlistdropcontainer');
         };
-
-        return dropListRef;
-    }
-
-    private onEnterdEvent(dropListRef: DropListRef): DropListRef {
-        dropListRef.entered.subscribe((event) => {
-            console.log(event);
-            (event.container.element as any).classList.add('with-element-to-remove');
-        });
-
-        return dropListRef;
-    }
-
-    private onExited(dropListRef: DropListRef): DropListRef {
-        dropListRef.exited.subscribe((event) => {
-            (event.container.element as any).classList.remove('with-element-to-remove');
-        });
 
         return dropListRef;
     }

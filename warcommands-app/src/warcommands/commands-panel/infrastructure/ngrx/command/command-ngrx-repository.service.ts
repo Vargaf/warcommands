@@ -24,4 +24,8 @@ export class CommandNgrxRepositoryService {
     getCommand(commandId: string): Observable<GenericCommandDTO> {
         return this.store.pipe(select(CommandSelectors.commandSelector, { commandId }));
     }
+
+    removeCommand(command: GenericCommandDTO): void {
+        this.store.dispatch(CommandActions.removeCommand({ command }));
+    }
 }

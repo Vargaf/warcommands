@@ -29,6 +29,14 @@ const commandReducer = createReducer(
         return {
             commandList: { ...state.commandList, ...newCommand }
         };
+    }),
+    on(CommandActions.removeCommand, (state, { command }) => {
+        const commandList = { ...state.commandList };
+        delete commandList[command.id];
+
+        return {
+            commandList
+        };
     })
 );
 

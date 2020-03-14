@@ -14,7 +14,11 @@ export class LocalStorageCommandComponentRepositoryService implements CommandCom
 
     findByCommandId(commandId: string): ComponentRef<any> {
         return this.commandComponentList.find((commandComponent) => {
-            return commandComponent.instance.commandData.id === commandId;
+            if(commandComponent.instance.commandData === undefined) {
+                return false;
+            } else {
+                return commandComponent.instance.commandData.id === commandId;
+            }
         });
     }
 

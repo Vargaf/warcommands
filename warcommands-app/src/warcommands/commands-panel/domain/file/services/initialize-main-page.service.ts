@@ -28,16 +28,18 @@ export class InitializeMainPageService {
         this.fileManagerEvents.fileLoadedDispatch(file);
 
         const commandContainer: CommandContainerDTO = this.createCommandContainer(file);
-        this.commandContainerEvents.commandContainerLoadedDispatch(commandContainer);
-        this.commandContainerRepositoryService.save(commandContainer);
-
         const gameLoopCommand: GameLoopCommandEntity = this.createCommand(commandContainer);
-        this.commandEvents.commandLoadedDispatch(gameLoopCommand, 0);
-        this.commandRepositoryService.save(gameLoopCommand);
-
         const gameLoopCommandContainer: CommandContainerDTO = this.createInnerCommandContainer(gameLoopCommand);
-        this.commandContainerEvents.commandContainerLoadedDispatch(gameLoopCommandContainer);
+        
+        commandContainer.commands = [gameLoopCommand.id];
+
+        this.commandContainerRepositoryService.save(commandContainer);
+        this.commandRepositoryService.save(gameLoopCommand);
         this.commandContainerRepositoryService.save(gameLoopCommandContainer);
+
+        this.commandContainerEvents.commandContainerLoadedDispatch(commandContainer);
+        this.commandEvents.commandLoadedDispatch(gameLoopCommand, 0);
+        this.commandContainerEvents.commandContainerLoadedDispatch(gameLoopCommandContainer);
 
         return [file];
     }

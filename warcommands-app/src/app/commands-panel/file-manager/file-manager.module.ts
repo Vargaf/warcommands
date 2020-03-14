@@ -53,4 +53,10 @@ import { CommandContainerRepositoryListenersService } from 'src/warcommands/comm
         FileManagerComponent
     ]
 })
-export class FileManagerModule {}
+export class FileManagerModule {
+
+    constructor(
+        commandRepositoryListenersService: CommandRepositoryListenersService,
+        commandContainerRepositoryListenersService: CommandContainerRepositoryListenersService
+    ) {}
+}

@@ -16,3 +16,8 @@ export const removeCommandFromContainer =
     createAction(actionNamespace +
         ' Remove a command from a command container',
         props<{ commandId: string, commandContainerId: string }>());
+
+export const removeCommandContainer =
+    createAction(actionNamespace +
+        'Remove command container',
+        props<{ commandContainer: CommandContainerDTO}>());

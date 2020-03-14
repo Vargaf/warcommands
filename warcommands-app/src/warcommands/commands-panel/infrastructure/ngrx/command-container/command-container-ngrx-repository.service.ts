@@ -31,4 +31,8 @@ export class CommandContainerNgrxRepositoryService {
         this.store.dispatch(CommandContainerActions.removeCommandFromContainer({ commandId, commandContainerId }));
     }
 
+    removeCommandContainer(commandContainer: CommandContainerDTO): void {
+        this.store.dispatch(CommandContainerActions.removeCommandContainer({ commandContainer }));
+    }
+
 }

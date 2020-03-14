@@ -5,7 +5,7 @@ import { CommandContainerDTO } from '../../command-container/model/command-conta
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 import { CommandComponentManagerService } from '../../command-component/services/command-component-manager.service';
 import { CommandContainerDragDropManagerService } from '../../command-container/services/command-container-drag-drop-manager.service';
-import { CommandRemoveManagerService } from '../../command/services/command-remove-manager.service';
+import { CommandDropRemoveManagerService } from '../../command/services/command-drop-remove-manager.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class CommandDragDropManagerService {
         private readonly commandListDragDropManager: CommandListDragDropManagerService,
         private readonly commandContainerDragDropManager: CommandContainerDragDropManagerService,
         private readonly commandComponentManagerService: CommandComponentManagerService,
-        private readonly commandRemoveManager: CommandRemoveManagerService
+        private readonly commandRemoveManager: CommandDropRemoveManagerService
     ) {}
 
     createCommandListDrop(commandListDivElement: ElementRef<HTMLDivElement>): void {
@@ -31,8 +31,8 @@ export class CommandDragDropManagerService {
         this.commandContainerDragDropManager.createCommandContainerDrop(commandContainerDivElement, commandContainer);
     }
 
-    createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>): void {
-        this.commandRemoveManager.createDeleteCommandDropContainer(deleteCommandContainerDivElement);
+    createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>, deleteButtonDragElement: ElementRef<HTMLDivElement>): void {
+        this.commandRemoveManager.createDeleteCommandDropContainer(deleteCommandContainerDivElement, deleteButtonDragElement);
     }
 
     addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {

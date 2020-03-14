@@ -29,6 +29,7 @@ export class CommandRemovedEvents {
     }
 
     commandRemovedFromCommandContainerListener(commandContainerId: string): Observable<GenericCommandDTO> {
+        this.initializeCommandRemovedFromCommandContainerSubject(commandContainerId);
         return this.commandRemovedFromCommandContainerSubjectList[commandContainerId];
     }
 

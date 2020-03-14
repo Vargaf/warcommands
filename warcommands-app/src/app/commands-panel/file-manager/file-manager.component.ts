@@ -16,6 +16,9 @@ export class FileManagerComponent implements OnInit {
     @ViewChild('deleteButtonWrapper', { static: true })
     deleteButtonWrapper: ElementRef<HTMLDivElement>;
 
+    @ViewChild('deleteButtonDragableElement', { static: true })
+    deleteButtonDragableElement: ElementRef<HTMLDivElement>;
+
     @ViewChild('filesTabGroup', { static: true })
     filesTabGroup: MatTabGroup;
 
@@ -35,7 +38,7 @@ export class FileManagerComponent implements OnInit {
             this.addFile(file);
         });
 
-        this.commandDragDropManager.createDeleteCommandDropContainer(this.deleteButtonWrapper);
+        this.commandDragDropManager.createDeleteCommandDropContainer(this.deleteButtonWrapper, this.deleteButtonDragableElement);
         this.commandsPanelManagerService.loadOpennedFiles();
 
     }

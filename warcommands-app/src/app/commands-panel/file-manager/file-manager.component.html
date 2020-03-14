@@ -5,9 +5,11 @@
         </button>
     </div>
     <div #deleteButtonWrapper class="delete-button-wrapper">
-        <button mat-icon-button disabled aria-label="Save file">
-            <mat-icon>delete</mat-icon>
-        </button>
+        <div #deleteButtonDragableElement>
+            <button mat-icon-button aria-label="Save file">
+                <mat-icon>delete</mat-icon>
+            </button>    
+        </div>
     </div>
 </div>
 
