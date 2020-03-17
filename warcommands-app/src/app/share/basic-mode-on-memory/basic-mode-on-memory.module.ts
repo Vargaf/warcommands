@@ -6,6 +6,9 @@ import * as MapPathfindingRepositoryProvider from 'src/warcommands/gameEngine/in
 import * as MapEngineProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map-engine.provider';
 import * as BuildPlacementProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/build-place-manager.provider';
 import * as NonBuildingTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/non-building-tile-repository.provider';
+import * as GameEventBusProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-event-bus.provider';
+import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
+import { GameServiceListenersService } from 'src/warcommands/game-middleware/game-service-listeners.service';
 
 
 @NgModule({
@@ -16,7 +19,10 @@ import * as NonBuildingTileRepositoryProvider from 'src/warcommands/gameEngine/i
     MapPathfindingRepositoryProvider.provider,
     MapEngineProvider.provider,
     BuildPlacementProvider.provider,
-    NonBuildingTileRepositoryProvider.provider
+    NonBuildingTileRepositoryProvider.provider,
+    GameEventBusProvider.provider,
+    GameMiddlewareService,
+    GameServiceListenersService,
   ]
 })
 export class BasicModeOnMemoryModule { }

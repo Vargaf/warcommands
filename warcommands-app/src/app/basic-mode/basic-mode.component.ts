@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GameService } from 'src/warcommands/gameEngine/domain/game.service';
 import { BasicModeComponentDirective } from './basic-mode.directive';
-import { BasicModeGameEngineService } from 'src/warcommands/basic-mode/game-engine-basic-mode.service';
+import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 
 @Component({
     selector: 'app-basic-mode',
@@ -13,18 +12,13 @@ export class BasicModeComponent implements OnInit {
     @ViewChild(BasicModeComponentDirective, {static: true})
     public basicModeGraphicsWrapper: BasicModeComponentDirective;
 
-    constructor(
-        private gameService: GameService,
-        private gameEngine: BasicModeGameEngineService,
+    constructor(private readonly gameMiddlewareService: GameMiddlewareService,
     ) { }
 
     ngOnInit() {
-
+        
         const viewContainerRef = this.basicModeGraphicsWrapper.viewContainerRef;
-
-        this.gameEngine.setViewContainerRef(viewContainerRef);
-        this.gameService.initialize(this.gameEngine);
-        this.gameService.start();
+        this.gameMiddlewareService.initialize(viewContainerRef);
 
   }
 

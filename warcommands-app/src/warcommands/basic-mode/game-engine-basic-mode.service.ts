@@ -32,6 +32,7 @@ export class BasicModeGameEngineService extends GameEngineService {
         super();
 
         this.lastFrameUpdateTime = 0;
+        
     }
 
     setViewContainerRef(viewContainerRef: ViewContainerRef): void {
