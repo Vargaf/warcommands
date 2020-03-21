@@ -1,0 +1,40 @@
+<div class="get-base-by-index-content" fxLayout="row" fxLayoutAlign="center center">
+    <div>
+        (
+    </div>
+    <div style="height: 58px;">
+        <form [formGroup]="componentFormGroup">
+            <mat-form-field appearance="" class="base-name-input">
+                <input matInput type="text" formControlName="baseName" min="0" max="10">
+            </mat-form-field>
+        </form>
+    </div>
+    <div>
+        ).
+    </div>
+    <div style="height: 58px;">
+        <mat-form-field appearance="">
+            <mat-select [(value)]="memberSelected" (selectionChange)="onMemberSelected($event)">
+                <mat-option>Select an option</mat-option>
+                <mat-optgroup label="Methods">
+                    <mat-option *ngFor="let member of baseClassDefinition.methods" [value]="member.value">
+                        {{ member.label }}
+                    </mat-option>
+                </mat-optgroup>
+                <mat-optgroup label="Properties">
+                    <mat-option *ngFor="let member of baseClassDefinition.properties" [value]="member.value">
+                        {{ member.label }}
+                    </mat-option>
+                </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <container-element [ngSwitch]="memberSelected">
+            <div *ngSwitchCase="'createMinion'">
+                ()
+            </div>
+            <div *ngSwitchDefault></div>
+        </container-element>
+    </div>
+</div>

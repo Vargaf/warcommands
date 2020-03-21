@@ -5,6 +5,7 @@ import { SetVariableComponent } from 'src/app/commands-panel/commands/set-variab
 import { IfThenComponent } from 'src/app/commands-panel/commands/if-then/if-then.component';
 import { IfThenElseComponent } from 'src/app/commands-panel/commands/if-then-else/if-then-else.component';
 import { GameLoopComponent } from 'src/app/commands-panel/commands/game-loop/game-loop.component';
+import { GameCommandComponent } from 'src/app/commands-panel/commands/game-command/game-command.component';
 
 export class CommandsComponentFactory {
 
@@ -12,6 +13,10 @@ export class CommandsComponentFactory {
 
         let component: any;
         switch (commandType) {
+            case CommandType.Game: {
+                component = GameCommandComponent;
+                break;
+            }
             case CommandType.CreateMinion: {
                 component = CreateMinionComponent;
                 break;

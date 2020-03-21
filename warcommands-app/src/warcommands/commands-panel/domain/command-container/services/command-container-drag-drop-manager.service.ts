@@ -149,7 +149,9 @@ export class CommandContainerDragDropManagerService {
 
     private isANewCommand(event: any): boolean {
         const commandListDropConainer: DropListRef = this.commandListDragDropManager.getCommandListDropContainer();
-        return event.previousContainer.id === commandListDropConainer.id;
+        const previousContainerId = event.previousContainer.element.getAttribute('id');
+        const commandListDropContainerId = (commandListDropConainer.element as any).getAttribute('id');
+        return previousContainerId === commandListDropContainerId;
     }
 
 }

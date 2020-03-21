@@ -2,7 +2,9 @@ import { MapEntity } from '../model/map.entity';
 import { TileEntity } from '../model/tile.entity';
 import { TileType } from '../model/tileType.enum';
 import { MapConfiguration } from '../model/map-configuration.interface';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class MapGeneratorService {
 
     generateMap(mapConfiguration: MapConfiguration): MapEntity {

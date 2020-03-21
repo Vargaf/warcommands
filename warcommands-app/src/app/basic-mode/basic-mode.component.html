@@ -1,16 +1,18 @@
-<mat-sidenav-container class="side-nav-container">
-    <mat-sidenav #sidenav mode="over" position="end" opened="true">
-        <app-commands-panel></app-commands-panel>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <app-stats></app-stats>
-        <div class="show-pannel-icon">
-            <mat-icon (click)="sidenav.toggle()">add_circle</mat-icon>
-        </div>
-        <div>
-            <div class="basic-mode-content">
-                <ng-template basic-mode-component-directive></ng-template>
+<div class="basic-mode-content" [ngClass.gt-sm]="['basic-mode-content-gt-sm']">
+    <mat-sidenav-container class="side-nav-container">
+        <mat-sidenav #sidenav mode="over" position="end" opened="true">
+            <app-commands-panel></app-commands-panel>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <app-stats></app-stats>
+            <div class="show-pannel-icon">
+                <mat-icon (click)="sidenav.toggle()">add_circle</mat-icon>
             </div>
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+            <div>
+                <div class="basic-mode-map">
+                    <ng-template basic-mode-component-directive></ng-template>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
