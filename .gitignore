@@ -1,4 +1,5 @@
 warcommands-app/dist
 warcommands-app/node_modules
+warcommands-app/core
 .idea
 .DS_Store
