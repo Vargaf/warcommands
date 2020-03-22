@@ -1,6 +1,8 @@
+import { ClassNameENUM } from './class-name.enum';
 
 export interface ClassMemberDTO {
-    value: string;
-    label: string;
-    label_id: string;
+    className: ClassNameENUM;
+    memberName: string;
+    args?: any[];
+    methodChained?: ClassMemberDTO;
 }

@@ -1,11 +1,11 @@
-import { ClassDefinition } from '../model/class-definition/class-definition.dto';
-import { ClassMemberDTO } from '../model/class-definition/class-member.dto';
+import { ClassOptionDefinition } from '../model/class-definition/class-option-definition.dto';
+import { ClassMemberOptionDTO } from '../model/class-definition/class-member-option.dto';
 
 export class GameCommandMemberFinderHelper {
  
-    static findMember(classDefinition: ClassDefinition, memberValue: string): ClassMemberDTO {
+    static findMember(classDefinition: ClassOptionDefinition, memberValue: string): ClassMemberOptionDTO {
 
-        let gameCommandMember: ClassMemberDTO = null;
+        let gameCommandMember: ClassMemberOptionDTO = null;
         
         for (const member of classDefinition.methods) {
             if(memberValue === member.value) {

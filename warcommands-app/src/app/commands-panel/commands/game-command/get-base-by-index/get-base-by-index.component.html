@@ -14,7 +14,7 @@
     </div>
     <div style="height: 58px;">
         <mat-form-field appearance="">
-            <mat-select [(value)]="memberSelected" (selectionChange)="onMemberSelected($event)">
+            <mat-select [(value)]="memberOptionSelected" (selectionChange)="onMemberSelected($event)">
                 <mat-option>Select an option</mat-option>
                 <mat-optgroup label="Methods">
                     <mat-option *ngFor="let member of baseClassDefinition.methods" [value]="member.value">
@@ -30,7 +30,7 @@
         </mat-form-field>
     </div>
     <div>
-        <container-element [ngSwitch]="memberSelected">
+        <container-element [ngSwitch]="memberOptionSelected">
             <div *ngSwitchCase="'createMinion'">
                 ()
             </div>

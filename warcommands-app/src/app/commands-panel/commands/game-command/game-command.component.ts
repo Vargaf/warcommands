@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GameCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command.entity';
-import { GameClassDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/game-class-definition';
+import { GameClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/game-class-options-definition';
+import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 
 @Component({
     selector: 'app-game-command',
@@ -11,7 +12,7 @@ export class GameCommandComponent implements OnInit {
 
     @Input() commandData: GameCommandEntity;
 
-    gameCommandClassDefinition = GameClassDefinition;
+    gameCommandClassDefinition = GameClassOptionsDefinition;
 
     memberSelected: string;
 
@@ -21,13 +22,8 @@ export class GameCommandComponent implements OnInit {
 
     }
 
-    onBaseMemberSelected(event): void {
-        console.log('onBaseMemberSelected');
-        console.log(event);
-    }
-
-    onBaseNameChange(event): void {
-        console.log('onBaseNameChange');
+    onClassMemberSelected(event: ClassMemberDTO): void {
+        console.log('onClassMemberSelected');
         console.log(event);
     }
 

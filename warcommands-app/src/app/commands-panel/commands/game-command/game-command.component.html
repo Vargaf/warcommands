@@ -23,8 +23,7 @@
         <container-element [ngSwitch]="memberSelected">
             <app-get-base-by-index 
                 *ngSwitchCase="'getBaseByName'"
-                (gameCommandBaseSelectedMember)="onBaseMemberSelected($event)"
-                (gameCommandBaseName)="onBaseNameChange($event)">
+                (classMember)="onClassMemberSelected($event)">
             </app-get-base-by-index>
     
             <div *ngSwitchCase="'resources'">
