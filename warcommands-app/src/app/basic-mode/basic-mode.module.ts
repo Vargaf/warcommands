@@ -12,6 +12,7 @@ import { DomElementComponentFactoryService } from 'src/warcommands/basic-mode/in
 import { GAME_ENGINE_BASIC_MODE_CONFIGURATION, GAME_CONFIG } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
 import { BasicModeOnMemoryModule } from '../share/basic-mode-on-memory/basic-mode-on-memory.module';
 import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -27,6 +28,7 @@ import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
     GraphicsModule,
     MaterialModule,
     BasicModeOnMemoryModule,
+    FlexLayoutModule,
     StoreModule.forFeature(BasicModeGameEngineStore.GameEngineBasicModeStoreKey, BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN),
   ],
   providers: [

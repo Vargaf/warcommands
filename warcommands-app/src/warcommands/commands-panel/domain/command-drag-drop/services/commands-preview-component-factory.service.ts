@@ -5,12 +5,18 @@ import { SetVariablePreviewComponent } from 'src/app/commands-panel/drag-preview
 import { IfThenPreviewComponent } from 'src/app/commands-panel/drag-previews/if-then-preview/if-then-preview.component';
 import { IfThenElsePreviewComponent } from 'src/app/commands-panel/drag-previews/if-then-else-preview/if-then-else-preview.component';
 
+import { GameCommandPreviewComponent } from 'src/app/commands-panel/drag-previews/game-command-preview/game-command-preview.component';
+
 export class CommandsPreviewComponentFactory {
 
     static getComponent(commandType: CommandType) {
 
         let component: any;
         switch (commandType) {
+            case CommandType.Game: {
+                component = GameCommandPreviewComponent;
+                break;
+            }
             case CommandType.CreateMinion: {
                 component = CreateMinionPreviewComponent;
                 break;

@@ -30,6 +30,9 @@ export class CommandDataFromCommandDroppedFactory {
             case (CommandType.SetVariable): {
                 break;
             }
+            case (CommandType.Game): {
+                break;
+            }
             case (CommandType.IfThen): {
                 (command as IfThenCommandEntity).innerCommandContainerIdList = {
                     thenCommandContainerId: uuid()
