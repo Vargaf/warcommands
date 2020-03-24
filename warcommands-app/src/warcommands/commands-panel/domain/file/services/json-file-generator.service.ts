@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
-import { FileJsonDTO, CommandContainerJsonDTO, CommandJsonDTO } from '../model/file-json.dto';
+import { FileJsonDTO, CommandContainerJsonDTO, CommandJsonDTO, ClassMemberJsonDTO } from '../model/file-json.dto';
 import { FileDTO } from '../model/file.dto';
 import { CommandContainerRepositoryService } from '../../command-container/services/command-container-repository.service';
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
+import { ClassMemberDTO } from '../../command/model/class-definition/class-member.dto';
 
 
 @Injectable({
@@ -25,7 +26,7 @@ export class JSONFileGeneratorService {
         return {
             id: file.id,
             name: file.name,
-            commandContainer: commandContainer
+            commandContainer
         };
     }
 
@@ -47,8 +48,10 @@ export class JSONFileGeneratorService {
     private buildCommandJSON(commandId: string): CommandJsonDTO {
 
         const command: GenericCommandDTO = this.commandRepositoryService.findById(commandId);
+        const classMemberChained = this.buildClassMember(command.classMember);
         const commandContainerJsonList: CommandContainerJsonDTO[] = [];
 
+        // tslint:disable-next-line: forin
         for (const commandContainerIndex in command.innerCommandContainerIdList) {
             const commandContainerId = command.innerCommandContainerIdList[commandContainerIndex];
             const commandContainetJson: CommandContainerJsonDTO = this.buildCommandContainerJSON(commandContainerId);
@@ -60,8 +63,24 @@ export class JSONFileGeneratorService {
             id: command.id,
             type: command.type,
             data: null,
-            commandContainerList: commandContainerJsonList
+            commandContainerList: commandContainerJsonList,
+            classMember: classMemberChained
         };
+
+    }
+
+    private buildClassMember(classMember: ClassMemberDTO): ClassMemberJsonDTO {
+
+        if(!classMember) {
+            return null;
+        } else {
+            return {
+                className: classMember.className,
+                memberName: classMember.memberName,
+                args: classMember.args || [],
+                methodChained: this.buildClassMember(classMember.methodChained)
+            }
+        }
 
     }
 

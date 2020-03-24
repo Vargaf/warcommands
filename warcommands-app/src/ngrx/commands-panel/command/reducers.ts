@@ -37,6 +37,13 @@ const commandReducer = createReducer(
         return {
             commandList
         };
+    }),
+    on(CommandActions.addClassMember, (state, { commandId, classMember }) => {
+        const command = { ...state.commandList[commandId] };
+        command.classMember = classMember;
+        return {
+            commandList: { ...state.commandList, ...{ [commandId]: command } }
+        };
     })
 );
 

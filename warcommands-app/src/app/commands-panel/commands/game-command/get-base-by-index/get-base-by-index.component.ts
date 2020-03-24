@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { GameCommandMemberFinderHelper } from 'src/warcommands/commands-panel/domain/command/services/game-command-member-finder-helper';
@@ -16,8 +16,11 @@ import { GameMembersENUM } from 'src/warcommands/commands-panel/domain/command/m
 })
 export class GetBaseByIndexComponent implements OnInit {
 
+    @Input()
+    classMember: ClassMemberDTO;
+
     @Output()
-    classMember = new EventEmitter<ClassMemberDTO>();
+    classMemberChange = new EventEmitter<ClassMemberDTO>();
 
     componentFormGroup: FormGroup;
 
@@ -37,8 +40,16 @@ export class GetBaseByIndexComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.baseName = 'base1';
-        this.onBaseNameChange(this.baseName);
+
+        if(this.classMember) {
+            this.baseName = this.classMember.args[0];
+            this.memberOptionSelected = this.classMember.methodChained?.memberName || null;
+            this.gameClassMember.args = this.classMember.args || [];
+            this.baseClassMember = this.classMember.methodChained || null;
+        } else {
+            this.baseName = 'base1';
+        }
+
         this.componentFormGroup = this.formBuilder.group({
             baseName: [this.baseName, [Validators.max(10), Validators.min(0)]],
             action: ['']
@@ -66,7 +77,7 @@ export class GetBaseByIndexComponent implements OnInit {
         if (this.baseName && this.memberOptionSelected) {
             const member = { ...this.gameClassMember };
             member.methodChained = { ... this.baseClassMember };
-            this.classMember.emit(member);
+            this.classMemberChange.emit(member);
         }
     }
 

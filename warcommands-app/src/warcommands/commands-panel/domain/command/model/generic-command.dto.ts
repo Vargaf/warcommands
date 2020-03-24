@@ -1,4 +1,5 @@
 import { CommandType } from './command-type.enum';
+import { ClassMemberDTO } from './class-definition/class-member.dto';
 
 export interface GenericCommandDTO {
     id: string;
@@ -6,6 +7,7 @@ export interface GenericCommandDTO {
     fileId: string;
     parentCommandContainerId: string;
     innerCommandContainerIdList?: { [index: string]: string };
+    classMember?: ClassMemberDTO;
 }
 
 export interface GenericCommandListDTO {

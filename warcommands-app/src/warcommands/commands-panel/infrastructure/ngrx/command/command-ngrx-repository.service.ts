@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
+import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 
 @Injectable({
    providedIn: 'root'
@@ -27,5 +28,9 @@ export class CommandNgrxRepositoryService {
 
     removeCommand(command: GenericCommandDTO): void {
         this.store.dispatch(CommandActions.removeCommand({ command }));
+    }
+
+    addClassMember(commandId: string, classMember: ClassMemberDTO): void {
+        this.store.dispatch(CommandActions.addClassMember({ commandId, classMember }));
     }
 }
