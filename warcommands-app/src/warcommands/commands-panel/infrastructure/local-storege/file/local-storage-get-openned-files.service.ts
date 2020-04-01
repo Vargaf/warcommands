@@ -21,6 +21,18 @@ export class LocalStorageGetOpennedFilesService {
         return rawOpennedFileList;
     }
 
+    getFiles(): FileJsonDTO[] {
+        const savedFileList = this.getUserFileList();
+        const rawOpennedFileList: FileJsonDTO[] = [];
+
+        for (const userFile of savedFileList) {
+            const rawFile = JSON.parse(localStorage.getItem(userFile.id));
+            rawOpennedFileList.push(rawFile);
+        }
+
+        return rawOpennedFileList;
+    }
+
     private fileterOpennedFiles(fileList: LocalStorageHelper.UserFileDTO[]): LocalStorageHelper.UserFileDTO[] {
         return fileList.filter((file) => {
             return file.isOppenedOnCommandPanel;

@@ -25,7 +25,7 @@ export class FileManagerService {
             commandContainerId: rawFile.commandContainer.id
         };
 
-        this.fileManagerEvents.fileLoadedDispatch(fileDTO);
+        this.fileManagerEvents.opennedFileLoadedDispatch(fileDTO);
     }
 
     isInitializationNeeded(): boolean {
@@ -34,6 +34,17 @@ export class FileManagerService {
 
     saveFile(file: FileJsonDTO): void {
         this.fileRepositoryService.saveFile(file);
+        this.fileManagerEvents.savedFileDispatch(file);
+    }
+
+    loadFiles(): void {
+        if (!this.isInitializationNeeded()) {
+            const savedFileList: FileJsonDTO[] = this.fileRepositoryService.getFiles();
+
+            for (const file of savedFileList) {
+                this.fileManagerEvents.fileLoadedDispatch(file);
+            }
+        }
     }
 
 }

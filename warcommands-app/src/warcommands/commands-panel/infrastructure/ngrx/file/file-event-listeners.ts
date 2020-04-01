@@ -15,7 +15,7 @@ export class FileEventListeners {
     }
 
     private onFileLoadedAddItToStore(): void {
-        this.fileManagerEvents.fileLoadedListener().subscribe((file) => {
+        this.fileManagerEvents.opennedFileLoadedListener().subscribe((file) => {
             this.fileNgrxRepositoryService.loadFile(file);
         });
     }

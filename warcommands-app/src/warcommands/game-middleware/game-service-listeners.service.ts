@@ -1,9 +1,6 @@
-import { Injectable } from "@angular/core";
-import { BasicModeGameEngineService } from '../basic-mode/game-engine-basic-mode.service';
-import { GameEventBusService } from '../gameEngine/domain/game-event-bus/services/game-event-bus.service';
-import { EventType } from '../gameEngine/domain/game-event-bus/model/event-type.enum';
-import { MapGeneratedEvent } from '../gameEngine/domain/game-event-bus/model/map/map-generated.event';
-import { BaseCreaedEvent } from '../gameEngine/domain/game-event-bus/model/base/base-created.event';
+import { Injectable } from '@angular/core';
+import { GameService } from '../gameEngine/domain/game.service';
+import { FileManagerEvents } from '../commands-panel/domain/file/services/file-manager.events';
 
 @Injectable({
     providedIn: 'root'
@@ -11,24 +8,25 @@ import { BaseCreaedEvent } from '../gameEngine/domain/game-event-bus/model/base/
 export class GameServiceListenersService {
 
     constructor(
-        private readonly gameEngine: BasicModeGameEngineService,
-        private readonly gameEventBusService: GameEventBusService,
+        private readonly gameEngine: GameService,
+        private readonly fileEventsListener: FileManagerEvents
     ) {}
 
     setListeners(): void {
-        this.setMapGeneratingListeners();
-        this.setBaseCreatedListeners();
-    } 
+        this.setFileLoadedListeners();
+        this.setFileSavedListeners();
+    }
 
-    private setMapGeneratingListeners(): void {
-        this.gameEventBusService.on(EventType.MapGenerated).subscribe((event: MapGeneratedEvent) => {
-            this.gameEngine.generateMap(event.data);
+    private setFileLoadedListeners(): void {
+        this.fileEventsListener.fileLoadedListener().subscribe((file) => {
+            this.gameEngine.addFile(file);
         });
     }
 
-    private setBaseCreatedListeners(): void {
-        this.gameEventBusService.on(EventType.BaseGenerated).subscribe((event: BaseCreaedEvent) => {
-            this.gameEngine.addBase(event.data);
+    private setFileSavedListeners(): void {
+        this.fileEventsListener.savedFileListener().subscribe((file) => {
+            this.gameEngine.addFile(file);
         });
     }
+
 }

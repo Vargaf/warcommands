@@ -8,6 +8,7 @@ import * as BuildPlacementProvider from 'src/warcommands/gameEngine/infrastructu
 import * as NonBuildingTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/non-building-tile-repository.provider';
 import * as GameEventBusProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-event-bus.provider';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
+import { GameEngineListenersService } from 'src/warcommands/game-middleware/game-engine-listeners.service';
 import { GameServiceListenersService } from 'src/warcommands/game-middleware/game-service-listeners.service';
 
 
@@ -22,6 +23,7 @@ import { GameServiceListenersService } from 'src/warcommands/game-middleware/gam
     NonBuildingTileRepositoryProvider.provider,
     GameEventBusProvider.provider,
     GameMiddlewareService,
+    GameEngineListenersService,
     GameServiceListenersService,
   ]
 })

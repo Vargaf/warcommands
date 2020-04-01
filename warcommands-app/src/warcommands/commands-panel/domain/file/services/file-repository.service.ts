@@ -8,4 +8,6 @@ export abstract class FileRepositoryService {
 
     abstract saveFile(file: FileJsonDTO): void;
 
+    abstract getFiles(): FileJsonDTO[];
+
 }

@@ -34,7 +34,7 @@ export class FileManagerComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.fileManagerEvents.fileLoadedListener().subscribe((file) => {
+        this.fileManagerEvents.opennedFileLoadedListener().subscribe((file) => {
             this.addFile(file);
         });
 

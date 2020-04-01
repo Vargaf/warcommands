@@ -9,6 +9,7 @@ import { GameInitializedEvent } from './game-event-bus/model/game-initialized-ev
 import { GeneratingMapEvent } from './game-event-bus/model/map/generating-map.event';
 import { MapGeneratedEvent } from './game-event-bus/model/map/map-generated.event';
 import { BaseCreaedEvent } from './game-event-bus/model/base/base-created.event';
+import { FileJsonDTO } from 'src/warcommands/commands-panel/domain/file/model/file-json.dto';
 
 export class GameService {
 
@@ -41,10 +42,14 @@ export class GameService {
         }
     }
 
+    addFile(file: FileJsonDTO): void {
+        console.log(file);
+    }
+
     private generateMap(mapConfiguration: MapConfiguration): void {
         const generatingMapEvent = new GeneratingMapEvent();
         this.gameEventBusService.cast(generatingMapEvent);
-        
+
         const mapResponse: MapInterface = this.mapEngine.generateMap(mapConfiguration);
 
         const mapGeneratedEvent = new MapGeneratedEvent(mapResponse);

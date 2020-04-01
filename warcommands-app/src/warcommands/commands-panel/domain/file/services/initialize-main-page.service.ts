@@ -25,12 +25,12 @@ export class InitializeMainPageService {
 
     initialize(): FileDTO[] {
         const file: FileDTO = this.createFile();
-        this.fileManagerEvents.fileLoadedDispatch(file);
+        this.fileManagerEvents.opennedFileLoadedDispatch(file);
 
         const commandContainer: CommandContainerDTO = this.createCommandContainer(file);
         const gameLoopCommand: GameLoopCommandEntity = this.createCommand(commandContainer);
         const gameLoopCommandContainer: CommandContainerDTO = this.createInnerCommandContainer(gameLoopCommand);
-        
+
         commandContainer.commands = [gameLoopCommand.id];
 
         this.commandContainerRepositoryService.save(commandContainer);

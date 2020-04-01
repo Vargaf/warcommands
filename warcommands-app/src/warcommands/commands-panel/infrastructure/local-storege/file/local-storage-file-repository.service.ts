@@ -30,6 +30,10 @@ export class LocalStorageFileRepositoryService implements FileRepositoryService 
         localStorage.setItem(file.id, JSON.stringify(file));
     }
 
+    getFiles(): FileJsonDTO[] {
+        return this.localStorageGetOpennedFilesService.getFiles();
+    }
+
     private isNewFile(fileId: string): boolean {
         const userFile = localStorage.getItem(fileId);
         return userFile ? false : true;

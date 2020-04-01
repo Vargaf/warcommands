@@ -48,6 +48,7 @@ export class GetBaseByIndexComponent implements OnInit {
             this.baseClassMember = this.classMember.methodChained || null;
         } else {
             this.baseName = 'base1';
+            this.gameClassMember.args = [this.baseName];
         }
 
         this.componentFormGroup = this.formBuilder.group({
