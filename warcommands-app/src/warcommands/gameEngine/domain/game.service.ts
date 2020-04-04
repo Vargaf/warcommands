@@ -9,7 +9,8 @@ import { GameInitializedEvent } from './game-event-bus/model/game-initialized-ev
 import { GeneratingMapEvent } from './game-event-bus/model/map/generating-map.event';
 import { MapGeneratedEvent } from './game-event-bus/model/map/map-generated.event';
 import { BaseCreaedEvent } from './game-event-bus/model/base/base-created.event';
-import { FileJsonDTO } from 'src/warcommands/commands-panel/domain/file/model/file-json.dto';
+import { PlayerCommandsManagerService } from './player-commands/player-commands-manager.service';
+import { FileJsonDTO } from './file/file-json.dto';
 
 export class GameService {
 
@@ -18,7 +19,8 @@ export class GameService {
     constructor(
         private readonly mapEngine: MapEngineService,
         private readonly buildPlaceManagerService: BuildPlaceManagerService,
-        private readonly gameEventBusService: GameEventBusService
+        private readonly gameEventBusService: GameEventBusService,
+        private readonly playerCommandsManagerService: PlayerCommandsManagerService
     ) {}
 
     initialize(mapType: MapType) {
@@ -43,7 +45,7 @@ export class GameService {
     }
 
     addFile(file: FileJsonDTO): void {
-        console.log(file);
+        this.playerCommandsManagerService.addFile(file);
     }
 
     private generateMap(mapConfiguration: MapConfiguration): void {
@@ -59,7 +61,7 @@ export class GameService {
     private addInitialBases(mapConfiguration: MapConfiguration) {
         for (const baseIndex of Object.keys(mapConfiguration.playerBaseList)) {
             this.buildPlaceManagerService.addBuilding(mapConfiguration.playerBaseList[baseIndex]);
-            
+
             const baseCreatedEvent = new BaseCreaedEvent(mapConfiguration.playerBaseList[baseIndex]);
             this.gameEventBusService.cast(baseCreatedEvent);
         }

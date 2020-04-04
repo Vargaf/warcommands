@@ -10,21 +10,29 @@ import * as GameEventBusProvider from 'src/warcommands/gameEngine/infrastructure
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { GameEngineListenersService } from 'src/warcommands/game-middleware/game-engine-listeners.service';
 import { GameServiceListenersService } from 'src/warcommands/game-middleware/game-service-listeners.service';
+import * as PlayerCommandsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/player-commands-manager.provider';
+import * as CommandRepositoryInMemoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/command/command-repository-in-memory.provider';
+import * as InMemoryCommandContainerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/command-container/in-memory-command-container-repository.provider';
+import * as FileParserProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/file/file-parser.provider';
 
 
 @NgModule({
-  providers: [
-    { provide: MapToResponseTranslatorService, useClass: MapToResponseTranslatorService },
-    GameServiceProvider.provider,
-    MapMemoryRepository.provider,
-    MapPathfindingRepositoryProvider.provider,
-    MapEngineProvider.provider,
-    BuildPlacementProvider.provider,
-    NonBuildingTileRepositoryProvider.provider,
-    GameEventBusProvider.provider,
-    GameMiddlewareService,
-    GameEngineListenersService,
-    GameServiceListenersService,
-  ]
+    providers: [
+        { provide: MapToResponseTranslatorService, useClass: MapToResponseTranslatorService },
+        GameServiceProvider.provider,
+        MapMemoryRepository.provider,
+        MapPathfindingRepositoryProvider.provider,
+        MapEngineProvider.provider,
+        BuildPlacementProvider.provider,
+        NonBuildingTileRepositoryProvider.provider,
+        GameEventBusProvider.provider,
+        GameMiddlewareService,
+        GameEngineListenersService,
+        GameServiceListenersService,
+        PlayerCommandsManagerProvider.provider,
+        CommandRepositoryInMemoryProvider.provider,
+        InMemoryCommandContainerProvider.provider,
+        FileParserProvider.provider,
+    ]
 })
 export class BasicModeOnMemoryModule { }
