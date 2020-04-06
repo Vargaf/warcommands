@@ -14,6 +14,11 @@ import * as PlayerCommandsManagerProvider from 'src/warcommands/gameEngine/infra
 import * as CommandRepositoryInMemoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/command/command-repository-in-memory.provider';
 import * as InMemoryCommandContainerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/command-container/in-memory-command-container-repository.provider';
 import * as FileParserProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/file/file-parser.provider';
+import * as GameLoopManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/game-loop-managerprovider';
+import * as GameClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/game-class/game-class-factory.provider';
+import * as GameClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/game-class/game-class.provider';
+import * as ClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/class-factory.provider';
+import * as PlayerManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player/player-manager.provider';
 
 
 @NgModule({
@@ -33,6 +38,11 @@ import * as FileParserProvider from 'src/warcommands/gameEngine/infrastructure/a
         CommandRepositoryInMemoryProvider.provider,
         InMemoryCommandContainerProvider.provider,
         FileParserProvider.provider,
+        GameLoopManagerProvider.provider,
+        GameClassFactoryProvider.provider,
+        GameClassProvider.provider,
+        ClassFactoryProvider.provider,
+        PlayerManagerProvider.provider,
     ]
 })
 export class BasicModeOnMemoryModule { }

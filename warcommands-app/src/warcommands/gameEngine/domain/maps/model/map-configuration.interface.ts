@@ -6,5 +6,6 @@ export interface MapConfiguration {
         width: number,
         height: number
     };
+    numberOfPlayers: number;
     playerBaseList: PlayersBaseListEntity;
 }

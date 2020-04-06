@@ -47,6 +47,7 @@ export const BasicMapConfiguration: MapConfiguration = {
         width: 40,
         height: 40
     },
+    numberOfPlayers: 2,
     playerBaseList: {
         0: {
             id: 0,

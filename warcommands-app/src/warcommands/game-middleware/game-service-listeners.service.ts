@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameService } from '../gameEngine/domain/game.service';
+import { GameService } from '../gameEngine/domain/game-engine/game.service';
 import { FileManagerEvents } from '../commands-panel/domain/file/services/file-manager.events';
 import { FileJsonDTO } from '../gameEngine/domain/file/file-json.dto';
 

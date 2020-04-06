@@ -27,6 +27,7 @@ export const onlyGrassMap: MapConfiguration = {
         width: 20,
         height: 20
     },
+    numberOfPlayers: 2,
     playerBaseList: {
         0: {
             id: 0,
