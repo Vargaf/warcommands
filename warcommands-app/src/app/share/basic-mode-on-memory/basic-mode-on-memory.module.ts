@@ -19,6 +19,8 @@ import * as GameClassFactoryProvider from 'src/warcommands/gameEngine/infrastruc
 import * as GameClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/game-class/game-class.provider';
 import * as ClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/class-factory.provider';
 import * as PlayerManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player/player-manager.provider';
+import * as FileMirrorDuplicationProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/file-mirror-duplication.provider';
+import * as InMemoryPlayerRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player/in-memory-player-repository.provider';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import * as PlayerManagerProvider from 'src/warcommands/gameEngine/infrastructur
         GameClassProvider.provider,
         ClassFactoryProvider.provider,
         PlayerManagerProvider.provider,
+        FileMirrorDuplicationProvider.provider,
+        InMemoryPlayerRepositoryProvider.provider,
     ]
 })
 export class BasicModeOnMemoryModule { }

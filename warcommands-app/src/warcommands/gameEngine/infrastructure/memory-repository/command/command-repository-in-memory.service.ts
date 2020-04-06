@@ -19,20 +19,6 @@ export class CommandRepositoryInMemoryService implements CommandRepositoryServic
         return this.commandList[commandId] || null;
     }
 
-    findByType(commandType:CommandType): CommandDTO[] {
-        const commandList: CommandDTO[] = [];
-
-        // tslint:disable-next-line: forin
-        for (const commandIndex in this.commandList) {
-            const command = this.commandList[commandIndex];
-            if (command.type === commandType) {
-                commandList.push(command);
-            }
-        }
-
-        return commandList;
-    }
-
     remove(command: CommandDTO): void {
         delete this.commandList[command.id];
     }

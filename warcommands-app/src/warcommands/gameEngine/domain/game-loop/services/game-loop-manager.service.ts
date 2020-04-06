@@ -7,26 +7,19 @@ import { ClassFactoryService } from '../../player-commands/class-factory.service
 
 export class GameLoopManagerService {
 
-    gameLoopCommand: CommandDTO;
-
     constructor(
         private readonly commandRepository: CommandRepositoryService,
         private readonly commandContainerRepository: CommandContainerRepository,
         private readonly classFactoryService: ClassFactoryService
     ) {}
 
-    runGameLoop(): void {
-        const gameLoopCommand: CommandDTO = this.gameLoopCommand || this.getGameLoopCommand();
+    runGameLoop(gameLoopCommandId: string): void {
+        const gameLoopCommand: CommandDTO = this.commandRepository.findById(gameLoopCommandId);
 
         if (gameLoopCommand) {
             this.runCommandContainer(gameLoopCommand.innerCommandContainerList[0]);
         }
 
-    }
-
-    private getGameLoopCommand(): CommandDTO {
-        const commandList = this.commandRepository.findByType(CommandType.GameLoop);
-        return commandList[0];
     }
 
     private runCommandContainer(commandContainerId: string): void {

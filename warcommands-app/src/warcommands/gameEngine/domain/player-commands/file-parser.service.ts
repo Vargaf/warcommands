@@ -4,12 +4,15 @@ import { FileJsonDTO, CommandContainerJsonDTO, CommandJsonDTO, ClassMemberJsonDT
 import { CommandContainerDTO } from '../command-container/model/command-container.dto';
 import { CommandDTO } from '../command/model/command.dto';
 import { ClassMemberDTO } from '../command/model/class-member.dto';
+import { PlayerManagerService } from '../player/services/player-manager.service';
+import { CommandType } from '../command/model/command-type.enum';
 
 export class FileParserService {
 
     constructor(
         private readonly commandRepository: CommandRepositoryService,
         private readonly commandContainerRepository: CommandContainerRepository,
+        private readonly playerManagerService: PlayerManagerService,
     ) {}
 
     parseFile(file: FileJsonDTO): void {
@@ -41,6 +44,10 @@ export class FileParserService {
             classMember: null,
             return: null
         };
+
+        if(command.type === CommandType.GameLoop) {
+            this.playerManagerService.addGameloopCommandToPlayer(playerId, command.id);
+        }
 
         for (const commandContainer of rawCommand.commandContainerList) {
             this.parseCommandContainer(commandContainer, parentCommandContainerId, playerId);
