@@ -22,6 +22,7 @@ export class FileManagerService {
         const fileDTO: FileDTO = {
             id: rawFile.id,
             name: rawFile.name,
+            playerId: rawFile.playerId,
             commandContainerId: rawFile.commandContainer.id
         };
 

@@ -18,7 +18,9 @@ export class GameLoopManagerService {
     runGameLoop(): void {
         const gameLoopCommand: CommandDTO = this.gameLoopCommand || this.getGameLoopCommand();
 
-        this.runCommandContainer(gameLoopCommand.innerCommandContainerList[0]);
+        if (gameLoopCommand) {
+            this.runCommandContainer(gameLoopCommand.innerCommandContainerList[0]);
+        }
 
     }
 

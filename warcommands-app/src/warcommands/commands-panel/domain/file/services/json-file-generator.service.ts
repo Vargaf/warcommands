@@ -26,6 +26,7 @@ export class JSONFileGeneratorService {
         return {
             id: file.id,
             name: file.name,
+            playerId: file.playerId,
             commandContainer
         };
     }

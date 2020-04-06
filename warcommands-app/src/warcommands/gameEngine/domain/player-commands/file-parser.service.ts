@@ -13,10 +13,10 @@ export class FileParserService {
     ) {}
 
     parseFile(file: FileJsonDTO): void {
-        this.parseCommandContainer(file.commandContainer, null);
+        this.parseCommandContainer(file.commandContainer, null, file.playerId);
     }
 
-    private parseCommandContainer(rawCommandContainer: CommandContainerJsonDTO, parentCommandContainerId: string): void {
+    private parseCommandContainer(rawCommandContainer: CommandContainerJsonDTO, parentCommandContainerId: string, playerid: string): void {
         const commandContainer: CommandContainerDTO = {
             id: rawCommandContainer.id,
             parentCommandContainerId,
@@ -24,17 +24,18 @@ export class FileParserService {
         };
 
         for (const rawCommand of rawCommandContainer.commands) {
-            const command = this.parseCommand(rawCommand, rawCommandContainer.id);
+            const command = this.parseCommand(rawCommand, rawCommandContainer.id, playerid);
             commandContainer.commandList.push(command.id);
         }
 
         this.commandContainerRepository.save(commandContainer);
     }
 
-    private parseCommand(rawCommand: CommandJsonDTO, parentCommandContainerId: string): CommandDTO {
+    private parseCommand(rawCommand: CommandJsonDTO, parentCommandContainerId: string, playerId: string): CommandDTO {
         const command: CommandDTO = {
             id: rawCommand.id,
             type: rawCommand.type,
+            playerId,
             parentCommandContainerId,
             innerCommandContainerList: [],
             classMember: null,
@@ -42,7 +43,7 @@ export class FileParserService {
         };
 
         for (const commandContainer of rawCommand.commandContainerList) {
-            this.parseCommandContainer(commandContainer, parentCommandContainerId);
+            this.parseCommandContainer(commandContainer, parentCommandContainerId, playerId);
             command.innerCommandContainerList.push(commandContainer.id);
         }
 

@@ -9,6 +9,8 @@ import { CommandContainerEvents } from '../../command-container/services/command
 import { CommandFromFileLoadEvents } from '../../command/events/command-from-file-load.events';
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
 import { CommandContainerRepositoryService } from '../../command-container/services/command-container-repository.service';
+import { CurrentPlayerRepositoryService } from '../../current-player/services/current-player-repository.service';
+import { CurrentPlayerDTO } from '../../current-player/model/current-player.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +22,8 @@ export class InitializeMainPageService {
         private readonly commandContainerEvents: CommandContainerEvents,
         private readonly commandEvents: CommandFromFileLoadEvents,
         private readonly commandRepositoryService: CommandRepositoryService,
-        private readonly commandContainerRepositoryService: CommandContainerRepositoryService
+        private readonly commandContainerRepositoryService: CommandContainerRepositoryService,
+        private readonly currentPlayerRepositoryService: CurrentPlayerRepositoryService
     ) {}
 
     initialize(): FileDTO[] {
@@ -45,9 +48,11 @@ export class InitializeMainPageService {
     }
 
     private createFile(): FileDTO {
+        const currentPlayer: CurrentPlayerDTO = this.currentPlayerRepositoryService.getPlayer();
         const mainFile: FileDTO = {
             id: uuid(),
             name: 'Main',
+            playerId: currentPlayer.id,
             commandContainerId: uuid()
         };
 
