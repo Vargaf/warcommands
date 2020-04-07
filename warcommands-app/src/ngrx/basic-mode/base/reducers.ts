@@ -1,5 +1,5 @@
 import * as BaseActions from './actions';
-import { BaseListInterface } from 'src/warcommands/basic-mode/domain/base/base-list-interface';
+import { BaseListInterface } from 'src/warcommands/basic-mode/domain/building/base/base-list-interface';
 import { createReducer, on, Action } from '@ngrx/store';
 
 export const GameEngineBasicModeBaseStoreKey = 'base';

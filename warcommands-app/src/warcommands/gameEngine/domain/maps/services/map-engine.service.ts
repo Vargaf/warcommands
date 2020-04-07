@@ -1,31 +1,41 @@
 import { MapRepository } from '../repositories/map-repository.service';
-import { MapPathfindingGridRepository } from '../repositories/map-pathfinding-grid-repository.service';
-import { MapEntity } from '../model/map.entity';
-import { MapInterface } from 'src/warcommands/gameEngine/interfaces/model/map/map.interface';
-import { MapToResponseTranslatorService } from './map-to-response-translator.service';
-import { MapPathfindingGrid } from '../model/map-pathfinding-grid.entity';
-import { MapPathFindingGridGenerator } from './map-pathfinding-grid-generator.service';
+import { MapDTO } from '../model/map.dto';
 import { MapConfiguration } from '../model/map-configuration.interface';
 import { MapGeneratorService } from './map-generator.service';
+import { GameEventBusService } from '../../game-event-bus/services/game-event-bus.service';
+import { GeneratingMapEvent } from '../../game-event-bus/model/map/generating-map.event';
+import { MapGeneratedEvent } from '../../game-event-bus/model/map/map-generated.event';
+import { PathFindingManagerService } from './path-finding-manager.service';
 
 export class MapEngineService {
 
     constructor(
-        private mapRepository: MapRepository,
-        private mapPathfindingGridRepository: MapPathfindingGridRepository,
-        private mapGeneratorService: MapGeneratorService
+        private readonly mapRepository: MapRepository,
+        private readonly mapGeneratorService: MapGeneratorService,
+        private readonly gameEventBusService: GameEventBusService,
+        private readonly pathFindingManagerService: PathFindingManagerService
     ) {}
 
-    generateMap(mapConfiguration: MapConfiguration): MapInterface {
+    generateMap(mapConfiguration: MapConfiguration): MapDTO {
 
-        const map: MapEntity = this.mapGeneratorService.generateMap(mapConfiguration);
-        const mapResponse: MapInterface = MapToResponseTranslatorService.translsate(map);
-        const mapPathfindingGrid: MapPathfindingGrid = MapPathFindingGridGenerator.generateGrid(map);
+        const generatingMapEvent = new GeneratingMapEvent();
+        this.gameEventBusService.cast(generatingMapEvent);
 
-        this.mapRepository.saveMap(map);
-        this.mapPathfindingGridRepository.saveGrid(mapPathfindingGrid);
+        const mapResponse: MapDTO = this.getMap(mapConfiguration);
+
+        const mapGeneratedEvent = new MapGeneratedEvent(mapResponse);
+        this.gameEventBusService.cast(mapGeneratedEvent);
 
         return mapResponse;
+    }
+
+    private getMap(mapConfiguration: MapConfiguration): MapDTO {
+        const map: MapDTO = this.mapGeneratorService.generateMap(mapConfiguration);
+
+        this.mapRepository.saveMap(map);
+        this.pathFindingManagerService.generateGrid(map);
+
+        return map;
     }
 
 }

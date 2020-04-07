@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Inject } from '@angular/core';
-import { TileInterface } from 'src/warcommands/gameEngine/interfaces/model/map/tile.interface';
-import { TileTypeEnum } from 'src/warcommands/gameEngine/interfaces/model/map/tileType.enum';
 import { GAME_CONFIG, GameEngineBasicModeConfiguration } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
+import { TileDTO } from 'src/warcommands/gameEngine/domain/maps/model/tile.dto';
+import { TileType } from 'src/warcommands/gameEngine/domain/maps/model/tile-type.enum';
 
 @Component({
   selector: 'app-tile-sand',
@@ -10,14 +10,14 @@ import { GAME_CONFIG, GameEngineBasicModeConfiguration } from 'src/warcommands/b
 })
 export class TileSandComponent implements OnInit {
 
-  @Input() data: TileInterface;
+  @Input() data: TileDTO;
 
   @ViewChild('tile', { static: true })
   public tileElement: ElementRef<HTMLDivElement>;
 
-  tileType = TileTypeEnum;
+  tileType = TileType;
 
-  type: TileTypeEnum;
+  type: TileType;
 
   constructor(
     @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration

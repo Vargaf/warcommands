@@ -1,19 +1,18 @@
-import { GameEngineService } from '../gameEngine/interfaces/game-engine.service';
 import { ComponentFactoryResolver, ViewContainerRef, Injectable, NgZone, ComponentRef } from '@angular/core';
 import { MinionComponent } from 'src/app/basic-mode/graphics/minion/minion.component';
 import { MinionEntity } from '../gameEngine/domain/minion/model/minion.entity';
 import { StatsService } from './infrastructure/stats.service';
 import { RequestAnimationFrameService } from './domain/request-animation-frame/request-animation-frame.service';
-import { MapInterface } from '../gameEngine/interfaces/model/map/map.interface';
-import { BaseInterface } from '../gameEngine/interfaces/model/base/base.interface';
 import { BaseStoreService } from './infrastructure/ngrx/base/base-store.service';
 import { DomElementInjectorService } from './infrastructure/angular/dom-element-injector.service';
+import { MapDTO } from '../gameEngine/domain/maps/model/map.dto';
+import { BaseEntityInterface } from './domain/building/base/base-entity-interface';
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class BasicModeGameEngineService extends GameEngineService {
+export class BasicModeGameEngineService  {
 
     private viewContainerRef: ViewContainerRef;
 
@@ -29,10 +28,7 @@ export class BasicModeGameEngineService extends GameEngineService {
         private baseStoreService: BaseStoreService,
         private domElementIjenctorService: DomElementInjectorService
     ) {
-        super();
-
         this.lastFrameUpdateTime = 0;
-        
     }
 
     setViewContainerRef(viewContainerRef: ViewContainerRef): void {
@@ -41,10 +37,10 @@ export class BasicModeGameEngineService extends GameEngineService {
     }
 
     initialize(): void {
-        //this.generateMap(map);
-        //this.addBase(map.playerBase);
-        //this.addBase(map.enemyBase);
-        
+        // this.generateMap(map);
+        // this.addBase(map.playerBase);
+        // this.addBase(map.enemyBase);
+
         /*
         for (let y = 0; y < 1; y++) {
             for (let x = 0; x < 1; x++) {
@@ -70,12 +66,12 @@ export class BasicModeGameEngineService extends GameEngineService {
         this.animate();
     }
 
-    addBase(base: BaseInterface): void {
+    addBase(base: BaseEntityInterface): void {
         this.baseStoreService.addBase(base);
         this.domElementIjenctorService.addBase(base);
     }
 
-    generateMap(map: MapInterface): void {
+    generateMap(map: MapDTO): void {
         for (const tile of map.tiles) {
             this.domElementIjenctorService.addTile(tile);
         }

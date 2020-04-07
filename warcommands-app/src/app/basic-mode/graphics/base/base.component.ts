@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Inject } from '@angular/core';
 import { GAME_CONFIG, GameEngineBasicModeConfiguration } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
-import { BaseInterface } from 'src/warcommands/gameEngine/interfaces/model/base/base.interface';
+import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
 
 @Component({
   selector: 'app-base',
@@ -9,7 +9,7 @@ import { BaseInterface } from 'src/warcommands/gameEngine/interfaces/model/base/
 })
 export class BaseComponent implements OnInit {
 
-  @Input() data: BaseInterface;
+  @Input() data: BaseEntityInterface;
 
   @ViewChild('base', { static: true })
   public baseElement: ElementRef<HTMLDivElement>;

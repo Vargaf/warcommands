@@ -1,13 +1,13 @@
-import { MapEntity } from '../model/map.entity';
-import { TileEntity } from '../model/tile.entity';
-import { TileType } from '../model/tileType.enum';
+import { MapDTO } from '../model/map.dto';
+import { TileDTO } from '../model/tile.dto';
+import { TileType } from '../model/tile-type.enum';
 import { MapConfiguration } from '../model/map-configuration.interface';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class MapGeneratorService {
 
-    generateMap(mapConfiguration: MapConfiguration): MapEntity {
+    generateMap(mapConfiguration: MapConfiguration): MapDTO {
         const tiles = this.buildTiles(mapConfiguration);
         return {
             tiles,
@@ -18,15 +18,15 @@ export class MapGeneratorService {
         };
     }
 
-    private buildTiles(mapConfiguration: MapConfiguration): TileEntity[] {
-        const tileList: TileEntity[] = [];
+    private buildTiles(mapConfiguration: MapConfiguration): TileDTO[] {
+        const tileList: TileDTO[] = [];
 
-        for (let y = 0; y < mapConfiguration.tiles.length; y++) {
-            for (let x = 0; x < mapConfiguration.tiles[y].length; x++) {
-                const tileType: TileType = mapConfiguration.tiles[y][x];
-                const tile: TileEntity = {
-                    xCoordinate: x,
-                    yCoordinate: y,
+        for (let row = 0; row < mapConfiguration.size.height; row++) {
+            for (let col = 0; col < mapConfiguration.size.width; col++) {
+                const tileType: TileType = mapConfiguration.tiles[row][col];
+                const tile: TileDTO = {
+                    xCoordinate: col,
+                    yCoordinate: row,
                     type: tileType
                 };
 

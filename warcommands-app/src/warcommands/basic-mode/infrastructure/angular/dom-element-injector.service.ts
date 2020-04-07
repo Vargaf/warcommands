@@ -1,7 +1,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
-import { BaseInterface } from 'src/warcommands/gameEngine/interfaces/model/base/base.interface';
-import { TileInterface } from 'src/warcommands/gameEngine/interfaces/model/map/tile.interface';
 import { DomElementComponentFactoryService } from './dom-element-component-factory.service';
+import { BaseBuildingDTO } from 'src/warcommands/gameEngine/domain/building/base/base-building.dto';
+import { TileDTO } from 'src/warcommands/gameEngine/domain/maps/model/tile.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -18,13 +18,13 @@ export class DomElementInjectorService {
         this.viewContainerRef = viewContainerRef;
     }
 
-    addBase(base: BaseInterface): void {
+    addBase(base: BaseBuildingDTO): void {
         const componentBase = this.domElementComponentFactoryService.getBaseComponent();
         const componentRef = this.viewContainerRef.createComponent(componentBase);
         componentRef.instance.data = base;
     }
 
-    addTile(tile: TileInterface): void {
+    addTile(tile: TileDTO): void {
         const tileComponent = this.domElementComponentFactoryService.getTileComponent(tile);
         const componentRef = this.viewContainerRef.createComponent(tileComponent);
         componentRef.instance.data = tile;

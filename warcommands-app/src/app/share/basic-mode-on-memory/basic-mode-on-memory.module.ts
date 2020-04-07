@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
-import { MapToResponseTranslatorService } from 'src/warcommands/gameEngine/domain/maps/services/map-to-response-translator.service';
 import * as GameServiceProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-service.provider';
 import * as MapMemoryRepository from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map-memory-repository.provider';
-import * as MapPathfindingRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map-pathfinding-grid-repository.provider';
-import * as MapEngineProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map-engine.provider';
-import * as BuildPlacementProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/build-place-manager.provider';
-import * as NonBuildingTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/non-building-tile-repository.provider';
+import * as InMemoryMapPathfindingRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-map-pathfinding-grid-repository.provider';
+import * as MapEngineProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-engine.provider';
+import * as BuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/buildings-manager.provider';
+import * as InMemoryBlockedTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/in-memory-blocked-tile-repository.provider';
 import * as GameEventBusProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-event-bus.provider';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { GameEngineListenersService } from 'src/warcommands/game-middleware/game-engine-listeners.service';
@@ -21,17 +20,18 @@ import * as ClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure
 import * as PlayerManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player/player-manager.provider';
 import * as FileMirrorDuplicationProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/file-mirror-duplication.provider';
 import * as InMemoryPlayerRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player/in-memory-player-repository.provider';
+import * as PathFindingManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/path-finding-manager.provider';
+import * as BuildingCreatedEventFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/building-created-event-factory.provider';
 
 
 @NgModule({
     providers: [
-        { provide: MapToResponseTranslatorService, useClass: MapToResponseTranslatorService },
         GameServiceProvider.provider,
         MapMemoryRepository.provider,
-        MapPathfindingRepositoryProvider.provider,
+        InMemoryMapPathfindingRepositoryProvider.provider,
         MapEngineProvider.provider,
-        BuildPlacementProvider.provider,
-        NonBuildingTileRepositoryProvider.provider,
+        BuildingsManagerProvider.provider,
+        InMemoryBlockedTileRepositoryProvider.provider,
         GameEventBusProvider.provider,
         GameMiddlewareService,
         GameEngineListenersService,
@@ -47,6 +47,8 @@ import * as InMemoryPlayerRepositoryProvider from 'src/warcommands/gameEngine/in
         PlayerManagerProvider.provider,
         FileMirrorDuplicationProvider.provider,
         InMemoryPlayerRepositoryProvider.provider,
+        PathFindingManagerProvider.provider,
+        BuildingCreatedEventFactoryProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

@@ -2,7 +2,7 @@ import * as BaseSelectors from '../../../../../ngrx/basic-mode/base/selectors';
 import * as BaseActions from '../../../../../ngrx/basic-mode/base/actions';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { BaseInterface } from 'src/warcommands/gameEngine/interfaces/model/base/base.interface';
+import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +13,7 @@ export class BaseStoreService {
         private readonly store: Store<BaseSelectors.BaseFeatureState>
     ) { }
 
-    addBase(base: BaseInterface): void {
+    addBase(base: BaseEntityInterface): void {
         this.store.dispatch(BaseActions.baseCreated( { base } ));
     }
 

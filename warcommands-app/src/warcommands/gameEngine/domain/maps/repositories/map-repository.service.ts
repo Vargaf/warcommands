@@ -1,7 +1,7 @@
-import { MapEntity } from '../model/map.entity';
+import { MapDTO } from '../model/map.dto';
 
 export abstract class MapRepository {
 
-    abstract saveMap(map: MapEntity): void;
+    abstract saveMap(map: MapDTO): void;
 
 }

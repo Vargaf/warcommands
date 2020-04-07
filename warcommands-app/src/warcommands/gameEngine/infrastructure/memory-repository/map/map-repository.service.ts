@@ -1,11 +1,11 @@
 import { MapRepository } from 'src/warcommands/gameEngine/domain/maps/repositories/map-repository.service';
-import { MapEntity } from 'src/warcommands/gameEngine/domain/maps/model/map.entity';
+import { MapDTO } from 'src/warcommands/gameEngine/domain/maps/model/map.dto';
 
 export class MapRepositoryService implements MapRepository {
 
-    private map: MapEntity;
+    private map: MapDTO;
 
-    saveMap(map: MapEntity): void {
+    saveMap(map: MapDTO): void {
         this.map = map;
     }
 

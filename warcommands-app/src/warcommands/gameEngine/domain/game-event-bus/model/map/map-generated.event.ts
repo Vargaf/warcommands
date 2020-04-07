@@ -1,17 +1,17 @@
 import { EventInterface } from '../event.interface';
 import { EventType } from '../event-type.enum';
-import { MapInterface } from 'src/warcommands/gameEngine/interfaces/model/map/map.interface';
+import { MapDTO } from '../../../maps/model/map.dto';
 
 export class MapGeneratedEvent implements EventInterface {
     readonly type = EventType.MapGenerated;
 
-    private _data: MapInterface;
+    private _data: MapDTO;
 
-    constructor(map: MapInterface) {
+    constructor(map: MapDTO) {
         this._data = map;
     }
 
-    get data(): MapInterface {
+    get data(): MapDTO {
         return this._data;
     }
 }
