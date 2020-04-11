@@ -22,6 +22,9 @@ import * as FileMirrorDuplicationProvider from 'src/warcommands/gameEngine/infra
 import * as InMemoryPlayerRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player/in-memory-player-repository.provider';
 import * as PathFindingManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/path-finding-manager.provider';
 import * as BuildingCreatedEventFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/building-created-event-factory.provider';
+import * as InMemoryBuildingsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/in-memory-buildings-repository.provider';
+import * as BaseClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/base-class/base-class.provider';
+import * as BaseClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/base-class/base-class-factory.provider';
 
 
 @NgModule({
@@ -48,7 +51,10 @@ import * as BuildingCreatedEventFactoryProvider from 'src/warcommands/gameEngine
         FileMirrorDuplicationProvider.provider,
         InMemoryPlayerRepositoryProvider.provider,
         PathFindingManagerProvider.provider,
-        BuildingCreatedEventFactoryProvider.provider
+        BuildingCreatedEventFactoryProvider.provider,
+        InMemoryBuildingsRepositoryProvider.provider,
+        BaseClassProvider.provider,
+        BaseClassFactoryProvider.provider,
     ]
 })
 export class BasicModeOnMemoryModule { }

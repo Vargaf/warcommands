@@ -47,7 +47,7 @@ export class GetBaseByIndexComponent implements OnInit {
             this.gameClassMember.args = this.classMember.args || [];
             this.baseClassMember = this.classMember.methodChained || null;
         } else {
-            this.baseName = 'base1';
+            this.baseName = 'main';
             this.gameClassMember.args = [this.baseName];
         }
 

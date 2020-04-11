@@ -37,7 +37,7 @@ export class GameLoopManagerService {
 
         switch (command.type) {
             case CommandType.Game: {
-                this.classFactoryService.runClass(command.classMember);
+                this.classFactoryService.runClass(command.classMember, command.playerId);
                 break;
             }
             default: {

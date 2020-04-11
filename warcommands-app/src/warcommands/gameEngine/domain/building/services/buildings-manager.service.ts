@@ -4,12 +4,14 @@ import { BuildingDTO } from '../model/building.dto';
 import { MapConfiguration } from '../../maps/model/map-configuration.interface';
 import { IsBlockedTileHelper } from './is-blocked-tile-helper';
 import { BuildingCreatedEventFactoryService } from './building-created-event-factory.service';
+import { BuildingsRepositoryService } from './buildings-repository.service';
 
 export class BuildingsManagerService {
 
     constructor(
         private readonly blockedTileRepository: BlockedTileRepository,
-        private readonly buildingCreatedEventFactoryService: BuildingCreatedEventFactoryService
+        private readonly buildingCreatedEventFactoryService: BuildingCreatedEventFactoryService,
+        private readonly buildingsRepositoryService: BuildingsRepositoryService
     ) {}
 
     initializeFromMap(map: MapConfiguration): void {
@@ -35,11 +37,8 @@ export class BuildingsManagerService {
             }
         }
 
+        this.buildingsRepositoryService.save(building);
         this.buildingCreatedEventFactoryService.cast(building);
-    }
-
-    addMainBase(base: BuildingDTO): void {
-
     }
 
 }
