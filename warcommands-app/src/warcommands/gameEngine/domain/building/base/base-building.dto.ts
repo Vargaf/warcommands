@@ -7,4 +7,8 @@ export interface BaseBuildingDTO extends BuildingDTO {
     name: string;
     queueList: [];
     spawnRelativeCoordinates: CoordinatesEntity;
+    resources: {
+        matter: number;
+        energy: number;
+    }
 }

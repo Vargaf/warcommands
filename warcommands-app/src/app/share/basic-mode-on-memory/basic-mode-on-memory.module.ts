@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import * as GameServiceProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-service.provider';
+import * as GameServiceProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-service.provider';
 import * as MapMemoryRepository from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map-memory-repository.provider';
 import * as InMemoryMapPathfindingRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-map-pathfinding-grid-repository.provider';
 import * as MapEngineProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-engine.provider';
@@ -25,6 +25,11 @@ import * as BuildingCreatedEventFactoryProvider from 'src/warcommands/gameEngine
 import * as InMemoryBuildingsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/in-memory-buildings-repository.provider';
 import * as BaseClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/base-class/base-class.provider';
 import * as BaseClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/base-class/base-class-factory.provider';
+import * as GameLogicProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic.provider';
+import * as GameLogicEventsListenerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-events-listener.provider';
+import * as GameEngineEventListenerHubProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-engine-event-listener-hub.provider';
+import * as UnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/units-manager.provider';
+import * as InMemoryUnitsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-units-repository.provider';
 
 
 @NgModule({
@@ -55,6 +60,11 @@ import * as BaseClassFactoryProvider from 'src/warcommands/gameEngine/infrastruc
         InMemoryBuildingsRepositoryProvider.provider,
         BaseClassProvider.provider,
         BaseClassFactoryProvider.provider,
+        GameLogicProvider.provider,
+        GameLogicEventsListenerProvider.provider,
+        GameEngineEventListenerHubProvider.provider,
+        UnitsManagerProvider.provider,
+        InMemoryUnitsRepositoryProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

@@ -40,7 +40,11 @@ export class GameEngineListenersService {
                 sizeWidth: event.data.sizeWidth,
                 xCoordinate: event.data.xCoordinate,
                 yCoordinate: event.data.yCoordinate,
-                playerId: event.data.playerId
+                playerId: event.data.playerId,
+                resources: {
+                    matter: event.data.resources.matter,
+                    energy: event.data.resources.energy
+                }
             };
             this.gameEngine.addBase(base);
         });

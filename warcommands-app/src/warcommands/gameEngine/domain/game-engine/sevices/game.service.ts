@@ -1,17 +1,18 @@
-import { MapType } from '../maps/model/map-type.enum';
-import { MapEngineService } from '../maps/services/map-engine.service';
-import { MapConfiguration } from '../maps/model/map-configuration.interface';
-import { MapConfigurationFactory } from '../maps/services/map-configuration-factory.service';
-import { BuildingsManagerService } from '../building/services/buildings-manager.service';
-import { GameEventBusService } from '../game-event-bus/services/game-event-bus.service';
-import { GameInitializedEvent } from '../game-event-bus/model/game-initialized-event';
-import { PlayerCommandsManagerService } from '../player-commands/player-commands-manager.service';
-import { FileJsonDTO } from '../file/file-json.dto';
-import { DifficultyLevel } from '../player/model/difficulty-level.enum';
-import { PlayerManagerService } from '../player/services/player-manager.service';
-import { PlayersBaseListEntity } from '../base/players-base-list.entity';
-import { BaseEntity } from '../base/base.entity';
-import { PlayerDTO } from '../player/model/player.dto';
+import { MapType } from '../../maps/model/map-type.enum';
+import { MapEngineService } from '../../maps/services/map-engine.service';
+import { MapConfiguration } from '../../maps/model/map-configuration.interface';
+import { MapConfigurationFactory } from '../../maps/services/map-configuration-factory.service';
+import { BuildingsManagerService } from '../../building/services/buildings-manager.service';
+import { GameEventBusService } from '../../game-event-bus/services/game-event-bus.service';
+import { GameInitializedEvent } from '../../game-event-bus/model/game-initialized-event';
+import { PlayerCommandsManagerService } from '../../player-commands/player-commands-manager.service';
+import { FileJsonDTO } from '../../file/file-json.dto';
+import { DifficultyLevel } from '../../player/model/difficulty-level.enum';
+import { PlayerManagerService } from '../../player/services/player-manager.service';
+import { PlayerDTO } from '../../player/model/player.dto';
+import { GameLogicService } from './game-logic.service';
+import { GameEngineEventListenerHubService } from './game-engine-event-listener-hub.service';
+import { BaseBuildingDTO } from '../../building/base/base-building.dto';
 
 export class GameService {
 
@@ -25,6 +26,8 @@ export class GameService {
         private readonly gameEventBusService: GameEventBusService,
         private readonly playerCommandsManagerService: PlayerCommandsManagerService,
         private readonly playerManagerService: PlayerManagerService,
+        private readonly gameLogicService: GameLogicService,
+        private readonly gameEngineEventListenerHubService: GameEngineEventListenerHubService
     ) {}
 
     setMap(mapType: MapType): void {
@@ -68,6 +71,7 @@ export class GameService {
         }
 
         this.runGameLoop();
+        this.gameLogic();
     }
 
     addFile(file: FileJsonDTO): void {
@@ -83,7 +87,7 @@ export class GameService {
         // tslint:disable-next-line: forin
         for (const index in randomizedBaseIndexList) {
             const randomIndex = randomizedBaseIndexList[index];
-            const base: BaseEntity = baseList[randomIndex];
+            const base: BaseBuildingDTO = baseList[randomIndex];
             const player: PlayerDTO = playerList[index];
 
             base.playerId = player.id;
@@ -91,14 +95,19 @@ export class GameService {
         }
     }
 
-    private getRandomizedBaseIndexList(baseList: PlayersBaseListEntity): string[] {
+    private getRandomizedBaseIndexList(baseList: BaseBuildingDTO[]): string[] {
         const randomizedBaseIndexList: string[] = Object.keys(baseList);
         return randomizedBaseIndexList.sort((a,b) => { return 0.5 - Math.random()});
     }
 
     private runGameLoop(): void {
         this.playerCommandsManagerService.runGameLoop();
-        setTimeout(() => {this.runGameLoop()}, 50);
+        setTimeout(() => {this.runGameLoop()}, 100);
+    }
+
+    private gameLogic(): void {
+        this.gameLogicService.gameLogicLoop();
+        setTimeout(() => this.gameLogic(), 50);
     }
 
 }

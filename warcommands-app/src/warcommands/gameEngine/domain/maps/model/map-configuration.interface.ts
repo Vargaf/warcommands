@@ -1,4 +1,4 @@
-import { PlayersBaseListEntity } from '../../base/players-base-list.entity';
+import { BaseBuildingDTO } from '../../building/base/base-building.dto';
 
 export interface MapConfiguration {
     tiles: number[][];
@@ -7,5 +7,5 @@ export interface MapConfiguration {
         height: number
     };
     numberOfPlayers: number;
-    playerBaseList: PlayersBaseListEntity;
+    playerBaseList: BaseBuildingDTO[];
 }

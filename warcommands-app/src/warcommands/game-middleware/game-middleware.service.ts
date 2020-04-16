@@ -1,5 +1,5 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
-import { GameService } from '../gameEngine/domain/game-engine/game.service';
+import { GameService } from '../gameEngine/domain/game-engine/sevices/game.service';
 import { BasicModeGameEngineService } from '../basic-mode/game-engine-basic-mode.service';
 import { MapType } from '../gameEngine/domain/maps/model/map-type.enum';
 import { GameEngineListenersService } from './game-engine-listeners.service';

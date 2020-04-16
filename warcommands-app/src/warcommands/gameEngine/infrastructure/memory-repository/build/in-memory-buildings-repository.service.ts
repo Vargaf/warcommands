@@ -7,7 +7,7 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
     private buildingsList: Map<string, BuildingDTO> = new Map<string, BuildingDTO>();
 
     save(building: BuildingDTO): void {
-        this.buildingsList.set(building.id, { ...building });
+        this.buildingsList.set(building.id, building);
     }
 
     findById(buildingId: string): BuildingDTO {
@@ -19,7 +19,7 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
 
         for (const building of this.buildingsList.values()) {
             if (building.type === buildingType && building.playerId === playerId) {
-                foundBuilding.push({ ...building });
+                foundBuilding.push(building);
             }
         }
 

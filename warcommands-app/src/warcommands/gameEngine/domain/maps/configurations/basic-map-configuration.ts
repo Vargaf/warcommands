@@ -49,8 +49,8 @@ export const BasicMapConfiguration: MapConfiguration = {
         height: 40
     },
     numberOfPlayers: 2,
-    playerBaseList: {
-        0: {
+    playerBaseList: [
+        {
             id: '0',
             sizeHeight: 3,
             sizeWidth: 3,
@@ -63,9 +63,13 @@ export const BasicMapConfiguration: MapConfiguration = {
             spawnRelativeCoordinates: {
                 xCoordinate: 1,
                 yCoordinate: 3,
+            },
+            resources: {
+                matter: 250,
+                energy: 50
             }
         },
-        1: {
+        {
             id: '1',
             sizeHeight: 3,
             sizeWidth: 3,
@@ -78,7 +82,11 @@ export const BasicMapConfiguration: MapConfiguration = {
             spawnRelativeCoordinates: {
                 xCoordinate: 1,
                 yCoordinate: 3,
+            },
+            resources: {
+                matter: 250,
+                energy: 50
             }
         }
-    }
+    ]
 };

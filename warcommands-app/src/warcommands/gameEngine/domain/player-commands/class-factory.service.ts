@@ -2,7 +2,7 @@ import { ClassMemberDTO } from '../command/model/class-member.dto';
 import { ClassNameENUM } from '../command/model/class-name.enum';
 import { GameClassFactoryService } from './game-class/services/game-class-factory.service';
 import { AbstractClassFactoryDefinition } from './abstract-class-factory-definition';
-import { BaseClassFactoryService } from './base-class/base-class-factory.service';
+import { BaseClassFactoryService } from './base-class/services/base-class-factory.service';
 
 export class ClassFactoryService {
 

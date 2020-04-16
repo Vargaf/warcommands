@@ -6,4 +6,6 @@ export enum EventType {
     MapGenerated = 'map:generated',
     GeneratingBase = 'base:generaing',
     BaseGenerated = 'base:generated',
+
+    CreateMinion = 'base:createMinion',
 }
