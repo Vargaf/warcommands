@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { UnitTypeENUM } from '../model/unit-type.enum';
 import { GameEventBusService } from '../../../game-event-bus/services/game-event-bus.service';
 import { BaseSpawningUnitEvent } from '../events/base-spawning-unit.event';
-import { BaseSpawnedUnitEvent } from '../events/base-spawned-unit.event';
+import { BaseQueueingUnitEvent } from '../events/base-queueing-unit.event';
 
 export class BaseUnitsManagerService {
 
@@ -19,8 +19,9 @@ export class BaseUnitsManagerService {
         let base: BaseBuildingDTO = (this.buildingsRepositoryService.findById(baseId) as BaseBuildingDTO);
         const minionMatterCost = MinionConfiguration.cost.matter;
         const minionEnergyCost = MinionConfiguration.cost.energy;
+        const thereIsRoomCreateUnit = this.thereIsRoomCreateUnit(base);
 
-        if(base.resources.matter >= minionMatterCost && base.resources.energy >= minionEnergyCost) {
+        if(thereIsRoomCreateUnit && base.resources.matter >= minionMatterCost && base.resources.energy >= minionEnergyCost) {
             const minion: UnitMinionDTO = {
                 id: uuid(),
                 playerId: base.playerId,
@@ -57,7 +58,7 @@ export class BaseUnitsManagerService {
             this.gameEventBusService.cast(event);
         } else {
             base.queueList.push(unit);
-            const event: BaseSpawnedUnitEvent = new BaseSpawnedUnitEvent(base, unit);
+            const event: BaseQueueingUnitEvent = new BaseQueueingUnitEvent(base, unit);
             this.gameEventBusService.cast(event);
         }
 
@@ -65,8 +66,11 @@ export class BaseUnitsManagerService {
     }
 
     private isBaseAlreadySpawning(base: BaseBuildingDTO): boolean {
-        return base.unitSpawning === null || base.unitSpawning.unit === null;
+        return base.unitSpawning.unit !== null;
     }
 
+    private thereIsRoomCreateUnit(base: BaseBuildingDTO): boolean {
+        return base.queueList.length < 3;
+    }
 
 }

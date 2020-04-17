@@ -2,16 +2,19 @@ import { InMemoryBlockedTileRepositoryService } from '../../../memory-repository
 import { BuildingsManagerService } from 'src/warcommands/gameEngine/domain/building/services/buildings-manager.service';
 import { BuildingCreatedEventFactoryService } from 'src/warcommands/gameEngine/domain/building/services/building-created-event-factory.service';
 import { InMemoryBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-buildings-repository.service';
+import { InMemorySpawningBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-spawning-buildings-repository.service';
 
 const factory = (
     blockedTileRepository: InMemoryBlockedTileRepositoryService,
     buildingCreatedEventFactoryService: BuildingCreatedEventFactoryService,
-    buildingsRepositoryService: InMemoryBuildingsRepositoryService
+    buildingsRepositoryService: InMemoryBuildingsRepositoryService,
+    spawningBuildingsRepositoryService: InMemorySpawningBuildingsRepositoryService
     ) => {
     return new BuildingsManagerService(
         blockedTileRepository,
         buildingCreatedEventFactoryService,
-        buildingsRepositoryService
+        buildingsRepositoryService,
+        spawningBuildingsRepositoryService
         );
 };
 
@@ -21,6 +24,7 @@ export const provider = {
     deps: [
         InMemoryBlockedTileRepositoryService,
         BuildingCreatedEventFactoryService,
-        InMemoryBuildingsRepositoryService
+        InMemoryBuildingsRepositoryService,
+        InMemorySpawningBuildingsRepositoryService
     ]
 };

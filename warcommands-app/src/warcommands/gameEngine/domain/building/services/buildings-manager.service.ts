@@ -5,13 +5,15 @@ import { MapConfiguration } from '../../maps/model/map-configuration.interface';
 import { IsBlockedTileHelper } from './is-blocked-tile-helper';
 import { BuildingCreatedEventFactoryService } from './building-created-event-factory.service';
 import { BuildingsRepositoryService } from './buildings-repository.service';
+import { SpawingBuildingsRepositoryservice } from './spawning-buildings-repository.service';
 
 export class BuildingsManagerService {
 
     constructor(
         private readonly blockedTileRepository: BlockedTileRepository,
         private readonly buildingCreatedEventFactoryService: BuildingCreatedEventFactoryService,
-        private readonly buildingsRepositoryService: BuildingsRepositoryService
+        private readonly buildingsRepositoryService: BuildingsRepositoryService,
+        private readonly spawningBuildngsRepositoryService: SpawingBuildingsRepositoryservice
     ) {}
 
     initializeFromMap(map: MapConfiguration): void {
@@ -39,6 +41,10 @@ export class BuildingsManagerService {
 
         this.buildingsRepositoryService.save(building);
         this.buildingCreatedEventFactoryService.cast(building);
+    }
+
+    addSpawningBuilding(buildingId: string): void {
+        this.spawningBuildngsRepositoryService.save(buildingId);
     }
 
 }

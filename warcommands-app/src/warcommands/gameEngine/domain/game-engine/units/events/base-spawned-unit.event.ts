@@ -5,7 +5,7 @@ import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
 
 interface BaseSpawnedUnitEventDTO {
     unit: UnitGenericDTO,
-    base: BaseBuildingDTO
+    baseId: string
 }
 
 export class BaseSpawnedUnitEvent implements EventInterface {
@@ -13,11 +13,11 @@ export class BaseSpawnedUnitEvent implements EventInterface {
 
     private _data: BaseSpawnedUnitEventDTO = {
         unit: null,
-        base: null
+        baseId: null
     };
 
     constructor(base: BaseBuildingDTO, unit: UnitGenericDTO) {
-        this._data.base = base;
+        this._data.baseId = base.id;
         this._data.unit = unit;
     }
 

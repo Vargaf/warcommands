@@ -31,7 +31,9 @@ import * as GameEngineEventListenerHubProvider from 'src/warcommands/gameEngine/
 import * as UnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/units-manager.provider';
 import * as InMemoryUnitsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-units-repository.provider';
 import * as BaseUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/base-units-manager.provider';
-
+import * as BuildingsManagereventListenersProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/buildings-manager-event-listeners.provider';
+import * as InMemorySpawningBuildingsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/in-memory-spawning-buildings-repository.provider';
+import * as GameLogicSpawningUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-spawning-units-manager.provider';
 
 @NgModule({
     providers: [
@@ -66,7 +68,10 @@ import * as BaseUnitsManagerProvider from 'src/warcommands/gameEngine/infrastruc
         GameEngineEventListenerHubProvider.provider,
         UnitsManagerProvider.provider,
         InMemoryUnitsRepositoryProvider.provider,
-        BaseUnitsManagerProvider.provider
+        BaseUnitsManagerProvider.provider,
+        BuildingsManagereventListenersProvider.provider,
+        InMemorySpawningBuildingsRepositoryProvider.provider,
+        GameLogicSpawningUnitsManagerProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

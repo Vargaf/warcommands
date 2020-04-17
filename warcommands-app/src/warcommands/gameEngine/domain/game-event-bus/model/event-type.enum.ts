@@ -9,6 +9,7 @@ export enum EventType {
 
     BaseSpawningUnit = 'base:spawningUnit',
     BaseSpawnedUnit = 'base:spawnedUnit',
+    BaseQueueingUnit = 'base:queueingUnit',
 
 
 

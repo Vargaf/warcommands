@@ -1,9 +1,6 @@
 import { UnitTypeENUM } from '../model/unit-type.enum';
-import { UnitMinionDTO } from '../minion/unit-minion.dto';
-import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
 import { BuildingsRepositoryService } from '../../../building/services/buildings-repository.service';
 import { UnitsRepositoryService } from './units-repository.service';
-import { MinionConfiguration } from '../minion/minion-configuration';
 import { BaseUnitsManagerService } from './base-units-manager.service';
 
 export class UnitsManagerService {

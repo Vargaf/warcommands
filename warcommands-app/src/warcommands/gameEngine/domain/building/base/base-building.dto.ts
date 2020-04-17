@@ -1,8 +1,7 @@
 import { BuildingTypeEnum } from '../model/building-type.enum';
-import { BuildingDTO } from '../model/building.dto';
-import { SpawnerDTO } from '../model/spawner.dto';
+import { SpawnerBuildingDTO } from '../model/building.dto';
 
-export interface BaseBuildingDTO extends BuildingDTO, SpawnerDTO {
+export interface BaseBuildingDTO extends SpawnerBuildingDTO {
     type: BuildingTypeEnum;
     name: string;
     

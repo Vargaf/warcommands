@@ -1,8 +1,13 @@
+import { GameLogicSpawningUnitsManager } from './game-logic-spawning-units-manager.service';
 
 export class GameLogicService {
 
-    constructor() {}
+    constructor(
+        private readonly gameLogicSpawningUnitsManager: GameLogicSpawningUnitsManager
+    ) {}
 
-    gameLogicLoop() {}
+    gameLogicLoop() {
+        this.gameLogicSpawningUnitsManager.spawnUnits();
+    }
 
 }

@@ -1,5 +1,6 @@
 import { CoordinatesEntity } from '../../maps/model/coordinates.entity';
 import { BuildingTypeEnum } from './building-type.enum';
+import { SpawnerDTO } from './spawner.dto';
 
 export interface BuildingDTO extends CoordinatesEntity {
     id: string;
@@ -8,3 +9,5 @@ export interface BuildingDTO extends CoordinatesEntity {
     sizeHeight: number;
     playerId: string;
 }
+
+export interface SpawnerBuildingDTO extends BuildingDTO, SpawnerDTO {}
