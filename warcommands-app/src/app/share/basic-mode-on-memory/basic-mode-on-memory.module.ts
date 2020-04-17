@@ -30,6 +30,7 @@ import * as GameLogicEventsListenerProvider from 'src/warcommands/gameEngine/inf
 import * as GameEngineEventListenerHubProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-engine-event-listener-hub.provider';
 import * as UnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/units-manager.provider';
 import * as InMemoryUnitsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-units-repository.provider';
+import * as BaseUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/base-units-manager.provider';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import * as InMemoryUnitsRepositoryProvider from 'src/warcommands/gameEngine/inf
         GameLogicEventsListenerProvider.provider,
         GameEngineEventListenerHubProvider.provider,
         UnitsManagerProvider.provider,
-        InMemoryUnitsRepositoryProvider.provider
+        InMemoryUnitsRepositoryProvider.provider,
+        BaseUnitsManagerProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

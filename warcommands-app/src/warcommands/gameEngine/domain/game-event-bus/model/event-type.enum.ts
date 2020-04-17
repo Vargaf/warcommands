@@ -7,5 +7,11 @@ export enum EventType {
     GeneratingBase = 'base:generaing',
     BaseGenerated = 'base:generated',
 
+    BaseSpawningUnit = 'base:spawningUnit',
+    BaseSpawnedUnit = 'base:spawnedUnit',
+
+
+
+    // Inner events
     CreateMinion = 'base:createMinion',
 }

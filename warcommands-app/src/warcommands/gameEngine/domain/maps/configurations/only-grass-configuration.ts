@@ -47,7 +47,8 @@ export const onlyGrassMap: MapConfiguration = {
             resources: {
                 matter: 250,
                 energy: 50
-            }
+            },
+            unitSpawning: null,
         },
         {
             id: '1',
@@ -66,7 +67,8 @@ export const onlyGrassMap: MapConfiguration = {
             resources: {
                 matter: 250,
                 energy: 50
-            }
+            },
+            unitSpawning: null,
         }
     ]
 };

@@ -1,0 +1,19 @@
+import { CoordinatesEntity } from '../share/model/coordinates.entity';
+import { UnitTypeENUM } from './unit-type.enum';
+
+export interface UnitGenericDTO extends CoordinatesEntity {
+    id: string;
+    playerId: string;
+    baseId: string;
+    type: UnitTypeENUM;
+    size: {
+        height: number,
+        width: number
+    },
+    attributes: {
+        armor: number,
+        fire: number,
+        speed: number,
+        hitPoints: number
+    }
+}
