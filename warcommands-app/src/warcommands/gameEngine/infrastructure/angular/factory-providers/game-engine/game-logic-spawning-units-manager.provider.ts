@@ -6,18 +6,21 @@ import { UnitsRepositoryService } from 'src/warcommands/gameEngine/domain/game-e
 import { GameEventBusService } from 'src/warcommands/gameEngine/domain/game-event-bus/services/game-event-bus.service';
 import { BuildingsRepositoryService } from 'src/warcommands/gameEngine/domain/building/services/buildings-repository.service';
 import { InMemoryBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-buildings-repository.service';
+import { MapBlockedTilesManagerService } from 'src/warcommands/gameEngine/domain/maps/services/map-blocked-tiles-manager.service';
 
 const factory = (
     spawningBuildngsRepositoryService: SpawingBuildingsRepositoryservice,
     unitsRepositoryService: UnitsRepositoryService,
     gameEventsBusSevice: GameEventBusService,
-    buildingsRepositoryService: BuildingsRepositoryService
+    buildingsRepositoryService: BuildingsRepositoryService,
+    mapBlockedTilesManagerService: MapBlockedTilesManagerService
 ) => {
     return new GameLogicSpawningUnitsManager(
         spawningBuildngsRepositoryService,
         unitsRepositoryService,
         gameEventsBusSevice,
-        buildingsRepositoryService
+        buildingsRepositoryService,
+        mapBlockedTilesManagerService
     )
 };
 
@@ -28,6 +31,7 @@ export const provider = {
         InMemorySpawningBuildingsRepositoryService,
         InMemoryUnitsRepositoryService,
         GameEventBusService,
-        InMemoryBuildingsRepositoryService
+        InMemoryBuildingsRepositoryService,
+        MapBlockedTilesManagerService
     ]
 };

@@ -6,4 +6,8 @@ export abstract class MapPathfindingGridRepository {
 
     abstract getGrid(): MapPathfindingGrid;
 
+    abstract blockTile(xCoordinate: number, yCoordinate: number): void;
+
+    abstract freeTile(xCoordinate: number, yCoordinate: number): void;
+
 }

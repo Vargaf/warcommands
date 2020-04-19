@@ -1,6 +1,6 @@
 import { TilePathfindingType } from '../../maps/model/tile-pathfinding-type.enum';
 
-export class IsBlockedTileHelper {
+export class IsTileBlockedToUnitsHelper {
 
     static check(tileType: TilePathfindingType): boolean {
         let isBlockedTile = true;

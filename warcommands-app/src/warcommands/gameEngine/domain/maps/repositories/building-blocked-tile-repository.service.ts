@@ -1,5 +1,5 @@
 
-export abstract class BlockedTileRepository {
+export abstract class BuildingBlockedTileRepository {
 
     abstract save(xCoordinate: number, yCoordinate: number): void;
 

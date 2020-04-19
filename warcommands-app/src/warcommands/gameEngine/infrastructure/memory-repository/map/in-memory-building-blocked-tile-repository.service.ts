@@ -1,9 +1,7 @@
-import { BlockedTileRepository } from 'src/warcommands/gameEngine/domain/building/repositories/blocked-tile-repository.service';
+import { BuildingBlockedTileRepository } from 'src/warcommands/gameEngine/domain/maps/repositories/building-blocked-tile-repository.service';
 import { CoordinatesEntity } from 'src/warcommands/gameEngine/domain/maps/model/coordinates.entity';
 
-export class InMemoryBlockedTileRepositoryService implements BlockedTileRepository {
-
-    // private blockedTiles: CoordinatesEntity[] = [];
+export class InMemoryBuildingBlockedTileRepositoryService implements BuildingBlockedTileRepository {
 
     private blockedTiles: Map<string, CoordinatesEntity> = new Map<string, CoordinatesEntity>();
 

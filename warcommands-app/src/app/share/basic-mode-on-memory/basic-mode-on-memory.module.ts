@@ -4,7 +4,7 @@ import * as MapMemoryRepository from 'src/warcommands/gameEngine/infrastructure/
 import * as InMemoryMapPathfindingRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-map-pathfinding-grid-repository.provider';
 import * as MapEngineProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-engine.provider';
 import * as BuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/buildings-manager.provider';
-import * as InMemoryBlockedTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/in-memory-blocked-tile-repository.provider';
+import * as InMemoryBuildingBlockedTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-building-blocked-tile-repository.provider';
 import * as GameEventBusProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-event-bus.provider';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { GameEngineListenersService } from 'src/warcommands/game-middleware/game-engine-listeners.service';
@@ -34,6 +34,8 @@ import * as BaseUnitsManagerProvider from 'src/warcommands/gameEngine/infrastruc
 import * as BuildingsManagereventListenersProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/buildings-manager-event-listeners.provider';
 import * as InMemorySpawningBuildingsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/in-memory-spawning-buildings-repository.provider';
 import * as GameLogicSpawningUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-spawning-units-manager.provider';
+import * as InMemoryUnitBlockedTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-unit-blocked-tile.repository.service';
+import * as MapBlockedTilesProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-blocked-tiles-manager.provider';
 
 @NgModule({
     providers: [
@@ -42,7 +44,7 @@ import * as GameLogicSpawningUnitsManagerProvider from 'src/warcommands/gameEngi
         InMemoryMapPathfindingRepositoryProvider.provider,
         MapEngineProvider.provider,
         BuildingsManagerProvider.provider,
-        InMemoryBlockedTileRepositoryProvider.provider,
+        InMemoryBuildingBlockedTileRepositoryProvider.provider,
         GameEventBusProvider.provider,
         GameMiddlewareService,
         GameEngineListenersService,
@@ -71,7 +73,9 @@ import * as GameLogicSpawningUnitsManagerProvider from 'src/warcommands/gameEngi
         BaseUnitsManagerProvider.provider,
         BuildingsManagereventListenersProvider.provider,
         InMemorySpawningBuildingsRepositoryProvider.provider,
-        GameLogicSpawningUnitsManagerProvider.provider
+        GameLogicSpawningUnitsManagerProvider.provider,
+        InMemoryUnitBlockedTileRepositoryProvider.provider,
+        MapBlockedTilesProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

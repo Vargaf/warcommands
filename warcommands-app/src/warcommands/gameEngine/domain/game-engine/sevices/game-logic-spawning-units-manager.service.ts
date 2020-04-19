@@ -7,6 +7,7 @@ import { BaseSpawnedUnitEvent } from '../units/events/base-spawned-unit.event';
 import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
 import { MinionConfiguration } from '../units/minion/minion-configuration';
 import { BaseSpawningUnitEvent } from '../units/events/base-spawning-unit.event';
+import { MapBlockedTilesManagerService } from '../../maps/services/map-blocked-tiles-manager.service';
 
 export class GameLogicSpawningUnitsManager {
 
@@ -14,7 +15,8 @@ export class GameLogicSpawningUnitsManager {
         private readonly spawningBuildngsRepositoryService: SpawingBuildingsRepositoryservice,
         private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly gameEventBusService: GameEventBusService,
-        private buildingsRepositoryService: BuildingsRepositoryService
+        private readonly buildingsRepositoryService: BuildingsRepositoryService,
+        private readonly mapBlockedTilesManagerService: MapBlockedTilesManagerService
     ) {}
 
     spawnUnits(): void {
@@ -26,15 +28,18 @@ export class GameLogicSpawningUnitsManager {
 
             for (let buildingId of spawngBuildingsList) {
                 const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(buildingId) as SpawnerBuildingDTO);
-                if (building.unitSpawning.spawnTime < currentTime) {
-                    
-                    this.spawnUnit(building);
-                    this.spawnNexUnitInQueue(building);
-                    this.buildingsRepositoryService.save(building);
-                    
-                    if(!this.isBuildingSpawning(building)) {
-                        this.spawningBuildngsRepositoryService.remove(buildingId);
-                        console.log("Todos los minions creados");
+
+                if (this.isSpawningSquareFree(building)) {
+                    if (building.unitSpawning.spawnTime < currentTime) {
+                        
+                        this.spawnUnit(building);
+                        this.spawnNexUnitInQueue(building);
+                        this.buildingsRepositoryService.save(building);
+                        
+                        if(!this.isBuildingSpawning(building)) {
+                            this.spawningBuildngsRepositoryService.remove(buildingId);
+                            console.log("Todos los minions creados");
+                        }
                     }
                 }
             }
@@ -48,6 +53,8 @@ export class GameLogicSpawningUnitsManager {
 
         building.unitSpawning.unit = null;
         building.unitSpawning.spawnTime = 0;
+
+        this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
 
         const event: BaseSpawnedUnitEvent = new BaseSpawnedUnitEvent((building as BaseBuildingDTO), unit);
         this.gameEventBusService.cast(event);
@@ -67,6 +74,13 @@ export class GameLogicSpawningUnitsManager {
 
     private isBuildingSpawning(building: SpawnerBuildingDTO): boolean {
         return building.unitSpawning.unit !== null;
+    }
+
+    private isSpawningSquareFree(building: SpawnerBuildingDTO): boolean {
+        const xCoordinate = building.xCoordinate + building.spawnRelativeCoordinates.xCoordinate;
+        const yCoordinate = building.yCoordinate + building.spawnRelativeCoordinates.yCoordinate;
+
+        return !this.mapBlockedTilesManagerService.isTileOccupiedByUnit(xCoordinate, yCoordinate);
     }
 
 }
