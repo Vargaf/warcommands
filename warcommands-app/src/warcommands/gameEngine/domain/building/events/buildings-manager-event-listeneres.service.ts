@@ -16,7 +16,7 @@ export class BuildingsManagerEventListenersService {
 
     private onBaseSpawningUnitEvent(): void {
         this.gameEventBusService.on(EventType.BaseSpawningUnit).subscribe((event: BaseSpawningUnitEvent) => {
-            this.buildingsManagerService.addSpawningBuildingId(event.data.baseId);
+            this.buildingsManagerService.addSpawningBuildingId(event.data.unit.baseId);
             console.log("Creando minion");
         });
     }

@@ -54,7 +54,7 @@ export class BaseUnitsManagerService {
             base.unitSpawning.unit = unit;
             base.unitSpawning.spawnTime = (performance || Date ).now() + MinionConfiguration.spawnTime;
 
-            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent(base, unit);
+            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent(unit, base.unitSpawning.spawnTime);
             this.gameEventBusService.cast(event);
         } else {
             base.queueList.push(unit);

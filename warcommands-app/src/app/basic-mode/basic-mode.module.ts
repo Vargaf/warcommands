@@ -13,6 +13,8 @@ import { GAME_ENGINE_BASIC_MODE_CONFIGURATION, GAME_CONFIG } from 'src/warcomman
 import { BasicModeOnMemoryModule } from '../share/basic-mode-on-memory/basic-mode-on-memory.module';
 import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { UnitSpawningManagerService } from 'src/warcommands/basic-mode/domain/units/services/unit-spawning-manager.service';
+import { BuildingsManagerService } from 'src/warcommands/basic-mode/domain/building/services/buildings-manager.service';
 
 
 
@@ -34,6 +36,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   providers: [
     DomElementInjectorService,
     DomElementComponentFactoryService,
+    UnitSpawningManagerService,
+    BuildingsManagerService,
     { provide: GAME_CONFIG, useValue: GAME_ENGINE_BASIC_MODE_CONFIGURATION },
     { provide: BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN, useFactory: BasicModeGameEngineStore.reducers }
   ]

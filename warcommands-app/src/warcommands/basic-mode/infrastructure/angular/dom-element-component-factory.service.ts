@@ -5,6 +5,8 @@ import { TileSandComponent } from 'src/app/basic-mode/graphics/tile-sand/tile-sa
 import { TileWaterComponent } from 'src/app/basic-mode/graphics/tile-water/tile-water.component';
 import { TileDTO } from 'src/warcommands/gameEngine/domain/maps/model/tile.dto';
 import { TileType } from 'src/warcommands/gameEngine/domain/maps/model/tile-type.enum';
+import { UnitTypeENUM } from '../../domain/units/unit-type.enum';
+import { MinionComponent } from 'src/app/basic-mode/graphics/minion/minion.component';
 
 @Injectable({
     providedIn: 'root'
@@ -35,6 +37,23 @@ export class DomElementComponentFactoryService {
             case TileType.Water: {
                 component = this.componentFactoryResolver.resolveComponentFactory(TileWaterComponent);
                 break;
+            }
+        }
+
+        return component;
+    }
+
+    getUnitComponent(unitType: UnitTypeENUM): ComponentFactory<MinionComponent> {
+
+        let component: ComponentFactory<any>;
+
+        switch (unitType) {
+            case UnitTypeENUM.Minion: {
+                component = this.componentFactoryResolver.resolveComponentFactory(MinionComponent);
+                break;
+            }
+            default: {
+                throw new Error("Wrong unit type: " + unitType);
             }
         }
 

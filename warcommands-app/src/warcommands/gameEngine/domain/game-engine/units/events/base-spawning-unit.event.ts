@@ -1,11 +1,10 @@
 import { EventInterface } from '../../../game-event-bus/model/event.interface';
 import { EventType } from '../../../game-event-bus/model/event-type.enum';
 import { UnitGenericDTO } from '../model/unit-generic.dto';
-import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
 
 interface BaseSpawningUnitEventDTO {
     unit: UnitGenericDTO,
-    baseId: string
+    spawnTime: number
 }
 
 export class BaseSpawningUnitEvent implements EventInterface {
@@ -14,12 +13,12 @@ export class BaseSpawningUnitEvent implements EventInterface {
 
     private _data: BaseSpawningUnitEventDTO = {
         unit: null,
-        baseId: null
+        spawnTime: 0
     };
 
-    constructor(base: BaseBuildingDTO, unit: UnitGenericDTO) {
-        this._data.baseId = base.id;
+    constructor(unit: UnitGenericDTO, spawnTime: number) {
         this._data.unit = unit;
+        this._data.spawnTime = spawnTime;
     }
 
     get data(): BaseSpawningUnitEventDTO {

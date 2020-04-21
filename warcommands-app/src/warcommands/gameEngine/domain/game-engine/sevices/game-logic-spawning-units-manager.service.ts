@@ -66,7 +66,7 @@ export class GameLogicSpawningUnitsManager {
             building.unitSpawning.unit = unit;
             building.unitSpawning.spawnTime = (performance || Date ).now() + MinionConfiguration.spawnTime;
 
-            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent((building as BaseBuildingDTO), unit);
+            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent(unit, building.unitSpawning.spawnTime);
             this.gameEventBusService.cast(event);
         }
         

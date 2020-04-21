@@ -6,6 +6,8 @@ import { MapGeneratedEvent } from '../gameEngine/domain/game-event-bus/model/map
 import { BaseCreaedEvent } from '../gameEngine/domain/game-event-bus/model/base/base-created.event';
 import { BaseEntityInterface } from '../basic-mode/domain/building/base/base-entity-interface';
 import { BuildingTypeEnum } from '../basic-mode/domain/building/model/building-type.enum';
+import { BaseSpawningUnitEvent } from '../gameEngine/domain/game-engine/units/events/base-spawning-unit.event';
+import { BaseSpawnedUnitEvent } from '../gameEngine/domain/game-engine/units/events/base-spawned-unit.event';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +22,8 @@ export class GameEngineListenersService {
     setListeners(): void {
         this.setMapGeneratingListeners();
         this.setBaseCreatedListeners();
+        this.onBaseSpawningUnit();
+        this.onBaseUnitSpawned();
     }
 
     private setMapGeneratingListeners(): void {
@@ -46,7 +50,19 @@ export class GameEngineListenersService {
                     energy: event.data.resources.energy
                 }
             };
-            this.gameEngine.addBase(base);
+            this.gameEngine.addBuilding(base);
+        });
+    }
+
+    private onBaseSpawningUnit(): void {
+        this.gameEventBusService.on(EventType.BaseSpawningUnit).subscribe((event: BaseSpawningUnitEvent) => {
+            this.gameEngine.spawningUnit(event.data.unit, event.data.spawnTime);
+        });
+    }
+
+    private onBaseUnitSpawned(): void {
+        this.gameEventBusService.on(EventType.BaseSpawnedUnit).subscribe((event: BaseSpawnedUnitEvent) => {
+            this.gameEngine.unitSpawned(event.data.unit);
         });
     }
 }
