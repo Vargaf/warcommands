@@ -50,7 +50,8 @@ export const onlyGrassMap: MapConfiguration = {
             },
             unitSpawning: {
                 unit: null,
-                spawnTime: null
+                spawnFinish: null,
+                spawnStart: null
             },
         },
         {
@@ -73,7 +74,8 @@ export const onlyGrassMap: MapConfiguration = {
             },
             unitSpawning: {
                 unit: null,
-                spawnTime: null
+                spawnFinish: null,
+                spawnStart: null
             },
         }
     ]

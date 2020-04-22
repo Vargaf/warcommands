@@ -6,7 +6,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 
 
@@ -19,7 +21,8 @@ import {MatInputModule} from '@angular/material/input';
         MatButtonModule,
         MatSelectModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatProgressSpinnerModule
     ]
 })
 export class MaterialModule { }

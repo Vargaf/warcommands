@@ -15,6 +15,7 @@ import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { UnitSpawningManagerService } from 'src/warcommands/basic-mode/domain/units/services/unit-spawning-manager.service';
 import { BuildingsManagerService } from 'src/warcommands/basic-mode/domain/building/services/buildings-manager.service';
+import { BasicModeInMemoryProvidersModule } from './basic-mode-in-memory-providers.module';
 
 
 
@@ -27,8 +28,9 @@ import { BuildingsManagerService } from 'src/warcommands/basic-mode/domain/build
     CommonModule,
     CommandsPanelModule,
     BasicModeRoutingModule,
-    GraphicsModule,
     MaterialModule,
+    BasicModeInMemoryProvidersModule,
+    GraphicsModule,
     BasicModeOnMemoryModule,
     FlexLayoutModule,
     StoreModule.forFeature(BasicModeGameEngineStore.GameEngineBasicModeStoreKey, BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN),
@@ -36,10 +38,10 @@ import { BuildingsManagerService } from 'src/warcommands/basic-mode/domain/build
   providers: [
     DomElementInjectorService,
     DomElementComponentFactoryService,
+    { provide: GAME_CONFIG, useValue: GAME_ENGINE_BASIC_MODE_CONFIGURATION },
+    { provide: BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN, useFactory: BasicModeGameEngineStore.reducers },
     UnitSpawningManagerService,
     BuildingsManagerService,
-    { provide: GAME_CONFIG, useValue: GAME_ENGINE_BASIC_MODE_CONFIGURATION },
-    { provide: BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN, useFactory: BasicModeGameEngineStore.reducers }
   ]
 })
 export class BasicModeModule { }

@@ -1,5 +1,5 @@
-import { CoordinatesEntity } from '../../maps/model/coordinates.entity';
-import { UnitGenericDTO } from '../../game-engine/units/model/unit-generic.dto';
+import { UnitGenericDTO } from '../../units/unit-generic.dto';
+import { CoordinatesEntity } from '../../share/model/coordinates.entity';
 
 export interface SpawnerDTO {
     queueList: UnitGenericDTO[];
@@ -7,6 +7,6 @@ export interface SpawnerDTO {
     unitSpawning: {
         unit: UnitGenericDTO,
         spawnFinish: number,
-        spawnStart: number,
+        spawnStart: number
     }
 }

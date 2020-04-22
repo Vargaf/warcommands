@@ -6,4 +6,9 @@
         position: absolute;
         background-color: rgb(4, 55, 61);
     }
+
+    .spinner {
+        position: absolute;
+        transform-origin: left top;
+    }
 }

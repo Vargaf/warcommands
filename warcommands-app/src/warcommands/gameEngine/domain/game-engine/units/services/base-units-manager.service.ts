@@ -25,7 +25,7 @@ export class BaseUnitsManagerService {
             const minion: UnitMinionDTO = {
                 id: uuid(),
                 playerId: base.playerId,
-                baseId: base.id,
+                buildingId: base.id,
                 type: UnitTypeENUM.Minion,
                 size: {
                     height: 1,
@@ -52,9 +52,10 @@ export class BaseUnitsManagerService {
     private addUnitToQueue(base: BaseBuildingDTO, unit: UnitMinionDTO): BaseBuildingDTO {
         if(!this.isBaseAlreadySpawning(base)) {
             base.unitSpawning.unit = unit;
-            base.unitSpawning.spawnTime = (performance || Date ).now() + MinionConfiguration.spawnTime;
+            base.unitSpawning.spawnStart = (performance || Date ).now();
+            base.unitSpawning.spawnFinish = base.unitSpawning.spawnStart + MinionConfiguration.spawnTime;
 
-            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent(unit, base.unitSpawning.spawnTime);
+            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent(unit, base.unitSpawning.spawnFinish, base.unitSpawning.spawnStart);
             this.gameEventBusService.cast(event);
         } else {
             base.queueList.push(unit);

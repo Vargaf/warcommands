@@ -4,7 +4,8 @@ import { UnitGenericDTO } from '../model/unit-generic.dto';
 
 interface BaseSpawningUnitEventDTO {
     unit: UnitGenericDTO,
-    spawnTime: number
+    spawnFinish: number,
+    spawnStart: number,
 }
 
 export class BaseSpawningUnitEvent implements EventInterface {
@@ -13,12 +14,16 @@ export class BaseSpawningUnitEvent implements EventInterface {
 
     private _data: BaseSpawningUnitEventDTO = {
         unit: null,
-        spawnTime: 0
+        spawnFinish: 0,
+        spawnStart: 0
     };
 
-    constructor(unit: UnitGenericDTO, spawnTime: number) {
-        this._data.unit = unit;
-        this._data.spawnTime = spawnTime;
+    constructor(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number) {
+        this._data = {
+            unit,
+            spawnFinish,
+            spawnStart
+        }
     }
 
     get data(): BaseSpawningUnitEventDTO {

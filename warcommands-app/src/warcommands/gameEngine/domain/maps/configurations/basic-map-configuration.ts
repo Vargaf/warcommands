@@ -70,7 +70,8 @@ export const BasicMapConfiguration: MapConfiguration = {
             },
             unitSpawning: {
                 unit: null,
-                spawnTime: null
+                spawnFinish: null,
+                spawnStart: null,
             },
         },
         {
@@ -93,7 +94,8 @@ export const BasicMapConfiguration: MapConfiguration = {
             },
             unitSpawning: {
                 unit: null,
-                spawnTime: null
+                spawnFinish: null,
+                spawnStart: null
             },
         }
     ]

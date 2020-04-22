@@ -18,7 +18,7 @@ export class BasicModeGameEngineService  {
 
     private lastFrameUpdateTime: number;
 
-    private readonly millisecondsPerFrame = 1000 / 30;
+    //private readonly millisecondsPerFrame = 1000 / 30;
 
     constructor(
         private readonly ngZone: NgZone,
@@ -45,18 +45,18 @@ export class BasicModeGameEngineService  {
         this.animate();
     }
 
-    addBuilding(building: BuildingDTO): void {
-        this.buildingsManagerService.addBuilding(building);
-    }
-
     generateMap(map: MapDTO): void {
         for (const tile of map.tiles) {
             this.domElementIjenctorService.addTile(tile);
         }
     }
 
-    spawningUnit(unit: UnitGenericDTO, spawnTime: number): void {
-        this.unitSpawnngManagerService.spawningUnit(unit, spawnTime);
+    addBuilding(building: BuildingDTO): void {
+        this.buildingsManagerService.addBuilding(building);
+    }
+
+    spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
+        this.buildingsManagerService.spawningUnit(unit, spawnFinish, spawnStart);
     }
 
     unitSpawned(unit: UnitGenericDTO): void {
@@ -79,19 +79,24 @@ export class BasicModeGameEngineService  {
             this.render();
         });
 
-        const timeElapsed = (performance || Date ).now();
+        //const timeElapsed = (performance || Date ).now();
 
+        /*
         if (this.isFrameUpdateNeeded(timeElapsed)) {
             this.lastFrameUpdateTime = timeElapsed;
             this.requestAnimationFrameService.updateFrameId(timeElapsed);
         }
+        */
 
         this.statsService.update();
+        this.requestAnimationFrameService.updateFrameTime();
     }
 
+    /*
     private isFrameUpdateNeeded(timeElapsed: number): boolean {
         const timeElapsedSinceLastUpdate = timeElapsed - this.lastFrameUpdateTime;
 
         return timeElapsedSinceLastUpdate > this.millisecondsPerFrame;
     }
+    */
 }

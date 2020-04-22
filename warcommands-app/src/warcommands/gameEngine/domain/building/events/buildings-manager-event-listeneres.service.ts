@@ -2,6 +2,7 @@ import { GameEventBusService } from '../../game-event-bus/services/game-event-bu
 import { EventType } from '../../game-event-bus/model/event-type.enum';
 import { BuildingsManagerService } from '../services/buildings-manager.service';
 import { BaseSpawningUnitEvent } from '../../game-engine/units/events/base-spawning-unit.event';
+import { BaseSpawnedUnitEvent } from '../../game-engine/units/events/base-spawned-unit.event';
 
 export class BuildingsManagerEventListenersService {
 
@@ -16,14 +17,14 @@ export class BuildingsManagerEventListenersService {
 
     private onBaseSpawningUnitEvent(): void {
         this.gameEventBusService.on(EventType.BaseSpawningUnit).subscribe((event: BaseSpawningUnitEvent) => {
-            this.buildingsManagerService.addSpawningBuildingId(event.data.unit.baseId);
-            console.log("Creando minion");
+            this.buildingsManagerService.addSpawningBuildingId(event.data.unit.buildingId);
+            console.log("Creando minion: " + event.data.unit.id);
         });
     }
 
     private onBaseSpawnedUnitEvent(): void {
-        this.gameEventBusService.on(EventType.BaseSpawnedUnit).subscribe((event) => {
-            console.log("Minion creado");
+        this.gameEventBusService.on(EventType.BaseSpawnedUnit).subscribe((event: BaseSpawnedUnitEvent) => {
+            console.log("Minion creado: " + event.data.unit.id);
         });
     }
 

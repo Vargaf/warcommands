@@ -48,6 +48,11 @@ export class GameEngineListenersService {
                 resources: {
                     matter: event.data.resources.matter,
                     energy: event.data.resources.energy
+                },
+                unitSpawning: {
+                    unit: null,
+                    spawnFinish: 0,
+                    spawnStart: 0
                 }
             };
             this.gameEngine.addBuilding(base);
@@ -56,7 +61,7 @@ export class GameEngineListenersService {
 
     private onBaseSpawningUnit(): void {
         this.gameEventBusService.on(EventType.BaseSpawningUnit).subscribe((event: BaseSpawningUnitEvent) => {
-            this.gameEngine.spawningUnit(event.data.unit, event.data.spawnTime);
+            this.gameEngine.spawningUnit(event.data.unit, event.data.spawnFinish, event.data.spawnStart);
         });
     }
 

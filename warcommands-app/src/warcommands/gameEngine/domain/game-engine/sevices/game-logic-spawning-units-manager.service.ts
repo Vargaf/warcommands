@@ -30,7 +30,7 @@ export class GameLogicSpawningUnitsManager {
                 const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(buildingId) as SpawnerBuildingDTO);
 
                 if (this.isSpawningSquareFree(building)) {
-                    if (building.unitSpawning.spawnTime < currentTime) {
+                    if (building.unitSpawning.spawnFinish < currentTime) {
                         
                         this.spawnUnit(building);
                         this.spawnNexUnitInQueue(building);
@@ -52,7 +52,7 @@ export class GameLogicSpawningUnitsManager {
         this.unitsRepositoryService.save(unit);
 
         building.unitSpawning.unit = null;
-        building.unitSpawning.spawnTime = 0;
+        building.unitSpawning.spawnFinish = 0;
 
         this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
 
@@ -64,9 +64,10 @@ export class GameLogicSpawningUnitsManager {
         if (building.queueList.length > 0) {
             const unit = building.queueList.shift();
             building.unitSpawning.unit = unit;
-            building.unitSpawning.spawnTime = (performance || Date ).now() + MinionConfiguration.spawnTime;
+            building.unitSpawning.spawnStart = (performance || Date ).now();
+            building.unitSpawning.spawnFinish = building.unitSpawning.spawnStart + MinionConfiguration.spawnTime;
 
-            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent(unit, building.unitSpawning.spawnTime);
+            const event: BaseSpawningUnitEvent = new BaseSpawningUnitEvent(unit, building.unitSpawning.spawnFinish, building.unitSpawning.spawnStart);
             this.gameEventBusService.cast(event);
         }
         

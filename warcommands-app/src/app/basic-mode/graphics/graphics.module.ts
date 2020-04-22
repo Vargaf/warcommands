@@ -11,6 +11,7 @@ import { TileGrassComponent } from './tile-grass/tile-grass.component';
 import { TileSandComponent } from './tile-sand/tile-sand.component';
 import { TileWaterComponent } from './tile-water/tile-water.component';
 import { BaseComponent } from './base/base.component';
+import { MaterialModule } from 'src/app/share/material/material.module';
 
 
 
@@ -24,7 +25,8 @@ import { BaseComponent } from './base/base.component';
     BaseComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule
   ],
   exports: [
     BasicModeComponentDirective

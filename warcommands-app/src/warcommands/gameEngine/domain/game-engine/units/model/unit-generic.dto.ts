@@ -4,7 +4,7 @@ import { UnitTypeENUM } from './unit-type.enum';
 export interface UnitGenericDTO extends CoordinatesEntity {
     id: string;
     playerId: string;
-    baseId: string;
+    buildingId: string;
     type: UnitTypeENUM;
     size: {
         height: number,
