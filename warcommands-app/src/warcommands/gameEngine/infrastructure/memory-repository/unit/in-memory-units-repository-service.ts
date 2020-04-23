@@ -1,5 +1,5 @@
-import { UnitsRepositoryService } from 'src/warcommands/gameEngine/domain/game-engine/units/services/units-repository.service';
-import { UnitGenericDTO } from 'src/warcommands/gameEngine/domain/game-engine/units/model/unit-generic.dto';
+import { UnitsRepositoryService } from 'src/warcommands/gameEngine/domain/units/services/units-repository.service';
+import { UnitGenericDTO } from 'src/warcommands/gameEngine/domain/units/model/unit-generic.dto';
 import * as _ from "lodash";
 
 export class InMemoryUnitsRepositoryService implements UnitsRepositoryService {

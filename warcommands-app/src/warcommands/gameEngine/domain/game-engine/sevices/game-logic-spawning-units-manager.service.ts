@@ -1,12 +1,12 @@
 import { SpawingBuildingsRepositoryservice } from '../../building/services/spawning-buildings-repository.service';
 import { BaseBuildingDTO } from '../../building/base/base-building.dto';
 import { SpawnerBuildingDTO } from '../../building/model/building.dto';
-import { UnitsRepositoryService } from '../units/services/units-repository.service';
+import { UnitsRepositoryService } from '../../units/services/units-repository.service';
 import { GameEventBusService } from '../../game-event-bus/services/game-event-bus.service';
-import { BaseSpawnedUnitEvent } from '../units/events/base-spawned-unit.event';
+import { BaseSpawnedUnitEvent } from '../../units/events/base-spawned-unit.event';
 import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
-import { MinionConfiguration } from '../units/minion/minion-configuration';
-import { BaseSpawningUnitEvent } from '../units/events/base-spawning-unit.event';
+import { MinionConfiguration } from '../../units/minion/minion-configuration';
+import { BaseSpawningUnitEvent } from '../../units/events/base-spawning-unit.event';
 import { MapBlockedTilesManagerService } from '../../maps/services/map-blocked-tiles-manager.service';
 
 export class GameLogicSpawningUnitsManager {

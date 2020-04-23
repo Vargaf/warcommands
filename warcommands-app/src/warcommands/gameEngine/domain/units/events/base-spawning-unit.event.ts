@@ -1,5 +1,5 @@
-import { EventInterface } from '../../../game-event-bus/model/event.interface';
-import { EventType } from '../../../game-event-bus/model/event-type.enum';
+import { EventInterface } from '../../game-event-bus/model/event.interface';
+import { EventType } from '../../game-event-bus/model/event-type.enum';
 import { UnitGenericDTO } from '../model/unit-generic.dto';
 
 interface BaseSpawningUnitEventDTO {

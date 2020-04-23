@@ -1,7 +1,7 @@
 import { GameLogicEventsListenerService } from 'src/warcommands/gameEngine/domain/game-engine/events/game-logic-events-listener.service';
 import { GameLogicService } from 'src/warcommands/gameEngine/domain/game-engine/sevices/game-logic.service';
 import { GameEventBusService } from 'src/warcommands/gameEngine/domain/game-event-bus/services/game-event-bus.service';
-import { UnitsManagerService } from 'src/warcommands/gameEngine/domain/game-engine/units/services/units-manager.service';
+import { UnitsManagerService } from 'src/warcommands/gameEngine/domain/units/services/units-manager.service';
 
 const factory = (
     gameLogicService: GameLogicService,

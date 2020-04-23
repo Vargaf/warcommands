@@ -1,7 +1,7 @@
-import { EventInterface } from '../../../game-event-bus/model/event.interface';
-import { EventType } from '../../../game-event-bus/model/event-type.enum';
+import { EventInterface } from '../../game-event-bus/model/event.interface';
+import { EventType } from '../../game-event-bus/model/event-type.enum';
 import { UnitGenericDTO } from '../model/unit-generic.dto';
-import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
+import { BaseBuildingDTO } from '../../building/base/base-building.dto';
 
 interface BaseQueueingUnitEventDTO {
     unit: UnitGenericDTO,

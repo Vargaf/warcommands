@@ -6,8 +6,8 @@ import { MapGeneratedEvent } from '../gameEngine/domain/game-event-bus/model/map
 import { BaseCreaedEvent } from '../gameEngine/domain/game-event-bus/model/base/base-created.event';
 import { BaseEntityInterface } from '../basic-mode/domain/building/base/base-entity-interface';
 import { BuildingTypeEnum } from '../basic-mode/domain/building/model/building-type.enum';
-import { BaseSpawningUnitEvent } from '../gameEngine/domain/game-engine/units/events/base-spawning-unit.event';
-import { BaseSpawnedUnitEvent } from '../gameEngine/domain/game-engine/units/events/base-spawned-unit.event';
+import { BaseSpawningUnitEvent } from '../gameEngine/domain/units/events/base-spawning-unit.event';
+import { BaseSpawnedUnitEvent } from '../gameEngine/domain/units/events/base-spawned-unit.event';
 
 @Injectable({
     providedIn: 'root'

@@ -6,7 +6,7 @@ import { IsTileBlockedToBuildHelper } from '../../building/services/is-tile-bloc
 import { IsTileBlockedToUnitsHelper } from '../../building/services/is-tile-blocked-to-units-helper';
 import { MapPathfindingGridRepository } from '../repositories/map-pathfinding-grid-repository.service';
 import { BuildingDTO } from '../../building/model/building.dto';
-import { UnitGenericDTO } from '../../game-engine/units/model/unit-generic.dto';
+import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 
 export class MapBlockedTilesManagerService {
 

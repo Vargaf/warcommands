@@ -1,4 +1,4 @@
-import { BaseUnitsManagerService } from 'src/warcommands/gameEngine/domain/game-engine/units/services/base-units-manager.service';
+import { BaseUnitsManagerService } from 'src/warcommands/gameEngine/domain/units/services/base-units-manager.service';
 import { InMemoryBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-buildings-repository.service';
 import { GameEventBusService } from 'src/warcommands/gameEngine/domain/game-event-bus/services/game-event-bus.service';
 

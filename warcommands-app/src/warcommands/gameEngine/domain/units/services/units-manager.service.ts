@@ -1,5 +1,5 @@
 import { UnitTypeENUM } from '../model/unit-type.enum';
-import { BuildingsRepositoryService } from '../../../building/services/buildings-repository.service';
+import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
 import { UnitsRepositoryService } from './units-repository.service';
 import { BaseUnitsManagerService } from './base-units-manager.service';
 

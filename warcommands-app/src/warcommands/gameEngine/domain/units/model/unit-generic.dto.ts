@@ -1,4 +1,4 @@
-import { CoordinatesEntity } from '../../../maps/model/coordinates.entity';
+import { CoordinatesEntity } from '../../maps/model/coordinates.entity';
 import { UnitTypeENUM } from './unit-type.enum';
 
 export interface UnitGenericDTO extends CoordinatesEntity {

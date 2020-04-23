@@ -1,10 +1,10 @@
-import { BuildingsRepositoryService } from '../../../building/services/buildings-repository.service';
-import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
+import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
+import { BaseBuildingDTO } from '../../building/base/base-building.dto';
 import { MinionConfiguration } from '../minion/minion-configuration';
 import { UnitMinionDTO } from '../minion/unit-minion.dto';
 import { v4 as uuid } from 'uuid';
 import { UnitTypeENUM } from '../model/unit-type.enum';
-import { GameEventBusService } from '../../../game-event-bus/services/game-event-bus.service';
+import { GameEventBusService } from '../../game-event-bus/services/game-event-bus.service';
 import { BaseSpawningUnitEvent } from '../events/base-spawning-unit.event';
 import { BaseQueueingUnitEvent } from '../events/base-queueing-unit.event';
 

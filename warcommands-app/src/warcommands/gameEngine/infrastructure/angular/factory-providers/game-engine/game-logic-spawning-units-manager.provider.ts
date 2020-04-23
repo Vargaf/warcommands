@@ -2,7 +2,7 @@ import { GameLogicSpawningUnitsManager } from 'src/warcommands/gameEngine/domain
 import { SpawingBuildingsRepositoryservice } from 'src/warcommands/gameEngine/domain/building/services/spawning-buildings-repository.service';
 import { InMemorySpawningBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-spawning-buildings-repository.service';
 import { InMemoryUnitsRepositoryService } from '../../../memory-repository/unit/in-memory-units-repository-service';
-import { UnitsRepositoryService } from 'src/warcommands/gameEngine/domain/game-engine/units/services/units-repository.service';
+import { UnitsRepositoryService } from 'src/warcommands/gameEngine/domain/units/services/units-repository.service';
 import { GameEventBusService } from 'src/warcommands/gameEngine/domain/game-event-bus/services/game-event-bus.service';
 import { BuildingsRepositoryService } from 'src/warcommands/gameEngine/domain/building/services/buildings-repository.service';
 import { InMemoryBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-buildings-repository.service';

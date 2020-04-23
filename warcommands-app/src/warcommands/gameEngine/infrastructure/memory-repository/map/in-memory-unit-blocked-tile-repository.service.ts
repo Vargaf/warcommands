@@ -1,5 +1,5 @@
 import { UnitBlockedTileRepositoryService } from 'src/warcommands/gameEngine/domain/maps/repositories/unit-blocked-tile-repository.service';
-import { UnitGenericDTO } from 'src/warcommands/gameEngine/domain/game-engine/units/model/unit-generic.dto';
+import { UnitGenericDTO } from 'src/warcommands/gameEngine/domain/units/model/unit-generic.dto';
 
 export class InMemoryUnitBlockedTileRepositoryService implements UnitBlockedTileRepositoryService {
     
