@@ -11,7 +11,7 @@ export interface BuildingListState {
 
 const initialState: BuildingListState = {
     list: {}
-}
+};
 
 const buildingListReducer = createReducer(
     initialState,

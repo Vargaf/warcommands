@@ -3,6 +3,7 @@ import { UnitGenericDTO } from '../unit-generic.dto';
 import { DomElementComponentFactoryService } from 'src/warcommands/basic-mode/infrastructure/angular/dom-element-component-factory.service';
 import { SpawnerBuildingDTO } from '../../building/model/building.dto';
 import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
+import { UnitRepositoryService } from './unit-repository.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ export class UnitSpawningManagerService {
 
     constructor(
         private readonly domElementComponentFactoryService: DomElementComponentFactoryService,
-        private readonly buildingsRepositoryService: BuildingsRepositoryService
+        private readonly unitRepositoryService: UnitRepositoryService
     ) {}
     
     setViewContainerRef(viewContainerRef: ViewContainerRef): void {
@@ -25,5 +26,7 @@ export class UnitSpawningManagerService {
         const viewContainerRef = this.viewContainerRef;
         const componentRef = viewContainerRef.createComponent(componentFactory);
         componentRef.instance.data = unit;
+
+        this.unitRepositoryService.save(unit);
     }
 }
