@@ -6,8 +6,8 @@ import { MapGeneratedEvent } from '../gameEngine/domain/game-event-bus/model/map
 import { BaseCreaedEvent } from '../gameEngine/domain/game-event-bus/model/base/base-created.event';
 import { BaseEntityInterface } from '../basic-mode/domain/building/base/base-entity-interface';
 import { BuildingTypeEnum } from '../basic-mode/domain/building/model/building-type.enum';
-import { BaseSpawningUnitEvent } from '../gameEngine/domain/units/events/base-spawning-unit.event';
-import { BaseSpawnedUnitEvent } from '../gameEngine/domain/units/events/base-spawned-unit.event';
+import { BuildingSpawningUnitEvent } from '../gameEngine/domain/game-engine/events/building-spawning-unit.event';
+import { BuildingSpawnedUnitEvent } from '../gameEngine/domain/game-engine/events/building-spawned-unit.event';
 
 @Injectable({
     providedIn: 'root'
@@ -22,8 +22,8 @@ export class GameEngineListenersService {
     setListeners(): void {
         this.setMapGeneratingListeners();
         this.setBaseCreatedListeners();
-        this.onBaseSpawningUnit();
-        this.onBaseUnitSpawned();
+        this.onBuildingSpawningUnit();
+        this.onBuildingUnitSpawned();
     }
 
     private setMapGeneratingListeners(): void {
@@ -59,14 +59,14 @@ export class GameEngineListenersService {
         });
     }
 
-    private onBaseSpawningUnit(): void {
-        this.gameEventBusService.on(EventType.BaseSpawningUnit).subscribe((event: BaseSpawningUnitEvent) => {
+    private onBuildingSpawningUnit(): void {
+        this.gameEventBusService.on(EventType.BuildingSpawningUnit).subscribe((event: BuildingSpawningUnitEvent) => {
             this.gameEngine.spawningUnit(event.data.unit, event.data.spawnFinish, event.data.spawnStart);
         });
     }
 
-    private onBaseUnitSpawned(): void {
-        this.gameEventBusService.on(EventType.BaseSpawnedUnit).subscribe((event: BaseSpawnedUnitEvent) => {
+    private onBuildingUnitSpawned(): void {
+        this.gameEventBusService.on(EventType.BuildingSpawnedUnit).subscribe((event: BuildingSpawnedUnitEvent) => {
             this.gameEngine.unitSpawned(event.data.unit);
         });
     }

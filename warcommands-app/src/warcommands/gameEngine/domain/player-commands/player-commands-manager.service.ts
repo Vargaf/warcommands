@@ -19,7 +19,7 @@ export class PlayerCommandsManagerService {
         this.setMirroringPlayers(file);
     }
 
-    runGameLoop(): void {
+    runPlayerCommands(): void {
         const playerList: PlayerDTO[] = this.playerManagerService.getPlayerList();
 
         for(const player of playerList) {

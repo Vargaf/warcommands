@@ -1,7 +1,7 @@
-import { BuildingDTO } from 'src/warcommands/gameEngine/domain/building/model/building.dto';
 import { createReducer, on, Action } from '@ngrx/store';
 import * as BuildingListActions from './actions';
 import * as _ from 'lodash';
+import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 
 export const BuildingListStoreKey = 'buildings';
 

@@ -28,14 +28,18 @@ import * as BaseClassFactoryProvider from 'src/warcommands/gameEngine/infrastruc
 import * as GameLogicProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic.provider';
 import * as GameLogicEventsListenerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-events-listener.provider';
 import * as GameEngineEventListenerHubProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-engine-event-listener-hub.provider';
-import * as UnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/units-manager.provider';
 import * as InMemoryUnitsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-units-repository.provider';
-import * as BaseUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/base-units-manager.provider';
 import * as BuildingsManagereventListenersProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/buildings-manager-event-listeners.provider';
 import * as InMemorySpawningBuildingsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/in-memory-spawning-buildings-repository.provider';
 import * as GameLogicSpawningUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-spawning-units-manager.provider';
 import * as InMemoryUnitBlockedTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-unit-blocked-tile.repository.service';
 import * as MapBlockedTilesProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-blocked-tiles-manager.provider';
+import * as InMemoryUnitsToCreateRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-units-to-create-repository.provider';
+import * as EnqueueUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/enqueue-units-manager.provider';
+import * as BuildingSpawnerServiceFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/building-spawner-service-factory.provider';
+import * as BaseBuildingSpawnerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/base-building-spawner.provider';
+import * as GameLogicTimeFrameProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-time-frame.provider';
+import * as SpawnUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/spawn-units-manager.provider';
 
 @NgModule({
     providers: [
@@ -68,14 +72,18 @@ import * as MapBlockedTilesProvider from 'src/warcommands/gameEngine/infrastruct
         GameLogicProvider.provider,
         GameLogicEventsListenerProvider.provider,
         GameEngineEventListenerHubProvider.provider,
-        UnitsManagerProvider.provider,
         InMemoryUnitsRepositoryProvider.provider,
-        BaseUnitsManagerProvider.provider,
         BuildingsManagereventListenersProvider.provider,
         InMemorySpawningBuildingsRepositoryProvider.provider,
         GameLogicSpawningUnitsManagerProvider.provider,
         InMemoryUnitBlockedTileRepositoryProvider.provider,
-        MapBlockedTilesProvider.provider
+        MapBlockedTilesProvider.provider,
+        InMemoryUnitsToCreateRepositoryProvider.provider,
+        EnqueueUnitsManagerProvider.provider,
+        BuildingSpawnerServiceFactoryProvider.provider,
+        BaseBuildingSpawnerProvider.provider,
+        GameLogicTimeFrameProvider.provider,
+        SpawnUnitsManagerProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

@@ -2,8 +2,8 @@ import * as BuildingActions from 'src/ngrx/basic-mode/buildings/actions';
 import * as BuildingSelectors from 'src/ngrx/basic-mode/buildings/selectors';
 import { Injectable } from "@angular/core";
 import { Store, select } from '@ngrx/store';
-import { BuildingDTO } from 'src/warcommands/gameEngine/domain/building/model/building.dto';
 import { Observable } from 'rxjs';
+import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 
 @Injectable({
     providedIn: 'root'

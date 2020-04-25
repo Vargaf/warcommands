@@ -32,6 +32,8 @@ export class BaseComponent implements OnInit {
     public spinerElement: ElementRef<HTMLDivElement>;
 
     progress = 0;
+    tileSize = 0;
+    spinerStrokeWidth = 0;
     isSpawning = false;
     spawningSubscription: Subscription;
     private spawningQueue: UnitSpawningDTO[] = [];
@@ -129,7 +131,6 @@ export class BaseComponent implements OnInit {
         const spawnLeft = this.gameConfig.tileSize * this.data.spawnRelativeCoordinates.xCoordinate;
         const spawnTop = this.gameConfig.tileSize * this.data.spawnRelativeCoordinates.yCoordinate;
 
-        const spinnerScale = this.gameConfig.tileSize / 100;
         const spinnerLeft = this.gameConfig.tileSize * this.data.spawnRelativeCoordinates.xCoordinate;
         const spinnerTop = this.gameConfig.tileSize * (this.data.spawnRelativeCoordinates.yCoordinate - 1);
 
@@ -144,9 +145,11 @@ export class BaseComponent implements OnInit {
         this.spawnElement.nativeElement.style.setProperty('top', spawnTop + 'px');
         this.spawnElement.nativeElement.style.setProperty('left', spawnLeft + 'px');
 
-        this.spinerElement.nativeElement.style.transform ='scale(' + spinnerScale + ')';
         this.spinerElement.nativeElement.style.setProperty('top', spinnerTop + 'px');
         this.spinerElement.nativeElement.style.setProperty('left', spinnerLeft + 'px');
+        
+       this.tileSize = this.gameConfig.tileSize;
+       this.spinerStrokeWidth = this.tileSize / 2;
     }
 
 }

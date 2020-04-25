@@ -8,6 +8,7 @@ export interface BuildingDTO extends CoordinatesEntity {
     sizeWidth: number;
     sizeHeight: number;
     playerId: string;
+    baseId: string;
 }
 
 export interface SpawnerBuildingDTO extends BuildingDTO, SpawnerDTO {}

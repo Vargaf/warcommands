@@ -19,17 +19,7 @@ export class RequestAnimationFrameNgrxService implements RequestAnimationFrameSe
         this.previousTime = (performance || Date ).now();
         this.currentTime = this.previousTime;
     }
-
-    /*
-    updateFrameId(frameId: number): void {
-        this.store.dispatch(RequestAnimationFrameActions.updateFrame({ frameId }));
-    }
-
-    getFrameId(): Observable<number> {
-        return this.store.pipe(select(RequestAnimationFrameSelectors.selectFrameId));
-    }
-    */
-
+    
     updateFrameTime(): void {
         this.previousTime = this.currentTime;
         this.currentTime = (performance || Date ).now();

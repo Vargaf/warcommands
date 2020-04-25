@@ -1,6 +1,7 @@
 import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
 import { GameEventBusService } from '../../../game-event-bus/services/game-event-bus.service';
-import { CreateMinionEvent } from '../model/create-minion.event';
+import { CreateUnitOnBuildingEvent } from '../../../building/events/create-unit-on-building.event';
+import { UnitTypeENUM } from '../../../units/model/unit-type.enum';
 
 export class BaseClassService {
 
@@ -9,9 +10,9 @@ export class BaseClassService {
     ) {}
 
     createMinion(base: BaseBuildingDTO): void {
-        
-        const createMinionEvent: CreateMinionEvent = new CreateMinionEvent(base);
-        this.gameEventBusService.cast(createMinionEvent);
+        const event: CreateUnitOnBuildingEvent = new CreateUnitOnBuildingEvent(base.id, UnitTypeENUM.Minion);
+        this.gameEventBusService.cast(event);
+
     }
 
 }

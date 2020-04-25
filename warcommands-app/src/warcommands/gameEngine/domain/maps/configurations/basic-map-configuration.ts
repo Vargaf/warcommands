@@ -52,6 +52,7 @@ export const BasicMapConfiguration: MapConfiguration = {
     playerBaseList: [
         {
             id: '0',
+            baseId: '0',
             sizeHeight: 3,
             sizeWidth: 3,
             xCoordinate: 5,
@@ -76,6 +77,7 @@ export const BasicMapConfiguration: MapConfiguration = {
         },
         {
             id: '1',
+            baseId: '1',
             sizeHeight: 3,
             sizeWidth: 3,
             xCoordinate: 32,

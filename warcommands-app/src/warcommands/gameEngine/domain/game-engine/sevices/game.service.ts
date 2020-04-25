@@ -70,7 +70,7 @@ export class GameService {
             throw new Error('The game has not been initialized');
         }
 
-        this.runGameLoop();
+        this.runPlayerCommands();
         this.gameLogic();
     }
 
@@ -100,14 +100,14 @@ export class GameService {
         return randomizedBaseIndexList.sort((a,b) => { return 0.5 - Math.random()});
     }
 
-    private runGameLoop(): void {
-        this.playerCommandsManagerService.runGameLoop();
-        setTimeout(() => {this.runGameLoop()}, 100);
+    private runPlayerCommands(): void {
+        setTimeout(() => {this.runPlayerCommands()}, 100);
+        this.playerCommandsManagerService.runPlayerCommands();
     }
 
     private gameLogic(): void {
-        this.gameLogicService.gameLogicLoop();
         setTimeout(() => this.gameLogic(), 50);
+        this.gameLogicService.gameLogicLoop();
     }
 
 }

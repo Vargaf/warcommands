@@ -1,22 +1,21 @@
 import { GameLogicService } from '../sevices/game-logic.service';
 import { GameEventBusService } from '../../game-event-bus/services/game-event-bus.service';
 import { EventType } from '../../game-event-bus/model/event-type.enum';
-import { UnitsManagerService } from '../units/services/units-manager.service';
-import { UnitTypeENUM } from '../units/model/unit-type.enum';
+import { UnitsToCreateRepositoryService } from '../../units/services/units-to-create-repository.service';
+import { CreateUnitOnBuildingEvent } from '../../building/events/create-unit-on-building.event';
 
 export class GameLogicEventsListenerService {
 
     constructor(
-        private readonly gameLogicService: GameLogicService,
         private readonly gameEventBusService: GameEventBusService,
-        private readonly unitsManagerService: UnitsManagerService
+        private readonly unitsToCreateRepositoryService: UnitsToCreateRepositoryService
     ) {
         this.onCreateMinionListener();
     }
 
     private onCreateMinionListener(): void {
-        this.gameEventBusService.on(EventType.CreateMinion).subscribe((event) => {
-            this.unitsManagerService.createUnit(UnitTypeENUM.Minion, event.data);
+        this.gameEventBusService.on(EventType.CreateUnitOnBuilding).subscribe((event: CreateUnitOnBuildingEvent) => {
+            this.unitsToCreateRepositoryService.save(event.data);
         });
     }
 

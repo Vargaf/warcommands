@@ -24,7 +24,7 @@ export class BuildingsManagerService {
     }
 
     spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
-        const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(unit.buildingId) as SpawnerBuildingDTO);
+        const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(unit.baseId) as SpawnerBuildingDTO);
         building.unitSpawning = {
             unit,
             spawnFinish,

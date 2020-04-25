@@ -2,7 +2,9 @@
     <div class="spawn" #spawn></div>
     <div #spiner class="spinner">
         <mat-progress-spinner *ngIf="isSpawning"
-        [value]="progress">
+        [value]="progress"
+        [diameter]="tileSize"
+        [strokeWidth]="spinerStrokeWidth">
         </mat-progress-spinner>
     </div>
 </div>

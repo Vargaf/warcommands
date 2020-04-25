@@ -1,18 +1,18 @@
+import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { EventInterface } from '../../game-event-bus/model/event.interface';
 import { EventType } from '../../game-event-bus/model/event-type.enum';
-import { UnitGenericDTO } from '../model/unit-generic.dto';
 
-interface BaseSpawningUnitEventDTO {
+interface BuildingSpawningUnitEventDTO {
     unit: UnitGenericDTO,
     spawnFinish: number,
     spawnStart: number,
 }
 
-export class BaseSpawningUnitEvent implements EventInterface {
+export class BuildingSpawningUnitEvent implements EventInterface {
     
-    readonly type = EventType.BaseSpawningUnit;
+    readonly type = EventType.BuildingSpawningUnit;
 
-    private _data: BaseSpawningUnitEventDTO = {
+    private _data: BuildingSpawningUnitEventDTO = {
         unit: null,
         spawnFinish: 0,
         spawnStart: 0
@@ -26,7 +26,7 @@ export class BaseSpawningUnitEvent implements EventInterface {
         }
     }
 
-    get data(): BaseSpawningUnitEventDTO {
+    get data(): BuildingSpawningUnitEventDTO {
         return this._data;
     }
 }

@@ -7,12 +7,12 @@ export enum EventType {
     GeneratingBase = 'base:generaing',
     BaseGenerated = 'base:generated',
 
-    BaseSpawningUnit = 'base:spawningUnit',
-    BaseSpawnedUnit = 'base:spawnedUnit',
-    BaseQueueingUnit = 'base:queueingUnit',
+    BuildingSpawningUnit = 'building:spawningUnit',
+    BuildingSpawnedUnit = 'building:spawnedUnit',
+    BuildingQueueingUnit = 'building:queueingUnit',
 
 
 
     // Inner events
-    CreateMinion = 'base:createMinion',
+    CreateUnitOnBuilding = 'building:createUnit'
 }

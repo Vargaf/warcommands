@@ -1,6 +1,6 @@
 import { UnitTypeENUM } from './unit-type.enum';
 
-export interface UnitToCreateOnBuildoingDTO {
+export interface UnitToCreateOnBuildingDTO {
     buildingId: string;
-    unitTyp: UnitTypeENUM;
+    unitType: UnitTypeENUM;
 }
