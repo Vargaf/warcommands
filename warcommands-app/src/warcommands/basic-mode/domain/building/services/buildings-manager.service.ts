@@ -21,13 +21,31 @@ export class BuildingsManagerService {
     }
 
     spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
-        const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(unit.baseId) as SpawnerBuildingDTO);
+        const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(unit.spawnerBuildingId) as SpawnerBuildingDTO);
         building.unitSpawning = {
             unit,
             spawnFinish,
             spawnStart
         }
         this.buildingsRepositoryService.save(building);
+    }
+
+    unitSpawned(unit: UnitGenericDTO): void {
+        const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(unit.spawnerBuildingId) as SpawnerBuildingDTO);
+        building.unitSpawning = {
+            unit: null,
+            spawnFinish: 0,
+            spawnStart: 0
+        }
+        this.buildingsRepositoryService.save(building);
+    }
+
+    queueingUnit(unit: UnitGenericDTO): void {
+        this.buildingsRepositoryService.addUnitToQueue(unit);
+    }
+
+    removingUnitFromQueue(unit: UnitGenericDTO): void {
+        this.buildingsRepositoryService.removeUnitFromQueue(unit);
     }
 
 }

@@ -14,12 +14,6 @@ import { BuildingDTO } from './domain/building/model/building.dto';
 })
 export class BasicModeGameEngineService  {
 
-    private viewContainerRef: ViewContainerRef;
-
-    private lastFrameUpdateTime: number;
-
-    //private readonly millisecondsPerFrame = 1000 / 30;
-
     constructor(
         private readonly ngZone: NgZone,
         private readonly statsService: StatsService,
@@ -27,12 +21,9 @@ export class BasicModeGameEngineService  {
         private readonly domElementIjenctorService: DomElementInjectorService,
         private readonly unitSpawnngManagerService: UnitSpawningManagerService,
         private readonly buildingsManagerService: BuildingsManagerService
-    ) {
-        this.lastFrameUpdateTime = 0;
-    }
+    ) {}
 
     setViewContainerRef(viewContainerRef: ViewContainerRef): void {
-        this.viewContainerRef = viewContainerRef;
         this.domElementIjenctorService.setViewContainerRef(viewContainerRef);
         this.unitSpawnngManagerService.setViewContainerRef(viewContainerRef);
     }
@@ -59,7 +50,16 @@ export class BasicModeGameEngineService  {
         this.buildingsManagerService.spawningUnit(unit, spawnFinish, spawnStart);
     }
 
+    queueingUnit(unit: UnitGenericDTO): void {
+        this.buildingsManagerService.queueingUnit(unit);
+    }
+
+    buildingRemoveUnitFromQueue(unit: UnitGenericDTO): void {
+        this.buildingsManagerService.removingUnitFromQueue(unit);
+    }
+
     unitSpawned(unit: UnitGenericDTO): void {
+        this.buildingsManagerService.unitSpawned(unit);
         this.unitSpawnngManagerService.unitSpawned(unit);
     }
 

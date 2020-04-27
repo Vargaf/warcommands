@@ -3,6 +3,8 @@ import { MinionEntity } from 'src/warcommands/gameEngine/domain/minion/model/min
 import { RequestAnimationFrameService } from 'src/warcommands/basic-mode/domain/request-animation-frame/request-animation-frame.service';
 import { Observable } from 'rxjs';
 import { GameEngineBasicModeConfiguration, GAME_CONFIG } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
+import { UnitNgrxRepositoryService } from 'src/warcommands/basic-mode/infrastructure/ngrx/units/unit-ngrx-repository.service';
+import { CurrentPlayerRepositoryService } from 'src/warcommands/commands-panel/domain/current-player/services/current-player-repository.service';
 
 @Component({
     selector: 'app-minion',
@@ -18,6 +20,8 @@ export class MinionComponent implements OnInit {
 
     private requestAnimationFrameIdEvent: Observable<number>;
 
+    classColor: string = 'colorBlue';
+
     private movementDirection = 2;
     private xCoodinate: number;
     private maxMovement: number;
@@ -25,7 +29,9 @@ export class MinionComponent implements OnInit {
 
     constructor(
         @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration,
-        private requestAnimationFrameService: RequestAnimationFrameService
+        private readonly unitNgrxRepositoryService: UnitNgrxRepositoryService,
+        private readonly currentPlayerRepository: CurrentPlayerRepositoryService,
+        private readonly requestAnimationFrameService: RequestAnimationFrameService
     ) { }
 
     ngOnInit() {
@@ -39,6 +45,15 @@ export class MinionComponent implements OnInit {
 
         //this.requestAnimationFrameIdEvent = this.requestAnimationFrameService.getFrameId();
         //this.requestAnimationFrameIdEvent.subscribe((frameId) => { this.onRequestAnimationFrameIdUpdate(); });
+
+        this.unitNgrxRepositoryService.watchUnit(this.data.id).subscribe((unit) => {
+            this.data = unit;
+        });
+
+        const playerId = this.currentPlayerRepository.getPlayer().id;
+        if (playerId !== this.data.playerId) {
+            this.classColor = 'colorRed';
+        }
 
     }
 

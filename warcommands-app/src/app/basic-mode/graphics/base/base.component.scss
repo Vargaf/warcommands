@@ -11,4 +11,17 @@
         position: absolute;
         transform-origin: left top;
     }
+
+    .unit-in-queue {
+        position: absolute;
+        border: 1px solid blue;
+    }
+
+    .colorBlue {
+        background-color: lightblue;
+    }
+    
+    .colorRed {
+        background-color: red;
+    }
 }

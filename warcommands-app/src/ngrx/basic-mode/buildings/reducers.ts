@@ -1,7 +1,7 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import * as BuildingListActions from './actions';
 import * as _ from 'lodash';
-import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
+import { BuildingDTO, SpawnerBuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 
 export const BuildingListStoreKey = 'buildings';
 
@@ -24,6 +24,33 @@ const buildingListReducer = createReducer(
         delete state.list[building.id]
         return {
             list: state.list
+        }
+    }),
+    on(BuildingListActions.addUnitToQueue, (state, { unit }) => {
+        const building: SpawnerBuildingDTO = (state.list[unit.spawnerBuildingId] as SpawnerBuildingDTO);
+        const cloneBuilding = _.cloneDeep(building);
+        cloneBuilding.queueList.push(unit);
+        const cloneStateList = _.cloneDeep(state.list);
+        cloneStateList[unit.spawnerBuildingId] = cloneBuilding;
+
+        return {
+            list: cloneStateList
+        }
+    }),
+    on(BuildingListActions.removeUnitFromQueue, (state, { unit }) => {
+        const building: SpawnerBuildingDTO = (state.list[unit.spawnerBuildingId] as SpawnerBuildingDTO);
+        const cloneBuilding = _.cloneDeep(building);
+        
+        const unitIndex = cloneBuilding.queueList.findIndex((queuedUnit) => {
+            return queuedUnit.id === unit.id;
+        });
+        cloneBuilding.queueList.splice(unitIndex, 1);
+
+        const cloneStateList = _.cloneDeep(state.list);
+        cloneStateList[unit.spawnerBuildingId] = cloneBuilding;
+
+        return {
+            list: cloneStateList
         }
     })
 );

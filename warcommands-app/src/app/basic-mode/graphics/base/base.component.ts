@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Inject, ViewChildren, QueryList, ViewContainerRef, AfterViewInit, Renderer2 } from '@angular/core';
 import { GAME_CONFIG, GameEngineBasicModeConfiguration } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
 import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
 import { BuildingsNgrxRepositoryService } from 'src/warcommands/basic-mode/infrastructure/ngrx/buildings/buildings-ngrx-repository.service';
 import { RequestAnimationFrameService } from 'src/warcommands/basic-mode/domain/request-animation-frame/request-animation-frame.service';
 import { Subscription } from 'rxjs';
 import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
-import { BaseBuildingDTO } from 'src/warcommands/gameEngine/domain/building/base/base-building.dto';
+import { CurrentPlayerRepositoryService } from 'src/warcommands/commands-panel/domain/current-player/services/current-player-repository.service';
 
 interface UnitSpawningDTO {
     unit: UnitGenericDTO;
@@ -18,7 +18,7 @@ interface UnitSpawningDTO {
     templateUrl: './base.component.html',
     styleUrls: ['./base.component.scss']
 })
-export class BaseComponent implements OnInit {
+export class BaseComponent implements OnInit, AfterViewInit {
 
     @Input() data: BaseEntityInterface;
 
@@ -31,22 +31,34 @@ export class BaseComponent implements OnInit {
     @ViewChild('spiner', { static: true })
     public spinerElement: ElementRef<HTMLDivElement>;
 
+    @ViewChildren('unitInQueue', { read: ElementRef })
+    public unitInQueueListElement: QueryList<ElementRef>;
+
     progress = 0;
     tileSize = 0;
     spinerStrokeWidth = 0;
     isSpawning = false;
     spawningSubscription: Subscription;
     private spawningQueue: UnitSpawningDTO[] = [];
+    
+    unitClassColor: string = 'colorBlue';
 
     constructor(
         @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration,
         private readonly buildingsNgrxReposioryService: BuildingsNgrxRepositoryService,
         private readonly requestAnimationFrameService: RequestAnimationFrameService,
+        private readonly currentPlayerRepository: CurrentPlayerRepositoryService,
+        private readonly renderer: Renderer2
     ) { }
 
     ngOnInit() {
 
         this.setStyles();
+
+        const playerId = this.currentPlayerRepository.getPlayer().id;
+        if (playerId !== this.data.playerId) {
+            this.unitClassColor = 'colorRed';
+        }
 
         this.buildingsNgrxReposioryService.watchBuilding(this.data.id).subscribe((base) => {
             this.data = (base as BaseEntityInterface);
@@ -54,6 +66,10 @@ export class BaseComponent implements OnInit {
                 this.manageSpawningSubscription();
             }
         });
+    }
+
+    ngAfterViewInit(): void {
+        this.unitInQueueListElement.changes.subscribe(() => this.updateQueueListStyles());
     }
 
     private isNewSpawning(): boolean {
@@ -150,6 +166,20 @@ export class BaseComponent implements OnInit {
         
        this.tileSize = this.gameConfig.tileSize;
        this.spinerStrokeWidth = this.tileSize / 2;
+    }
+
+    private updateQueueListStyles(): void {
+        if (this.data.queueList.length > 0) {
+            const unitSize = (this.gameConfig.tileSize -2) * 0.75;
+            this.unitInQueueListElement.forEach((element, index) => {
+                const elementLeftPosition = this.gameConfig.tileSize * index * 0.25;
+                element.nativeElement.style.setProperty('width', unitSize + 'px');
+                element.nativeElement.style.setProperty('height', unitSize + 'px');
+                element.nativeElement.style.setProperty('top', 0  + 'px');
+                element.nativeElement.style.setProperty('left', elementLeftPosition + 'px');
+                this.renderer.addClass(element.nativeElement, this.unitClassColor);
+            });
+        }
     }
 
 }

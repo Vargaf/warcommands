@@ -1,8 +1,6 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { UnitGenericDTO } from '../unit-generic.dto';
 import { DomElementComponentFactoryService } from 'src/warcommands/basic-mode/infrastructure/angular/dom-element-component-factory.service';
-import { SpawnerBuildingDTO } from '../../building/model/building.dto';
-import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
 import { UnitRepositoryService } from './unit-repository.service';
 
 @Injectable({

@@ -5,6 +5,7 @@ export interface UnitGenericDTO extends CoordinatesEntity {
     id: string;
     playerId: string;
     baseId: string;
+    spawnerBuildingId: string;
     type: UnitTypeENUM;
     size: {
         height: number,

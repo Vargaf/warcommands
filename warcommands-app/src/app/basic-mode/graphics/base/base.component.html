@@ -7,4 +7,9 @@
         [strokeWidth]="spinerStrokeWidth">
         </mat-progress-spinner>
     </div>
+
+    <div *ngFor="let unit of data.queueList">
+        <div class="unit-in-queue" #unitInQueue>
+        </div>
+    </div>
 </div>

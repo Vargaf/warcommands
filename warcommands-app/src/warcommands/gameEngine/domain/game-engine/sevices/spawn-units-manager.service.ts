@@ -7,6 +7,7 @@ import { BuildingSpawnerServiceFactory } from './building-spawner-service.factor
 import { BuildingSpawnerService } from '../../building/services/building-spawner.service';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { BuildingSpawningUnitEvent } from '../events/building-spawning-unit.event';
+import { BuildingRemovedUnitFromQueueEvent } from '../events/building-removed-unit-from-queue.event';
 
 export class SpawnUnitsManagerService {
 
@@ -85,10 +86,13 @@ export class SpawnUnitsManagerService {
         const unit: UnitGenericDTO = 
             spawnerBuildingService.spawnNexUnitInQueue(building, this.gameLogicTimeFrameService.getCurrentTime());
 
-        const event: BuildingSpawningUnitEvent = new BuildingSpawningUnitEvent(
+        const buildingRemovedUnitFromQueueEvent: BuildingRemovedUnitFromQueueEvent = new BuildingRemovedUnitFromQueueEvent(unit);
+        this.gameEventBusService.cast(buildingRemovedUnitFromQueueEvent);
+        
+        const buildingSpawningUnitEvent: BuildingSpawningUnitEvent = new BuildingSpawningUnitEvent(
             unit,
             building.unitSpawning.spawnFinish,
             building.unitSpawning.spawnStart);
-        this.gameEventBusService.cast(event);
+        this.gameEventBusService.cast(buildingSpawningUnitEvent);
     }
 }

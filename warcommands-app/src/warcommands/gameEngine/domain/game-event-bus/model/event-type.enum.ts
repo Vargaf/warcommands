@@ -10,6 +10,7 @@ export enum EventType {
     BuildingSpawningUnit = 'building:spawningUnit',
     BuildingSpawnedUnit = 'building:spawnedUnit',
     BuildingQueueingUnit = 'building:queueingUnit',
+    BuildingRemovedUnitFromQueue = 'building:removedUnitFromQueue',
 
 
 

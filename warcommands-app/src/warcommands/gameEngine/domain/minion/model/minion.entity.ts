@@ -1,5 +1,6 @@
+import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
+import { UnitTypeENUM } from '../../units/model/unit-type.enum';
 
-export interface MinionEntity {
-    xCoordinate: number;
-    yCoordinate: number;
+export interface MinionEntity extends UnitGenericDTO {
+    type: UnitTypeENUM.Minion
 }
