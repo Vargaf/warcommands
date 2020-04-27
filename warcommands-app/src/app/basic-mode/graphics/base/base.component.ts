@@ -3,9 +3,10 @@ import { GAME_CONFIG, GameEngineBasicModeConfiguration } from 'src/warcommands/b
 import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
 import { BuildingsNgrxRepositoryService } from 'src/warcommands/basic-mode/infrastructure/ngrx/buildings/buildings-ngrx-repository.service';
 import { RequestAnimationFrameService } from 'src/warcommands/basic-mode/domain/request-animation-frame/request-animation-frame.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, from } from 'rxjs';
 import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
 import { CurrentPlayerRepositoryService } from 'src/warcommands/commands-panel/domain/current-player/services/current-player-repository.service';
+import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 
 interface UnitSpawningDTO {
     unit: UnitGenericDTO;
@@ -20,7 +21,9 @@ interface UnitSpawningDTO {
 })
 export class BaseComponent implements OnInit, AfterViewInit {
 
-    @Input() data: BaseEntityInterface;
+    @Input() data: BuildingDTO;
+    base: BaseEntityInterface;
+    queueList: Observable<UnitGenericDTO[]>;
 
     @ViewChild('base', { static: true })
     public baseElement: ElementRef<HTMLDivElement>;
@@ -53,18 +56,21 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
+        this.base = (this.data as BaseEntityInterface);
         this.setStyles();
 
         const playerId = this.currentPlayerRepository.getPlayer().id;
-        if (playerId !== this.data.playerId) {
+        if (playerId !== this.base.playerId) {
             this.unitClassColor = 'colorRed';
         }
 
-        this.buildingsNgrxReposioryService.watchBuilding(this.data.id).subscribe((base) => {
-            this.data = (base as BaseEntityInterface);
+        this.buildingsNgrxReposioryService.watchBuilding(this.base.id).subscribe((base) => {
+            this.base = (base as BaseEntityInterface);
+            this.queueList = from([this.base.queueList]);
             if (this.isNewSpawning()) {
                 this.manageSpawningSubscription();
             }
+            
         });
     }
 
@@ -75,9 +81,9 @@ export class BaseComponent implements OnInit, AfterViewInit {
     private isNewSpawning(): boolean {
         let isNewSpawning = false;
 
-        const spawnFinish = this.data.unitSpawning.spawnFinish;
+        const spawnFinish = this.base.unitSpawning.spawnFinish;
         const currentTime = this.requestAnimationFrameService.getCurrentTime();
-        if (this.data.unitSpawning.unit && currentTime < spawnFinish && !this.isUnitAlreadyInSpaningQueue()) {
+        if (this.base.unitSpawning.unit && currentTime < spawnFinish && !this.isUnitAlreadyInSpaningQueue()) {
             isNewSpawning = true;
         }
 
@@ -97,7 +103,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
     private isUnitAlreadyInSpaningQueue(): boolean {
         const isUnitAlreadySpawning = this.spawningQueue.some((unitSpawning: UnitSpawningDTO) => {
-            return unitSpawning.unit.id === this.data.unitSpawning.unit.id;
+            return unitSpawning.unit.id === this.base.unitSpawning.unit.id;
         });
 
         return isUnitAlreadySpawning;
@@ -106,9 +112,9 @@ export class BaseComponent implements OnInit, AfterViewInit {
     private addNewSpawningToQueue(): void {
         if (!this.isUnitAlreadyInSpaningQueue()) {
             const unitSpawning: UnitSpawningDTO = {
-                unit: this.data.unitSpawning.unit,
-                spawnStart: this.data.unitSpawning.spawnStart,
-                spawnFinish: this.data.unitSpawning.spawnFinish
+                unit: this.base.unitSpawning.unit,
+                spawnStart: this.base.unitSpawning.spawnStart,
+                spawnFinish: this.base.unitSpawning.spawnFinish
             };
             this.spawningQueue.push(unitSpawning);
         }
@@ -140,24 +146,24 @@ export class BaseComponent implements OnInit, AfterViewInit {
     }
 
     private setStyles(): void {
-        const baseWidth = this.gameConfig.tileSize * this.data.sizeWidth;
-        const baseHeight = this.gameConfig.tileSize * this.data.sizeHeight;
+        const baseWidth = this.gameConfig.tileSize * this.base.sizeWidth;
+        const baseHeight = this.gameConfig.tileSize * this.base.sizeHeight;
 
         const spawnSize = this.gameConfig.tileSize;
-        const spawnLeft = this.gameConfig.tileSize * this.data.spawnRelativeCoordinates.xCoordinate;
-        const spawnTop = this.gameConfig.tileSize * this.data.spawnRelativeCoordinates.yCoordinate;
+        const spawnLeft = this.gameConfig.tileSize * this.base.spawnRelativeCoordinates.xCoordinate;
+        const spawnTop = this.gameConfig.tileSize * this.base.spawnRelativeCoordinates.yCoordinate;
 
-        const spinnerLeft = this.gameConfig.tileSize * this.data.spawnRelativeCoordinates.xCoordinate;
-        const spinnerTop = this.gameConfig.tileSize * (this.data.spawnRelativeCoordinates.yCoordinate - 1);
+        const spinnerLeft = this.gameConfig.tileSize * this.base.spawnRelativeCoordinates.xCoordinate;
+        const spinnerTop = this.gameConfig.tileSize * (this.base.spawnRelativeCoordinates.yCoordinate - 1);
 
         this.baseElement.nativeElement.style.setProperty('width', baseWidth + 'px');
         this.baseElement.nativeElement.style.setProperty('height', baseHeight + 'px');
-        this.baseElement.nativeElement.style.setProperty('left', this.data.xCoordinate * this.gameConfig.tileSize + 'px');
-        this.baseElement.nativeElement.style.setProperty('top', this.data.yCoordinate * this.gameConfig.tileSize + 'px');
+        this.baseElement.nativeElement.style.setProperty('left', this.base.xCoordinate * this.gameConfig.tileSize + 'px');
+        this.baseElement.nativeElement.style.setProperty('top', this.base.yCoordinate * this.gameConfig.tileSize + 'px');
 
         this.spawnElement.nativeElement.style.setProperty('width', spawnSize + 'px');
         this.spawnElement.nativeElement.style.setProperty('height', spawnSize + 'px');
-        this.spawnElement.nativeElement.style.setProperty('left', this.data.xCoordinate * this.gameConfig.tileSize + 'px');
+        this.spawnElement.nativeElement.style.setProperty('left', this.base.xCoordinate * this.gameConfig.tileSize + 'px');
         this.spawnElement.nativeElement.style.setProperty('top', spawnTop + 'px');
         this.spawnElement.nativeElement.style.setProperty('left', spawnLeft + 'px');
 
@@ -169,13 +175,14 @@ export class BaseComponent implements OnInit, AfterViewInit {
     }
 
     private updateQueueListStyles(): void {
-        if (this.data.queueList.length > 0) {
+        if (this.base.queueList.length > 0) {
             const unitSize = (this.gameConfig.tileSize -2) * 0.75;
+            const top = (this.gameConfig.tileSize - unitSize) / 2;
             this.unitInQueueListElement.forEach((element, index) => {
                 const elementLeftPosition = this.gameConfig.tileSize * index * 0.25;
                 element.nativeElement.style.setProperty('width', unitSize + 'px');
                 element.nativeElement.style.setProperty('height', unitSize + 'px');
-                element.nativeElement.style.setProperty('top', 0  + 'px');
+                element.nativeElement.style.setProperty('top', top  + 'px');
                 element.nativeElement.style.setProperty('left', elementLeftPosition + 'px');
                 this.renderer.addClass(element.nativeElement, this.unitClassColor);
             });

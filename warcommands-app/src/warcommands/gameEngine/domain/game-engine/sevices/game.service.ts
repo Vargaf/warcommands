@@ -9,10 +9,9 @@ import { PlayerCommandsManagerService } from '../../player-commands/player-comma
 import { FileJsonDTO } from '../../file/file-json.dto';
 import { DifficultyLevel } from '../../player/model/difficulty-level.enum';
 import { PlayerManagerService } from '../../player/services/player-manager.service';
-import { PlayerDTO } from '../../player/model/player.dto';
 import { GameLogicService } from './game-logic.service';
 import { GameEngineEventListenerHubService } from './game-engine-event-listener-hub.service';
-import { BaseBuildingDTO } from '../../building/base/base-building.dto';
+import { InitialBuildingsManagerService } from '../../building/services/initial-buildings-manager.service';
 
 export class GameService {
 
@@ -21,13 +20,14 @@ export class GameService {
     private mapType: MapType;
 
     constructor(
+        private readonly gameEngineEventListenerHubService: GameEngineEventListenerHubService,
         private readonly mapEngine: MapEngineService,
         private readonly buildingsManagerService: BuildingsManagerService,
         private readonly gameEventBusService: GameEventBusService,
         private readonly playerCommandsManagerService: PlayerCommandsManagerService,
         private readonly playerManagerService: PlayerManagerService,
         private readonly gameLogicService: GameLogicService,
-        private readonly gameEngineEventListenerHubService: GameEngineEventListenerHubService
+        private readonly initialBuildingsManagerService: InitialBuildingsManagerService
     ) {}
 
     setMap(mapType: MapType): void {
@@ -56,8 +56,8 @@ export class GameService {
 
         this.mapEngine.generateMap(mapConfiguration);
         this.buildingsManagerService.initializeFromMap(mapConfiguration);
-        this.addInitialBases(mapConfiguration);
-
+        this.initialBuildingsManagerService.initializeFromMap(mapConfiguration);
+        
         this.isInitialized = true;
 
         const initializedEvent: GameInitializedEvent = new GameInitializedEvent();
@@ -76,28 +76,6 @@ export class GameService {
 
     addFile(file: FileJsonDTO): void {
         this.playerCommandsManagerService.addFile(file);
-    }
-
-    private addInitialBases(mapConfiguration: MapConfiguration) {
-
-        const randomizedBaseIndexList: string[] = this.getRandomizedBaseIndexList(mapConfiguration.playerBaseList);
-        const playerList = this.playerManagerService.getPlayerList();
-        const baseList = mapConfiguration.playerBaseList;
-
-        // tslint:disable-next-line: forin
-        for (const index in randomizedBaseIndexList) {
-            const randomIndex = randomizedBaseIndexList[index];
-            const base: BaseBuildingDTO = baseList[randomIndex];
-            const player: PlayerDTO = playerList[index];
-
-            base.playerId = player.id;
-            this.buildingsManagerService.addBuilding(base);
-        }
-    }
-
-    private getRandomizedBaseIndexList(baseList: BaseBuildingDTO[]): string[] {
-        const randomizedBaseIndexList: string[] = Object.keys(baseList);
-        return randomizedBaseIndexList.sort((a,b) => { return 0.5 - Math.random()});
     }
 
     private runPlayerCommands(): void {

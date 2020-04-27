@@ -1,28 +1,31 @@
 import { PlayerRepositoryService } from 'src/warcommands/gameEngine/domain/player/services/player-repository.service';
 import { PlayerDTO } from 'src/warcommands/gameEngine/domain/player/model/player.dto';
-
-interface PlayerList {
-    [id: string]: PlayerDTO;
-}
+import * as _ from 'lodash';
 
 export class InMemoryPlayerRepositoryService implements PlayerRepositoryService {
 
-    private playerList: PlayerList = {};
+    private playerList: Map<string, PlayerDTO> = new Map<string, PlayerDTO>();
 
     save(player: PlayerDTO): void {
-        this.playerList[player.id] = { ...player };
+        const clone = _.cloneDeep(player);
+        this.playerList.set(clone.id, clone);
     }
 
     findById(playerId: string): PlayerDTO {
-        return { ...this.playerList[playerId] };
+        const player = this.playerList.get(playerId);
+        return _.cloneDeep(player);
     }
 
     countPlayers(): number {
-        return Object.keys(this.playerList).length;
+        return this.playerList.size;
     }
 
     getPlayerList(): PlayerDTO[] {
-        return [ ...Object.values(this.playerList) ];
+        const list: PlayerDTO[] = [];
+        for (const player of this.playerList.values()) {
+            list.push(player);
+        }
+        return _.cloneDeep(list);
     }
 
 }

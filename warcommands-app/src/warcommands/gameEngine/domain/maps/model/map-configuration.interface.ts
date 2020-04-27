@@ -1,4 +1,5 @@
 import { BaseBuildingDTO } from '../../building/base/base-building.dto';
+import { MatterFarmBuildingDTO } from '../../building/matter-farm/matter-farm-building.dto';
 
 export interface MapConfiguration {
     tiles: number[][];
@@ -7,5 +8,10 @@ export interface MapConfiguration {
         height: number
     };
     numberOfPlayers: number;
-    playerBaseList: BaseBuildingDTO[];
+    initialBuildings: 
+        {
+            base: BaseBuildingDTO,
+            matterFarm?: MatterFarmBuildingDTO,
+            energyFarm?: any,
+        }[]
 }

@@ -3,13 +3,12 @@ import { BasicModeGameEngineService } from '../basic-mode/game-engine-basic-mode
 import { GameEventBusService } from '../gameEngine/domain/game-event-bus/services/game-event-bus.service';
 import { EventType } from '../gameEngine/domain/game-event-bus/model/event-type.enum';
 import { MapGeneratedEvent } from '../gameEngine/domain/game-event-bus/model/map/map-generated.event';
-import { BaseCreaedEvent } from '../gameEngine/domain/game-event-bus/model/base/base-created.event';
-import { BaseEntityInterface } from '../basic-mode/domain/building/base/base-entity-interface';
-import { BuildingTypeEnum } from '../basic-mode/domain/building/model/building-type.enum';
 import { BuildingSpawningUnitEvent } from '../gameEngine/domain/game-engine/events/building-spawning-unit.event';
 import { BuildingSpawnedUnitEvent } from '../gameEngine/domain/game-engine/events/building-spawned-unit.event';
 import { BuildingQueueingUnitEvent } from '../gameEngine/domain/game-engine/events/building-queueing-unit.event';
 import { BuildingRemovedUnitFromQueueEvent } from '../gameEngine/domain/game-engine/events/building-removed-unit-from-queue.event';
+import { BuildingCreaedEvent } from '../gameEngine/domain/building/events/building-created.event';
+import { BuildingObjectTranslatorFactory } from './building-object-translator.factory';
 
 @Injectable({
     providedIn: 'root'
@@ -23,11 +22,11 @@ export class GameEngineListenersService {
 
     setListeners(): void {
         this.setMapGeneratingListeners();
-        this.setBaseCreatedListeners();
         this.onBuildingSpawningUnit();
         this.onBuildingUnitSpawned();
         this.onBuildingQueueingUnitEvent();
         this.onBuildingRemovedUnitFromQueueEvent();
+        this.onBuildingCreatedEvent();
     }
 
     private setMapGeneratingListeners(): void {
@@ -36,30 +35,10 @@ export class GameEngineListenersService {
         });
     }
 
-    private setBaseCreatedListeners(): void {
-        this.gameEventBusService.on(EventType.BaseGenerated).subscribe((event: BaseCreaedEvent) => {
-            const base: BaseEntityInterface = {
-                type: BuildingTypeEnum.Base,
-                name: event.data.name,
-                queueList: event.data.queueList,
-                spawnRelativeCoordinates: event.data.spawnRelativeCoordinates,
-                id: event.data.id,
-                sizeHeight: event.data.sizeHeight,
-                sizeWidth: event.data.sizeWidth,
-                xCoordinate: event.data.xCoordinate,
-                yCoordinate: event.data.yCoordinate,
-                playerId: event.data.playerId,
-                resources: {
-                    matter: event.data.resources.matter,
-                    energy: event.data.resources.energy
-                },
-                unitSpawning: {
-                    unit: null,
-                    spawnFinish: 0,
-                    spawnStart: 0
-                }
-            };
-            this.gameEngine.addBuilding(base);
+    private onBuildingCreatedEvent(): void {
+        this.gameEventBusService.on(EventType.BuildingCreated).subscribe((event: BuildingCreaedEvent) => {
+            const translateBuilding = BuildingObjectTranslatorFactory.translateBuildingType(event.data);
+            this.gameEngine.addBuilding(translateBuilding);
         });
     }
 

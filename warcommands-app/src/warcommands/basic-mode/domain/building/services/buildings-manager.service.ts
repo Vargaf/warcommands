@@ -16,7 +16,7 @@ export class BuildingsManagerService {
     ) {}
 
     addBuilding(building: BuildingDTO): void {
-        this.domElementIjenctorService.addBase((building as BaseEntityInterface));
+        this.domElementIjenctorService.addBuilding(building);
         this.buildingsRepositoryService.save(building);
     }
 

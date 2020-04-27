@@ -23,7 +23,7 @@ export class BasicModeComponent implements OnInit {
     ngOnInit() {
 
         const viewContainerRef = this.basicModeGraphicsWrapper.viewContainerRef;
-        this.gameMiddlewareService.setMap(MapType.BasicMap);
+        this.gameMiddlewareService.setMap(MapType.TutorialFirstMap);
         this.gameMiddlewareService.addPlayer(this.currentPlayerRepository.getPlayer().id);
         this.gameMiddlewareService.addIAPlayer(DifficultyLevel.Mirror);
         this.gameMiddlewareService.initialize(viewContainerRef);

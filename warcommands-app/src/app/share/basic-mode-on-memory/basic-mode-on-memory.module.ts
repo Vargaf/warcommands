@@ -21,7 +21,6 @@ import * as PlayerManagerProvider from 'src/warcommands/gameEngine/infrastructur
 import * as FileMirrorDuplicationProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/file-mirror-duplication.provider';
 import * as InMemoryPlayerRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player/in-memory-player-repository.provider';
 import * as PathFindingManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/path-finding-manager.provider';
-import * as BuildingCreatedEventFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/building-created-event-factory.provider';
 import * as InMemoryBuildingsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/in-memory-buildings-repository.provider';
 import * as BaseClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/base-class/base-class.provider';
 import * as BaseClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/base-class/base-class-factory.provider';
@@ -40,6 +39,7 @@ import * as BuildingSpawnerServiceFactoryProvider from 'src/warcommands/gameEngi
 import * as BaseBuildingSpawnerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/base-building-spawner.provider';
 import * as GameLogicTimeFrameProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-time-frame.provider';
 import * as SpawnUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/spawn-units-manager.provider';
+import * as InitialBuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/initial-buildings-manager.provider';
 
 @NgModule({
     providers: [
@@ -65,7 +65,6 @@ import * as SpawnUnitsManagerProvider from 'src/warcommands/gameEngine/infrastru
         FileMirrorDuplicationProvider.provider,
         InMemoryPlayerRepositoryProvider.provider,
         PathFindingManagerProvider.provider,
-        BuildingCreatedEventFactoryProvider.provider,
         InMemoryBuildingsRepositoryProvider.provider,
         BaseClassProvider.provider,
         BaseClassFactoryProvider.provider,
@@ -83,7 +82,8 @@ import * as SpawnUnitsManagerProvider from 'src/warcommands/gameEngine/infrastru
         BuildingSpawnerServiceFactoryProvider.provider,
         BaseBuildingSpawnerProvider.provider,
         GameLogicTimeFrameProvider.provider,
-        SpawnUnitsManagerProvider.provider
+        SpawnUnitsManagerProvider.provider,
+        InitialBuildingsManagerProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

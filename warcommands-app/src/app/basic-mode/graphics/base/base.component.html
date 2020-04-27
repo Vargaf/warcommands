@@ -8,7 +8,7 @@
         </mat-progress-spinner>
     </div>
 
-    <div *ngFor="let unit of data.queueList">
+    <div *ngFor="let unit of queueList | async">
         <div class="unit-in-queue" #unitInQueue>
         </div>
     </div>

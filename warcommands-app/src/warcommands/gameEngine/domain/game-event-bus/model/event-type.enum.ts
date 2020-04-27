@@ -7,6 +7,7 @@ export enum EventType {
     GeneratingBase = 'base:generaing',
     BaseGenerated = 'base:generated',
 
+    BuildingCreated = 'building:created',
     BuildingSpawningUnit = 'building:spawningUnit',
     BuildingSpawnedUnit = 'building:spawnedUnit',
     BuildingQueueingUnit = 'building:queueingUnit',

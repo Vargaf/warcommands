@@ -12,6 +12,8 @@ import { TileSandComponent } from './tile-sand/tile-sand.component';
 import { TileWaterComponent } from './tile-water/tile-water.component';
 import { BaseComponent } from './base/base.component';
 import { MaterialModule } from 'src/app/share/material/material.module';
+import { MatterFarmComponent } from './matter-farm/matter-farm.component';
+import { EnergyFarmComponent } from './energy-farm/energy-farm.component';
 
 
 
@@ -22,7 +24,9 @@ import { MaterialModule } from 'src/app/share/material/material.module';
     TileGrassComponent,
     TileSandComponent,
     TileWaterComponent,
-    BaseComponent
+    BaseComponent,
+    MatterFarmComponent,
+    EnergyFarmComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +40,9 @@ import { MaterialModule } from 'src/app/share/material/material.module';
     TileGrassComponent,
     TileSandComponent,
     TileWaterComponent,
-    BaseComponent
+    BaseComponent,
+    MatterFarmComponent,
+    EnergyFarmComponent
   ],
   providers: [
     MapGeneratorService,

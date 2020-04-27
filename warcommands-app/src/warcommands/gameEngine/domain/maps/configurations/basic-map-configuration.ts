@@ -49,56 +49,60 @@ export const BasicMapConfiguration: MapConfiguration = {
         height: 40
     },
     numberOfPlayers: 2,
-    playerBaseList: [
+    initialBuildings: [
         {
-            id: '0',
-            baseId: '0',
-            sizeHeight: 3,
-            sizeWidth: 3,
-            xCoordinate: 5,
-            yCoordinate: 5,
-            playerId: null,
-            queueList: [],
-            type: BuildingTypeEnum.Base,
-            name: 'main',
-            spawnRelativeCoordinates: {
-                xCoordinate: 1,
-                yCoordinate: 3,
-            },
-            resources: {
-                matter: 250,
-                energy: 50
-            },
-            unitSpawning: {
-                unit: null,
-                spawnFinish: null,
-                spawnStart: null,
-            },
+            base: {
+                id: null,
+                baseId: null,
+                sizeHeight: 3,
+                sizeWidth: 3,
+                xCoordinate: 5,
+                yCoordinate: 5,
+                playerId: null,
+                queueList: [],
+                type: BuildingTypeEnum.Base,
+                name: 'main',
+                spawnRelativeCoordinates: {
+                    xCoordinate: 1,
+                    yCoordinate: 3,
+                },
+                resources: {
+                    matter: 250,
+                    energy: 50
+                },
+                unitSpawning: {
+                    unit: null,
+                    spawnFinish: null,
+                    spawnStart: null,
+                },
+            }
         },
         {
-            id: '1',
-            baseId: '1',
-            sizeHeight: 3,
-            sizeWidth: 3,
-            xCoordinate: 32,
-            yCoordinate: 32,
-            playerId: null,
-            queueList: [],
-            type: BuildingTypeEnum.Base,
-            name: 'main',
-            spawnRelativeCoordinates: {
-                xCoordinate: 1,
-                yCoordinate: 3,
-            },
-            resources: {
-                matter: 250,
-                energy: 50
-            },
-            unitSpawning: {
-                unit: null,
-                spawnFinish: null,
-                spawnStart: null
-            },
+            base: {
+                id: null,
+                baseId: null,
+                sizeHeight: 3,
+                sizeWidth: 3,
+                xCoordinate: 32,
+                yCoordinate: 32,
+                playerId: null,
+                queueList: [],
+                type: BuildingTypeEnum.Base,
+                name: 'main',
+                spawnRelativeCoordinates: {
+                    xCoordinate: 1,
+                    yCoordinate: 3,
+                },
+                resources: {
+                    matter: 250,
+                    energy: 50
+                },
+                unitSpawning: {
+                    unit: null,
+                    spawnFinish: null,
+                    spawnStart: null
+                },
+            }
         }
-    ]
+    ],
 };

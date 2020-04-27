@@ -1,5 +1,6 @@
 
 export enum MapType {
     OnlyGrass,
-    BasicMap
+    BasicMap,
+    TutorialFirstMap,
 }
