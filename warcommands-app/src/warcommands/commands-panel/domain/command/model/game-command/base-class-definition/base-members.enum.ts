@@ -1,5 +1,5 @@
 
 export enum BaseMembersENUM {
-    CreateMinion = 'createMinion',
-    NumberOfMinions = 'numberOfMinions'
+    CreateWorker = 'createWorker',
+    NumberOfWorkers = 'numberOfWorkers'
 }

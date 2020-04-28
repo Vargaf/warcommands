@@ -10,17 +10,17 @@ export class BaseClassGetClassMemberByClassMemberOption {
         let classMember: ClassMemberDTO = null;
 
         switch(classMemberOption.value) {
-            case BaseMembersENUM.CreateMinion: {
+            case BaseMembersENUM.CreateWorker: {
                 classMember = {
                     className: ClassNameENUM.Base,
-                    memberName: BaseMembersENUM.CreateMinion
+                    memberName: BaseMembersENUM.CreateWorker
                 };
                 break;
             }
-            case BaseMembersENUM.NumberOfMinions: {
+            case BaseMembersENUM.NumberOfWorkers: {
                 classMember = {
                     className: ClassNameENUM.Base,
-                    memberName: BaseMembersENUM.NumberOfMinions
+                    memberName: BaseMembersENUM.NumberOfWorkers
                 };
                 break;
             }

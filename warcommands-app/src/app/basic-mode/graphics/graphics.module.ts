@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BasicModeComponentDirective } from '../basic-mode.directive';
-import { MinionComponent } from './minion/minion.component';
+import { WorkerComponent } from './worker/worker.component';
 import { StatsService } from 'src/warcommands/basic-mode/infrastructure/stats.service';
 import { MapGeneratorService } from 'src/warcommands/gameEngine/domain/maps/services/map-generator.service';
 import { BasicModeGameEngineService } from 'src/warcommands/basic-mode/game-engine-basic-mode.service';
@@ -20,7 +20,7 @@ import { EnergyFarmComponent } from './energy-farm/energy-farm.component';
 @NgModule({
   declarations: [
     BasicModeComponentDirective,
-    MinionComponent,
+    WorkerComponent,
     TileGrassComponent,
     TileSandComponent,
     TileWaterComponent,
@@ -36,7 +36,7 @@ import { EnergyFarmComponent } from './energy-farm/energy-farm.component';
     BasicModeComponentDirective
   ],
   entryComponents: [
-    MinionComponent,
+    WorkerComponent,
     TileGrassComponent,
     TileSandComponent,
     TileWaterComponent,

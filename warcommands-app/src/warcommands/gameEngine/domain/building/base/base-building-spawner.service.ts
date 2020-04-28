@@ -2,9 +2,9 @@ import { BuildingSpawnerService } from '../services/building-spawner.service';
 import { SpawnerBuildingDTO } from '../model/building.dto';
 import { UnitTypeENUM } from '../../units/model/unit-type.enum';
 import { ResourcesDTO } from '../../share/reources.dto';
-import { MinionConfiguration } from '../../units/minion/minion-configuration';
+import { WorkerConfiguration } from '../../units/worker/worker-configuration';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
-import { UnitMinionDTO } from '../../units/minion/unit-minion.dto';
+import { WorkerUnitDTO } from '../../units/worker/worker-unit.dto';
 import { v4 as uuid } from 'uuid';
 
 export class BaseBuildingSpawnerService implements BuildingSpawnerService {
@@ -13,10 +13,10 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
         let resources: ResourcesDTO = null;
 
         switch(unitType) {
-            case UnitTypeENUM.Minion: {
+            case UnitTypeENUM.Worker: {
                 resources = {
-                    matter: MinionConfiguration.cost.matter,
-                    energy: MinionConfiguration.cost.energy
+                    matter: WorkerConfiguration.cost.matter,
+                    energy: WorkerConfiguration.cost.energy
                 }
             }
         }
@@ -29,27 +29,27 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
     }
 
     createUnit(spawnerBuilding: SpawnerBuildingDTO): UnitGenericDTO {
-        const minion: UnitMinionDTO = {
+        const worker: WorkerUnitDTO = {
             id: uuid(),
             playerId: spawnerBuilding.playerId,
             baseId: spawnerBuilding.baseId,
             spawnerBuildingId: spawnerBuilding.id,
-            type: UnitTypeENUM.Minion,
+            type: UnitTypeENUM.Worker,
             size: {
                 height: 1,
                 width: 1
             },
             attributes: {
-                armor: MinionConfiguration.attributes.armor,
-                fire: MinionConfiguration.attributes.fire,
-                speed: MinionConfiguration.attributes.speed,
-                hitPoints: MinionConfiguration.attributes.hitPoints
+                armor: WorkerConfiguration.attributes.armor,
+                fire: WorkerConfiguration.attributes.fire,
+                speed: WorkerConfiguration.attributes.speed,
+                hitPoints: WorkerConfiguration.attributes.hitPoints
             },
             xCoordinate: spawnerBuilding.xCoordinate + spawnerBuilding.spawnRelativeCoordinates.xCoordinate,
             yCoordinate: spawnerBuilding.yCoordinate + spawnerBuilding.spawnRelativeCoordinates.yCoordinate
         };
 
-        return minion;
+        return worker;
     }
 
     isSpawnerBuildingAlreadySpawning(building: SpawnerBuildingDTO): boolean {
@@ -60,7 +60,7 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
     {
         building.unitSpawning.unit = unit;
         building.unitSpawning.spawnStart = currentTimeFrame;
-        building.unitSpawning.spawnFinish = currentTimeFrame + MinionConfiguration.spawnTime;
+        building.unitSpawning.spawnFinish = currentTimeFrame + WorkerConfiguration.spawnTime;
 
         return building;
     }
@@ -76,7 +76,7 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
         const unit = building.queueList.shift();
         building.unitSpawning.unit = unit;
         building.unitSpawning.spawnStart = currentTimeFrame;
-        building.unitSpawning.spawnFinish = currentTimeFrame + MinionConfiguration.spawnTime;
+        building.unitSpawning.spawnFinish = currentTimeFrame + WorkerConfiguration.spawnTime;
 
         return unit;
     }

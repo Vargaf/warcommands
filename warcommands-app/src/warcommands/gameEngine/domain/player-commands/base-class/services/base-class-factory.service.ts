@@ -13,8 +13,8 @@ export class BaseClassFactoryService implements AbstractClassFactoryDefinition {
         let returnValue: any = null;
 
         switch (classMember.memberName) {
-            case BaseClassMemberNameEnum.CreateMinion: {
-                returnValue = this.baseClassService.createMinion(previousMethodChainReturn);
+            case BaseClassMemberNameEnum.CreateWorker: {
+                returnValue = this.baseClassService.createWorker(previousMethodChainReturn);
                 break;
             }
 

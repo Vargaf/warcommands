@@ -13,7 +13,7 @@ export class BuildingSpawnerServiceFactory {
         let service: BuildingSpawnerService = null;
 
         switch (unitType) {
-            case UnitTypeENUM.Minion: {
+            case UnitTypeENUM.Worker: {
                 service = this.baseBuildingSpawnerService;
                 break;
             }

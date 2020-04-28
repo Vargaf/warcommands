@@ -1,4 +1,4 @@
 
 export enum UnitTypeENUM {
-    Minion = 'minion',
+    Worker = 'worker',
 }

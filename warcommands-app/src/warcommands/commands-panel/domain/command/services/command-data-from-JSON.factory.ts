@@ -22,9 +22,6 @@ export class CommandDataFromJSONFactory {
         };
 
         switch (rawCommand.type) {
-            case (CommandType.CreateMinion): {
-                break;
-            }
             case (CommandType.Variable): {
                 break;
             }

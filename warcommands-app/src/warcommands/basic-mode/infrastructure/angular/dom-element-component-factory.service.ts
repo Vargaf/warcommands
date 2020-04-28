@@ -6,7 +6,7 @@ import { TileWaterComponent } from 'src/app/basic-mode/graphics/tile-water/tile-
 import { TileDTO } from 'src/warcommands/gameEngine/domain/maps/model/tile.dto';
 import { TileType } from 'src/warcommands/gameEngine/domain/maps/model/tile-type.enum';
 import { UnitTypeENUM } from '../../domain/units/unit-type.enum';
-import { MinionComponent } from 'src/app/basic-mode/graphics/minion/minion.component';
+import { WorkerComponent } from 'src/app/basic-mode/graphics/worker/worker.component';
 import { BuildingTypeEnum } from '../../domain/building/model/building-type.enum';
 import { BuildingDTO } from '../../domain/building/model/building.dto';
 import { MatterFarmComponent } from 'src/app/basic-mode/graphics/matter-farm/matter-farm.component';
@@ -73,13 +73,13 @@ export class DomElementComponentFactoryService {
         return component;
     }
 
-    getUnitComponent(unitType: UnitTypeENUM): ComponentFactory<MinionComponent> {
+    getUnitComponent(unitType: UnitTypeENUM): ComponentFactory<WorkerComponent> {
 
         let component: ComponentFactory<any>;
 
         switch (unitType) {
-            case UnitTypeENUM.Minion: {
-                component = this.componentFactoryResolver.resolveComponentFactory(MinionComponent);
+            case UnitTypeENUM.Worker: {
+                component = this.componentFactoryResolver.resolveComponentFactory(WorkerComponent);
                 break;
             }
             default: {

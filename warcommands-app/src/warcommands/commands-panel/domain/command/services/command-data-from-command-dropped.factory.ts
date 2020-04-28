@@ -21,9 +21,6 @@ export class CommandDataFromCommandDroppedFactory {
         };
 
         switch (commandType) {
-            case (CommandType.CreateMinion): {
-                break;
-            }
             case (CommandType.Variable): {
                 break;
             }

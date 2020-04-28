@@ -1,5 +1,4 @@
 import { CommandType } from '../../command/model/command-type.enum';
-import { CreateMinionPreviewComponent } from 'src/app/commands-panel/drag-previews/create-minion-preview/create-minion-preview.component';
 import { VariablePreviewComponent } from 'src/app/commands-panel/drag-previews/variable-preview/variable-preview.component';
 import { SetVariablePreviewComponent } from 'src/app/commands-panel/drag-previews/set-variable-preview/set-variable-preview.component';
 import { IfThenPreviewComponent } from 'src/app/commands-panel/drag-previews/if-then-preview/if-then-preview.component';
@@ -15,10 +14,6 @@ export class CommandsPreviewComponentFactory {
         switch (commandType) {
             case CommandType.Game: {
                 component = GameCommandPreviewComponent;
-                break;
-            }
-            case CommandType.CreateMinion: {
-                component = CreateMinionPreviewComponent;
                 break;
             }
             case CommandType.Variable: {

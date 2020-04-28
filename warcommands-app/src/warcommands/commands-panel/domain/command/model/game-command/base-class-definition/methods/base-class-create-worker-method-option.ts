@@ -2,9 +2,9 @@ import { ClassMemberOptionDTO } from '../../../class-definition/class-member-opt
 import { ClassNameENUM } from '../../../class-definition/class-name.enum';
 import { BaseMembersENUM } from '../base-members.enum';
 
-export const BaseClassNumberOfMinionsPropertyOption: ClassMemberOptionDTO = {
+export const BaseClassCreateWorkerMethodOption: ClassMemberOptionDTO = {
     className: ClassNameENUM.Base,
-    value: BaseMembersENUM.NumberOfMinions,
-    label: 'numberOfMinions',
-    label_id: 'number_of_minions'
-}
+    value: BaseMembersENUM.CreateWorker,
+    label: 'createWorker',
+    label_id: 'create_worker'
+};

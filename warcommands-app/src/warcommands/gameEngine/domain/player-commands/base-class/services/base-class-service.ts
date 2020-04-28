@@ -9,8 +9,8 @@ export class BaseClassService {
         private readonly gameEventBusService: GameEventBusService,
     ) {}
 
-    createMinion(base: BaseBuildingDTO): void {
-        const event: CreateUnitOnBuildingEvent = new CreateUnitOnBuildingEvent(base.id, UnitTypeENUM.Minion);
+    createWorker(base: BaseBuildingDTO): void {
+        const event: CreateUnitOnBuildingEvent = new CreateUnitOnBuildingEvent(base.id, UnitTypeENUM.Worker);
         this.gameEventBusService.cast(event);
 
     }

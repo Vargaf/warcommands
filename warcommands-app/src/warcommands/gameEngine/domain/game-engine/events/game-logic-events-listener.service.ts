@@ -10,10 +10,10 @@ export class GameLogicEventsListenerService {
         private readonly gameEventBusService: GameEventBusService,
         private readonly unitsToCreateRepositoryService: UnitsToCreateRepositoryService
     ) {
-        this.onCreateMinionListener();
+        this.onCreateWorkerListener();
     }
 
-    private onCreateMinionListener(): void {
+    private onCreateWorkerListener(): void {
         this.gameEventBusService.on(EventType.CreateUnitOnBuilding).subscribe((event: CreateUnitOnBuildingEvent) => {
             this.unitsToCreateRepositoryService.save(event.data);
         });

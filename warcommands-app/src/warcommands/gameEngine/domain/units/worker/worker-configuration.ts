@@ -1,5 +1,5 @@
 
-export const MinionConfiguration = {
+export const WorkerConfiguration = {
     cost: {
         matter: 50,
         energy: 10
