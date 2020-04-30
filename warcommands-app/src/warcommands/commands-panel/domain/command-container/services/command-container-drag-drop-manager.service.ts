@@ -12,6 +12,7 @@ import { MouseDragDropHelperService } from '../../command-drag-drop/services/mou
 import { CommandDragDropManagerEvents } from '../../command-drag-drop/events/command-drag-drop-manager-events';
 import { DragCustomPreviewService } from '../../command-drag-drop/services/drag-custom-preview.service';
 import { CommandType } from '../../command/model/command-type.enum';
+import { CommandRepositoryService } from '../../command/services/command-repository.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +26,8 @@ export class CommandContainerDragDropManagerService {
         private readonly commandListDragDropManager: CommandListDragDropManagerService,
         private readonly commandDragDropManagerEvents: CommandDragDropManagerEvents,
         private readonly mouseHelperService: MouseDragDropHelperService,
-        private readonly dragCustomPreviewService: DragCustomPreviewService
+        private readonly dragCustomPreviewService: DragCustomPreviewService,
+        private readonly commandRepositoryService: CommandRepositoryService
     ) {}
 
     createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO): void {
@@ -100,7 +102,8 @@ export class CommandContainerDragDropManagerService {
             } else {
                 const commandContainerId: string = (event.container.element as any).getAttribute('id');
                 const commandWrapper = this.buildCommandWrapper(event);
-                commandWrapper.command = { ...event.item.data };
+                const command = this.commandRepositoryService.findById(event.item.data.id);
+                commandWrapper.command = command;
                 commandWrapper.command.parentCommandContainerId = commandContainerId;
                 commandWrapper.dropType = DropType.MoveSameList;
                 this.commandDragDropManagerEvents.commandMovedDispatch(commandWrapper);

@@ -1,8 +1,6 @@
 import { ClassNameENUM } from './class-name.enum';
+import { SelectOptionDTO } from './select-option.dto';
 
-export interface ClassMemberOptionDTO {
+export interface ClassMemberOptionDTO extends SelectOptionDTO {
     className: ClassNameENUM;
-    value: string;
-    label: string;
-    label_id: string;
 }

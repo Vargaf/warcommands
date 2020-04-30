@@ -40,6 +40,12 @@ import * as BaseBuildingSpawnerProvider from 'src/warcommands/gameEngine/infrast
 import * as GameLogicTimeFrameProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-time-frame.provider';
 import * as SpawnUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/spawn-units-manager.provider';
 import * as InitialBuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/initial-buildings-manager.provider';
+import * as WorkerClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class.provider';
+import * as WorkerClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class-factory.provider';
+
+
+
+
 
 @NgModule({
     providers: [
@@ -83,7 +89,9 @@ import * as InitialBuildingsManagerProvider from 'src/warcommands/gameEngine/inf
         BaseBuildingSpawnerProvider.provider,
         GameLogicTimeFrameProvider.provider,
         SpawnUnitsManagerProvider.provider,
-        InitialBuildingsManagerProvider.provider
+        InitialBuildingsManagerProvider.provider,
+        WorkerClassProvider.provider,
+        WorkerClassFactoryProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

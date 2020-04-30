@@ -26,6 +26,12 @@
                 (classMemberChange)="onClassMemberSelected($event)"
                 [classMember]="commandData.classMember">
             </app-get-base-by-index>
+
+            <app-get-worker
+                *ngSwitchCase="'getWorker'"
+                (classMemberChange)="onClassMemberSelected($event)"
+                [classMember]="commandData.classMember">
+            </app-get-worker>
     
             <div *ngSwitchCase="'resources'">
                 resources

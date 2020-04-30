@@ -52,7 +52,7 @@ export class GetBaseByIndexComponent implements OnInit {
         }
 
         this.componentFormGroup = this.formBuilder.group({
-            baseName: [this.baseName, [Validators.max(10), Validators.min(0)]],
+            baseName: [this.baseName],
             action: ['']
         });
 
@@ -65,7 +65,6 @@ export class GetBaseByIndexComponent implements OnInit {
         const memberOption = GameCommandMemberFinderHelper.findMember(this.baseClassDefinition, event.value);
         this.baseClassMember = GetClassMemberByclassMemberOption.getClassMember(memberOption);
         this.emitSelectedMember();
-
     }
 
     onBaseNameChange(baseName: string): void {

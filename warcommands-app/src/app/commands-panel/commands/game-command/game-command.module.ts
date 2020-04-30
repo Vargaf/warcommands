@@ -5,11 +5,13 @@ import { MaterialModule } from 'src/app/share/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GetBaseByIndexComponent } from './get-base-by-index/get-base-by-index.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GetWorkerComponent } from './get-worker/get-worker.component';
+import { SetRoleComponent } from './get-worker/set-role/set-role.component';
 
 
 
 @NgModule({
-  declarations: [GameCommandComponent, GetBaseByIndexComponent],
+  declarations: [GameCommandComponent, GetBaseByIndexComponent, GetWorkerComponent, SetRoleComponent],
   imports: [
     CommonModule,
     MaterialModule,

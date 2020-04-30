@@ -1,0 +1,45 @@
+<div class="get-worker-content" fxLayoutAlign="center center">
+    <div style="height: 58px;">
+        <form [formGroup]="componentFormGroup">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div>(</div>
+                <div>
+                    <mat-form-field class="worker-index-input">
+                        <input matInput type="number" min="0" formControlName="worker">
+                    </mat-form-field>
+                </div>
+                <div>)</div>
+                <div>
+                    <mat-form-field>
+                        <mat-select formControlName="memberOptionSelected">
+                            <mat-option>Select an option</mat-option>
+                            <ng-template [ngIf]="workerClassOptionsDefinition.methods.length">
+                                <mat-optgroup label="Methods">
+                                    <mat-option *ngFor="let member of workerClassOptionsDefinition.methods" [value]="member.value">
+                                        {{ member.label }}
+                                    </mat-option>
+                                </mat-optgroup>
+                            </ng-template>
+                            <ng-template [ngIf]="workerClassOptionsDefinition.properties.length">
+                                <mat-optgroup label="Properties">
+                                    <mat-option *ngFor="let member of workerClassOptionsDefinition.properties" [value]="member.value">
+                                        {{ member.label }}
+                                    </mat-option>
+                                </mat-optgroup>
+                            </ng-template>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <container-element [ngSwitch]="memberOptionSelected">
+            <app-set-role
+                *ngSwitchCase="'setRole'"
+                (classMemberChange)="onClassMemberSelected($event)"
+                [classMember]="getWorkerClassMember.methodChained">
+            </app-set-role>
+        </container-element>
+    </div>
+</div>
