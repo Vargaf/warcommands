@@ -1,7 +1,7 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import * as UnitListActions from './actions';
 import * as _ from 'lodash';
-import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
+import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 
 export const UnitListStoreKey = 'units';
 

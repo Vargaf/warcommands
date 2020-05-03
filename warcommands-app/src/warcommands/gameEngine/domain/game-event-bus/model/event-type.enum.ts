@@ -13,6 +13,8 @@ export enum EventType {
     BuildingQueueingUnit = 'building:queueingUnit',
     BuildingRemovedUnitFromQueue = 'building:removedUnitFromQueue',
 
+    ActionUnitStartsToMove = 'action:unitStartsToMove',
+
 
 
     // Inner events

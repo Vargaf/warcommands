@@ -1,4 +1,4 @@
-import { UnitGenericDTO } from '../unit-generic.dto';
+import { UnitGenericDTO } from '../model/unit-generic.dto';
 
 export abstract class UnitRepositoryService {
 

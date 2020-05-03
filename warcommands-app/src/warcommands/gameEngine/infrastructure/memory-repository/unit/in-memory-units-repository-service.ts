@@ -32,4 +32,13 @@ export class InMemoryUnitsRepositoryService implements UnitsRepositoryService {
         this.unitsList.delete(unit.id);
     }
 
+    getAll(): UnitGenericDTO[] {
+        const unitList: UnitGenericDTO[] = [];
+        this.unitsList.forEach((unit) => {
+            unitList.push(_.cloneDeep(unit));
+        })
+        
+        return unitList;
+    }
+
 }

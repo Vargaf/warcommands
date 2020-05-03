@@ -1,4 +1,4 @@
-import { UnitGenericDTO } from '../../units/unit-generic.dto';
+import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { CoordinatesEntity } from '../../share/model/coordinates.entity';
 
 export interface SpawnerDTO {

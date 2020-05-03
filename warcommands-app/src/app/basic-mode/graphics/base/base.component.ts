@@ -4,7 +4,7 @@ import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/
 import { BuildingsNgrxRepositoryService } from 'src/warcommands/basic-mode/infrastructure/ngrx/buildings/buildings-ngrx-repository.service';
 import { RequestAnimationFrameService } from 'src/warcommands/basic-mode/domain/request-animation-frame/request-animation-frame.service';
 import { Subscription, Observable, from } from 'rxjs';
-import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
+import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 import { CurrentPlayerRepositoryService } from 'src/warcommands/commands-panel/domain/current-player/services/current-player-repository.service';
 import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 
@@ -94,7 +94,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
         this.addNewSpawningToQueue();
         if (!this.isSpawning) {
             this.isSpawning = true;
-            this.spawningSubscription = this.requestAnimationFrameService.onUpdateFrame().subscribe((currentTime) => {
+            this.spawningSubscription = this.requestAnimationFrameService.onFrameUpdate().subscribe((currentTime) => {
                 this.updateSpawningProgress(currentTime);
             });
         }

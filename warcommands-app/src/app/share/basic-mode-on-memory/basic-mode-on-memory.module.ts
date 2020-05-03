@@ -42,6 +42,9 @@ import * as SpawnUnitsManagerProvider from 'src/warcommands/gameEngine/infrastru
 import * as InitialBuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/initial-buildings-manager.provider';
 import * as WorkerClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class.provider';
 import * as WorkerClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class-factory.provider';
+import * as GameLogicWorkerActionsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/game-logic-worker-actions-manager.provider';
+import * as WorkerMoveActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/worker-move-action-manager.provider';
+import * as MoveToActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/actions/move-to-action-manager.provider';
 
 
 
@@ -91,7 +94,10 @@ import * as WorkerClassFactoryProvider from 'src/warcommands/gameEngine/infrastr
         SpawnUnitsManagerProvider.provider,
         InitialBuildingsManagerProvider.provider,
         WorkerClassProvider.provider,
-        WorkerClassFactoryProvider.provider
+        WorkerClassFactoryProvider.provider,
+        GameLogicWorkerActionsManagerProvider.provider,
+        WorkerMoveActionManagerProvider.provider,
+        MoveToActionManagerProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

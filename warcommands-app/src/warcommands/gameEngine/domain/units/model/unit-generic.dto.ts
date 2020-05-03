@@ -1,5 +1,6 @@
 import { CoordinatesEntity } from '../../maps/model/coordinates.entity';
 import { UnitTypeENUM } from './unit-type.enum';
+import { UnitActionGenericDTO } from '../unit-actions/unit-action-generic.dto';
 
 export interface UnitGenericDTO extends CoordinatesEntity {
     id: string;
@@ -7,6 +8,7 @@ export interface UnitGenericDTO extends CoordinatesEntity {
     baseId: string;
     spawnerBuildingId: string;
     type: UnitTypeENUM;
+    action: UnitActionGenericDTO,
     size: {
         height: number,
         width: number
@@ -16,5 +18,5 @@ export interface UnitGenericDTO extends CoordinatesEntity {
         fire: number,
         speed: number,
         hitPoints: number
-    }
+    },
 }

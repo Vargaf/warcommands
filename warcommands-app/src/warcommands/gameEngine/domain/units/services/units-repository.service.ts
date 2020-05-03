@@ -11,4 +11,6 @@ export abstract class UnitsRepositoryService {
 
     abstract remove(unit: UnitGenericDTO): void;
 
+    abstract getAll(): UnitGenericDTO[];
+
 }

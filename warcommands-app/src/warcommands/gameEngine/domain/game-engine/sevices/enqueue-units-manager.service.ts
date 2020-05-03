@@ -12,6 +12,7 @@ import { GameEventBusService } from '../../game-event-bus/services/game-event-bu
 import { BuildingSpawningUnitEvent } from '../events/building-spawning-unit.event';
 import { BuildingQueueingUnitEvent } from '../events/building-queueing-unit.event';
 import { SpawingBuildingsRepositoryservice } from '../../building/services/spawning-buildings-repository.service';
+import { BuildingTypeEnum } from '../../building/model/building-type.enum';
 
 export class EnqueueUnitsManagerService {
 
@@ -52,10 +53,15 @@ export class EnqueueUnitsManagerService {
                         this.gameEventBusService.cast(event);
                     }
 
-                    playerBase.resources.matter -= unitCost.matter;
-                    playerBase.resources.energy -= unitCost.energy;
-
-                    this.buildingsRepositoryService.save(playerBase);
+                    if (spawnerBuilding.type === BuildingTypeEnum.Base) {
+                        (spawnerBuilding as BaseBuildingDTO).resources.matter -= unitCost.matter;
+                        (spawnerBuilding as BaseBuildingDTO).resources.energy -= unitCost.energy;
+                    } else {
+                        playerBase.resources.matter -= unitCost.matter;
+                        playerBase.resources.energy -= unitCost.energy;
+                        this.buildingsRepositoryService.save(playerBase);
+                    }
+                    
                     this.buildingsRepositoryService.save(spawnerBuilding);
                     this.spawningBuildngsRepositoryService.save(spawnerBuilding.id);
                 }

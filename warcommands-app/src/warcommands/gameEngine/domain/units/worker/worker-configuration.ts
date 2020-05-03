@@ -7,8 +7,8 @@ export const WorkerConfiguration = {
     attributes: {
         armor: 10,
         fire: 10,
-        speed: 10,
+        speed: 1500,
         hitPoints: 100
     },
-    spawnTime: 10 * 1000
+    spawnTime: 10 * 1000,
 }

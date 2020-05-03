@@ -1,5 +1,5 @@
 import { UnitRepositoryService } from 'src/warcommands/basic-mode/domain/units/services/unit-repository.service';
-import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
+import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 import { Injectable } from '@angular/core';
 import { UnitNgrxRepositoryService } from '../../ngrx/units/unit-ngrx-repository.service';
 import * as _ from "lodash";

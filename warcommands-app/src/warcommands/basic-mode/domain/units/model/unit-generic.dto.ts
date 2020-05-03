@@ -1,5 +1,6 @@
-import { CoordinatesEntity } from '../share/model/coordinates.entity';
-import { UnitTypeENUM } from './unit-type.enum';
+import { CoordinatesEntity } from '../../share/model/coordinates.entity';
+import { UnitTypeENUM } from '../unit-type.enum';
+import { UnitActionGenericDTO } from './unit-action-generic.dto';
 
 export interface UnitGenericDTO extends CoordinatesEntity {
     id: string;
@@ -7,6 +8,7 @@ export interface UnitGenericDTO extends CoordinatesEntity {
     baseId: string;
     spawnerBuildingId: string;
     type: UnitTypeENUM;
+    action: UnitActionGenericDTO,
     size: {
         height: number,
         width: number

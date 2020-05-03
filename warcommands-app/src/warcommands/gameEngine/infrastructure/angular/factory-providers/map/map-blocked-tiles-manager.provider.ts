@@ -2,17 +2,17 @@ import { MapBlockedTilesManagerService } from 'src/warcommands/gameEngine/domain
 import { InMemoryBuildingBlockedTileRepositoryService } from '../../../memory-repository/map/in-memory-building-blocked-tile-repository.service';
 import { InMemoryUnitBlockedTileRepositoryService } from '../../../memory-repository/map/in-memory-unit-blocked-tile-repository.service';
 import { InMemoryBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-buildings-repository.service';
-import { InMemoryMapPathfindingGridRepositoryService } from '../../../memory-repository/map/in-memory-map-pathfinding-grid-repository.service';
+import { PathFindingManagerService } from 'src/warcommands/gameEngine/domain/maps/services/path-finding-manager.service';
 
 const factory = (
     buildingBlockedTileRepository: InMemoryBuildingBlockedTileRepositoryService,
     unitBlockedTileRepository: InMemoryUnitBlockedTileRepositoryService,
-    mapPathfindingGridRepository: InMemoryMapPathfindingGridRepositoryService,
+    pathFindingManager: PathFindingManagerService
 ) => {
     return new MapBlockedTilesManagerService(
         buildingBlockedTileRepository,
         unitBlockedTileRepository,
-        mapPathfindingGridRepository
+        pathFindingManager
     );
 };
 
@@ -22,6 +22,6 @@ export const provider = {
     deps: [
         InMemoryBuildingsRepositoryService,
         InMemoryUnitBlockedTileRepositoryService,
-        InMemoryMapPathfindingGridRepositoryService
+        PathFindingManagerService
     ]
 };

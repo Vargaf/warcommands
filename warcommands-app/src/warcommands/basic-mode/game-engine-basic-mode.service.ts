@@ -3,8 +3,8 @@ import { StatsService } from './infrastructure/stats.service';
 import { RequestAnimationFrameService } from './domain/request-animation-frame/request-animation-frame.service';
 import { DomElementInjectorService } from './infrastructure/angular/dom-element-injector.service';
 import { MapDTO } from '../gameEngine/domain/maps/model/map.dto';
-import { UnitGenericDTO } from './domain/units/unit-generic.dto';
-import { UnitSpawningManagerService } from './domain/units/services/unit-spawning-manager.service';
+import { UnitGenericDTO } from './domain/units/model/unit-generic.dto';
+import { UnitsManagerService } from './domain/units/services/units-manager.service';
 import { BuildingsManagerService } from './domain/building/services/buildings-manager.service';
 import { BuildingDTO } from './domain/building/model/building.dto';
 
@@ -19,13 +19,13 @@ export class BasicModeGameEngineService  {
         private readonly statsService: StatsService,
         private readonly requestAnimationFrameService: RequestAnimationFrameService,
         private readonly domElementIjenctorService: DomElementInjectorService,
-        private readonly unitSpawnngManagerService: UnitSpawningManagerService,
+        private readonly unitsManagerService: UnitsManagerService,
         private readonly buildingsManagerService: BuildingsManagerService
     ) {}
 
     setViewContainerRef(viewContainerRef: ViewContainerRef): void {
         this.domElementIjenctorService.setViewContainerRef(viewContainerRef);
-        this.unitSpawnngManagerService.setViewContainerRef(viewContainerRef);
+        this.unitsManagerService.setViewContainerRef(viewContainerRef);
     }
 
     initialize(): void {
@@ -60,7 +60,11 @@ export class BasicModeGameEngineService  {
 
     unitSpawned(unit: UnitGenericDTO): void {
         this.buildingsManagerService.unitSpawned(unit);
-        this.unitSpawnngManagerService.unitSpawned(unit);
+        this.unitsManagerService.unitSpawned(unit);
+    }
+
+    unitMoving(unit: UnitGenericDTO): void {
+        this.unitsManagerService.unitMoving(unit);
     }
 
     private animate(): void {
@@ -79,24 +83,9 @@ export class BasicModeGameEngineService  {
             this.render();
         });
 
-        //const timeElapsed = (performance || Date ).now();
-
-        /*
-        if (this.isFrameUpdateNeeded(timeElapsed)) {
-            this.lastFrameUpdateTime = timeElapsed;
-            this.requestAnimationFrameService.updateFrameId(timeElapsed);
-        }
-        */
-
         this.statsService.update();
         this.requestAnimationFrameService.updateFrameTime();
     }
 
-    /*
-    private isFrameUpdateNeeded(timeElapsed: number): boolean {
-        const timeElapsedSinceLastUpdate = timeElapsed - this.lastFrameUpdateTime;
 
-        return timeElapsedSinceLastUpdate > this.millisecondsPerFrame;
-    }
-    */
 }

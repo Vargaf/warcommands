@@ -26,7 +26,7 @@ export class RequestAnimationFrameNgrxService implements RequestAnimationFrameSe
         this.store.dispatch(RequestAnimationFrameActions.updateFrame({ frameId: this.currentTime }));
     }
 
-    onUpdateFrame(): Observable<number> {
+    onFrameUpdate(): Observable<number> {
         return this.store.pipe(select(RequestAnimationFrameSelectors.selectFrameId));
     }
 

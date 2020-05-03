@@ -8,11 +8,13 @@ export class WorkerClassService {
         private readonly unitsRepositoryService: UnitsRepositoryService
     ) {}
 
-    setRole(unit: WorkerUnitDTO, role: string): void {
+    setRole(unit: WorkerUnitDTO, role: WorkerUnitRoleENUM): void {
         if (unit) {
-            unit.role = WorkerUnitRoleENUM[role];
-            this.unitsRepositoryService.save(unit);
-
+            if (unit.role !== role) {
+                unit.action = null;
+                unit.role = role;
+                this.unitsRepositoryService.save(unit);
+            }
         }
     }
 

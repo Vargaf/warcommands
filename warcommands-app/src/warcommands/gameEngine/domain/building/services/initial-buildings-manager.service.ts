@@ -6,6 +6,8 @@ import { BuildingsManagerService } from './buildings-manager.service';
 import { v4 as uuid } from 'uuid';
 import { MatterFarmBuildingDTO } from '../matter-farm/matter-farm-building.dto';
 import { EnergyFarmBuildingDTO } from '../energy-farm/energy-farm-building.dto';
+import { MatterFarmBuildingConfiguration } from '../matter-farm/matter-farm-building-configuration';
+import { EnergyFarmBuildingConfiguration } from '../energy-farm/energy-farm-building-configurtion';
 
 export class InitialBuildingsManagerService {
 
@@ -58,6 +60,7 @@ export class InitialBuildingsManagerService {
         matterFarm.id = uuid();
         matterFarm.baseId = baseId;
         matterFarm.playerId = player.id;
+        matterFarm.maxUnitRoom = MatterFarmBuildingConfiguration.maxUnitRoom;
         this.buildingsManagerService.addBuilding(matterFarm);
     }
 
@@ -66,6 +69,7 @@ export class InitialBuildingsManagerService {
         energyFarm.id = uuid();
         energyFarm.baseId = baseId;
         energyFarm.playerId = player.id;
+        energyFarm.maxUnitRoom = EnergyFarmBuildingConfiguration.maxUnitRoom;
         this.buildingsManagerService.addBuilding(energyFarm);
     }
 }

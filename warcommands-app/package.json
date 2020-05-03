@@ -27,6 +27,7 @@
     "@ngrx/store-devtools": "^9.0.0",
     "@types/stats": "^0.16.30",
     "@types/uuid": "^3.4.8",
+    "easystarjs": "^0.4.3",
     "hammerjs": "^2.0.8",
     "lodash": "^4.17.15",
     "ng-event-bus": "^1.0.6",

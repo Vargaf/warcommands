@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
-import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
+import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 
 const actionNamespace = '[Building list]';
 

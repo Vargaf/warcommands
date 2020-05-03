@@ -85,7 +85,13 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 playerId: null,
                 baseId: null,
                 xCoordinate: 3,
-                yCoordinate: 5
+                yCoordinate: 5,
+                maxUnitRoom: 0,
+                unitsFarmingIdList: [],
+                relativeEntranceCoordinates: {
+                    xCoordinate: 0,
+                    yCoordinate: 1,
+                }
             },
             energyFarm: {
                 id: null,
@@ -95,7 +101,13 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 playerId: null,
                 baseId: null,
                 xCoordinate: 3,
-                yCoordinate: 7
+                yCoordinate: 7,
+                maxUnitRoom: 0,
+                unitsFarmingIdList: [],
+                relativeEntranceCoordinates: {
+                    xCoordinate: 0,
+                    yCoordinate: 1,
+                }
             }
         },
         {
@@ -132,7 +144,13 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 playerId: null,
                 baseId: null,
                 xCoordinate: 37,
-                yCoordinate: 33
+                yCoordinate: 33,
+                maxUnitRoom: 0,
+                unitsFarmingIdList: [],
+                relativeEntranceCoordinates: {
+                    xCoordinate: 0,
+                    yCoordinate: 1,
+                }
             },
             energyFarm: {
                 id: null,
@@ -142,7 +160,13 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 playerId: null,
                 baseId: null,
                 xCoordinate: 37,
-                yCoordinate: 35
+                yCoordinate: 35,
+                maxUnitRoom: 0,
+                unitsFarmingIdList: [],
+                relativeEntranceCoordinates: {
+                    xCoordinate: 0,
+                    yCoordinate: 1,
+                }
             }
         }
     ]

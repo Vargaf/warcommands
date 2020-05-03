@@ -1,5 +1,6 @@
 import { BaseBuildingDTO } from '../../building/base/base-building.dto';
 import { MatterFarmBuildingDTO } from '../../building/matter-farm/matter-farm-building.dto';
+import { EnergyFarmBuildingDTO } from '../../building/energy-farm/energy-farm-building.dto';
 
 export interface MapConfiguration {
     tiles: number[][];
@@ -12,6 +13,6 @@ export interface MapConfiguration {
         {
             base: BaseBuildingDTO,
             matterFarm?: MatterFarmBuildingDTO,
-            energyFarm?: any,
+            energyFarm?: EnergyFarmBuildingDTO,
         }[]
 }

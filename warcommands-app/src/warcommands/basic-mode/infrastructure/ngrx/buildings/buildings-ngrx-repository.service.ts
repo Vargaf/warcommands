@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
-import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
+import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 
 @Injectable({
     providedIn: 'root'

@@ -4,16 +4,16 @@ import { MapConfiguration } from '../model/map-configuration.interface';
 import { TilePathfindingType } from '../model/tile-pathfinding-type.enum';
 import { IsTileBlockedToBuildHelper } from '../../building/services/is-tile-blocked-to-build-helper';
 import { IsTileBlockedToUnitsHelper } from '../../building/services/is-tile-blocked-to-units-helper';
-import { MapPathfindingGridRepository } from '../repositories/map-pathfinding-grid-repository.service';
 import { BuildingDTO } from '../../building/model/building.dto';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
+import { PathFindingManagerService } from './path-finding-manager.service';
 
 export class MapBlockedTilesManagerService {
 
     constructor(
         private readonly buildingBlockedTileRepository: BuildingBlockedTileRepository,
         private readonly unitBlockedTileRepository: UnitBlockedTileRepositoryService,
-        private readonly mapPathfindingGridRepository: MapPathfindingGridRepository,
+        private readonly pathFindingManager: PathFindingManagerService
     ) {}
 
     initializeFromMap(map: MapConfiguration): void {
@@ -83,7 +83,7 @@ export class MapBlockedTilesManagerService {
 
         for (let y = yCoordinateStart; y < yCoordinateEnd; y++ ) {
             for (let x = xCoordinateStart; x < xCoordinateEnd; x++) {
-                this.mapPathfindingGridRepository.blockTile(x, y);
+                this.pathFindingManager.blockTile(x, y);
             }
         }
     }

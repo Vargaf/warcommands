@@ -2,16 +2,73 @@ import { MapPathfindingGridRepository } from '../repositories/map-pathfinding-gr
 import { MapDTO } from '../model/map.dto';
 import { MapPathfindingGrid } from '../model/map-pathfinding-grid.entity';
 import { MapPathFindingGridGenerator } from './map-pathfinding-grid-generator.service';
+import { js as EasyStar } from 'easystarjs';
+import { UnitActionMoveToDTO } from '../../units/unit-actions/unit-action-move-to.dto';
+import { TileType } from '../model/tile-type.enum';
+import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
+import { UnitActionTypeENUM } from '../../units/unit-actions/unit-action-type.enum';
+import { Subject, Observable } from 'rxjs';
+import { PathFindingCoordinate } from '../model/path-finding-coordinate.dto';
 
 export class PathFindingManagerService {
 
+    private pathfinder: EasyStar;
+
     constructor(
         private readonly mapPathfindingGridRepository: MapPathfindingGridRepository,
-    ) {}
+    ) {
+        this.pathfinder = new EasyStar();
+        this.pathfinder.setAcceptableTiles([TileType.Grass, TileType.Sand]);
+        this.pathfinder.enableDiagonals();
+        this.pathfinder.disableCornerCutting();
+        this.pathfinder.setIterationsPerCalculation(10);
+    }
 
     generateGrid(map: MapDTO): void {
         const mapPathfindingGrid: MapPathfindingGrid = MapPathFindingGridGenerator.generateGrid(map);
         this.mapPathfindingGridRepository.saveGrid(mapPathfindingGrid);
+        this.pathfinder.setGrid(mapPathfindingGrid.tilesMap);
+    }
+
+    blockTile(xCoordinate: number, yCoordinate: number): void {
+        this.mapPathfindingGridRepository.blockTile(xCoordinate, yCoordinate);
+        this.pathfinder.avoidAdditionalPoint(xCoordinate, yCoordinate);
+    }
+
+    findPath(unit: UnitGenericDTO): Observable<PathFindingCoordinate[]> {
+
+        const pathFound: Subject<PathFindingCoordinate[]> = new Subject<PathFindingCoordinate[]>();
+        if(unit.action && unit.action.type === UnitActionTypeENUM.MoveTo) {
+            const moveAction: UnitActionMoveToDTO = (unit.action as UnitActionMoveToDTO);
+            this.pathfinder.findPath(
+                moveAction.data.from.xCoordinate,
+                moveAction.data.from.yCoordinate,
+                moveAction.data.to.xCoordinate,
+                moveAction.data.to.yCoordinate,
+                (rawPath) => {
+                    const path: PathFindingCoordinate[] = [];
+                    for (const rawCoordinate of rawPath) {
+                        const pathCoordinate: PathFindingCoordinate = {
+                            xCoordinate: rawCoordinate.x,
+                            yCoordinate: rawCoordinate.y,
+                            time : null
+                        }
+                        path.push(pathCoordinate);
+                    }
+                    pathFound.next(path);
+            });
+        }
+
+        return pathFound;
+    }
+
+    calculatePathFinding(): void {
+        this.pathfinder.calculate();
+    }
+
+    private pathFound(unit: UnitGenericDTO, path: PathFindingCoordinate[]) {
+        console.log(unit);
+        console.log(path);
     }
 
 }

@@ -35,6 +35,8 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
             baseId: spawnerBuilding.baseId,
             spawnerBuildingId: spawnerBuilding.id,
             type: UnitTypeENUM.Worker,
+            action: null,
+            role: null,
             size: {
                 height: 1,
                 width: 1
@@ -46,7 +48,7 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
                 hitPoints: WorkerConfiguration.attributes.hitPoints
             },
             xCoordinate: spawnerBuilding.xCoordinate + spawnerBuilding.spawnRelativeCoordinates.xCoordinate,
-            yCoordinate: spawnerBuilding.yCoordinate + spawnerBuilding.spawnRelativeCoordinates.yCoordinate
+            yCoordinate: spawnerBuilding.yCoordinate + spawnerBuilding.spawnRelativeCoordinates.yCoordinate,
         };
 
         return worker;

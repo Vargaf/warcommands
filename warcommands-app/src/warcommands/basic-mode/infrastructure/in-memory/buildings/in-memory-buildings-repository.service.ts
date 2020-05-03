@@ -3,7 +3,7 @@ import { BuildingDTO, SpawnerBuildingDTO } from 'src/warcommands/basic-mode/doma
 import * as _ from "lodash";
 import { BuildingsNgrxRepositoryService } from '../../ngrx/buildings/buildings-ngrx-repository.service';
 import { Injectable } from '@angular/core';
-import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/unit-generic.dto';
+import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 
 @Injectable({
     providedIn: 'root'

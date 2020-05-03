@@ -1,5 +1,5 @@
 import { BuildingDTO } from '../model/building.dto';
-import { UnitGenericDTO } from '../../units/unit-generic.dto';
+import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 
 export abstract class BuildingsRepositoryService {
 
