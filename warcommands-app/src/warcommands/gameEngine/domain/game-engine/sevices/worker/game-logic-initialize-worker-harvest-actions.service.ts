@@ -1,5 +1,4 @@
 import { UnitsRepositoryService } from '../../../units/services/units-repository.service';
-import { UnitTypeENUM } from '../../../units/model/unit-type.enum';
 import { WorkerUnitDTO } from '../../../units/worker/worker-unit.dto';
 import { UnitSuperAcionRepositopriService } from '../../../units/unit-actions/unit-super-action-repository.service';
 import { WorkerUnitRoleENUM } from '../../../units/worker/worker-unit-role.enum';
@@ -19,12 +18,11 @@ import { GameLogicHarvestActionManagerService } from '../../../game-logic-action
 import { GameLogicDeliverActionManagerService } from '../../../game-logic-actions/game-logic-deliver-action-manager.service';
 import { GameLogicMoveToActionManagerService } from '../../../game-logic-actions/game-logic-move-to-action-manager.service';
 
-export class GameLogicInitializeWorkerActionsService {
+export class GameLogicInitializeWorkerHarvestActionsService {
 
     private readonly atomicActionsNumber = 5;
 
     constructor(
-        private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly unitSuperActionRepositoryService: UnitSuperAcionRepositopriService,
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
         private readonly gameLogicHarvestActionManager: GameLogicHarvestActionManagerService,
@@ -32,39 +30,7 @@ export class GameLogicInitializeWorkerActionsService {
         private readonly gameLogicMoveToActionManager: GameLogicMoveToActionManagerService
     ) {}
 
-    initializeActions(): void {
-
-       const workerList = this.unitsRepositoryService.findByType(UnitTypeENUM.Worker);
-
-       for (const unit of workerList) {
-           const worker: WorkerUnitDTO = (unit as WorkerUnitDTO);
-            if (this.hasRole(worker)) {
-                if (!this.hasSuperaction(worker)) {
-                    this.createSuperAction(worker);
-                }
-            }
-        }
-    }
-
-    private hasRole(worker: WorkerUnitDTO): boolean {
-        return worker.role !== undefined;
-    }
-
-    private hasSuperaction(worker: WorkerUnitDTO): boolean {
-        return this.unitSuperActionRepositoryService.unitHasSuperaction(worker.id);
-    }
-
-    private createSuperAction(worker: WorkerUnitDTO): void {
-        if (this.hasHarvesterRole(worker)) {
-            this.createHarvesterSuperAction(worker);
-        }
-    }
-
-    private hasHarvesterRole(worker: WorkerUnitDTO): boolean {
-        return worker.role === WorkerUnitRoleENUM.MatterHarvester || worker.role === WorkerUnitRoleENUM.EnergyHarvester;
-    }
-
-    private createHarvesterSuperAction(worker: WorkerUnitDTO): void {
+    createHarvesterSuperAction(worker: WorkerUnitDTO): void {
         const farmBuilding: FarmBuildingDTO = (this.getFarmBuilding(worker) as FarmBuildingDTO);
 
         if (farmBuilding) {
@@ -98,12 +64,10 @@ export class GameLogicInitializeWorkerActionsService {
             const xCoordinateFarm = farmBuilding.xCoordinate + farmBuilding.relativeEntranceCoordinates.xCoordinate;
             const yCoordinateFarm = farmBuilding.yCoordinate + farmBuilding.relativeEntranceCoordinates.yCoordinate;
 
-            //this.workerMoveActionManager.moveTo(xCoordinateBase, yCoordinateBase, xCoordinateFarm, yCoordinateFarm).subscribe((action) => {
             this.gameLogicMoveToActionManager.createAction(xCoordinateBase, yCoordinateBase, xCoordinateFarm, yCoordinateFarm).subscribe((action) => {
                 this.setMoveToFarmAtomicAction(worker.id, action);
             });
     
-            //this.workerMoveActionManager.moveTo(xCoordinateFarm, yCoordinateFarm, xCoordinateBase, yCoordinateBase).subscribe((action) => {
             this.gameLogicMoveToActionManager.createAction(xCoordinateFarm, yCoordinateFarm, xCoordinateBase, yCoordinateBase).subscribe((action) => {
                 this.setMoveToBaseAtomicAction(worker.id, action);
             });

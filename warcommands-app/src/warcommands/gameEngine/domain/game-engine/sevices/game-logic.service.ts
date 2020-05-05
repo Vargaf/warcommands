@@ -32,7 +32,7 @@ export class GameLogicService {
         
         // A lo mismo debemos pasar de un workerAction a un initializeActions y petarnos una clase
         pre = (performance || Date ).now();
-        this.gameLogicWorkerActionsManager.workerActions();
+        this.gameLogicWorkerActionsManager.initializeWorkerActions();
         post = (performance || Date ).now();
         //console.log('Worker actions: ' + (post - pre));
         
