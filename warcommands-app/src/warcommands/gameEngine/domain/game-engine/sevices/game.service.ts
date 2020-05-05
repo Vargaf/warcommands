@@ -79,13 +79,14 @@ export class GameService {
     }
 
     private runPlayerCommands(): void {
-        setTimeout(() => {this.runPlayerCommands()}, 100);
+        setTimeout(() => {this.runPlayerCommands()}, 300);
         this.playerCommandsManagerService.runPlayerCommands();
     }
 
     private gameLogic(): void {
-        setTimeout(() => this.gameLogic(), 50);
+        setTimeout(() => this.gameLogic(), 150);
         this.gameLogicService.gameLogicLoop();
+        const postLogic = (performance || Date ).now();
     }
 
 }

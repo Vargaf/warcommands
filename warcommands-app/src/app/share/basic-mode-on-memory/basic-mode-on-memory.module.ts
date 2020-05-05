@@ -45,6 +45,18 @@ import * as WorkerClassFactoryProvider from 'src/warcommands/gameEngine/infrastr
 import * as GameLogicWorkerActionsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/game-logic-worker-actions-manager.provider';
 import * as WorkerMoveActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/worker-move-action-manager.provider';
 import * as MoveToActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/actions/move-to-action-manager.provider';
+import * as InMemoryUnitSuperActionRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-unit-super-action-repository.provider';
+import * as WorkerHarvestActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/worker-harvest-action-manager.provider';
+import * as WorkerDeliverActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/worker-deliver-action-manager.provider';
+import * as GameLogicInitializeWorkerActionsServiceProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/game-logic-initialize-worker-actions-service.provider';
+import * as GameLogicActionsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-actions-manager.provider';
+import * as GameLogicMoveToActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-move-to-action-manager.provider';
+import * as GameLogicActionManagerFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-action-manager-factory.provider';
+import * as GameLogicHarvestActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-harvest-action-manager.provider';
+import * as GameLogicDeliverActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-deliver-action-manager.provider';
+
+
+
 
 
 
@@ -97,7 +109,16 @@ import * as MoveToActionManagerProvider from 'src/warcommands/gameEngine/infrast
         WorkerClassFactoryProvider.provider,
         GameLogicWorkerActionsManagerProvider.provider,
         WorkerMoveActionManagerProvider.provider,
-        MoveToActionManagerProvider.provider
+        MoveToActionManagerProvider.provider,
+        InMemoryUnitSuperActionRepositoryProvider.provider,
+        WorkerHarvestActionManagerProvider.provider,
+        WorkerDeliverActionManagerProvider.provider,
+        GameLogicInitializeWorkerActionsServiceProvider.provider,
+        GameLogicActionsManagerProvider.provider,
+        GameLogicMoveToActionManagerProvider.provider,
+        GameLogicActionManagerFactoryProvider.provider,
+        GameLogicHarvestActionManagerProvider.provider,
+        GameLogicDeliverActionManagerProvider.provider,
     ]
 })
 export class BasicModeOnMemoryModule { }

@@ -7,6 +7,8 @@ export abstract class UnitsRepositoryService {
 
     abstract findById(unitId: string): UnitGenericDTO;
 
+    abstract findByType(unitType: UnitTypeENUM): UnitGenericDTO[];
+
     abstract findByTypeAndPlayer(unitType: UnitTypeENUM, playerId: string): UnitGenericDTO[];
 
     abstract remove(unit: UnitGenericDTO): void;

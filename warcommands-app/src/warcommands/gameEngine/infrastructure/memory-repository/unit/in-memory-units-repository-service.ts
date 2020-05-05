@@ -28,6 +28,18 @@ export class InMemoryUnitsRepositoryService implements UnitsRepositoryService {
         return unitList;
     }
 
+    findByType(unitType: UnitTypeENUM): UnitGenericDTO[] {
+        const unitList: UnitGenericDTO[] = [];
+
+        this.unitsList.forEach((unit) => {
+            if (unit.type === unitType) {
+                unitList.push(unit);
+            }
+        });
+
+        return unitList;
+    }
+
     remove(unit: UnitGenericDTO): void {
         this.unitsList.delete(unit.id);
     }

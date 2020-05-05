@@ -35,40 +35,34 @@ export class PathFindingManagerService {
         this.pathfinder.avoidAdditionalPoint(xCoordinate, yCoordinate);
     }
 
-    findPath(unit: UnitGenericDTO): Observable<PathFindingCoordinate[]> {
+    
+    findPath(action: UnitActionMoveToDTO): Observable<PathFindingCoordinate[]> {
 
         const pathFound: Subject<PathFindingCoordinate[]> = new Subject<PathFindingCoordinate[]>();
-        if(unit.action && unit.action.type === UnitActionTypeENUM.MoveTo) {
-            const moveAction: UnitActionMoveToDTO = (unit.action as UnitActionMoveToDTO);
-            this.pathfinder.findPath(
-                moveAction.data.from.xCoordinate,
-                moveAction.data.from.yCoordinate,
-                moveAction.data.to.xCoordinate,
-                moveAction.data.to.yCoordinate,
-                (rawPath) => {
-                    const path: PathFindingCoordinate[] = [];
-                    for (const rawCoordinate of rawPath) {
-                        const pathCoordinate: PathFindingCoordinate = {
-                            xCoordinate: rawCoordinate.x,
-                            yCoordinate: rawCoordinate.y,
-                            time : null
-                        }
-                        path.push(pathCoordinate);
+    
+        this.pathfinder.findPath(
+            action.data.from.xCoordinate,
+            action.data.from.yCoordinate,
+            action.data.to.xCoordinate,
+            action.data.to.yCoordinate,
+            (rawPath) => {
+                const path: PathFindingCoordinate[] = [];
+                for (const rawCoordinate of rawPath) {
+                    const pathCoordinate: PathFindingCoordinate = {
+                        xCoordinate: rawCoordinate.x,
+                        yCoordinate: rawCoordinate.y,
+                        time : null
                     }
-                    pathFound.next(path);
-            });
-        }
-
+                    path.push(pathCoordinate);
+                }
+                pathFound.next(path);
+        });
+    
         return pathFound;
     }
 
     calculatePathFinding(): void {
         this.pathfinder.calculate();
-    }
-
-    private pathFound(unit: UnitGenericDTO, path: PathFindingCoordinate[]) {
-        console.log(unit);
-        console.log(path);
     }
 
 }

@@ -2,5 +2,6 @@
 export enum UnitActionTypeENUM {
     MoveTo = 'moveTo',
     Harvest = 'harvest',
-    Deliver = 'deliver'
+    Deliver = 'deliver',
+    RewindSuperAction = 'rewindSuperAction'
 }

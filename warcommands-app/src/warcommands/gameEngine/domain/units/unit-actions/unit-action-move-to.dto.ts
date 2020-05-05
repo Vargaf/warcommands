@@ -8,6 +8,7 @@ export interface UnitActionMoveToDTO extends UnitActionGenericDTO {
     data: {
         from: CoordinatesEntity,
         to: CoordinatesEntity,
-        path: PathFindingCoordinate[]
+        path: PathFindingCoordinate[],
+        currentPathStep: 0
     }
 }

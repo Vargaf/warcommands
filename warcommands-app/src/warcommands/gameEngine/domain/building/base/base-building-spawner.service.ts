@@ -49,6 +49,23 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
             },
             xCoordinate: spawnerBuilding.xCoordinate + spawnerBuilding.spawnRelativeCoordinates.xCoordinate,
             yCoordinate: spawnerBuilding.yCoordinate + spawnerBuilding.spawnRelativeCoordinates.yCoordinate,
+            buildingSpeed: WorkerConfiguration.buildingSpeed,
+            harvestingSpeeds: {
+                energy: WorkerConfiguration.extractionSpeed.energy,
+                matter: WorkerConfiguration.extractionSpeed.matter,
+            },
+            deliveringSpeeds: {
+                energy: WorkerConfiguration.deliverySpeed.energy,
+                matter: WorkerConfiguration.deliverySpeed.matter,
+            },
+            maxCargo: {
+                energy: WorkerConfiguration.maxCargo.energy,
+                matter: WorkerConfiguration.maxCargo.matter
+            },
+            currentCargo: {
+                energy: 0,
+                matter: 0
+            }
         };
 
         return worker;

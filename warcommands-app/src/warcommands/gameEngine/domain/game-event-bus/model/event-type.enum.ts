@@ -4,9 +4,7 @@ export enum EventType {
     GameStarted = 'game:started',
     GeneratingMap = 'map:generating',
     MapGenerated = 'map:generated',
-    GeneratingBase = 'base:generaing',
-    BaseGenerated = 'base:generated',
-
+    
     BuildingCreated = 'building:created',
     BuildingSpawningUnit = 'building:spawningUnit',
     BuildingSpawnedUnit = 'building:spawnedUnit',
@@ -14,6 +12,7 @@ export enum EventType {
     BuildingRemovedUnitFromQueue = 'building:removedUnitFromQueue',
 
     ActionUnitStartsToMove = 'action:unitStartsToMove',
+    BaseResourcesUpdated = 'base:resourcesUpdated',
 
 
 

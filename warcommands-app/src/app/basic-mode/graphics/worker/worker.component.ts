@@ -27,12 +27,7 @@ export class WorkerComponent implements OnInit {
 
     classColor: string = 'colorBlue';
 
-    private movementDirection = 2;
-    private xCoodinate: number;
-    private maxMovement: number;
-    private minMovement: number;
-
-    private currentAction: UnitActionTypeENUM;
+    private currentActionId: string;
     private currentActionSubscription: Subscription;
     private path: PathCoordinate[];
 
@@ -72,21 +67,17 @@ export class WorkerComponent implements OnInit {
         coordinates.top = this.data.yCoordinate * tileSize + workerSize / 2;
         coordinates.left = this.data.xCoordinate * tileSize + workerSize / 2;
 
-        this.xCoodinate = coordinates.left;
-        this.minMovement = coordinates.left;
-        this.maxMovement = this.minMovement + 50;
-
         return coordinates;
     }
 
     private updateAction(): void {
-        if (this.worker.action && this.worker.action.type !== this.currentAction) {
+        if (this.worker.action && this.worker.action.id !== this.currentActionId) {
             if (this.currentActionSubscription) {
                 this.currentActionSubscription.unsubscribe();
             }
             
             if (this.worker.action.type === UnitActionTypeENUM.MoveTo) {
-                this.currentAction = UnitActionTypeENUM.MoveTo;
+                this.currentActionId = this.worker.action.id;
                 this.path = _.clone((this.worker.action as UnitActionMoveToDTO).data.path);
                 this.currentActionSubscription = this.requestAnimationFrameService.onFrameUpdate().subscribe((currentTime) => {
                     this.moveUnit(currentTime);
@@ -119,23 +110,6 @@ export class WorkerComponent implements OnInit {
             this.path = [];
             this.currentActionSubscription.unsubscribe();
         }
-    }
-
-    private onRequestAnimationFrameIdUpdate() {
-
-        const speed = (50 / (1000 / 60 ) / 3);
-
-        if (this.xCoodinate >= this.maxMovement) {
-            this.movementDirection = -1;
-        }
-
-        if (this.xCoodinate <= this.minMovement) {
-            this.movementDirection = 1;
-        }
-
-        this.xCoodinate += (this.movementDirection * speed);
-        this.workerElement.nativeElement.style.setProperty('left', this.xCoodinate + 'px');
-
     }
 
 }
