@@ -8,16 +8,16 @@ import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
 import { BuildingsRepositoryService } from '../../../building/services/buildings-repository.service';
 import { UnitSuperActionDTO } from '../../../units/unit-actions/unit-super-action.dto';
 import { UnitSuperActionStatusENUM } from '../../../units/unit-actions/unit-super-action-status.enum';
-import { WorkerHarvestActionManagerService } from './worker-harvest-action-manager.service';
-import { WorkerDeliverActionManagerService } from './worker-deliver-action-manager.service';
 import { UnitActionRewindDTO } from '../../../units/unit-actions/unit-action-rewind.dto';
 import { UnitActionTypeENUM } from '../../../units/unit-actions/unit-action-type.enum';
 import { UnitActionStatusENUM } from '../../../units/unit-actions/unit-action-status.enum';
-import { WorkerMoveActionManagerService } from './worker-move-action-manager.service';
 import { UnitActionGenericDTO } from '../../../units/unit-actions/unit-action-generic.dto';
 import { BuildingDTO } from '../../../building/model/building.dto';
 import { BuildingTypeEnum } from '../../../building/model/building-type.enum';
 import { v4 as uuid } from 'uuid';
+import { GameLogicHarvestActionManagerService } from '../../../game-logic-actions/game-logic-harvest-action-manager.service';
+import { GameLogicDeliverActionManagerService } from '../../../game-logic-actions/game-logic-deliver-action-manager.service';
+import { GameLogicMoveToActionManagerService } from '../../../game-logic-actions/game-logic-move-to-action-manager.service';
 
 export class GameLogicInitializeWorkerActionsService {
 
@@ -27,9 +27,9 @@ export class GameLogicInitializeWorkerActionsService {
         private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly unitSuperActionRepositoryService: UnitSuperAcionRepositopriService,
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
-        private readonly workerHarvestActionManagerService: WorkerHarvestActionManagerService,
-        private readonly workerDeliverActionManagerService: WorkerDeliverActionManagerService,
-        private readonly workerMoveActionManager: WorkerMoveActionManagerService,
+        private readonly gameLogicHarvestActionManager: GameLogicHarvestActionManagerService,
+        private readonly gameLogicDeliverActionManager: GameLogicDeliverActionManagerService,
+        private readonly gameLogicMoveToActionManager: GameLogicMoveToActionManagerService
     ) {}
 
     initializeActions(): void {
@@ -77,10 +77,10 @@ export class GameLogicInitializeWorkerActionsService {
                 status: UnitSuperActionStatusENUM.Initializing
             }
     
-            const harvestAction = this.workerHarvestActionManagerService.harvest(worker);
+            const harvestAction = this.gameLogicHarvestActionManager.createAction()
             harvestSuperAction.atomicActions[1] = harvestAction;
             
-            const deliverAction = this.workerDeliverActionManagerService.deliver(worker);
+            const deliverAction = this.gameLogicDeliverActionManager.createAction();
             harvestSuperAction.atomicActions[3] = deliverAction;
 
             const rewindSuperAction: UnitActionRewindDTO = {
@@ -98,11 +98,13 @@ export class GameLogicInitializeWorkerActionsService {
             const xCoordinateFarm = farmBuilding.xCoordinate + farmBuilding.relativeEntranceCoordinates.xCoordinate;
             const yCoordinateFarm = farmBuilding.yCoordinate + farmBuilding.relativeEntranceCoordinates.yCoordinate;
 
-            this.workerMoveActionManager.moveTo(xCoordinateBase, yCoordinateBase, xCoordinateFarm, yCoordinateFarm).subscribe((action) => {
+            //this.workerMoveActionManager.moveTo(xCoordinateBase, yCoordinateBase, xCoordinateFarm, yCoordinateFarm).subscribe((action) => {
+            this.gameLogicMoveToActionManager.createAction(xCoordinateBase, yCoordinateBase, xCoordinateFarm, yCoordinateFarm).subscribe((action) => {
                 this.setMoveToFarmAtomicAction(worker.id, action);
             });
     
-            this.workerMoveActionManager.moveTo(xCoordinateFarm, yCoordinateFarm, xCoordinateBase, yCoordinateBase).subscribe((action) => {
+            //this.workerMoveActionManager.moveTo(xCoordinateFarm, yCoordinateFarm, xCoordinateBase, yCoordinateBase).subscribe((action) => {
+            this.gameLogicMoveToActionManager.createAction(xCoordinateFarm, yCoordinateFarm, xCoordinateBase, yCoordinateBase).subscribe((action) => {
                 this.setMoveToBaseAtomicAction(worker.id, action);
             });
 

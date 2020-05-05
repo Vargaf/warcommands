@@ -4,18 +4,21 @@ import { MapBlockedTilesManagerService } from 'src/warcommands/gameEngine/domain
 import { GameEventBusService } from 'src/warcommands/gameEngine/domain/game-event-bus/services/game-event-bus.service';
 import { GameLogicTimeFrameService } from 'src/warcommands/gameEngine/domain/game-engine/sevices/game-logic-time-frame.service';
 import { InMemoryUnitsRepositoryService } from '../../../memory-repository/unit/in-memory-units-repository-service';
+import { PathFindingManagerService } from 'src/warcommands/gameEngine/domain/maps/services/path-finding-manager.service';
 
 const factory = (
     unitsRepositoryService: UnitsRepositoryService,
     mapBlockedTilesManagerService: MapBlockedTilesManagerService,
     gameEventBusService: GameEventBusService,
     gameLogicTimeFrameService: GameLogicTimeFrameService,
+    pathFindingManager: PathFindingManagerService,
 ) => {
     return new GameLogicMoveToActionManagerService(
         unitsRepositoryService,
         mapBlockedTilesManagerService,
         gameEventBusService,
-        gameLogicTimeFrameService
+        gameLogicTimeFrameService,
+        pathFindingManager
     );
 };
 
@@ -26,6 +29,7 @@ export const provider = {
         InMemoryUnitsRepositoryService,
         MapBlockedTilesManagerService,
         GameEventBusService,
-        GameLogicTimeFrameService
+        GameLogicTimeFrameService,
+        PathFindingManagerService
     ]
 };

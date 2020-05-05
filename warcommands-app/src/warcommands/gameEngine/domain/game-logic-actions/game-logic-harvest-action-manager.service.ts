@@ -6,6 +6,8 @@ import { UnitActionHarvestDTO } from '../units/unit-actions/unit-action-harvest.
 import { GameLogicTimeFrameService } from '../game-engine/sevices/game-logic-time-frame.service';
 import { UnitActionStatusENUM } from '../units/unit-actions/unit-action-status.enum';
 import { WorkerUnitRoleENUM } from '../units/worker/worker-unit-role.enum';
+import { v4 as uuid } from 'uuid';
+import { UnitActionTypeENUM } from '../units/unit-actions/unit-action-type.enum';
 
 export class GameLogicHarvestActionManagerService implements GameLogicActionManagerService {
     
@@ -13,6 +15,21 @@ export class GameLogicHarvestActionManagerService implements GameLogicActionMana
         private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
     ) {}
+
+    createAction(): UnitActionGenericDTO {
+
+        const action: UnitActionHarvestDTO = {
+            id: uuid(),
+            type: UnitActionTypeENUM.Harvest,
+            actionStatus: UnitActionStatusENUM.WaitingToStart,
+            data: {
+                started: 0,
+                finished: 0
+            }
+        }
+
+        return action;
+    }
 
     initializeAction(action: UnitActionGenericDTO, unitId: string): UnitActionGenericDTO {
         const unit: WorkerUnitDTO = (this.unitsRepositoryService.findById(unitId) as WorkerUnitDTO);

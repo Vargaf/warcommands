@@ -86,7 +86,6 @@ export class GameService {
     private gameLogic(): void {
         setTimeout(() => this.gameLogic(), 150);
         this.gameLogicService.gameLogicLoop();
-        const postLogic = (performance || Date ).now();
     }
 
 }

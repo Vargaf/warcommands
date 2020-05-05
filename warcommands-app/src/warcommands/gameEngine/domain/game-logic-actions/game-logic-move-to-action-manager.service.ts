@@ -8,6 +8,11 @@ import { UnitActionStatusENUM } from '../units/unit-actions/unit-action-status.e
 import { ActionUnitStartsToMoveEvent } from '../game-engine/events/action-unit-starts-to-move.event';
 import { GameEventBusService } from '../game-event-bus/services/game-event-bus.service';
 import { GameLogicTimeFrameService } from '../game-engine/sevices/game-logic-time-frame.service';
+import { Observable, Subject } from 'rxjs';
+import { v4 as uuid } from 'uuid';
+import { PathFindingManagerService } from '../maps/services/path-finding-manager.service';
+import { UnitActionTypeENUM } from '../units/unit-actions/unit-action-type.enum';
+
 
 export class GameLogicMoveToActionManagerService implements GameLogicActionManagerService {
     
@@ -16,7 +21,38 @@ export class GameLogicMoveToActionManagerService implements GameLogicActionManag
         private readonly mapBlockedTilesManagerService: MapBlockedTilesManagerService,
         private readonly gameEventBusService: GameEventBusService,
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
+        private readonly pathFindingManager: PathFindingManagerService,
     ) {}
+
+    createAction(xFromCoordinate: number, yFromCoordinate: number, xToCoordinate: number, yToCoordinate: number): Observable<UnitActionGenericDTO> {
+        const actionSubject: Subject<UnitActionGenericDTO> = new Subject<UnitActionGenericDTO>();
+  
+            const action: UnitActionMoveToDTO = {
+                id: uuid(),
+                type: UnitActionTypeENUM.MoveTo,
+                actionStatus: UnitActionStatusENUM.WaitingToStart,
+                data: {
+                    from: {
+                        xCoordinate: xFromCoordinate,
+                        yCoordinate: yFromCoordinate
+                    },
+                    to: {
+                        xCoordinate: xToCoordinate,
+                        yCoordinate: yToCoordinate
+                    },
+                    path: [],
+                    currentPathStep: 0
+                }
+            }
+
+            this.pathFindingManager.findPath(action).subscribe((path) => {
+                action.data.path = path;
+                actionSubject.next(action);
+                
+            });
+        
+        return actionSubject;
+    }
 
     initializeAction(action: UnitActionGenericDTO, unitId: string): UnitActionGenericDTO {
         const unit: UnitGenericDTO = this.unitsRepositoryService.findById(unitId);

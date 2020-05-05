@@ -21,7 +21,7 @@ export const WorkerConfiguration = {
     },
     deliverySpeed: {
         matter: 4 / 1000, // 4 units each second
-        energy: 0.8, // 0.8 units each second
+        energy: 0.8 / 1000, // 0.8 units each second
     },
     buildingSpeed: 100 / 1000, // 100 hit points each second
     maxCargo: {

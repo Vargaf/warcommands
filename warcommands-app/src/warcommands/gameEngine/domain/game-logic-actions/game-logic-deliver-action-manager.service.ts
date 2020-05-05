@@ -10,6 +10,8 @@ import { BuildingsRepositoryService } from '../building/services/buildings-repos
 import { BaseBuildingDTO } from '../building/base/base-building.dto';
 import { BaseResourcesUpdateEvent } from '../game-engine/events/base-resources-updated.event';
 import { GameEventBusService } from '../game-event-bus/services/game-event-bus.service';
+import { v4 as uuid } from 'uuid';
+import { UnitActionTypeENUM } from '../units/unit-actions/unit-action-type.enum';
 
 export class GameLogicDeliverActionManagerService implements GameLogicActionManagerService {
     
@@ -19,6 +21,20 @@ export class GameLogicDeliverActionManagerService implements GameLogicActionMana
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
         private readonly gameEventBusService: GameEventBusService,
     ) {}
+
+    createAction(): UnitActionGenericDTO {
+        const action: UnitActionDeliverDTO = {
+            id: uuid(),
+            type: UnitActionTypeENUM.Deliver,
+            actionStatus: UnitActionStatusENUM.WaitingToStart,
+            data: {
+                started: 0,
+                finished: 0
+            }
+        }
+
+        return action;
+    }
 
     initializeAction(action: UnitActionGenericDTO, unitId: string): UnitActionGenericDTO {
         const unit: WorkerUnitDTO = (this.unitsRepositoryService.findById(unitId) as WorkerUnitDTO);
