@@ -10,6 +10,7 @@ import { BuildingRemovedUnitFromQueueEvent } from '../gameEngine/domain/game-eng
 import { BuildingCreaedEvent } from '../gameEngine/domain/building/events/building-created.event';
 import { BuildingObjectTranslatorFactory } from './building-object-translator.factory';
 import { ActionUnitStartsToMoveEvent } from '../gameEngine/domain/game-engine/events/action-unit-starts-to-move.event';
+import { BaseResourcesUpdateEvent } from '../gameEngine/domain/game-engine/events/base-resources-updated.event';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class GameEngineListenersService {
         this.onBuildingRemovedUnitFromQueueEvent();
         this.onBuildingCreatedEvent();
         this.onMoveToActionEvent();
+        this.onResourcesUpdateEvent();
     }
 
     private setMapGeneratingListeners(): void {
@@ -72,5 +74,11 @@ export class GameEngineListenersService {
         this.gameEventBusService.on(EventType.ActionUnitStartsToMove).subscribe((event: ActionUnitStartsToMoveEvent) => {
             this.gameEngine.unitMoving(event.data);
         });
+    }
+
+    private onResourcesUpdateEvent(): void {
+        this.gameEventBusService.on(EventType.BaseResourcesUpdated).subscribe((event: BaseResourcesUpdateEvent) => {
+            this.gameEngine.updateBaseResources(event.data.baseId, event.data.resources);
+        })
     }
 }

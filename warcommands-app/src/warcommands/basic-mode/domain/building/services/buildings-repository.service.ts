@@ -1,5 +1,6 @@
 import { BuildingDTO } from '../model/building.dto';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
+import { ResourcesDTO } from '../../share/model/resources.dto';
 
 export abstract class BuildingsRepositoryService {
 
@@ -12,5 +13,7 @@ export abstract class BuildingsRepositoryService {
     abstract addUnitToQueue(unit: UnitGenericDTO): void;
 
     abstract removeUnitFromQueue(unit: UnitGenericDTO): void;
+
+    abstract updateBaseResources(baseId: string, resources: ResourcesDTO): void;
 
 }

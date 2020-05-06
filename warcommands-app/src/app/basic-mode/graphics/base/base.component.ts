@@ -42,6 +42,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
     spinerStrokeWidth = 0;
     isSpawning = false;
     spawningSubscription: Subscription;
+    playerBaseId: string;
     private spawningQueue: UnitSpawningDTO[] = [];
     
     unitClassColor: string = 'colorBlue';
@@ -62,6 +63,8 @@ export class BaseComponent implements OnInit, AfterViewInit {
         const playerId = this.currentPlayerRepository.getPlayer().id;
         if (playerId !== this.base.playerId) {
             this.unitClassColor = 'colorRed';
+        } else {
+            this.playerBaseId = this.base.id;
         }
 
         this.buildingsNgrxReposioryService.watchBuilding(this.base.id).subscribe((base) => {

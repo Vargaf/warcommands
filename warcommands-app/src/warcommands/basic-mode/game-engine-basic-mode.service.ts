@@ -7,6 +7,7 @@ import { UnitGenericDTO } from './domain/units/model/unit-generic.dto';
 import { UnitsManagerService } from './domain/units/services/units-manager.service';
 import { BuildingsManagerService } from './domain/building/services/buildings-manager.service';
 import { BuildingDTO } from './domain/building/model/building.dto';
+import { ResourcesDTO } from './domain/share/model/resources.dto';
 
 
 @Injectable({
@@ -65,6 +66,10 @@ export class BasicModeGameEngineService  {
 
     unitMoving(unit: UnitGenericDTO): void {
         this.unitsManagerService.unitMoving(unit);
+    }
+
+    updateBaseResources(baseId: string, resources: ResourcesDTO): void {
+        this.buildingsManagerService.updateBaseResources(baseId, resources);
     }
 
     private animate(): void {

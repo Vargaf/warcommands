@@ -13,6 +13,7 @@ import { BuildingSpawningUnitEvent } from '../events/building-spawning-unit.even
 import { BuildingQueueingUnitEvent } from '../events/building-queueing-unit.event';
 import { SpawingBuildingsRepositoryservice } from '../../building/services/spawning-buildings-repository.service';
 import { BuildingTypeEnum } from '../../building/model/building-type.enum';
+import { BaseResourcesUpdateEvent } from '../events/base-resources-updated.event';
 
 export class EnqueueUnitsManagerService {
 
@@ -56,10 +57,12 @@ export class EnqueueUnitsManagerService {
                     if (spawnerBuilding.type === BuildingTypeEnum.Base) {
                         (spawnerBuilding as BaseBuildingDTO).resources.matter -= unitCost.matter;
                         (spawnerBuilding as BaseBuildingDTO).resources.energy -= unitCost.energy;
+                        this.launchResourcesUpdateEvent(spawnerBuilding.id, (spawnerBuilding as BaseBuildingDTO).resources);
                     } else {
                         playerBase.resources.matter -= unitCost.matter;
                         playerBase.resources.energy -= unitCost.energy;
                         this.buildingsRepositoryService.save(playerBase);
+                        this.launchResourcesUpdateEvent(playerBase.id, playerBase.resources);
                     }
                     
                     this.buildingsRepositoryService.save(spawnerBuilding);
@@ -73,6 +76,11 @@ export class EnqueueUnitsManagerService {
     private hasBaseEnoughResources(base: BaseBuildingDTO, unitCost: ResourcesDTO): boolean {
         return base.resources.energy >= unitCost.energy &&
             base.resources.matter >= unitCost.matter;
+    }
+
+    private launchResourcesUpdateEvent(baseId: string, resources: ResourcesDTO): void {
+        const event: BaseResourcesUpdateEvent = new BaseResourcesUpdateEvent(baseId, resources);
+        this.gameEventBusService.cast(event);
     }
 
 }

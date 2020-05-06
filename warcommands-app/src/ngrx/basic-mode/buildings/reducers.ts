@@ -2,6 +2,7 @@ import { createReducer, on, Action } from '@ngrx/store';
 import * as BuildingListActions from './actions';
 import * as _ from 'lodash';
 import { BuildingDTO, SpawnerBuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
+import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
 
 export const BuildingListStoreKey = 'buildings';
 
@@ -51,6 +52,15 @@ const buildingListReducer = createReducer(
 
         return {
             list: cloneStateList
+        }
+    }),
+    on(BuildingListActions.updateBaseResources, (state, { baseId, resources }) => {
+        let base: BaseEntityInterface = (state.list[baseId] as BaseEntityInterface);
+        base = _.cloneDeep(base);
+        base.resources = resources;
+
+        return {
+            list: { ...state.list, ...{ [baseId]: base } }
         }
     })
 );

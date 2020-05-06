@@ -4,6 +4,8 @@ import * as _ from "lodash";
 import { BuildingsNgrxRepositoryService } from '../../ngrx/buildings/buildings-ngrx-repository.service';
 import { Injectable } from '@angular/core';
 import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
+import { ResourcesDTO } from 'src/warcommands/basic-mode/domain/share/model/resources.dto';
+import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
 
 @Injectable({
     providedIn: 'root'
@@ -51,5 +53,13 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
         this.buildingsNgrxRepositoryService.removeUnitFromQueue(unit);
         this.buildingList.set(clone.id, clone);
     }
-    
+
+    updateBaseResources(baseId: string, resources: ResourcesDTO): void {
+        let base: BaseEntityInterface = (this.buildingList.get(baseId) as BaseEntityInterface);
+        base = _.cloneDeep(base);
+        base.resources = resources;
+        this.buildingList.set(baseId, base);
+
+        this.buildingsNgrxRepositoryService.updateBaseResources(baseId, resources);
+    }
 }

@@ -28,7 +28,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
-      actionsBlocklist: [ '[Game engine basic mode] Update the request animation frame id' ]
+      actionsBlocklist: [ 
+        '[Game engine basic mode] Update the request animation frame id',
+        '[Building list] update base resources'
+       ]
     }),
     BrowserAnimationsModule
   ],

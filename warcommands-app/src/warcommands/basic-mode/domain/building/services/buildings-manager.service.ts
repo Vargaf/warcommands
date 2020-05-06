@@ -3,6 +3,7 @@ import { BuildingDTO, SpawnerBuildingDTO } from '../model/building.dto';
 import { DomElementInjectorService } from 'src/warcommands/basic-mode/infrastructure/angular/dom-element-injector.service';
 import { BuildingsRepositoryService } from './buildings-repository.service';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
+import { ResourcesDTO } from '../../share/model/resources.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -45,6 +46,10 @@ export class BuildingsManagerService {
 
     removingUnitFromQueue(unit: UnitGenericDTO): void {
         this.buildingsRepositoryService.removeUnitFromQueue(unit);
+    }
+
+    updateBaseResources(baseId: string, resources: ResourcesDTO): void {
+        this.buildingsRepositoryService.updateBaseResources(baseId, resources);
     }
 
 }

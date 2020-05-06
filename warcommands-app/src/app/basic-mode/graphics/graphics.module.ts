@@ -14,6 +14,8 @@ import { BaseComponent } from './base/base.component';
 import { MaterialModule } from 'src/app/share/material/material.module';
 import { MatterFarmComponent } from './matter-farm/matter-farm.component';
 import { EnergyFarmComponent } from './energy-farm/energy-farm.component';
+import { PlayerResourcesComponent } from './player-resources/player-resources.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -26,11 +28,13 @@ import { EnergyFarmComponent } from './energy-farm/energy-farm.component';
     TileWaterComponent,
     BaseComponent,
     MatterFarmComponent,
-    EnergyFarmComponent
+    EnergyFarmComponent,
+    PlayerResourcesComponent
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   exports: [
     BasicModeComponentDirective

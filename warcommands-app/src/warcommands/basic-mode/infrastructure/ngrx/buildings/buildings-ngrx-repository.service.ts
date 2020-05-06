@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
+import { ResourcesDTO } from 'src/warcommands/basic-mode/domain/share/model/resources.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +34,10 @@ export class BuildingsNgrxRepositoryService {
 
     removeUnitFromQueue(unit: UnitGenericDTO): void {
         this.store.dispatch(BuildingActions.removeUnitFromQueue({ unit }));
+    }
+
+    updateBaseResources(baseId: string, resources: ResourcesDTO): void {
+        this.store.dispatch(BuildingActions.updateBaseResources({ baseId, resources }));
     }
 
 }

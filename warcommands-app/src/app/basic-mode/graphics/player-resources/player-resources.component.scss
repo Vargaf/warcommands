@@ -1,0 +1,27 @@
+
+.player-resources-content {
+    position: absolute;
+    top: 0px;
+    left: 100px;
+    background-color: black;
+    border-radius: 5px;
+    margin-top: 7px;
+    padding: 1px 7px;
+
+    .matter {
+        padding-right: 10px;
+        color: rgb(154, 74, 230);
+
+        .matterIcon {
+            padding-top: 3px;
+        }
+    }
+
+    .energy {
+        color: rgb(66, 66, 250);
+
+        .energyIcon {
+            padding-top: 3px;
+        }
+    }
+}
