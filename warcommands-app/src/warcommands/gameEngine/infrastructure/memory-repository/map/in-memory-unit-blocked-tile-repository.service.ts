@@ -3,18 +3,24 @@ import { UnitGenericDTO } from 'src/warcommands/gameEngine/domain/units/model/un
 
 export class InMemoryUnitBlockedTileRepositoryService implements UnitBlockedTileRepositoryService {
     
-    private unitTileList: Map<string, string> = new Map<string, string>();
+    private unitTileList: Map<string, string[]> = new Map<string, string[]>();
     private blockedTileList: Map<string, string> = new Map<string, string>();
 
     addUnit(unit: UnitGenericDTO): void {
-        this.unitTileList.set(unit.xCoordinate + ':' + unit.yCoordinate, unit.id);
+        const index = unit.xCoordinate + ':' + unit.yCoordinate;
+        if (!this.unitTileList.has(index)) {
+            this.unitTileList.set(index,[]);
+        }
+        const currentUnitsOnTile = this.unitTileList.get(index);
+        currentUnitsOnTile.push(unit.id)
+        this.unitTileList.set(index, currentUnitsOnTile);
     }
 
     addTileBlocked(xCoordinate: number, yCoordinate: number): void {
         this.blockedTileList.set(xCoordinate + ':' + yCoordinate, "blocked");
     }
 
-    getUnitIdBlokingTile(xCoordinate: number, yCoordinate: number): string {
+    getUnitIdListBlokingTile(xCoordinate: number, yCoordinate: number): string[] {
         return this.unitTileList.get(xCoordinate + ':' + yCoordinate);
     }
 
@@ -24,8 +30,23 @@ export class InMemoryUnitBlockedTileRepositoryService implements UnitBlockedTile
             false;
     }
 
-    free(xCoordinate: number, yCoordinate: number): void {
-        this.unitTileList.delete(xCoordinate + ':' + yCoordinate);
+    removeUnit(unit: UnitGenericDTO): void {
+        const index = unit.xCoordinate + ':' + unit.yCoordinate;
+        const unitList: string[] = this.unitTileList.get(index);
+
+        if (!unitList) {
+            console.log('ups');
+        }
+
+        if (unitList.length === 1) {
+            this.unitTileList.delete(index);
+        } else {
+            const unitIndex = unitList.findIndex((unitId) => {
+                return unitId === unit.id;
+            });
+            unitList.splice(unitIndex, 1);
+            this.unitTileList.set(index, unitList);
+        }
     }
     
 }

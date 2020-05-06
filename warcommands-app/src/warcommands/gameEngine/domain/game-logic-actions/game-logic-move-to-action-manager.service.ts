@@ -58,10 +58,15 @@ export class GameLogicMoveToActionManagerService implements GameLogicActionManag
         const unit: UnitGenericDTO = this.unitsRepositoryService.findById(unitId);
 
         action = this.setTimesToPath((action as UnitActionMoveToDTO), unit);
-        this.mapBlockedTilesManagerService.freeTileByUnit(unit);
         action.actionStatus = UnitActionStatusENUM.InProgress;
         action.data.currentPathStep = 0;
         unit.action = action;
+
+        this.mapBlockedTilesManagerService.freeTileByUnit(unit);
+        const nextTileIndex = action.data.currentPathStep + 1;
+        unit.xCoordinate = action.data.path[nextTileIndex].xCoordinate;
+        unit.yCoordinate = action.data.path[nextTileIndex].yCoordinate;
+        this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
 
         this.unitsRepositoryService.save(unit);
 
@@ -89,6 +94,10 @@ export class GameLogicMoveToActionManagerService implements GameLogicActionManag
 
                 if(action.data.path.length - 1 === nextTileIndex) {
                     action.actionStatus = UnitActionStatusENUM.Finished;
+                    action.data.currentPathStep++;
+                    unit.xCoordinate = action.data.path[nextTileIndex].xCoordinate;
+                    unit.yCoordinate = action.data.path[nextTileIndex].yCoordinate;
+                    this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
                     isUnitDirty = true;
                 }
             }

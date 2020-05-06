@@ -6,10 +6,10 @@ export interface UnitBlockedTileRepositoryService {
 
     addTileBlocked(xCoordinate: number, yCoordinate: number): void;
 
-    getUnitIdBlokingTile(xCoordinate: number, yCoordinate: number): string;
+    getUnitIdListBlokingTile(xCoordinate: number, yCoordinate: number): string[];
 
     isBlocked(xCoordinate: number, yCoordinate: number): boolean;
 
-    free(xCoordinate: number, yCoordinate: number): void
+    removeUnit(unit: UnitGenericDTO): void
 
 }

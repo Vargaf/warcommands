@@ -42,7 +42,7 @@ export class MapBlockedTilesManagerService {
     }
 
     freeTileByUnit(unit: UnitGenericDTO): void {
-        this.unitBlockedTileRepository.free(unit.xCoordinate, unit.yCoordinate);
+        this.unitBlockedTileRepository.removeUnit(unit);
     }
 
     isTileOccupiedByUnit(xCoordinate: number, yCoordinate: number): boolean {

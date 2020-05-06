@@ -25,7 +25,7 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
     }
 
     hasSpawnerBuildingQueueRoom(building: SpawnerBuildingDTO): boolean {
-        return building.queueList.length < 3;
+        return building.queueList.length < 10;
     }
 
     createUnit(spawnerBuilding: SpawnerBuildingDTO): UnitGenericDTO {

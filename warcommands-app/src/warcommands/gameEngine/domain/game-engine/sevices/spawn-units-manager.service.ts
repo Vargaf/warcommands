@@ -36,7 +36,6 @@ export class SpawnUnitsManagerService {
                             this.spawnNextUnitInQueue(building);
                         } else {
                             this.spawningBuildngsRepositoryService.remove(buildingId);
-                            console.log("Todos los workers creados");
                         }
 
                         this.buildingsRepositoryService.save(building);

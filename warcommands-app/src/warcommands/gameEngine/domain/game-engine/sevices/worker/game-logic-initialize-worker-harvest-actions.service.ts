@@ -34,6 +34,9 @@ export class GameLogicInitializeWorkerHarvestActionsService {
         const farmBuilding: FarmBuildingDTO = (this.getFarmBuilding(worker) as FarmBuildingDTO);
 
         if (farmBuilding) {
+            farmBuilding.unitsFarmingIdList.push(worker.id);
+            this.buildingsRepositoryService.save(farmBuilding)
+
             const base: BaseBuildingDTO = (this.buildingsRepositoryService.findById(worker.baseId) as BaseBuildingDTO);
 
             const harvestSuperAction: UnitSuperActionDTO = {
