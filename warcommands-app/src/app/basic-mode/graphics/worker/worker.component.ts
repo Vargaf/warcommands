@@ -93,7 +93,7 @@ export class WorkerComponent implements OnInit {
         const xDirection = this.path[1].xCoordinate - this.path[0].xCoordinate;
         const yDirection = this.path[1].yCoordinate - this.path[0].yCoordinate;
 
-        const timeDelta = this.requestAnimationFrameService.getCurrentTime() - this.path[0].time;
+        const timeDelta = currentTime - this.path[0].time;
         const positionDelta = timeDelta * tileSize / this.worker.attributes.speed;
 
         const xCoordinateNew = tileSize * this.path[0].xCoordinate + (positionDelta * xDirection) + workerSize / 2;
@@ -102,11 +102,15 @@ export class WorkerComponent implements OnInit {
         this.workerElement.nativeElement.style.setProperty('left', xCoordinateNew + 'px');
         this.workerElement.nativeElement.style.setProperty('top', yCoordinateNew + 'px');
 
-        if (this.path[1].time < this.requestAnimationFrameService.getCurrentTime()) {
+        if (this.path[1].time < currentTime) {
             this.path.splice(0, 1);
         }
 
         if (this.path.length === 1) {
+            const xCoordinateNew = tileSize * this.path[0].xCoordinate + workerSize / 2;
+            const yCoordinateNew = tileSize * this.path[0].yCoordinate + workerSize / 2;
+            this.workerElement.nativeElement.style.setProperty('left', xCoordinateNew + 'px');
+            this.workerElement.nativeElement.style.setProperty('top', yCoordinateNew + 'px');
             this.path = [];
             this.currentActionSubscription.unsubscribe();
         }

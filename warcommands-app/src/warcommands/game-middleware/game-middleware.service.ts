@@ -45,6 +45,14 @@ export class GameMiddlewareService {
         this.gameService.start();
     }
 
+    pauseGame(): void {
+        this.gameEngine.pauseGame();
+        this.gameService.pauseGame();
+    }
 
+    resumeGame(): void {
+        this.gameEngine.resumeGame();
+        this.gameService.resumeGame();
+    }
 
 }

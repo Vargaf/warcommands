@@ -5,6 +5,7 @@ import { FileManagerEvents } from 'src/warcommands/commands-panel/domain/file/se
 import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
 import { MouseDragDropHelperService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/mouse-drag-drop-helper.service';
 import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service';
+import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 
 @Component({
     selector: 'app-file-manager',
@@ -25,12 +26,14 @@ export class FileManagerComponent implements OnInit {
     fileList: FileDTO[] = [];
 
     isDeleteCommandDropContainer = true;
+    isGamePaused = false;
 
     constructor(
         private readonly commandsPanelManagerService: CommandsPanelManagerService,
         private readonly fileManagerEvents: FileManagerEvents,
         private readonly mouseDragDropHelperService: MouseDragDropHelperService,
         private readonly commandDragDropManager: CommandDragDropManagerService,
+        private readonly gameMiddlewareService: GameMiddlewareService
     ) { }
 
     ngOnInit() {
@@ -55,6 +58,16 @@ export class FileManagerComponent implements OnInit {
         const selectedFile = this.filesTabGroup.selectedIndex;
         const file: FileDTO = this.fileList[selectedFile];
         this.commandsPanelManagerService.saveFile(file);
+    }
+
+    onPauseGame(): void {
+        this.isGamePaused = true;
+        this.gameMiddlewareService.pauseGame();
+    }
+
+    onResumeGame(): void {
+        this.isGamePaused = false;
+        this.gameMiddlewareService.resumeGame();
     }
 
 }

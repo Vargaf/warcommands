@@ -12,12 +12,15 @@ import { PlayerManagerService } from '../../player/services/player-manager.servi
 import { GameLogicService } from './game-logic.service';
 import { GameEngineEventListenerHubService } from './game-engine-event-listener-hub.service';
 import { InitialBuildingsManagerService } from '../../building/services/initial-buildings-manager.service';
+import { WarcommandsNgZone } from '../../share/warcommands-ng-zone.service';
 
 export class GameService {
 
     private isInitialized: boolean;
 
     private mapType: MapType;
+
+    private isGameRunning: boolean = true;
 
     constructor(
         private readonly gameEngineEventListenerHubService: GameEngineEventListenerHubService,
@@ -27,7 +30,8 @@ export class GameService {
         private readonly playerCommandsManagerService: PlayerCommandsManagerService,
         private readonly playerManagerService: PlayerManagerService,
         private readonly gameLogicService: GameLogicService,
-        private readonly initialBuildingsManagerService: InitialBuildingsManagerService
+        private readonly initialBuildingsManagerService: InitialBuildingsManagerService,
+        private readonly warcommandsNgZoneService: WarcommandsNgZone
     ) {}
 
     setMap(mapType: MapType): void {
@@ -70,8 +74,22 @@ export class GameService {
             throw new Error('The game has not been initialized');
         }
 
-        this.runPlayerCommands();
-        this.gameLogic();
+        this.warcommandsNgZoneService.runOutsideAngular(() => {
+            this.runPlayerCommands();
+            this.gameLogic();
+        });
+    }
+
+    pauseGame(): void {
+        this.isGameRunning = false;
+    }
+
+    resumeGame(): void {
+        this.isGameRunning = true;
+        this.warcommandsNgZoneService.runOutsideAngular(() => {
+            this.runPlayerCommands();
+            this.gameLogic();
+        });
     }
 
     addFile(file: FileJsonDTO): void {
@@ -79,13 +97,17 @@ export class GameService {
     }
 
     private runPlayerCommands(): void {
-        setTimeout(() => {this.runPlayerCommands()}, 300);
-        this.playerCommandsManagerService.runPlayerCommands();
+        if (this.isGameRunning) {
+            setTimeout(() => {this.runPlayerCommands()}, 300);
+            this.playerCommandsManagerService.runPlayerCommands();    
+        }
     }
 
     private gameLogic(): void {
-        setTimeout(() => this.gameLogic(), 150);
-        this.gameLogicService.gameLogicLoop();
+        if (this.isGameRunning) {
+            setTimeout(() => this.gameLogic(), 150);
+            this.gameLogicService.gameLogicLoop();
+        }
     }
 
 }

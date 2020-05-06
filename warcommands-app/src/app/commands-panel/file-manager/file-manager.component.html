@@ -4,6 +4,14 @@
             <mat-icon>save</mat-icon>
         </button>
     </div>
+    <div>
+        <button mat-icon-button aria-label="Resume game" *ngIf="isGamePaused" (click)="onResumeGame()">
+            <mat-icon>play_arrow</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Pause game" *ngIf="!isGamePaused" (click)="onPauseGame()">
+            <mat-icon>pause</mat-icon>
+        </button>    
+    </div>
     <div #deleteButtonWrapper class="delete-button-wrapper">
         <div #deleteButtonDragableElement>
             <button mat-icon-button aria-label="Save file">

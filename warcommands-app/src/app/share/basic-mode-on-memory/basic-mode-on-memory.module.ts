@@ -50,6 +50,7 @@ import * as GameLogicMoveToActionManagerProvider from 'src/warcommands/gameEngin
 import * as GameLogicActionManagerFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-action-manager-factory.provider';
 import * as GameLogicHarvestActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-harvest-action-manager.provider';
 import * as GameLogicDeliverActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-deliver-action-manager.provider';
+import * as WarcommandsNgZoneProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/warcommands-ng-zone.provider';
 
 
 
@@ -111,6 +112,7 @@ import * as GameLogicDeliverActionManagerProvider from 'src/warcommands/gameEngi
         GameLogicActionManagerFactoryProvider.provider,
         GameLogicHarvestActionManagerProvider.provider,
         GameLogicDeliverActionManagerProvider.provider,
+        WarcommandsNgZoneProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

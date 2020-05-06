@@ -15,6 +15,8 @@ import { ResourcesDTO } from './domain/share/model/resources.dto';
 })
 export class BasicModeGameEngineService  {
 
+    private isGameRunning: boolean = true;
+
     constructor(
         private readonly ngZone: NgZone,
         private readonly statsService: StatsService,
@@ -35,6 +37,19 @@ export class BasicModeGameEngineService  {
 
     start() {
         this.animate();
+    }
+
+    pauseGame(): void {
+        this.isGameRunning = false;
+    }
+
+    resumeGame(): void {
+        this.isGameRunning = true;
+        // We have to run this outside angular zones,
+        // because it could trigger heavy changeDetection cycles.
+        this.ngZone.runOutsideAngular(() => {
+            this.render();
+        });
     }
 
     generateMap(map: MapDTO): void {
@@ -84,12 +99,15 @@ export class BasicModeGameEngineService  {
 
     private render(): void {
 
-        const frameId = requestAnimationFrame(() => {
-            this.render();
-        });
-
-        this.statsService.update();
-        this.requestAnimationFrameService.updateFrameTime();
+        if (this.isGameRunning) {
+            requestAnimationFrame(() => {
+                this.render();
+            });
+    
+            this.statsService.update();
+            this.requestAnimationFrameService.updateFrameTime();
+        }
+        
     }
 
 
