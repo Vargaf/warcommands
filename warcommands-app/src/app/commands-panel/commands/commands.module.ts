@@ -21,6 +21,8 @@ import { CommandDropRemoveManagerService } from 'src/warcommands/commands-panel/
 import { CommandRemovalEventChainGeneratorService } from 'src/warcommands/commands-panel/domain/command/services/command-removal-event-chain-generator.service';
 import { GameCommandModule } from './game-command/game-command.module';
 import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -39,6 +41,8 @@ import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
         DragPreviewsModule,
         CommandDropModule,
         GameCommandModule,
+        FlexLayoutModule,
+        ReactiveFormsModule
     ],
     providers: [
         CommandDragDropManagerService,

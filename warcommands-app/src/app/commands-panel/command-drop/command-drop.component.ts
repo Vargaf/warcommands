@@ -94,13 +94,10 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private setRemovedCommandFromContainerListener(): void {
         const subscription = this.commandRemovedEvents.commandRemovedFromCommandContainerListener(this.commandContainerId).subscribe((command) => {
-            let position: number;
-            for (const index in this.commandContainer.commands) {
-                position = +index;
-                if (command.id === this.commandContainer.commands[index]) {
-                    break;
-                }
-            }
+            const position = this.commandList.findIndex((commandItem) => {
+                return command.id === commandItem.id;
+            })
+
             this.removeCommandWrapper(position);
             this.commandDragDropManagerService.removeCommandComponent(command, command.parentCommandContainerId);
         });

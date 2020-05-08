@@ -3,7 +3,8 @@ import { BasicModeComponentDirective } from './basic-mode.directive';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { MapType } from 'src/warcommands/gameEngine/domain/maps/model/map-type.enum';
 import { DifficultyLevel } from 'src/warcommands/gameEngine/domain/player/model/difficulty-level.enum';
-import { CurrentPlayerRepositoryService } from 'src/warcommands/commands-panel/domain/current-player/services/current-player-repository.service';
+import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/domain/current-player/current-player-manager-service';
+import { CurrentPlayerDTO } from 'src/warcommands/commands-panel/domain/current-player/model/current-player.dto';
 
 @Component({
     selector: 'app-basic-mode',
@@ -17,14 +18,14 @@ export class BasicModeComponent implements OnInit {
 
     constructor(
         private readonly gameMiddlewareService: GameMiddlewareService,
-        private readonly currentPlayerRepository: CurrentPlayerRepositoryService,
+        private readonly currentPlayerManager: CurrentPlayerManagerService
     ) { }
 
     ngOnInit() {
-
+        const currentPlayer: CurrentPlayerDTO = this.currentPlayerManager.initializePlayer();
         const viewContainerRef = this.basicModeGraphicsWrapper.viewContainerRef;
         this.gameMiddlewareService.setMap(MapType.TutorialFirstMap);
-        this.gameMiddlewareService.addPlayer(this.currentPlayerRepository.getPlayer().id);
+        this.gameMiddlewareService.addPlayer(currentPlayer.id);
         this.gameMiddlewareService.addIAPlayer(DifficultyLevel.Mirror);
         this.gameMiddlewareService.initialize(viewContainerRef);
 

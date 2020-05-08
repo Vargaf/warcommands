@@ -18,7 +18,8 @@ export class CommandDataFromJSONFactory {
             id: rawCommand.id,
             type: rawCommand.type,
             parentCommandContainerId,
-            fileId
+            fileId,
+            data: rawCommand.data,
         };
 
         switch (rawCommand.type) {

@@ -8,6 +8,7 @@ import { CommandRemovedEvents } from '../events/command-removed-events';
 import { GenericCommandDTO } from '../model/generic-command.dto';
 import { CommandClassMemberAddedEvents } from '../events/command-class-member-added-events';
 import { CommandClassMemberAddedEventDTO } from '../events/command-class-member-added-event.dto';
+import { CommandUpdatedEvents } from '../events/command-updated-events';
 
 @Injectable({
     providedIn: 'root'
@@ -19,12 +20,14 @@ export class CommandRepositoryListenersService {
         private readonly commandCreatedEvents: CommandCreatedEvents,
         private readonly commandMovedEvents: CommandMovedEvents,
         private readonly commandRemovedEvents: CommandRemovedEvents,
-        private readonly commandClassMemberAddedEvents: CommandClassMemberAddedEvents
+        private readonly commandClassMemberAddedEvents: CommandClassMemberAddedEvents,
+        private readonly commandUpdatedEvents: CommandUpdatedEvents
     ) {
         this.onCommandCreatedListener();
         this.onCommandMovedListener();
         this.onCommandRemoveListener();
         this.onCommandClassMemberAddedListener();
+        this.onCommandUpdatedListener();
     }
 
     private onCommandCreatedListener(): void {
@@ -48,6 +51,12 @@ export class CommandRepositoryListenersService {
     private onCommandClassMemberAddedListener(): void {
         this.commandClassMemberAddedEvents.commandClassMemberAddedListener().subscribe((event: CommandClassMemberAddedEventDTO) => {
             this.commandRepositoryService.addClassMember(event.commandId, event.classMember);
+        });
+    }
+
+    private onCommandUpdatedListener(): void {
+        this.commandUpdatedEvents.commandCreatedListener().subscribe((command: GenericCommandDTO) => {
+            this.commandRepositoryService.save(command);
         });
     }
 

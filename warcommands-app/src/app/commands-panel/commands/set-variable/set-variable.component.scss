@@ -1,9 +1,26 @@
 
 
 .set-variable-content {
-    background-color: greenyellow;
-    color: black;
+    
     border-radius: 10px;
     padding: 10px;
     inline-size: max-content;
+
+    .var-name-input {
+        padding: 0px 10px;
+    }
+
+    .var-value-input {
+        padding-left: 10px;
+    }
+}
+
+.set-variable-content-valid {
+    background-color: greenyellow;
+    color: black;
+}
+
+.set-variable-content-invalid {
+    background-color: red;
+    color: white;
 }

@@ -63,7 +63,7 @@ export class JSONFileGeneratorService {
         return {
             id: command.id,
             type: command.type,
-            data: null,
+            data: command.data,
             commandContainerList: commandContainerJsonList,
             classMember: classMemberChained
         };

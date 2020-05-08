@@ -41,8 +41,8 @@ export class GameMiddlewareService {
 
         this.fileManagerService.loadFiles();
 
-        this.gameEngine.start();
-        this.gameService.start();
+        //this.gameEngine.start();
+        //this.gameService.start();
     }
 
     pauseGame(): void {

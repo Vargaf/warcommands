@@ -69,9 +69,14 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
         this.buildingsNgrxReposioryService.watchBuilding(this.base.id).subscribe((base) => {
             this.base = (base as BaseEntityInterface);
+            
             this.queueList = from([this.base.queueList]);
             if (this.isNewSpawning()) {
                 this.manageSpawningSubscription();
+            }
+
+            if (this.isSpawning && !this.base.unitSpawning.unit) {
+                this.unitSpawned();
             }
             
         });
@@ -143,8 +148,10 @@ export class BaseComponent implements OnInit, AfterViewInit {
     }
 
     private spawningProgressUnsubscribe(): void {
-        this.isSpawning = false;
         this.spawningSubscription.unsubscribe();
+    }
+    private unitSpawned(): void {
+        this.isSpawning = false;
         this.progress = 0;
     }
 

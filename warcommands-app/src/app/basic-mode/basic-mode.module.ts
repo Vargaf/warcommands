@@ -16,6 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { UnitsManagerService } from 'src/warcommands/basic-mode/domain/units/services/units-manager.service';
 import { BuildingsManagerService } from 'src/warcommands/basic-mode/domain/building/services/buildings-manager.service';
 import { BasicModeInMemoryProvidersModule } from './basic-mode-in-memory-providers.module';
+import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/domain/current-player/current-player-manager-service';
 
 
 
@@ -42,6 +43,7 @@ import { BasicModeInMemoryProvidersModule } from './basic-mode-in-memory-provide
     { provide: BasicModeGameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN, useFactory: BasicModeGameEngineStore.reducers },
     UnitsManagerService,
     BuildingsManagerService,
+    CurrentPlayerManagerService,
   ]
 })
 export class BasicModeModule { }

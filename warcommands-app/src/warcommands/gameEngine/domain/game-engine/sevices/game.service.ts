@@ -74,10 +74,7 @@ export class GameService {
             throw new Error('The game has not been initialized');
         }
 
-        this.warcommandsNgZoneService.runOutsideAngular(() => {
-            this.runPlayerCommands();
-            this.gameLogic();
-        });
+        this.runGame();
     }
 
     pauseGame(): void {
@@ -86,14 +83,18 @@ export class GameService {
 
     resumeGame(): void {
         this.isGameRunning = true;
-        this.warcommandsNgZoneService.runOutsideAngular(() => {
-            this.runPlayerCommands();
-            this.gameLogic();
-        });
+        this.runGame();
     }
 
     addFile(file: FileJsonDTO): void {
         this.playerCommandsManagerService.addFile(file);
+    }
+
+    private runGame(): void {
+        this.warcommandsNgZoneService.runOutsideAngular(() => {
+            this.gameLogic();
+            this.runPlayerCommands();
+        });
     }
 
     private runPlayerCommands(): void {

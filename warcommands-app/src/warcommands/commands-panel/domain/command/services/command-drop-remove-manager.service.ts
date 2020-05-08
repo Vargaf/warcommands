@@ -13,7 +13,7 @@ export class CommandDropRemoveManagerService {
     constructor(
         private readonly commandDropRepositoryService: CommandDropRepository,
         private readonly angularDragDropService: DragDrop,
-        private readonly CcmmandRemovalEventChainGeneratorService: CommandRemovalEventChainGeneratorService
+        private readonly commandRemovalEventChainGeneratorService: CommandRemovalEventChainGeneratorService
     ) {}
 
     createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>, deleteButtonDragElement: ElementRef<HTMLDivElement>): void {
@@ -38,7 +38,7 @@ export class CommandDropRemoveManagerService {
 
     private setDeleteCommandDropContainerDroppedObserver(dropListRef: DropListRef): void {
         dropListRef.dropped.subscribe(event => {
-            this.CcmmandRemovalEventChainGeneratorService.generateCommandRemovalEventChain(event.item.data.id);
+            this.commandRemovalEventChainGeneratorService.generateCommandRemovalEventChain(event.item.data.id);
         });
     }
 

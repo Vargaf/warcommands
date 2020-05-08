@@ -29,10 +29,12 @@ export class GameCommandComponent implements OnInit, OnDestroy {
     ngOnInit() {
         if (this.commandData) {
             this.commandDataSubscription = this.commandNgrxRepositoryService.getCommand(this.commandData.id).subscribe((command) => {
-                this.commandData = (command as GameCommandEntity);
+                if (command) {
+                    this.commandData = (command as GameCommandEntity);
 
-                if (command.classMember) {
-                    this.memberSelected = command.classMember.memberName;
+                    if (command.classMember) {
+                        this.memberSelected = command.classMember.memberName;
+                    }
                 }
             });
         }

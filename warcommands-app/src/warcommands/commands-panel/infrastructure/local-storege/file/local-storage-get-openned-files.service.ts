@@ -10,7 +10,7 @@ export class LocalStorageGetOpennedFilesService {
     getOpennedFilesInRaw(): FileJsonDTO[] {
 
         const savedFileList = this.getUserFileList();
-        const opennedFileList = this.fileterOpennedFiles(savedFileList);
+        const opennedFileList = this.filetrOpennedFiles(savedFileList);
         const rawOpennedFileList: FileJsonDTO[] = [];
 
         for (const userFile of opennedFileList) {
@@ -33,7 +33,7 @@ export class LocalStorageGetOpennedFilesService {
         return rawOpennedFileList;
     }
 
-    private fileterOpennedFiles(fileList: LocalStorageHelper.UserFileDTO[]): LocalStorageHelper.UserFileDTO[] {
+    private filetrOpennedFiles(fileList: LocalStorageHelper.UserFileDTO[]): LocalStorageHelper.UserFileDTO[] {
         return fileList.filter((file) => {
             return file.isOppenedOnCommandPanel;
         });

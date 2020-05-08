@@ -26,6 +26,8 @@ export class CommandContainerEventListeners {
         this.onNewCommandContainerAddItToStore();
         this.onNewCommandAddItToCommandContainer();
         this.onCommandMovedUpdateStore();
+        this.onCommandRemovedUpdateStore();
+        this.onCommandContainerRemovedUpdateStore();
     }
 
     private onLoadedCommandContainerAddItToStore(): void {

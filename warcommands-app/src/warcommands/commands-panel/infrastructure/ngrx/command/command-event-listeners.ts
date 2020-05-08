@@ -6,6 +6,8 @@ import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/comman
 import { CommandRemovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-removed-events';
 import { CommandClassMemberAddedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-class-member-added-events';
 import { CommandClassMemberAddedEventDTO } from 'src/warcommands/commands-panel/domain/command/events/command-class-member-added-event.dto';
+import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
+import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -18,13 +20,15 @@ export class CommandEventListeners {
         private readonly commandCreatedEvents: CommandCreatedEvents,
         private readonly commandMovedEvents: CommandMovedEvents,
         private readonly commandRemovedEvents: CommandRemovedEvents,
-        private readonly commandClassMemberAddedEvents: CommandClassMemberAddedEvents
+        private readonly commandClassMemberAddedEvents: CommandClassMemberAddedEvents,
+        private readonly commandUpdatedEvents: CommandUpdatedEvents
     ) {
         this.onLoadedCommandAddItToStore();
         this.onNewCommandAddItToStore();
         this.onCommandMovedUpdateStore();
         this.onCommandRemovedUpdateStore();
         this.onCommandClassMemberAddedUpdateStore();
+        this.onCommandUpdatedListener();
     }
 
     private onLoadedCommandAddItToStore(): void {
@@ -54,6 +58,12 @@ export class CommandEventListeners {
     private onCommandClassMemberAddedUpdateStore(): void {
         this.commandClassMemberAddedEvents.commandClassMemberAddedListener().subscribe((event: CommandClassMemberAddedEventDTO) => {
             this.commandNgrxRepositoryService.addClassMember(event.commandId, event.classMember);
+        });
+    }
+
+    private onCommandUpdatedListener(): void {
+        this.commandUpdatedEvents.commandCreatedListener().subscribe((command: GenericCommandDTO) => {
+            this.commandNgrxRepositoryService.saveCommand(command);
         });
     }
 }

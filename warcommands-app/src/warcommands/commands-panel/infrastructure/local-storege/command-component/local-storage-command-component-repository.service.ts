@@ -6,29 +6,17 @@ import { CommandComponentRepositoryService } from 'src/warcommands/commands-pane
 })
 export class LocalStorageCommandComponentRepositoryService implements CommandComponentRepositoryService {
 
-    private commandComponentList: ComponentRef<any>[] = [];
+    private commandComponentList: Map<string, ComponentRef<any>> = new Map<string, ComponentRef<any>>();
 
     save(commandComponent: ComponentRef<any>): void {
-        this.commandComponentList.push(commandComponent);
+        this.commandComponentList.set(commandComponent.instance.commandData.id, commandComponent);
     }
 
     findByCommandId(commandId: string): ComponentRef<any> {
-        return this.commandComponentList.find((commandComponent) => {
-            if(commandComponent.instance.commandData === undefined) {
-                return false;
-            } else {
-                return commandComponent.instance.commandData.id === commandId;
-            }
-        });
+       return this.commandComponentList.get(commandId);
     }
 
     remove(commandId: string): void {
-        const newList = this.commandComponentList.filter((commandComponent) => {
-            return commandComponent.instance.commandData.id !== commandId;
-        });
-
-        this.commandComponentList = newList;
+       this.commandComponentList.delete(commandId);
     }
-
-
 }

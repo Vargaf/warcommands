@@ -20,7 +20,8 @@ import { GameCommandPreviewComponent } from './game-command-preview/game-command
         CommonModule
     ],
     exports: [
-        GameCommandPreviewComponent
+        GameCommandPreviewComponent,
+        SetVariablePreviewComponent,
     ],
     entryComponents: [
         VariablePreviewComponent,
