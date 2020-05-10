@@ -1,39 +1,55 @@
 <div class="get-base-by-index-content" fxLayout="row" fxLayoutAlign="center center">
-    <div>
-        (
-    </div>
-    <div style="height: 58px;">
+    <div class="warcommands-command-panel-input-height">
         <form [formGroup]="componentFormGroup">
-            <mat-form-field appearance="" class="base-name-input">
-                <input matInput type="text" formControlName="baseName">
-            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div>
+                    (
+                </div>
+                <div>
+                    <mat-form-field appearance="" class="base-name-input">
+                        <input matInput type="text" formControlName="baseName">
+                    </mat-form-field>
+                </div>
+                <div>
+                    )
+                </div>
+                <div *ngIf="!areMemberOptionsVisible">
+                    <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
+                        <mat-icon>arrow_drop_down_circle</mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="areMemberOptionsVisible">
+                    .
+                </div>
+                <div *ngIf="areMemberOptionsVisible">
+                    <mat-form-field appearance="">
+                        <mat-select formControlName="memberSelected">
+                            <mat-option>Select an option</mat-option>
+                            <mat-option value="-1">none</mat-option>
+                            <mat-optgroup label="Methods">
+                                <mat-option *ngFor="let member of baseClassOptionsDefinition.methods" [value]="member.value">
+                                    {{ member.label }}
+                                </mat-option>
+                            </mat-optgroup>
+                            <mat-optgroup label="Properties">
+                                <mat-option *ngFor="let member of baseClassOptionsDefinition.properties" [value]="member.value">
+                                    {{ member.label }}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
         </form>
     </div>
+    
     <div>
-        ).
-    </div>
-    <div style="height: 58px;">
-        <mat-form-field appearance="">
-            <mat-select [(value)]="memberOptionSelected" (selectionChange)="onMemberSelected($event)">
-                <mat-option>Select an option</mat-option>
-                <mat-optgroup label="Methods">
-                    <mat-option *ngFor="let member of baseClassDefinition.methods" [value]="member.value">
-                        {{ member.label }}
-                    </mat-option>
-                </mat-optgroup>
-                <mat-optgroup label="Properties">
-                    <mat-option *ngFor="let member of baseClassDefinition.properties" [value]="member.value">
-                        {{ member.label }}
-                    </mat-option>
-                </mat-optgroup>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div>
-        <container-element [ngSwitch]="memberOptionSelected">
-            <div *ngSwitchCase="'createWorker'">
-                ()
-            </div>
+        <container-element [ngSwitch]="memberSelected">
+            <app-create-worker 
+                *ngSwitchCase="'createWorker'"
+                (classMemberChange)="onClassMemberSelected($event)"
+                [classMember]="baseByNameClassMethodMember.classMember">
+            </app-create-worker>
             <div *ngSwitchDefault></div>
         </container-element>
     </div>

@@ -1,20 +1,19 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
-import { GameCommandMemberFinderHelper } from 'src/warcommands/commands-panel/domain/command/services/game-command-member-finder-helper';
 import { BaseClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/base-class-options-definition';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
-import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
 import { GetBaseByNameClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/methods/get-base-by-name-class-method-member';
-import { ClassNameENUM } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-name.enum';
-import { GameMembersENUM } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/game-members.enum';
+import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
+import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
+import { GameClassGetBaseByNameMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/methods/game-class-get-base-by-name-method-option';
 
 @Component({
     selector: 'app-get-base-by-index',
     templateUrl: './get-base-by-index.component.html',
     styleUrls: ['./get-base-by-index.component.scss']
 })
-export class GetBaseByIndexComponent implements OnInit {
+export class GetBaseByIndexComponent implements OnInit, OnDestroy {
 
     @Input()
     classMember: ClassMemberDTO;
@@ -24,16 +23,15 @@ export class GetBaseByIndexComponent implements OnInit {
 
     componentFormGroup: FormGroup;
 
-    baseClassDefinition = BaseClassOptionsDefinition;
+    baseClassOptionsDefinition = BaseClassOptionsDefinition;
 
-    memberOptionSelected: string;
+    memberSelected: string;
     baseName: string;
+    areMemberOptionsVisible = false;
+    onMememberOptionChangeSubscription: Subscription;
+    onFormValueChangeSubscription: Subscription;
 
-    private gameClassMember: GetBaseByNameClassMethodMember = {
-        className: ClassNameENUM.Game,
-        memberName: GameMembersENUM.GetBaseByName
-    };
-    private baseClassMember: ClassMemberDTO;
+    private baseByNameClassMethodMember: GetBaseByNameClassMethodMember;
 
     constructor(
         private readonly formBuilder: FormBuilder
@@ -41,44 +39,86 @@ export class GetBaseByIndexComponent implements OnInit {
 
     ngOnInit(): void {
 
-        if(this.classMember) {
-            this.baseName = this.classMember.args[0];
-            this.memberOptionSelected = this.classMember.methodChained?.memberName || null;
-            this.gameClassMember.args = this.classMember.args || [];
-            this.baseClassMember = this.classMember.methodChained || null;
-        } else {
-            this.baseName = 'main';
-            this.gameClassMember.args = [this.baseName];
-        }
+        this.initializeClassMember();
 
         this.componentFormGroup = this.formBuilder.group({
-            baseName: [this.baseName],
-            action: ['']
+            baseName: [this.baseName, [Validators.required]],
+            memberSelected: [this.memberSelected, [Validators.required]]
         });
 
-        this.componentFormGroup.get('baseName').valueChanges.subscribe((event) => {
-            this.onBaseNameChange(event);
-        });
-    }
-
-    onMemberSelected(event: MatSelectChange): void {
-        const memberOption = GameCommandMemberFinderHelper.findMember(this.baseClassDefinition, event.value);
-        this.baseClassMember = GetClassMemberByclassMemberOption.getClassMember(memberOption);
-        this.emitSelectedMember();
-    }
-
-    onBaseNameChange(baseName: string): void {
-        this.baseName = baseName;
-        this.gameClassMember.args = [baseName];
-        this.emitSelectedMember();
-    }
-
-    emitSelectedMember(): void {
-        if (this.baseName && this.memberOptionSelected) {
-            const member = { ...this.gameClassMember };
-            member.methodChained = { ... this.baseClassMember };
-            this.classMemberChange.emit(member);
+        if (!this.memberSelected) {
+            this.componentFormGroup.get('memberSelected').disable();
         }
+        
+        this.setMemberOptionOnChangeListener();
+
+        this.onFormValueChangeSubscription = this.componentFormGroup.valueChanges.subscribe((event) => {
+            if (this.componentFormGroup.valid) {
+                this.onValidFormChangeListener();
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.onMememberOptionChangeSubscription.unsubscribe();
+        this.onFormValueChangeSubscription.unsubscribe();
+    }
+
+    showMemberOptions(): void {
+        this.areMemberOptionsVisible = true;
+        this.componentFormGroup.get('memberSelected').enable();
+        this.setMemberOptionOnChangeListener();
+    }
+
+    private onValidFormChangeListener(): void {
+        this.baseByNameClassMethodMember.args = [this.componentFormGroup.get('baseName').value];
+        this.memberSelected = this.componentFormGroup.get('memberSelected').value;
+        this.emitSelectedMember();
+    }
+
+    private onMemberSelectionChanged(value: string): void {
+        if (value === '-1' && this.areMemberOptionsVisible) {
+            this.areMemberOptionsVisible = false;
+            this.componentFormGroup.get('memberSelected').disable();
+        }
+    }
+
+    private setMemberOptionOnChangeListener(): void {
+        this.onMememberOptionChangeSubscription = this.componentFormGroup.get('memberSelected').valueChanges.subscribe((event) => {
+            this.onMemberSelectionChanged(event);
+        });
+    }
+
+    private initializeClassMember(): void {
+        this.baseByNameClassMethodMember = 
+            (GetClassMemberByclassMemberOption.getClassMember(GameClassGetBaseByNameMethodOption) as GetBaseByNameClassMethodMember);
+        
+        if(this.classMember) {
+            this.baseName = this.classMember.args[0];
+            this.memberSelected = this.classMember.methodChained?.memberName || null;
+            this.baseByNameClassMethodMember.args[0] = this.classMember.args[0] || [];
+
+            if (this.memberSelected) {
+                this.areMemberOptionsVisible = true;
+            }
+        } else {
+            this.baseName = 'main';
+            this.baseByNameClassMethodMember.args[0] = this.baseName;
+            this.memberSelected = '';
+            this.emitSelectedMember();
+        }
+    }
+
+    private emitSelectedMember(): void {
+        // To avoid ExpressionChangedAfterItHasBeenCheckedError
+        setTimeout(() => {
+            this.classMemberChange.emit(_.clone(this.baseByNameClassMethodMember));
+        }, 0);
+    }
+
+    onClassMemberSelected(classMember: ClassMemberDTO): void {
+        this.baseByNameClassMethodMember.methodChained = classMember;
+        this.emitSelectedMember();
     }
 
 }

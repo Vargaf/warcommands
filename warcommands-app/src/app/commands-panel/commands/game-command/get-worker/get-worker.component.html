@@ -9,10 +9,19 @@
                     </mat-form-field>
                 </div>
                 <div>)</div>
-                <div>
+                <div *ngIf="!areMemberOptionsVisible">
+                    <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
+                        <mat-icon>arrow_drop_down_circle</mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="areMemberOptionsVisible">
+                    .
+                </div>
+                <div *ngIf="areMemberOptionsVisible">
                     <mat-form-field>
                         <mat-select formControlName="memberOptionSelected">
                             <mat-option>Select an option</mat-option>
+                            <mat-option value="-1">none</mat-option>
                             <ng-template [ngIf]="workerClassOptionsDefinition.methods.length">
                                 <mat-optgroup label="Methods">
                                     <mat-option *ngFor="let member of workerClassOptionsDefinition.methods" [value]="member.value">

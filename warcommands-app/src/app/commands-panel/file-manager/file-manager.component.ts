@@ -26,7 +26,7 @@ export class FileManagerComponent implements OnInit {
     fileList: FileDTO[] = [];
 
     isDeleteCommandDropContainer = true;
-    isGamePaused = false;
+    isGamePaused = true;
 
     constructor(
         private readonly commandsPanelManagerService: CommandsPanelManagerService,

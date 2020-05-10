@@ -13,7 +13,8 @@ export class GameClassGetClassMemberByClassMemberOption {
             case GameMembersENUM.GetBaseByName: {
                 classMember = {
                     className: ClassNameENUM.Game,
-                    memberName: GameMembersENUM.GetBaseByName
+                    memberName: GameMembersENUM.GetBaseByName,
+                    args: []
                 };
                 break;
             }
@@ -22,6 +23,14 @@ export class GameClassGetClassMemberByClassMemberOption {
                     className: ClassNameENUM.Game,
                     memberName: GameMembersENUM.Resources
                 };
+                break;
+            }
+            case GameMembersENUM.GetWorker: {
+                classMember = {
+                    className: ClassNameENUM.Game,
+                    memberName: GameMembersENUM.GetWorker,
+                    args: []
+                }
                 break;
             }
             default: {

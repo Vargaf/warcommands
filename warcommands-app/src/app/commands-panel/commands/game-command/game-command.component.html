@@ -4,7 +4,7 @@
     </div>
     <div style="height: 58px;">
         <mat-form-field appearance="">
-            <mat-select [(value)]="memberSelected">
+            <mat-select [(value)]="memberSelected" (selectionChange)="onOptionMemberChanged($event)">
                 <mat-option>Select an option</mat-option>
                 <mat-optgroup label="Methods">
                     <mat-option *ngFor="let member of gameCommandClassDefinition.methods" [value]="member.value">
@@ -24,13 +24,13 @@
             <app-get-base-by-index 
                 *ngSwitchCase="'getBaseByName'"
                 (classMemberChange)="onClassMemberSelected($event)"
-                [classMember]="commandData.classMember">
+                [classMember]="gameCommand.classMember">
             </app-get-base-by-index>
 
             <app-get-worker
                 *ngSwitchCase="'getWorker'"
                 (classMemberChange)="onClassMemberSelected($event)"
-                [classMember]="commandData.classMember">
+                [classMember]="gameCommand.classMember">
             </app-get-worker>
     
             <div *ngSwitchCase="'resources'">

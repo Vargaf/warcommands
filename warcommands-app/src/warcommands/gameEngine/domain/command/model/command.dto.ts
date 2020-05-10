@@ -10,4 +10,5 @@ export class CommandDTO {
     innerCommandContainerList?: string[];
     classMember?: ClassMemberDTO;
     return?: any;
+    data?: any;
 }

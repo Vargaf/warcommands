@@ -42,7 +42,8 @@ export class FileParserService {
             parentCommandContainerId,
             innerCommandContainerList: [],
             classMember: null,
-            return: null
+            return: null,
+            data: rawCommand.data
         };
 
         if(command.type === CommandType.GameLoop) {

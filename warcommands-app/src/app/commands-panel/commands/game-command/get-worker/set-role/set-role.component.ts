@@ -3,9 +3,9 @@ import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/mo
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { workerRoleSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-role-select-options';
 import { SetRoleClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/set-role-class-method-member';
-import { ClassNameENUM } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-name.enum';
-import { WorkerMembersENUM } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-members.enum';
 import * as _ from 'lodash';
+import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
+import { WorkerClassSetRoleMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/worker-class-set-role-method-option';
 
 @Component({
     selector: 'app-set-role',
@@ -26,10 +26,7 @@ export class SetRoleComponent implements OnInit {
 
     roleSelected: string;
 
-    setRoleClassMethodMember: SetRoleClassMethodMember = {
-        className: ClassNameENUM.Worker,
-        memberName: WorkerMembersENUM.SetRole
-    }
+    setRoleClassMethodMember: SetRoleClassMethodMember;
 
     constructor(
         private readonly formBuilder: FormBuilder
@@ -57,6 +54,8 @@ export class SetRoleComponent implements OnInit {
     }
 
     private initialize(): void {
+        this.setRoleClassMethodMember = 
+            (GetClassMemberByclassMemberOption.getClassMember(WorkerClassSetRoleMethodOption) as SetRoleClassMethodMember);
         if (this.classMember) {
             this.setRoleClassMethodMember = (_.cloneDeep(this.classMember) as SetRoleClassMethodMember);
             this.roleSelected = this.classMember.args[0];

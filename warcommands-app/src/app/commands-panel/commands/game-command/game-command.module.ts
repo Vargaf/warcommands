@@ -7,11 +7,17 @@ import { GetBaseByIndexComponent } from './get-base-by-index/get-base-by-index.c
 import { ReactiveFormsModule } from '@angular/forms';
 import { GetWorkerComponent } from './get-worker/get-worker.component';
 import { SetRoleComponent } from './get-worker/set-role/set-role.component';
+import { CreateWorkerComponent } from './get-base-by-index/create-worker/create-worker.component';
 
 
 
 @NgModule({
-  declarations: [GameCommandComponent, GetBaseByIndexComponent, GetWorkerComponent, SetRoleComponent],
+  declarations: [
+    GameCommandComponent,
+    GetBaseByIndexComponent,
+    GetWorkerComponent,
+    SetRoleComponent,
+    CreateWorkerComponent],
   imports: [
     CommonModule,
     MaterialModule,

@@ -51,6 +51,10 @@ import * as GameLogicActionManagerFactoryProvider from 'src/warcommands/gameEngi
 import * as GameLogicHarvestActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-harvest-action-manager.provider';
 import * as GameLogicDeliverActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-deliver-action-manager.provider';
 import * as WarcommandsNgZoneProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/warcommands-ng-zone.provider';
+import * as PlayerCommandsScopeManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/player-commands-scope-manager.provider';
+import * as InMemoryPlayerCommandsScopeRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/in-memory-player-commands-scope-repository.provider';
+import * as InMemoryPlayerCommandScopeVarValueRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/in-memory-player-command-scope-var-value-repository.provider';
+
 
 
 
@@ -112,7 +116,10 @@ import * as WarcommandsNgZoneProvider from 'src/warcommands/gameEngine/infrastru
         GameLogicActionManagerFactoryProvider.provider,
         GameLogicHarvestActionManagerProvider.provider,
         GameLogicDeliverActionManagerProvider.provider,
-        WarcommandsNgZoneProvider.provider
+        WarcommandsNgZoneProvider.provider,
+        PlayerCommandsScopeManagerProvider.provider,
+        InMemoryPlayerCommandsScopeRepositoryProvider.provider,
+        InMemoryPlayerCommandScopeVarValueRepositoryProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

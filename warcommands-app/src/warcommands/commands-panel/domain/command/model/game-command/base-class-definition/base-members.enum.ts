@@ -1,5 +1,6 @@
 
 export enum BaseMembersENUM {
     CreateWorker = 'createWorker',
-    NumberOfWorkers = 'numberOfWorkers'
+    NumberOfWorkers = 'numberOfWorkers',
+    GetWorkers = 'getWorkers'
 }
