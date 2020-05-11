@@ -5,6 +5,7 @@ import { IfThenPreviewComponent } from 'src/app/commands-panel/drag-previews/if-
 import { IfThenElsePreviewComponent } from 'src/app/commands-panel/drag-previews/if-then-else-preview/if-then-else-preview.component';
 
 import { GameCommandPreviewComponent } from 'src/app/commands-panel/drag-previews/game-command-preview/game-command-preview.component';
+import { SetVariableFromCommandPreviewComponent } from 'src/app/commands-panel/drag-previews/set-variable-from-command-preview/set-variable-from-command-preview.component';
 
 export class CommandsPreviewComponentFactory {
 
@@ -22,6 +23,10 @@ export class CommandsPreviewComponentFactory {
             }
             case CommandType.SetVariable: {
                 component = SetVariablePreviewComponent;
+                break;
+            }
+            case CommandType.SetVariableFromCommand: {
+                component = SetVariableFromCommandPreviewComponent;
                 break;
             }
             case CommandType.IfThen: {

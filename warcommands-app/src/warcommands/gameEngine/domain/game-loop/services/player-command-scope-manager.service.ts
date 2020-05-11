@@ -1,6 +1,6 @@
 import { PlayerCommandsScopeRepositoryService } from './player-commands-scope-repository.service';
 import { PlayerCommandScopeDTO } from '../model/player-command-scope.dto';
-import { PlayerCommandScopeVarValueRepositoryService } from './player-comand-scope-var-value-repository.service';
+import { PlayerCommandScopeVarValueRepositoryService } from './player-command-scope-var-value-repository.service';
 import { PlayerCommandScopeVarValueDTO } from '../model/player-command-scope-var-value.dto';
 
 export class PlayerCommandsScopeManagerService {

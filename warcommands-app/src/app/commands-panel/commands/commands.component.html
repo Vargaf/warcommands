@@ -6,6 +6,9 @@
     <div #command class="dragable-command" [attr.commandType]="commandType.SetVariable">
         <app-set-variable-preview></app-set-variable-preview>
     </div>
+    <div #command class="dragable-command" [attr.commandType]="commandType.SetVariableFromCommand">
+        <app-set-variable-from-command-preview></app-set-variable-from-command-preview>
+    </div>
     <div #command class="dragable-command" [attr.commandType]="commandType.Variable">
         <app-variable></app-variable>
     </div>

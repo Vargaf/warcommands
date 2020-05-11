@@ -1,4 +1,4 @@
-import { PlayerCommandScopeVarValueRepositoryService } from 'src/warcommands/gameEngine/domain/game-loop/services/player-comand-scope-var-value-repository.service';
+import { PlayerCommandScopeVarValueRepositoryService } from 'src/warcommands/gameEngine/domain/game-loop/services/player-command-scope-var-value-repository.service';
 import { PlayerCommandScopeVarValueDTO } from 'src/warcommands/gameEngine/domain/game-loop/model/player-command-scope-var-value.dto';
 import * as _ from 'lodash';
 

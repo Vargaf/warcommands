@@ -6,5 +6,5 @@ export enum CommandType {
     IfThenElse = 210,
     Variable = 925,
     SetVariable = 950,
-    
+    SetVariableFromCommand = 960
 }
