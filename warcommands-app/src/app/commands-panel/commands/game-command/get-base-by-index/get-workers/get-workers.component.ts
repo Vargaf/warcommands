@@ -1,20 +1,21 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { BaseClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/base-class-options-definition';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
-import { GetBaseByNameClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/methods/get-base-by-name-class-method-member';
-import { Subscription } from 'rxjs';
-import * as _ from 'lodash';
+import { WorkerGetWorkersClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/worker-get-workers-class-method-member';
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
-import { GameClassGetBaseByNameMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/methods/game-class-get-base-by-name-method-option';
+import { BaseClassGetWorkersMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/methods/base-class-get-workers-method-option';
+import * as _ from 'lodash';
+import { WorkerListClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/worker-list-class-options-definition';
 import { MatSelect } from '@angular/material/select';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ArrayClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/array-class-definition/array-class-options-definition';
 
 @Component({
-    selector: 'app-get-base-by-index',
-    templateUrl: './get-base-by-index.component.html',
-    styleUrls: ['./get-base-by-index.component.scss']
+    selector: 'app-get-workers',
+    templateUrl: './get-workers.component.html',
+    styleUrls: ['./get-workers.component.scss']
 })
-export class GetBaseByIndexComponent implements OnInit, OnDestroy {
+export class GetWorkersComponent implements OnInit, OnDestroy {
 
     @Input()
     classMember: ClassMemberDTO;
@@ -26,16 +27,17 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy {
     memberSelectElement: MatSelect;
 
     componentFormGroup: FormGroup;
+    workerListClassOptionsDefinition = WorkerListClassOptionsDefinition;
 
-    baseClassOptionsDefinition = BaseClassOptionsDefinition;
+
+    arrayClassOptionsDefinition = ArrayClassOptionsDefinition;
 
     memberSelected: string;
-    baseName: string;
     areMemberOptionsVisible = false;
     onMememberOptionChangeSubscription: Subscription;
     onFormValueChangeSubscription: Subscription;
 
-    baseByNameClassMethodMember: GetBaseByNameClassMethodMember;
+    getWorkersClassMethodMember: WorkerGetWorkersClassMethodMember;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -43,18 +45,16 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-
         this.initializeClassMember();
 
         this.componentFormGroup = this.formBuilder.group({
-            baseName: [this.baseName, [Validators.required]],
             memberSelected: [this.memberSelected, [Validators.required]]
         });
 
         if (!this.memberSelected) {
             this.componentFormGroup.get('memberSelected').disable();
         }
-        
+
         this.setMemberOptionOnChangeListener();
 
         this.onFormValueChangeSubscription = this.componentFormGroup.valueChanges.subscribe((event) => {
@@ -72,13 +72,11 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy {
     showMemberOptions(): void {
         this.areMemberOptionsVisible = true;
         this.componentFormGroup.get('memberSelected').enable();
-        this.setMemberOptionOnChangeListener();
         this.changeDetectorRef.detectChanges();
         this.memberSelectElement.open();
     }
 
     private onValidFormChangeListener(): void {
-        this.baseByNameClassMethodMember.args = [this.componentFormGroup.get('baseName').value];
         this.memberSelected = this.componentFormGroup.get('memberSelected').value;
         this.emitSelectedMember();
     }
@@ -89,7 +87,8 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy {
             this.componentFormGroup.get('memberSelected').setValue('');
             this.componentFormGroup.get('memberSelected').disable();
         }
-        this.baseByNameClassMethodMember.methodChained = null;
+
+        this.getWorkersClassMethodMember.methodChained = null;
     }
 
     private setMemberOptionOnChangeListener(): void {
@@ -99,35 +98,31 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy {
     }
 
     private initializeClassMember(): void {
-        this.baseByNameClassMethodMember = 
-            (GetClassMemberByclassMemberOption.getClassMember(GameClassGetBaseByNameMethodOption) as GetBaseByNameClassMethodMember);
-        
-        if(this.classMember) {
-            this.baseName = this.classMember.args[0];
-            this.memberSelected = this.classMember.methodChained?.memberName || null;
-            this.baseByNameClassMethodMember.methodChained = this.classMember.methodChained;
-            this.baseByNameClassMethodMember.args[0] = this.classMember.args[0] || [];
+        this.getWorkersClassMethodMember =
+            (GetClassMemberByclassMemberOption.getClassMember(BaseClassGetWorkersMethodOption) as WorkerGetWorkersClassMethodMember);
 
-            if (this.memberSelected) {
-                this.areMemberOptionsVisible = true;
-            }
+        if (this.classMember) {
+            this.memberSelected = this.classMember.methodChained?.memberName || '';
+            this.getWorkersClassMethodMember.methodChained = this.classMember.methodChained;
         } else {
-            this.baseName = 'main';
-            this.baseByNameClassMethodMember.args[0] = this.baseName;
             this.memberSelected = '';
             this.emitSelectedMember();
+        }
+
+        if (this.memberSelected) {
+            this.areMemberOptionsVisible = true;
         }
     }
 
     private emitSelectedMember(): void {
         // To avoid ExpressionChangedAfterItHasBeenCheckedError
         setTimeout(() => {
-            this.classMemberChange.emit(_.clone(this.baseByNameClassMethodMember));
+            this.classMemberChange.emit(_.clone(this.getWorkersClassMethodMember));
         }, 0);
     }
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {
-        this.baseByNameClassMethodMember.methodChained = classMember;
+        this.getWorkersClassMethodMember.methodChained = classMember;
         this.emitSelectedMember();
     }
 

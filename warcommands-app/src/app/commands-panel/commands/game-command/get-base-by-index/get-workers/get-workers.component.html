@@ -1,0 +1,34 @@
+<div class="get-workers-content" fxLayout="row" fxLayoutAlign="center center">
+    <div>()</div>
+    <div *ngIf="!areMemberOptionsVisible; else memberOptionList">
+        <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
+            <mat-icon>arrow_drop_down_circle</mat-icon>
+        </button>
+    </div>
+    <ng-template #memberOptionList>
+        <div>.</div>
+        <div class="warcommands-command-panel-input-height">
+            <form [formGroup]="componentFormGroup">
+                <mat-form-field appearance="">
+                    <mat-select formControlName="memberSelected" #memberSelectElement>
+                        <mat-option>Select an option</mat-option>
+                        <mat-option value="-1">none</mat-option>
+                        <mat-option *ngFor="let member of workerListClassOptionsDefinition.methods" [value]="member.value">
+                            {{ member.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </div>
+    </ng-template>
+    <div>
+        <container-element [ngSwitch]="memberSelected">
+            <app-filter-by-role
+                *ngSwitchCase="'filterByRole'"
+                (classMemberChange)="onClassMemberSelected($event)"
+                [classMember]="getWorkersClassMethodMember.methodChained">
+            </app-filter-by-role>
+            <div *ngSwitchDefault></div>
+        </container-element>
+    </div>
+</div>

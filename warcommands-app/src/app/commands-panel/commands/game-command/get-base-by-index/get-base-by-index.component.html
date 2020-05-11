@@ -1,11 +1,11 @@
 <div class="get-base-by-index-content" fxLayout="row" fxLayoutAlign="center center">
-    <div class="warcommands-command-panel-input-height">
+    <div>
         <form [formGroup]="componentFormGroup">
             <div fxLayout="row" fxLayoutAlign="center center">
                 <div>
                     (
                 </div>
-                <div>
+                <div class="warcommands-command-panel-input-height">
                     <mat-form-field appearance="" class="base-name-input">
                         <input matInput type="text" formControlName="baseName">
                     </mat-form-field>
@@ -13,32 +13,34 @@
                 <div>
                     )
                 </div>
-                <div *ngIf="!areMemberOptionsVisible">
+                <div *ngIf="!areMemberOptionsVisible; else memberOptionList">
                     <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
                         <mat-icon>arrow_drop_down_circle</mat-icon>
                     </button>
                 </div>
-                <div *ngIf="areMemberOptionsVisible">
-                    .
-                </div>
-                <div *ngIf="areMemberOptionsVisible">
-                    <mat-form-field appearance="">
-                        <mat-select formControlName="memberSelected">
-                            <mat-option>Select an option</mat-option>
-                            <mat-option value="-1">none</mat-option>
-                            <mat-optgroup label="Methods">
-                                <mat-option *ngFor="let member of baseClassOptionsDefinition.methods" [value]="member.value">
-                                    {{ member.label }}
-                                </mat-option>
-                            </mat-optgroup>
-                            <mat-optgroup label="Properties">
-                                <mat-option *ngFor="let member of baseClassOptionsDefinition.properties" [value]="member.value">
-                                    {{ member.label }}
-                                </mat-option>
-                            </mat-optgroup>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                <ng-template #memberOptionList>
+                    <div>
+                        .
+                    </div>
+                    <div class="warcommands-command-panel-input-height">
+                        <mat-form-field appearance="">
+                            <mat-select formControlName="memberSelected" #memberSelectElement>
+                                <mat-option>Select an option</mat-option>
+                                <mat-option value="-1">none</mat-option>
+                                <mat-optgroup label="Methods">
+                                    <mat-option *ngFor="let member of baseClassOptionsDefinition.methods" [value]="member.value">
+                                        {{ member.label }}
+                                    </mat-option>
+                                </mat-optgroup>
+                                <mat-optgroup label="Properties">
+                                    <mat-option *ngFor="let member of baseClassOptionsDefinition.properties" [value]="member.value">
+                                        {{ member.label }}
+                                    </mat-option>
+                                </mat-optgroup>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </ng-template>
             </div>
         </form>
     </div>
@@ -48,8 +50,13 @@
             <app-create-worker 
                 *ngSwitchCase="'createWorker'"
                 (classMemberChange)="onClassMemberSelected($event)"
-                [classMember]="baseByNameClassMethodMember.classMember">
+                [classMember]="baseByNameClassMethodMember.methodChained">
             </app-create-worker>
+            <app-get-workers 
+                *ngSwitchCase="'getWorkers'"
+                (classMemberChange)="onClassMemberSelected($event)"
+                [classMember]="baseByNameClassMethodMember.methodChained">
+            </app-get-workers>
             <div *ngSwitchDefault></div>
         </container-element>
     </div>

@@ -2,6 +2,7 @@ import { ClassMemberOptionDTO } from '../../model/class-definition/class-member-
 import { ClassMemberDTO } from '../../model/class-definition/class-member.dto';
 import { WorkerMembersENUM } from '../../model/game-command/worker-class-definition/worker-members.enum';
 import { ClassNameENUM } from '../../model/class-definition/class-name.enum';
+import { WorkerListMembersENUM } from '../../model/game-command/worker-class-definition/worker-list-members-enum';
 
 export class WorkerClassGetClassMemberByClassMemberOptions {
 
@@ -14,6 +15,14 @@ export class WorkerClassGetClassMemberByClassMemberOptions {
                 classMember = {
                     className: ClassNameENUM.Worker,
                     memberName: WorkerMembersENUM.SetRole,
+                    args: []
+                };
+                break;
+            }
+            case WorkerListMembersENUM.FilterByRole: {
+                classMember = {
+                    className: ClassNameENUM.Worker,
+                    memberName: WorkerListMembersENUM.FilterByRole,
                     args: []
                 };
                 break;

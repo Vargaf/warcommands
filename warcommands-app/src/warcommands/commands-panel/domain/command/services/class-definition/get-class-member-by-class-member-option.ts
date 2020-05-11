@@ -4,6 +4,7 @@ import { ClassNameENUM } from '../../model/class-definition/class-name.enum';
 import { GameClassGetClassMemberByClassMemberOption } from './game-class-get-class-member-by-class-member-options';
 import { BaseClassGetClassMemberByClassMemberOption } from './base-class-get-class-member-by-class-member-options';
 import { WorkerClassGetClassMemberByClassMemberOptions } from './worker-class-get-class-member-by-class-member-options';
+import { ArrayClassGetClassMemberByClassMemberOptions } from '../../model/game-command/array-class-definition/array-class-get-class-member-by-class-member-options';
 
 export class GetClassMemberByclassMemberOption {
 
@@ -22,6 +23,10 @@ export class GetClassMemberByclassMemberOption {
             }
             case ClassNameENUM.Worker: {
                 classMember = WorkerClassGetClassMemberByClassMemberOptions.getClassMember(classMemberOption);
+                break;
+            }
+            case ClassNameENUM.Array: {
+                classMember = ArrayClassGetClassMemberByClassMemberOptions.getClassMember(classMemberOption);
                 break;
             }
             default: {
