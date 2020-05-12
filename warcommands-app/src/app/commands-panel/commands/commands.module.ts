@@ -23,6 +23,7 @@ import { GameCommandModule } from './game-command/game-command.module';
 import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SetVariableFromCommandComponent } from './set-variable-from-command/set-variable-from-command.component';
 
 
 
@@ -34,6 +35,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         IfThenElseComponent,
         GameLoopComponent,
         VariableComponent,
+        SetVariableFromCommandComponent,
     ],
     imports: [
         CommonModule,
@@ -64,6 +66,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         IfThenElseComponent,
         GameLoopComponent,
         VariableComponent,
+        SetVariableFromCommandComponent,
     ]
 })
 export class CommandsModule { }

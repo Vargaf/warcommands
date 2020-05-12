@@ -5,6 +5,7 @@ import { IfThenCommandEntity } from '../../command/model/if-then-command.entity'
 import { IfThenElseCommandEntity } from '../../command/model/if-then-else-command.entity';
 import { GameLoopCommandEntity } from '../../command/model/game-loop-command.enntity';
 import { GenericCommandDTO } from '../model/generic-command.dto';
+import { SetVariableFromCommandCommandEntity } from '../model/set-variable-from-command-command.entity';
 
 @Injectable({
     providedIn: 'root'
@@ -21,13 +22,15 @@ export class CommandDataFromCommandDroppedFactory {
         };
 
         switch (commandType) {
-            case (CommandType.Variable): {
-                break;
-            }
-            case (CommandType.SetVariable): {
-                break;
-            }
+            case (CommandType.Variable):
+            case (CommandType.SetVariable):
             case (CommandType.Game): {
+                break;
+            }
+            case (CommandType.SetVariableFromCommand): {
+                (command as SetVariableFromCommandCommandEntity).innerCommandContainerIdList = {
+                    command: uuid()
+                }
                 break;
             }
             case (CommandType.IfThen): {

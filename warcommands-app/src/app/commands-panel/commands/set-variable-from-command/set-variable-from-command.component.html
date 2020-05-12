@@ -1,0 +1,18 @@
+<div class="set-variable-from-command-content" fxLayout="row" fxLayoutAlign="center center">
+    <div class="set-label">
+        set
+    </div>
+    <div>
+        <form [formGroup]="setVarForm">
+            <mat-form-field class="var-name-input warcommands-command-panel-input-height">
+                <input matInput type="text" formControlName="varName">
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="assignment-operator">
+        =
+    </div>
+    <div>
+        <app-command-drop [commandContainerId]="setVarCommandContainerId"></app-command-drop>
+    </div>
+</div>

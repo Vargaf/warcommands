@@ -5,6 +5,7 @@ import { IfThenComponent } from 'src/app/commands-panel/commands/if-then/if-then
 import { IfThenElseComponent } from 'src/app/commands-panel/commands/if-then-else/if-then-else.component';
 import { GameLoopComponent } from 'src/app/commands-panel/commands/game-loop/game-loop.component';
 import { GameCommandComponent } from 'src/app/commands-panel/commands/game-command/game-command.component';
+import { SetVariableFromCommandComponent } from 'src/app/commands-panel/commands/set-variable-from-command/set-variable-from-command.component';
 
 export class CommandsComponentFactory {
 
@@ -22,6 +23,10 @@ export class CommandsComponentFactory {
             }
             case CommandType.SetVariable: {
                 component = SetVariableComponent;
+                break;
+            }
+            case CommandType.SetVariableFromCommand: {
+                component = SetVariableFromCommandComponent;
                 break;
             }
             case CommandType.IfThen: {
