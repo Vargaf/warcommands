@@ -1,4 +1,4 @@
-import { UnitsRepositoryService } from 'src/warcommands/gameEngine/domain/units/services/units-repository.service';
+import { UnitsRepositoryService, QueryFilter } from 'src/warcommands/gameEngine/domain/units/services/units-repository.service';
 import { UnitGenericDTO } from 'src/warcommands/gameEngine/domain/units/model/unit-generic.dto';
 import * as _ from "lodash";
 import { UnitTypeENUM } from 'src/warcommands/gameEngine/domain/units/model/unit-type.enum';
@@ -51,6 +51,29 @@ export class InMemoryUnitsRepositoryService implements UnitsRepositoryService {
         })
         
         return unitList;
+    }
+
+    findBy(filterList: QueryFilter): UnitGenericDTO[] {
+        const filteredList: UnitGenericDTO[] = [];
+        const filterKeyList = Object.keys(filterList);
+
+        this.unitsList.forEach((unit) => {
+            
+            let filtersMatch = true;
+
+            for (const filterKey of filterKeyList) {
+                if (unit[filterKey] !== filterList[filterKey]) {
+                    filtersMatch = false;
+                    break;
+                }
+            }
+
+            if (filtersMatch) {
+                filteredList.push(_.cloneDeep(unit));
+            }
+        });
+
+        return filteredList;
     }
 
 }

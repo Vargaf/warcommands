@@ -8,7 +8,12 @@ export class InMemoryPlayerCommandScopeVarValueRepositoryService implements Play
 
     save(varValue: PlayerCommandScopeVarValueDTO): void {
         const clone = _.cloneDeep(varValue);
-        this.varValueList.set(clone.playerId, (new Map).set(clone.commandId, clone));
+        
+        if (!this.varValueList.has(clone.playerId)) {
+            this.varValueList.set(clone.playerId, (new Map).set(clone.commandId, clone));
+        } else {
+            this.varValueList.get(clone.playerId).set(clone.commandId, clone);
+        }
     }
 
     findVarValueByPlayerId(commandId: string, playerId: string): PlayerCommandScopeVarValueDTO {

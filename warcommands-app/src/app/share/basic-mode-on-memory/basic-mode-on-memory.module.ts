@@ -54,6 +54,8 @@ import * as WarcommandsNgZoneProvider from 'src/warcommands/gameEngine/infrastru
 import * as PlayerCommandsScopeManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/player-commands-scope-manager.provider';
 import * as InMemoryPlayerCommandsScopeRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/in-memory-player-commands-scope-repository.provider';
 import * as InMemoryPlayerCommandScopeVarValueRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/in-memory-player-command-scope-var-value-repository.provider';
+import * as ArrayClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/array-class/array-class-factory.provider';
+import * as ArrayClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/array-class/array-class.provider';
 
 
 
@@ -119,7 +121,9 @@ import * as InMemoryPlayerCommandScopeVarValueRepositoryProvider from 'src/warco
         WarcommandsNgZoneProvider.provider,
         PlayerCommandsScopeManagerProvider.provider,
         InMemoryPlayerCommandsScopeRepositoryProvider.provider,
-        InMemoryPlayerCommandScopeVarValueRepositoryProvider.provider
+        InMemoryPlayerCommandScopeVarValueRepositoryProvider.provider,
+        ArrayClassFactoryProvider.provider,
+        ArrayClassProvider.provider
     ]
 })
 export class BasicModeOnMemoryModule { }

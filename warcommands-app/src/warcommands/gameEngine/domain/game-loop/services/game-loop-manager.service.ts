@@ -8,6 +8,7 @@ import { PlayerCommandScopeDTO } from '../model/player-command-scope.dto';
 import { CommandContainerDTO } from '../../command-container/model/command-container.dto';
 import { PlayerCommandScopeVarValueDTO } from '../model/player-command-scope-var-value.dto';
 import { SetVariableCommandDTO } from '../../command/model/set-variable-command.dto';
+import { SetVariableFromCommandCommandDTO } from '../../command/model/set-variable-from-command-command.dto';
 
 
 export class GameLoopManagerService {
@@ -41,18 +42,21 @@ export class GameLoopManagerService {
         return scope;
     }
 
-    private runCommandContainer(commandContainerId: string, playerId: string): void {
+    private runCommandContainer(commandContainerId: string, playerId: string): any {
+
+        let returnValue: any = null;
 
         const commandContainer = this.commandContainerRepository.findById(commandContainerId);
         const commandContainerScope = this.setCommandContainerScope(commandContainer, playerId);
 
         for (const commandId of commandContainer.commandList) {
             const command: CommandDTO = this.commandRepository.findById(commandId);
-            this.runCommand(command);
+            returnValue = this.runCommand(command);
         }
 
         this.removeScope(commandContainerScope);
 
+        return returnValue;
     }
 
     private setCommandContainerScope(commandContainer: CommandContainerDTO, playerId: string): PlayerCommandScopeDTO {
@@ -69,11 +73,13 @@ export class GameLoopManagerService {
         this.playerCommandScopeManager.removePlayerScope(scope);
     }
 
-    private runCommand(command: CommandDTO): void {
+    private runCommand(command: CommandDTO): any {
+
+        let returnValue: any = null;
 
         switch (command.type) {
             case CommandType.Game: {
-                this.classFactoryService.runClass(command.classMember, command.playerId);
+                returnValue = this.classFactoryService.runClass(command.classMember, command.playerId);
                 break;
             }
             case CommandType.SetVariable: {
@@ -86,9 +92,24 @@ export class GameLoopManagerService {
                 this.playerCommandScopeManager.addPlayerCommandScopeVarValue(scopeVar);
                 break;
             }
+            case CommandType.SetVariableFromCommand: {
+                const commandContainerIdToRun: string = (command as SetVariableFromCommandCommandDTO).innerCommandContainerList[0];
+                const commandReturnValue: any = this.runCommandContainer(commandContainerIdToRun, command.playerId);
+                const scopeVar: PlayerCommandScopeVarValueDTO = {
+                    commandId: command.id,
+                    playerId: command.playerId,
+                    commandContainerId: command.parentCommandContainerId,
+                    value: commandReturnValue
+                }
+                this.playerCommandScopeManager.addPlayerCommandScopeVarValue(scopeVar);
+
+                break;
+            }
             default: {
                 throw new Error('Undefined command to run: ' + command.type);
             }
         }
+
+        return returnValue;
     }
 }

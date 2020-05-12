@@ -87,7 +87,7 @@ export class GetWorkerComponent implements OnInit {
     }
 
     emitSelectedMember(): void {
-        this.classMemberChange.emit(this.getWorkerClassMember);
+        this.classMemberChange.emit(_.cloneDeep(this.getWorkerClassMember));
     }
 
     showMemberOptions(): void {

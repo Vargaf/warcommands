@@ -1,5 +1,6 @@
 import { UnitGenericDTO } from '../model/unit-generic.dto';
 import { UnitTypeENUM } from '../model/unit-type.enum';
+import { QueryFilterDTO } from '../../share/query-filter.dto';
 
 export abstract class UnitsRepositoryService {
 
@@ -15,4 +16,6 @@ export abstract class UnitsRepositoryService {
 
     abstract getAll(): UnitGenericDTO[];
 
-}
+    abstract findBy(filterList: QueryFilterDTO): UnitGenericDTO[];
+
+} 

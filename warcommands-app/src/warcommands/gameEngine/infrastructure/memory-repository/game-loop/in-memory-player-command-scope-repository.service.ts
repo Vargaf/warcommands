@@ -9,7 +9,12 @@ export class InMemoryPlayerCommandsScopeRepositoryService implements PlayerComma
     
     save(scope: PlayerCommandScopeDTO): void {
         const clone = _.cloneDeep(scope);
-        this.scopeList.set(clone.playerId, (new Map).set(clone.scopeId, clone));   
+
+        if (!this.scopeList.has(clone.playerId)) {
+            this.scopeList.set(clone.playerId, (new Map).set(clone.scopeId, clone));
+        } else {
+            this.scopeList.get(clone.playerId).set(clone.scopeId, clone);
+        }
     }
 
     findScopeByPlayerId(scopeId: string, playerId: string): PlayerCommandScopeDTO {

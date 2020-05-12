@@ -23,7 +23,9 @@ export class CreateWorkerComponent implements OnInit {
         const createWorkerClassMember =
             GetClassMemberByclassMemberOption.getClassMember(BaseClassCreateWorkerMethodOption);
 
-        this.classMemberChange.emit(createWorkerClassMember);
+        setTimeout(() => {
+            this.classMemberChange.emit(createWorkerClassMember);
+        }, 0);
     }
 
 }
