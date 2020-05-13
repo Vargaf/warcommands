@@ -27,6 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         GameCommandPreviewComponent,
         SetVariablePreviewComponent,
         SetVariableFromCommandPreviewComponent,
+        IfThenPreviewComponent,
     ],
     entryComponents: [
         VariablePreviewComponent,

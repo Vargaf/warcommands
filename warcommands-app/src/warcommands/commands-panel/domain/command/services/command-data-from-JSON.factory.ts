@@ -41,7 +41,8 @@ export class CommandDataFromJSONFactory {
             }
             case (CommandType.IfThen): {
                 (command as IfThenCommandEntity).innerCommandContainerIdList = {
-                    thenCommandContainerId: rawCommand.commandContainerList[0].id
+                    conditionCommandContainerId: rawCommand.commandContainerList[0].id,
+                    thenCommandContainerId: rawCommand.commandContainerList[1].id
                 };
                 break;
             }

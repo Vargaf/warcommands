@@ -35,6 +35,7 @@ export class CommandDataFromCommandDroppedFactory {
             }
             case (CommandType.IfThen): {
                 (command as IfThenCommandEntity).innerCommandContainerIdList = {
+                    conditionCommandContainerId: uuid(),
                     thenCommandContainerId: uuid()
                 };
                 break;

@@ -1,13 +1,21 @@
 <div class="if-then-content">
     <div class="if-then-start">
-        <div class="if-then-label">if ( lo que sea )</div>
+        <div class="if-then-label" fxLayout="row" fxLayoutAlign="center center">
+            <div>
+                if (
+            </div>
+            <div [attr.MouseHelperDetectorCommandContainerId]="conditionCommandContainerId" class="condition-command-container-wrapper">
+                <app-command-drop  [commandContainerId]="conditionCommandContainerId"></app-command-drop>
+            </div>
+            <div>
+                )
+            </div>
+        </div>
     </div>
     <div class="if-then-body" [attr.MouseHelperDetectorCommandContainerId]="thenCommandContainerId">
         <div class="if-then-body-content">
 
-            <app-command-drop  *ngIf="thenCommandContainerId" [commandContainerId]="thenCommandContainerId"></app-command-drop>
-
-            <div *ngIf="!thenCommandContainerId" class="commands-drop-container"></div>
+            <app-command-drop  [commandContainerId]="thenCommandContainerId"></app-command-drop>
 
         </div>
     </div>

@@ -90,6 +90,7 @@ export class GameLoopManagerService {
                     value: (command as SetVariableCommandDTO).data.varValue
                 }
                 this.playerCommandScopeManager.addPlayerCommandScopeVarValue(scopeVar);
+                returnValue = scopeVar.value;
                 break;
             }
             case CommandType.SetVariableFromCommand: {
@@ -102,7 +103,7 @@ export class GameLoopManagerService {
                     value: commandReturnValue
                 }
                 this.playerCommandScopeManager.addPlayerCommandScopeVarValue(scopeVar);
-
+                returnValue = scopeVar.value;
                 break;
             }
             default: {
