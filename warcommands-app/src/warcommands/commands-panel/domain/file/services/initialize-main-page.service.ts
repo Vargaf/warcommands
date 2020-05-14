@@ -2,7 +2,7 @@ import { FileDTO } from '../model/file.dto';
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { CommandContainerDTO } from '../../command-container/model/command-container.dto';
-import { GameLoopCommandEntity } from '../../command/model/game-loop-command.enntity';
+import { GameLoopCommandEntity } from '../../command/model/game-loop-command.entity';
 import { CommandType } from '../../command/model/command-type.enum';
 import { FileManagerEvents } from './file-manager.events';
 import { CommandContainerEvents } from '../../command-container/services/command-container.events';

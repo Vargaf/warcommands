@@ -3,9 +3,10 @@ import { CommandType } from '../../command/model/command-type.enum';
 import { v4 as uuid } from 'uuid';
 import { IfThenCommandEntity } from '../../command/model/if-then-command.entity';
 import { IfThenElseCommandEntity } from '../../command/model/if-then-else-command.entity';
-import { GameLoopCommandEntity } from '../../command/model/game-loop-command.enntity';
+import { GameLoopCommandEntity } from '../model/game-loop-command.entity';
 import { GenericCommandDTO } from '../model/generic-command.dto';
 import { SetVariableFromCommandCommandEntity } from '../model/set-variable-from-command-command.entity';
+import { LogicOperatorCommandEntity } from '../model/logic-operator/logic-operator-command.entity';
 
 @Injectable({
     providedIn: 'root'
@@ -53,8 +54,15 @@ export class CommandDataFromCommandDroppedFactory {
                 };
                 break;
             }
+            case CommandType.LogicOperator: {
+                (command as LogicOperatorCommandEntity).innerCommandContainerIdList = {
+                    firstCommandContainerId: uuid(),
+                    secondCommandContainerId: uuid()
+                }
+                break;
+            }
             default: {
-                throw new Error('This command type has no command data. Command type: ' + commandType);
+                throw new Error('This command type has no command entity. Command type: ' + commandType);
             }
         }
 

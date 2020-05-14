@@ -1,5 +1,10 @@
 <ng-container *ngTemplateOutlet="dragCommandPreview"></ng-container>
 
 <ng-template #dragCommandPreview>
-    <div class="drag-command-preview">if (condition) then {{ '{ actions }' }}</div>
+    <div class="drag-command-preview" fxLayout="row" fxLayoutAlign="center center">
+        <div>if (</div>
+        <div class="commands-drop-container condition-container">Condition</div>
+        <div>) then </div>
+        <div class="commands-drop-container actions-container">Commands</div>
+    </div>
 </ng-template>

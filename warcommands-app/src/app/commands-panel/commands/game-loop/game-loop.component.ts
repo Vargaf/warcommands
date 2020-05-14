@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { GameLoopCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/game-loop-command.enntity';
+import { GameLoopCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/game-loop-command.entity';
 import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service';
 import { Subscription } from 'rxjs';
 

@@ -1,6 +1,6 @@
 
 export interface SelectOptionDTO {
-    value: string;
+    value: string | number;
     label: string;
     label_id: string;
 }

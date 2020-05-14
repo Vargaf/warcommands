@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { workerRoleSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-role-select-options';
@@ -6,13 +6,14 @@ import { SetRoleClassMethodMember } from 'src/warcommands/commands-panel/domain/
 import * as _ from 'lodash';
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
 import { WorkerClassSetRoleMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/worker-class-set-role-method-option';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-set-role',
     templateUrl: './set-role.component.html',
     styleUrls: ['./set-role.component.scss']
 })
-export class SetRoleComponent implements OnInit {
+export class SetRoleComponent implements OnInit, OnDestroy {
 
     @Input()
     classMember: ClassMemberDTO;
@@ -25,6 +26,7 @@ export class SetRoleComponent implements OnInit {
     workerRoleOptions = workerRoleSelectOptions;
 
     roleSelected: string;
+    roleSelectedSubscription: Subscription;
 
     setRoleClassMethodMember: SetRoleClassMethodMember;
 
@@ -47,10 +49,14 @@ export class SetRoleComponent implements OnInit {
         });
 
         
-       this.componentFormGroup.get('roleSelected').valueChanges.subscribe((value) => {
+       this.roleSelectedSubscription = this.componentFormGroup.get('roleSelected').valueChanges.subscribe((value) => {
             this.roleSelected = value;
             this.setRoleClassMethodMember.args = [value];
         });
+    }
+
+    ngOnDestroy() {
+        this.roleSelectedSubscription.unsubscribe();
     }
 
     private initialize(): void {

@@ -1,0 +1,25 @@
+
+.logic-operator-command-content {
+
+    background-color: #8ccf27;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+    inline-size: max-content;
+
+    .first-command-container-wrapper {
+        min-width: 100px;
+    }
+
+    .comparison-operator {
+        padding: 0px 10px;
+
+        .comparsion-operator-input-wrapper {
+            width: 50px;
+        }
+    }
+
+    .second-command-container-wrapper {
+        min-width: 100px;
+    }
+}

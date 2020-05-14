@@ -3,9 +3,10 @@ import { CommandType } from '../../command/model/command-type.enum';
 import { GenericCommandDTO } from '../model/generic-command.dto';
 import { IfThenCommandEntity } from '../model/if-then-command.entity';
 import { IfThenElseCommandEntity } from '../model/if-then-else-command.entity';
-import { GameLoopCommandEntity } from '../model/game-loop-command.enntity';
+import { GameLoopCommandEntity } from '../model/game-loop-command.entity';
 import { GameCommandEntity } from '../model/game-command/game-command.entity';
 import { SetVariableFromCommandCommandEntity } from '../model/set-variable-from-command-command.entity';
+import { LogicOperatorCommandEntity } from '../model/logic-operator/logic-operator-command.entity';
 
 export class CommandDataFromJSONFactory {
 
@@ -56,6 +57,13 @@ export class CommandDataFromJSONFactory {
             case (CommandType.GameLoop): {
                 (command as GameLoopCommandEntity).innerCommandContainerIdList = {
                     commandContainerId: rawCommand.commandContainerList[0].id
+                };
+                break;
+            }
+            case CommandType.LogicOperator: {
+                (command as LogicOperatorCommandEntity).innerCommandContainerIdList = {
+                    firstCommandContainerId: rawCommand.commandContainerList[0].id,
+                    secondCommandContainerId: rawCommand.commandContainerList[1].id
                 };
                 break;
             }

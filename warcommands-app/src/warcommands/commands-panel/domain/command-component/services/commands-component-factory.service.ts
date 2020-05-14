@@ -6,6 +6,7 @@ import { IfThenElseComponent } from 'src/app/commands-panel/commands/if-then-els
 import { GameLoopComponent } from 'src/app/commands-panel/commands/game-loop/game-loop.component';
 import { GameCommandComponent } from 'src/app/commands-panel/commands/game-command/game-command.component';
 import { SetVariableFromCommandComponent } from 'src/app/commands-panel/commands/set-variable-from-command/set-variable-from-command.component';
+import { LogicOperatorCommandComponent } from 'src/app/commands-panel/commands/logic-operator-command/logic-operator-command.component';
 
 export class CommandsComponentFactory {
 
@@ -39,6 +40,10 @@ export class CommandsComponentFactory {
             }
             case CommandType.GameLoop: {
                 component = GameLoopComponent;
+                break;
+            }
+            case CommandType.LogicOperator: {
+                component = LogicOperatorCommandComponent;
                 break;
             }
             default: {

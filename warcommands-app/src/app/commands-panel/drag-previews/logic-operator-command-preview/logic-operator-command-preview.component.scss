@@ -1,24 +1,22 @@
 .drag-command-preview {
-    background-color: red;
+    background-color: #8ccf27;
     color: black;
     border-radius: 10px;
     padding: 10px;
     inline-size: max-content;
 
     .commands-drop-container {
-        border:dashed 1px #ffffff;
+        border:dashed 1px #7fff00;
         padding: 5px 10px;
         border-radius:10px;
         overflow:hidden;
         background-color: #424242;
         color: white;
-    }
-
-    .condition-container {
-        margin: 0px 5px;
-    }
-
-    .actions-container {
         margin-left: 5px;
     }
+
+    .comparison-label {
+        padding: 0px 10px;
+    }
+
 }

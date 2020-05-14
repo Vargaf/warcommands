@@ -24,6 +24,7 @@ import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SetVariableFromCommandComponent } from './set-variable-from-command/set-variable-from-command.component';
+import { LogicOperatorCommandComponent } from './logic-operator-command/logic-operator-command.component';
 
 
 
@@ -36,6 +37,7 @@ import { SetVariableFromCommandComponent } from './set-variable-from-command/set
         GameLoopComponent,
         VariableComponent,
         SetVariableFromCommandComponent,
+        LogicOperatorCommandComponent,
     ],
     imports: [
         CommonModule,
@@ -67,6 +69,7 @@ import { SetVariableFromCommandComponent } from './set-variable-from-command/set
         GameLoopComponent,
         VariableComponent,
         SetVariableFromCommandComponent,
+        LogicOperatorCommandComponent
     ]
 })
 export class CommandsModule { }

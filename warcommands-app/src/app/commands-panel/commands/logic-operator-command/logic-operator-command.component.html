@@ -1,0 +1,25 @@
+<div class="logic-operator-command-content" fxLayout="row" fxLayoutAlign="start center">
+    <div>
+        <div [attr.MouseHelperDetectorCommandContainerId]="firstCommandContainerId" class="first-command-container-wrapper">
+            <app-command-drop  [commandContainerId]="firstCommandContainerId"></app-command-drop>
+        </div>
+    </div>
+    <div class="comparison-operator">
+        <form [formGroup]="componentFormGroup">
+            <mat-form-field class="comparsion-operator-input-wrapper">
+                <mat-select formControlName="logicOperator">
+                    <mat-option>Select an option</mat-option>
+                    <mat-option *ngFor="let option of logicOperatorOptions" [value]="option.value">
+                        {{ option.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+    <div>
+        <div [attr.MouseHelperDetectorCommandContainerId]="secondCommandContainerId" class="second-command-container-wrapper">
+            <app-command-drop  [commandContainerId]="secondCommandContainerId"></app-command-drop>
+        </div>
+    </div>
+
+</div>
