@@ -30,7 +30,8 @@ import { LogicOperatorCommandPreviewComponent } from './logic-operator-command-p
         SetVariablePreviewComponent,
         SetVariableFromCommandPreviewComponent,
         IfThenPreviewComponent,
-        LogicOperatorCommandPreviewComponent
+        LogicOperatorCommandPreviewComponent,
+        VariablePreviewComponent
     ],
     entryComponents: [
         VariablePreviewComponent,

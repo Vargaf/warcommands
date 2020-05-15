@@ -117,6 +117,7 @@ export class CommandContainerDragDropManagerService {
             const commandContainer: CommandContainerDTO = {
                 id: command.innerCommandContainerIdList[innerCommandContainerIndex],
                 fileId: command.fileId,
+                parentCommandId: command.id,
                 commands: []
             };
             this.commandDragDropManagerEvents.commandContainerCreatedDispatch(commandContainer);

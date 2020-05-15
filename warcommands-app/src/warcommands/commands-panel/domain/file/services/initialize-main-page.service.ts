@@ -63,6 +63,7 @@ export class InitializeMainPageService {
         const commandContainer: CommandContainerDTO = {
             id: file.commandContainerId,
             fileId: file.id,
+            parentCommandId: null,
             commands: []
         };
 
@@ -89,6 +90,7 @@ export class InitializeMainPageService {
         const commandContainer: CommandContainerDTO = {
             id: commandContainerId,
             fileId: command.fileId,
+            parentCommandId: command.id,
             commands: []
         };
 

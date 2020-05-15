@@ -1,1 +1,10 @@
-<div class="variable-content">my var</div>
+<div class="variable-content">
+    <form [formGroup]="variableCommandForm">
+        <mat-form-field>
+            <mat-select formControlName="variable">
+                <mat-option [value]="''">Select a variable</mat-option>
+                <mat-option *ngFor="let option of variableOptionList" [value]="option.value">{{ option.label }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>

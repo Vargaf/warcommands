@@ -1,4 +1,7 @@
-<ng-template #dragCommandPreview>
-    <div class="drag-command-preview">my var...</div>
-</ng-template>
+<ng-container *ngTemplateOutlet="dragCommandPreview"></ng-container>
 
+<ng-template #dragCommandPreview>
+    <div class="drag-command-preview">
+        your variable
+    </div>
+</ng-template>

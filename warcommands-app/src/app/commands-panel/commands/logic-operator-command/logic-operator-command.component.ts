@@ -4,6 +4,7 @@ import { logicOperatorSelectOptions } from 'src/warcommands/commands-panel/domai
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-logic-operator-command',
@@ -13,6 +14,7 @@ import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/comm
 export class LogicOperatorCommandComponent implements OnInit {
 
     @Input() commandData: LogicOperatorCommandEntity;
+    logicOperatorCommandData: LogicOperatorCommandEntity;
 
     firstCommandContainerId: string;
     secondCommandContainerId: string;
@@ -40,16 +42,17 @@ export class LogicOperatorCommandComponent implements OnInit {
 
         this.logicOperatorSelectedSubscription = this.componentFormGroup.valueChanges.subscribe(() => {
             if (this.componentFormGroup.valid) {
-                this.commandData.data = {
+                this.logicOperatorCommandData.data = {
                     operator: this.componentFormGroup.get('logicOperator').value
                 }
-                this.commandUpdatedEvents.commandUpdatedDispatch(this.commandData);
+                this.commandUpdatedEvents.commandUpdatedDispatch(this.logicOperatorCommandData);
             }
         });
     }
 
     private initialize(): void {
-        this.logicOperatorSelected = this.commandData.data?.operator || 0;
+        this.logicOperatorCommandData = _.cloneDeep(this.commandData);
+        this.logicOperatorSelected = this.logicOperatorCommandData.data?.operator || 0;
     }
 
 }

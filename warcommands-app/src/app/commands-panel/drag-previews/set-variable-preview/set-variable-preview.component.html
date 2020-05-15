@@ -1,5 +1,7 @@
-<ng-template #dragCommandPreview>
-    <div class="drag-command-preview">set varName = varValue</div>
-</ng-template>
+<ng-container *ngTemplateOutlet="dragCommandPreview"></ng-container>
 
-<div class="drag-command-preview">set varName = varValue</div>
+<ng-template #dragCommandPreview>
+    <div class="drag-command-preview">
+        set varName = varValue
+    </div>
+</ng-template>

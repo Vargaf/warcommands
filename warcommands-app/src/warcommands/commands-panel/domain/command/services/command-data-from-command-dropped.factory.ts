@@ -7,6 +7,7 @@ import { GameLoopCommandEntity } from '../model/game-loop-command.entity';
 import { GenericCommandDTO } from '../model/generic-command.dto';
 import { SetVariableFromCommandCommandEntity } from '../model/set-variable-from-command-command.entity';
 import { LogicOperatorCommandEntity } from '../model/logic-operator/logic-operator-command.entity';
+import { SetVariableCommandEntity } from '../model/set-variable-command.entity';
 
 @Injectable({
     providedIn: 'root'
@@ -24,13 +25,22 @@ export class CommandDataFromCommandDroppedFactory {
 
         switch (commandType) {
             case (CommandType.Variable):
-            case (CommandType.SetVariable):
             case (CommandType.Game): {
+                break;
+            }
+            case (CommandType.SetVariable): {
+                (command as SetVariableCommandEntity).data = {
+                    varName: '',
+                    varValue: ''
+                }
                 break;
             }
             case (CommandType.SetVariableFromCommand): {
                 (command as SetVariableFromCommandCommandEntity).innerCommandContainerIdList = {
                     command: uuid()
+                };
+                (command as SetVariableFromCommandCommandEntity).data = {
+                    varName: ''
                 }
                 break;
             }

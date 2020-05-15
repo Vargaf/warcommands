@@ -15,24 +15,26 @@ export class CommandContainerManagerService {
     ) {}
 
     parseCommandContainerFromRawFile(rawFile: FileJsonDTO): void {
-        this.loadCommandContainerFromRawFile(rawFile.id, rawFile.commandContainer);
+        this.loadCommandContainerFromRawFile(rawFile.id, rawFile.commandContainer, null);
     }
 
     private loadCommandContainerFromRawFile(
         fileId: string,
-        rawCommandContainer: CommandContainerJsonDTO
+        rawCommandContainer: CommandContainerJsonDTO,
+        parentCommandId: string
     ): void {
 
         const commandContainer: CommandContainerDTO = {
             id: rawCommandContainer.id,
             fileId,
+            parentCommandId,
             commands: []
         };
 
         for (const command of rawCommandContainer.commands) {
             commandContainer.commands.push(command.id);
             for (const rawInnerCommandContainer of command.commandContainerList) {
-                this.loadCommandContainerFromRawFile(fileId, rawInnerCommandContainer);
+                this.loadCommandContainerFromRawFile(fileId, rawInnerCommandContainer, command.id);
             }
         }
 

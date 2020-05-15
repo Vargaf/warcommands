@@ -25,6 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SetVariableFromCommandComponent } from './set-variable-from-command/set-variable-from-command.component';
 import { LogicOperatorCommandComponent } from './logic-operator-command/logic-operator-command.component';
+import { VariableInScopeFinderService } from 'src/warcommands/commands-panel/domain/command/model/variable/services/variables-in-scope-finder.service';
 
 
 
@@ -56,6 +57,7 @@ import { LogicOperatorCommandComponent } from './logic-operator-command/logic-op
         DragCustomPreviewService,
         CommandDropRemoveManagerService,
         CommandRemovalEventChainGeneratorService,
+        VariableInScopeFinderService,
         { provide: CommandDropRepository, useClass: AngularCommandDropRepositoryService },
         { provide: CommandDraggableElementRepositoryService, useClass: AngularCommandDraggableElementRepositoryService }
     ],
