@@ -33,7 +33,7 @@ export class CommandDataFromJSONFactory {
             }
             case (CommandType.SetVariableFromCommand) : {
                 (command as SetVariableFromCommandCommandEntity).innerCommandContainerIdList = {
-                    command: rawCommand.commandContainerList[0].id
+                    command: rawCommand.commandContainerList.command.id
                 }
             }
             case (CommandType.Game): {
@@ -42,28 +42,28 @@ export class CommandDataFromJSONFactory {
             }
             case (CommandType.IfThen): {
                 (command as IfThenCommandEntity).innerCommandContainerIdList = {
-                    conditionCommandContainerId: rawCommand.commandContainerList[0].id,
-                    thenCommandContainerId: rawCommand.commandContainerList[1].id
+                    conditionCommandContainerId: rawCommand.commandContainerList.conditionCommandContainerId.id,
+                    thenCommandContainerId: rawCommand.commandContainerList.thenCommandContainerId.id
                 };
                 break;
             }
             case (CommandType.IfThenElse): {
                 (command as IfThenElseCommandEntity).innerCommandContainerIdList = {
-                    thenCommandContainerId: rawCommand.commandContainerList[0].id,
-                    elseCommandContainerId: rawCommand.commandContainerList[1].id
+                    thenCommandContainerId: rawCommand.commandContainerList.thenCommandContainerId.id,
+                    elseCommandContainerId: rawCommand.commandContainerList.elseCommandContainerId.id
                 };
                 break;
             }
             case (CommandType.GameLoop): {
                 (command as GameLoopCommandEntity).innerCommandContainerIdList = {
-                    commandContainerId: rawCommand.commandContainerList[0].id
+                    commandContainerId: rawCommand.commandContainerList.commandContainerId.id
                 };
                 break;
             }
             case CommandType.LogicOperator: {
                 (command as LogicOperatorCommandEntity).innerCommandContainerIdList = {
-                    firstCommandContainerId: rawCommand.commandContainerList[0].id,
-                    secondCommandContainerId: rawCommand.commandContainerList[1].id
+                    firstCommandContainerId: rawCommand.commandContainerList.firstCommandContainerId.id,
+                    secondCommandContainerId: rawCommand.commandContainerList.secondCommandContainerId.id
                 };
                 break;
             }

@@ -28,7 +28,8 @@ export class CommandManagerService {
             this.commandEvents.commandLoadedDispatch(command, +position);
             this.commandRepositoryService.save(command);
 
-            for (const rawInnerCommandContainer of rawCommand.commandContainerList) {
+            for (const rawInnerCommandContainerIndex in rawCommand.commandContainerList) {
+                const rawInnerCommandContainer = rawCommand.commandContainerList[rawInnerCommandContainerIndex];
                 this.loadCommandsFromRawFile(fileId, rawInnerCommandContainer);
             }
         }

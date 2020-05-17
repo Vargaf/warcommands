@@ -33,7 +33,8 @@ export class CommandContainerManagerService {
 
         for (const command of rawCommandContainer.commands) {
             commandContainer.commands.push(command.id);
-            for (const rawInnerCommandContainer of command.commandContainerList) {
+            for (const rawInnerCommandContainerIndex in command.commandContainerList) {
+                const rawInnerCommandContainer = command.commandContainerList[rawInnerCommandContainerIndex];
                 this.loadCommandContainerFromRawFile(fileId, rawInnerCommandContainer, command.id);
             }
         }

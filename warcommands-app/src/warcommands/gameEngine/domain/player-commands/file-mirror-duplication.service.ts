@@ -43,7 +43,7 @@ export class FileMirrorDuplicationService {
             id: newCommandId,
             type: command.type,
             data: command.data,
-            commandContainerList: [],
+            commandContainerList: {},
             classMember: null,
         }
 
@@ -51,9 +51,10 @@ export class FileMirrorDuplicationService {
             newCommand.classMember = { ...command.classMember };
         }
 
-        for (const commandContainer of command.commandContainerList) {
+        for (const commandContainerIndex in command.commandContainerList) {
+            const commandContainer = command.commandContainerList[commandContainerIndex];
             const newCommandContainer = this.duplicateCommandContainer(commandContainer, newPlayerId);
-            newCommand.commandContainerList.push(newCommandContainer);
+            newCommand.commandContainerList[commandContainerIndex] = newCommandContainer;
         }
 
         return newCommand;

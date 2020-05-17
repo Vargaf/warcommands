@@ -50,7 +50,8 @@ export class FileParserService {
             this.playerManagerService.addGameloopCommandToPlayer(playerId, command.id);
         }
 
-        for (const commandContainer of rawCommand.commandContainerList) {
+        for (const commandContainerIndex in rawCommand.commandContainerList) {
+            const commandContainer = rawCommand.commandContainerList[commandContainerIndex];
             this.parseCommandContainer(commandContainer, parentCommandContainerId, playerId);
             command.innerCommandContainerList.push(commandContainer.id);
         }

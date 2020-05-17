@@ -12,7 +12,7 @@ export interface CommandJsonDTO {
     id: string;
     type: CommandType;
     data: any;
-    commandContainerList: CommandContainerJsonDTO[];
+    commandContainerList: { [index: string]: CommandContainerJsonDTO };
     classMember: ClassMemberJsonDTO;
 }
 
