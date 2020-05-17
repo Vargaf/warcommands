@@ -12,14 +12,22 @@ export class MouseDragDropHelperService {
         private readonly commandsDropRepository: CommandDropRepository
     ) {}
 
-    saveActiveCommandContainer(event: MouseEvent) {
+    saveActiveCommandContainerByMouse(event: MouseEvent) {
+        this.setActiveCommandContainer((event as any).path);
+    }
 
-        // tslint:disable-next-line: forin
-        for (const index in (event as any).path) {
-            const item = (event as any).path[index];
+    saveActiveCommandContainerByTouchDevice(event: TouchEvent): void {
+        const documentElement = (event as any).path[(event as any).path.length - 2];
+        const xCoordinate = event.touches[0].pageX;
+        const yCoordinate = event.touches[0].pageY;
+        const path = documentElement.elementsFromPoint(xCoordinate, yCoordinate);
+        this.setActiveCommandContainer(path);
+    }
 
+    private setActiveCommandContainer(path: any[]): void {
+        for (const index in path) {
+            const item = path[index];
             if (item.hasAttribute && item.hasAttribute('MouseHelperDetectorCommandContainerId')) {
-
                 const commandContainerId = item.getAttribute('MouseHelperDetectorCommandContainerId');
                 if (commandContainerId !== this.activeContainerId) {
                     this.desactivateThePreviousCommandContainer(this.activeContainerId);

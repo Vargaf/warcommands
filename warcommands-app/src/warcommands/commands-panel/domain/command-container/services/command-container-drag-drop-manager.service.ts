@@ -27,13 +27,13 @@ export class CommandContainerDragDropManagerService {
         private readonly commandDragDropManagerEvents: CommandDragDropManagerEvents,
         private readonly mouseHelperService: MouseDragDropHelperService,
         private readonly dragCustomPreviewService: DragCustomPreviewService,
-        private readonly commandRepositoryService: CommandRepositoryService
+        private readonly commandRepositoryService: CommandRepositoryService,
+        private readonly mouseDragDropHelperService: MouseDragDropHelperService,
     ) {}
 
     createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO): void {
         const commandContainerDropRef: DropListRef = this.angularDragDropService.createDropList(commandContainerDivElement);
         commandContainerDropRef.withItems([]);
-        commandContainerDropRef.disabled = true;
         this.setDropAvailavilityFlagListener(commandContainerDropRef);
         this.commandDropRepositoryService.save(commandContainerDropRef, commandContainer.id);
 
@@ -49,6 +49,7 @@ export class CommandContainerDragDropManagerService {
             const previewTemplate = this.dragCustomPreviewService.getDragHelperTemplate(command.type);
             dragRefElement.withPreviewTemplate(previewTemplate);
             dragRefElement.withPlaceholderTemplate(previewTemplate);
+            this.setDragManagmentEvents(dragRefElement);
         } else {
             dragRefElement.disabled = true;
         }
@@ -64,6 +65,36 @@ export class CommandContainerDragDropManagerService {
     removeDraggableElementFromCommandContainer(command: GenericCommandDTO, commandContainerId: string): void {
         this.commandDraggableElementRepositoryService.removeDragItem(command, commandContainerId);
         this.updateDropList(commandContainerId);
+    }
+
+    private setDragManagmentEvents(dragRefElement: DragRef): void {
+        dragRefElement.moved.subscribe((event) => {
+            if (event.event instanceof MouseEvent) {
+                this.mouseDragDropHelperService.saveActiveCommandContainerByMouse(event.event);
+            } else {
+                this.mouseDragDropHelperService.saveActiveCommandContainerByTouchDevice(event.event);
+            }
+        });
+
+        dragRefElement.started.subscribe((event) => {
+            const dropList: DropListRef[] = this.commandDropRepositoryService.getDropItemList();
+            
+            for (const drop of dropList) {
+                const commandContainerId = (drop.element as any).id;
+                drop.disabled = true;
+                this.commandDropRepositoryService.save(drop, commandContainerId);
+            }
+        });
+
+        dragRefElement.ended.subscribe((event) => {
+            const dropList: DropListRef[] = this.commandDropRepositoryService.getDropItemList();
+            
+            for (const drop of dropList) {
+                const commandContainerId = (drop.element as any).id;
+                drop.disabled = false;
+                this.commandDropRepositoryService.save(drop, commandContainerId);
+            }
+        });
     }
 
     private setDropAvailavilityFlagListener(dropList: DropListRef): void {

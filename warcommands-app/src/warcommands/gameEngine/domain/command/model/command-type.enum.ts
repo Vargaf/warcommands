@@ -6,5 +6,6 @@ export enum CommandType {
     IfThenElse = 210,
     Variable = 925,
     SetVariable = 950,
-    SetVariableFromCommand = 960
+    SetVariableFromCommand = 960,
+    LogicOperator = 1000,
 }

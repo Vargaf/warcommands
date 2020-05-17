@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<mat-tab-group #filesTabGroup dynamicHeight (mouseover)="onMouseMove($event)">
+<mat-tab-group #filesTabGroup dynamicHeight>
     <mat-tab *ngFor="let file of fileList">
         <ng-template mat-tab-label>
             {{ file.name }}
