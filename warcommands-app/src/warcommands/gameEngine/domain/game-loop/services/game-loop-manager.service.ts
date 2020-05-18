@@ -9,6 +9,11 @@ import { CommandContainerDTO } from '../../command-container/model/command-conta
 import { PlayerCommandScopeVarValueDTO } from '../model/player-command-scope-var-value.dto';
 import { SetVariableCommandDTO } from '../../command/model/set-variable-command.dto';
 import { SetVariableFromCommandCommandDTO } from '../../command/model/set-variable-from-command-command.dto';
+import { GameLoopCommandDTO } from '../../command/model/game-loop.dto';
+import { IfThenCommandDTO } from '../../command/model/if-then-command.dto';
+import { LogicalOperatorCommandDTO } from '../../command/model/logical-operator-command/logical-operator-command.dto';
+import { VariableCommandDTO } from '../../command/model/variable-command.dto';
+import { LogicOperatorENUM } from '../../command/model/logical-operator-command/logic-operator.enum';
 
 
 export class GameLoopManagerService {
@@ -21,17 +26,17 @@ export class GameLoopManagerService {
     ) {}
 
     runGameLoop(gameLoopCommandId: string): void {
-        const gameLoopCommand: CommandDTO = this.commandRepository.findById(gameLoopCommandId);
+        const gameLoopCommand: GameLoopCommandDTO = (this.commandRepository.findById(gameLoopCommandId) as GameLoopCommandDTO);
         const fileScope = this.setGameLoopScope(gameLoopCommand);
 
         if (gameLoopCommand) {
-            this.runCommandContainer(gameLoopCommand.innerCommandContainerList[0], gameLoopCommand.playerId);
+            this.runCommandContainer(gameLoopCommand.innerCommandContainerIdList.commandContainerId, gameLoopCommand.playerId);
         }
 
         this.removeScope(fileScope);
     }
 
-    private setGameLoopScope(command: CommandDTO): PlayerCommandScopeDTO {
+    private setGameLoopScope(command: GameLoopCommandDTO): PlayerCommandScopeDTO {
         this.playerCommandScopeManager.clearPlayerScope(command.playerId);
         const scope: PlayerCommandScopeDTO = {
             scopeId: command.parentCommandContainerId,
@@ -94,7 +99,7 @@ export class GameLoopManagerService {
                 break;
             }
             case CommandType.SetVariableFromCommand: {
-                const commandContainerIdToRun: string = (command as SetVariableFromCommandCommandDTO).innerCommandContainerList[0];
+                const commandContainerIdToRun: string = (command as SetVariableFromCommandCommandDTO).innerCommandContainerIdList.command;
                 const commandReturnValue: any = this.runCommandContainer(commandContainerIdToRun, command.playerId);
                 const scopeVar: PlayerCommandScopeVarValueDTO = {
                     commandId: command.id,
@@ -104,6 +109,58 @@ export class GameLoopManagerService {
                 }
                 this.playerCommandScopeManager.addPlayerCommandScopeVarValue(scopeVar);
                 returnValue = scopeVar.value;
+                break;
+            }
+            case CommandType.IfThen: {
+                const conditionContainerId: string = (command as IfThenCommandDTO).innerCommandContainerIdList.conditionCommandContainerId;
+                const conditionResult = this.runCommandContainer(conditionContainerId, command.playerId);
+
+                if (conditionResult) {
+                    const thenCommandContainerId = (command as IfThenCommandDTO).innerCommandContainerIdList.thenCommandContainerId;
+                    this.runCommandContainer(thenCommandContainerId, command.playerId);
+                }
+                
+                break;
+            }
+            case CommandType.LogicOperator: {
+                const logicalOperatorCommand: LogicalOperatorCommandDTO = (command as LogicalOperatorCommandDTO);
+                const firstVariableCommandContainerId = logicalOperatorCommand.innerCommandContainerIdList.firstCommandContainerId;
+                const secondVariableCommandContainerId = logicalOperatorCommand.innerCommandContainerIdList.secondCommandContainerId;
+                const fisrtVariableValue: PlayerCommandScopeVarValueDTO = this.runCommandContainer(firstVariableCommandContainerId, command.playerId);
+                const secondVariableValue: PlayerCommandScopeVarValueDTO = this.runCommandContainer(secondVariableCommandContainerId, command.playerId);
+
+                switch (logicalOperatorCommand.data.operator) {
+                    case LogicOperatorENUM.EqualTo: {
+                        returnValue = fisrtVariableValue.value == secondVariableValue.value;
+                        break;
+                    }
+                    case LogicOperatorENUM.GreatherThan: {
+                        returnValue = fisrtVariableValue.value > secondVariableValue.value;
+                        break;
+                    }
+                    case LogicOperatorENUM.GreatherThanOrEqualTo: {
+                        returnValue = fisrtVariableValue.value >= secondVariableValue.value;
+                        break;
+                    }
+                    case LogicOperatorENUM.LessThan: {
+                        returnValue = fisrtVariableValue.value < secondVariableValue.value;
+                        break;
+                    }
+                    case LogicOperatorENUM.LessThanOrEqualTo: {
+                        returnValue = fisrtVariableValue.value <= secondVariableValue.value;
+                        break;
+                    }
+                    case LogicOperatorENUM.NotEqual: {
+                        returnValue = fisrtVariableValue.value != secondVariableValue.value;
+                        break;
+                    }
+                }
+
+                break;
+            }
+            case CommandType.Variable: {
+                const variableCommandId: string = (command as VariableCommandDTO).data.variableCommandId;
+                returnValue = this.playerCommandScopeManager.getPlayerCommandScopeVarValue(variableCommandId, command.playerId);
                 break;
             }
             default: {

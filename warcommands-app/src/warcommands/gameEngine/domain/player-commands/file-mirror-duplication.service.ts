@@ -1,5 +1,7 @@
 import { FileJsonDTO, CommandContainerJsonDTO, CommandJsonDTO } from '../file/file-json.dto';
 import { v4 as uuid } from 'uuid';
+import { CommandType } from '../command/model/command-type.enum';
+import * as _ from 'lodash';
 
 export class FileMirrorDuplicationService {
 
@@ -42,9 +44,14 @@ export class FileMirrorDuplicationService {
         const newCommand: CommandJsonDTO = {
             id: newCommandId,
             type: command.type,
-            data: command.data,
+            data: _.cloneDeep(command.data),
             commandContainerList: {},
             classMember: null,
+        }
+
+        if (newCommand.type === CommandType.Variable) {
+            const currentCommandId = (newCommand as any).data.variableCommandId;
+            (newCommand as any).data.variableCommandId = this.getNewCommandId(currentCommandId);
         }
 
         if (command.classMember) {

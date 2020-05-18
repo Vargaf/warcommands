@@ -6,4 +6,7 @@ export interface SetVariableFromCommandCommandDTO extends CommandDTO {
     data: {
         varName: string;
     };
+    innerCommandContainerIdList: {
+        command: string
+    };
 }

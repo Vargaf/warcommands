@@ -7,7 +7,7 @@ export class CommandDTO {
     type: CommandType;
     playerId: string;
     parentCommandContainerId: string;
-    innerCommandContainerList?: string[];
+    innerCommandContainerIdList?: { [index: string]: string };
     classMember?: ClassMemberDTO;
     return?: any;
     data?: any;

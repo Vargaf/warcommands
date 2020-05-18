@@ -30,6 +30,8 @@ export class PlayerCommandsScopeManagerService {
         this.playerCommandsScopeRepository.save(scope);
     }
 
-
+    getPlayerCommandScopeVarValue(commandId: string, playerId: string): PlayerCommandScopeVarValueDTO {
+        return this.playerCommandScopeVarValueRepositoryService.findVarValueByPlayerId(commandId, playerId);
+    }
 
 }

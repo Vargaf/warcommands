@@ -40,7 +40,7 @@ export class FileParserService {
             type: rawCommand.type,
             playerId,
             parentCommandContainerId,
-            innerCommandContainerList: [],
+            innerCommandContainerIdList: {},
             classMember: null,
             return: null,
             data: rawCommand.data
@@ -53,7 +53,7 @@ export class FileParserService {
         for (const commandContainerIndex in rawCommand.commandContainerList) {
             const commandContainer = rawCommand.commandContainerList[commandContainerIndex];
             this.parseCommandContainer(commandContainer, parentCommandContainerId, playerId);
-            command.innerCommandContainerList.push(commandContainer.id);
+            command.innerCommandContainerIdList[commandContainerIndex] = commandContainer.id;
         }
 
         if(rawCommand.classMember !== null) {
