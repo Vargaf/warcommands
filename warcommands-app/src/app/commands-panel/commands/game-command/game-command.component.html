@@ -1,43 +1,54 @@
 <div class="variable-content" fxLayout="row" fxLayoutAlign="center center">
     <div>
-        Game.
+        Game
     </div>
-    <div style="height: 58px;">
-        <mat-form-field appearance="">
-            <mat-select [(value)]="memberSelected" (selectionChange)="onOptionMemberChanged($event)">
-                <mat-option>Select an option</mat-option>
-                <mat-optgroup label="Methods">
-                    <mat-option *ngFor="let member of gameCommandClassDefinition.methods" [value]="member.value">
-                        {{ member.label }}
-                    </mat-option>
-                </mat-optgroup>
-                <mat-optgroup label="Properties">
-                    <mat-option *ngFor="let member of gameCommandClassDefinition.properties" [value]="member.value">
-                        {{ member.label }}
-                    </mat-option>
-                </mat-optgroup>
-            </mat-select>
-        </mat-form-field>
+    <div *ngIf="!areMemberOptionsVisible; else memberOptionList">
+        <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
+            <mat-icon>arrow_drop_down_circle</mat-icon>
+        </button>
     </div>
-    <div>
-        <container-element [ngSwitch]="memberSelected">
-            <app-get-base-by-index 
-                *ngSwitchCase="'getBaseByName'"
-                (classMemberChange)="onClassMemberSelected($event)"
-                [classMember]="gameCommand.classMember">
-            </app-get-base-by-index>
-
-            <app-get-worker
-                *ngSwitchCase="'getWorker'"
-                (classMemberChange)="onClassMemberSelected($event)"
-                [classMember]="gameCommand.classMember">
-            </app-get-worker>
-    
-            <div *ngSwitchCase="'resources'">
-                resources
+    <ng-template #memberOptionList>
+        <div>.</div>
+        <form [formGroup]="componentFormGroup">
+            <div class="warcommands-command-panel-input-height">
+                <mat-form-field appearance="">
+                    <mat-select formControlName="memberSelected" #memberSelectElement>
+                        <mat-option>Select an option</mat-option>
+                        <mat-option value="-1">none</mat-option>
+                        <mat-optgroup label="Methods">
+                            <mat-option *ngFor="let member of gameCommandClassDefinition.methods" [value]="member.value">
+                                {{ member.label }}
+                            </mat-option>
+                        </mat-optgroup>
+                        <mat-optgroup label="Properties">
+                            <mat-option *ngFor="let member of gameCommandClassDefinition.properties" [value]="member.value">
+                                {{ member.label }}
+                            </mat-option>
+                        </mat-optgroup>
+                    </mat-select>
+                </mat-form-field>
             </div>
+        </form>
+        <div>
+            <container-element [ngSwitch]="memberSelected">
+                <app-get-base-by-index 
+                    *ngSwitchCase="'getBaseByName'"
+                    (classMemberChange)="onClassMemberSelected($event)"
+                    [classMember]="gameCommand.classMember">
+                </app-get-base-by-index>
 
-            <div *ngSwitchDefault></div>
-        </container-element>
-    </div>
+                <app-get-worker
+                    *ngSwitchCase="'getWorker'"
+                    (classMemberChange)="onClassMemberSelected($event)"
+                    [classMember]="gameCommand.classMember">
+                </app-get-worker>
+        
+                <div *ngSwitchCase="'resources'">
+                    resources
+                </div>
+
+                <div *ngSwitchDefault></div>
+            </container-element>
+        </div>
+    </ng-template>
 </div>
