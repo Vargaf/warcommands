@@ -8,6 +8,7 @@ import { GenericCommandDTO } from '../model/generic-command.dto';
 import { SetVariableFromCommandCommandEntity } from '../model/set-variable-from-command-command.entity';
 import { LogicOperatorCommandEntity } from '../model/logic-operator/logic-operator-command.entity';
 import { SetVariableCommandEntity } from '../model/set-variable-command.entity';
+import { ClassNameENUM } from '../model/class-definition/class-name.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,8 @@ export class CommandDataFromCommandDroppedFactory {
             case (CommandType.SetVariable): {
                 (command as SetVariableCommandEntity).data = {
                     varName: '',
-                    varValue: ''
+                    varValue: '',
+                    className: ClassNameENUM.String
                 }
                 break;
             }
@@ -40,7 +42,9 @@ export class CommandDataFromCommandDroppedFactory {
                     command: uuid()
                 };
                 (command as SetVariableFromCommandCommandEntity).data = {
-                    varName: ''
+                    varName: '',
+                    className: ClassNameENUM.String,
+                    innerCommandId: null
                 }
                 break;
             }

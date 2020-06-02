@@ -4,5 +4,6 @@ import { BaseMembersENUM } from '../base-members.enum';
 
 export interface NumberOfWorkersClassPropertyMemberDTO extends ClassMemberDTO {
     className: ClassNameENUM.Base;
+    returnClassName: ClassNameENUM.Number;
     memberName: BaseMembersENUM.NumberOfWorkers;
 }

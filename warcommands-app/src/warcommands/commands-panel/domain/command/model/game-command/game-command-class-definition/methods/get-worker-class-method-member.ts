@@ -4,5 +4,6 @@ import { GameMembersENUM } from '../game-members.enum';
 
 export interface GetWorkerClassMethodMember extends ClassMemberDTO {
     className: ClassNameENUM.Game;
+    returnClassName: ClassNameENUM.Worker;
     memberName: GameMembersENUM.GetWorker;
 }

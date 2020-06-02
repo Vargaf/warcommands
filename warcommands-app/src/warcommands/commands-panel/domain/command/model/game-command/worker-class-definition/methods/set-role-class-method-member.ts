@@ -4,5 +4,6 @@ import { WorkerMembersENUM } from '../worker-members.enum';
 
 export interface SetRoleClassMethodMember extends ClassMemberDTO {
     className: ClassNameENUM.Worker;
+    returnClassName: ClassNameENUM.Worker;
     memberName: WorkerMembersENUM.SetRole;
 }

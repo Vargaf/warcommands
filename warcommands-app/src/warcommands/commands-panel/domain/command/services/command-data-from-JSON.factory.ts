@@ -7,6 +7,7 @@ import { GameLoopCommandEntity } from '../model/game-loop-command.entity';
 import { GameCommandEntity } from '../model/game-command/game-command.entity';
 import { SetVariableFromCommandCommandEntity } from '../model/set-variable-from-command-command.entity';
 import { LogicOperatorCommandEntity } from '../model/logic-operator/logic-operator-command.entity';
+import { VariableCommandEntity } from '../model/variable/model/variable-command.entity';
 
 export class CommandDataFromJSONFactory {
 
@@ -26,6 +27,7 @@ export class CommandDataFromJSONFactory {
 
         switch (rawCommand.type) {
             case (CommandType.Variable): {
+                (command as VariableCommandEntity).classMember = rawCommand.classMember;
                 break;
             }
             case (CommandType.SetVariable): {

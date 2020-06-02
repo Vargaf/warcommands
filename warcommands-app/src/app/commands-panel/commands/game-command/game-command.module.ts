@@ -11,6 +11,7 @@ import { CreateWorkerComponent } from './get-base-by-index/create-worker/create-
 import { GetWorkersComponent } from './get-base-by-index/get-workers/get-workers.component';
 import { FilterByRoleComponent } from './get-base-by-index/get-workers/filter-by-role/filter-by-role.component';
 import { ArrayCountComponent } from './array/array-count/array-count.component';
+import { GameClassMemberOptionsListComponent } from './game-class-member-options-list/game-class-member-options-list.component';
 
 
 
@@ -23,7 +24,8 @@ import { ArrayCountComponent } from './array/array-count/array-count.component';
     CreateWorkerComponent,
     GetWorkersComponent,
     FilterByRoleComponent,
-    ArrayCountComponent],
+    ArrayCountComponent,
+    GameClassMemberOptionsListComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -34,7 +36,8 @@ import { ArrayCountComponent } from './array/array-count/array-count.component';
     GameCommandComponent
   ],
   entryComponents: [
-    GameCommandComponent
+    GameCommandComponent,
+    GameClassMemberOptionsListComponent
   ]
 })
 export class GameCommandModule { }

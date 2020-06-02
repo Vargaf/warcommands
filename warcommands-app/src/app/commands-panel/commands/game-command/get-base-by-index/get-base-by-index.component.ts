@@ -80,7 +80,6 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy {
     private onValidFormChangeListener(): void {
         this.baseByNameClassMethodMember.args = [this.componentFormGroup.get('baseName').value];
         this.memberSelected = this.componentFormGroup.get('memberSelected').value;
-        this.emitSelectedMember();
     }
 
     private onMemberSelectionChanged(value: string): void {

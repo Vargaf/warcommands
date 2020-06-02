@@ -13,6 +13,7 @@ export class ArrayClassGetClassMemberByClassMemberOptions {
             case ArrayMembersENUM.Count: {
                 classMember = {
                     className: ClassNameENUM.Array,
+                    returnClassName: ClassNameENUM.Number,
                     memberName: ArrayMembersENUM.Count
                 };
                 break;

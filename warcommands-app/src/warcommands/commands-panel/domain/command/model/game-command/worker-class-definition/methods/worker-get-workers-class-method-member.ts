@@ -4,5 +4,6 @@ import { WorkerMembersENUM } from '../worker-members.enum';
 
 export interface WorkerGetWorkersClassMethodMember extends ClassMemberDTO {
     className: ClassNameENUM.Worker;
+    returnClassName: ClassNameENUM.Array;
     memberName: WorkerMembersENUM.GetWorkers;
 }

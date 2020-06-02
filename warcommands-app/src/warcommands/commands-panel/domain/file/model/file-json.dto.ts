@@ -3,6 +3,7 @@ import { ClassNameENUM } from '../../command/model/class-definition/class-name.e
 
 export interface ClassMemberJsonDTO {
     className: ClassNameENUM;
+    returnClassName: ClassNameENUM;
     memberName: string;
     args: any[];
     methodChained: ClassMemberJsonDTO;

@@ -4,5 +4,6 @@ import { GameMembersENUM } from '../game-members.enum';
 
 export interface GetBaseByNameClassMethodMember extends ClassMemberDTO {
     className: ClassNameENUM.Game;
+    returnClassName: ClassNameENUM.Base;
     memberName: GameMembersENUM.GetBaseByName;
 }

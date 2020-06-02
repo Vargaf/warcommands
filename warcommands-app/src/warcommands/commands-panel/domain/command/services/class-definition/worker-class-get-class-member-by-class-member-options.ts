@@ -14,6 +14,7 @@ export class WorkerClassGetClassMemberByClassMemberOptions {
             case WorkerMembersENUM.SetRole: {
                 classMember = {
                     className: ClassNameENUM.Worker,
+                    returnClassName: ClassNameENUM.Worker,
                     memberName: WorkerMembersENUM.SetRole,
                     args: []
                 };
@@ -22,6 +23,7 @@ export class WorkerClassGetClassMemberByClassMemberOptions {
             case WorkerListMembersENUM.FilterByRole: {
                 classMember = {
                     className: ClassNameENUM.Worker,
+                    returnClassName: ClassNameENUM.Array,
                     memberName: WorkerListMembersENUM.FilterByRole,
                     args: []
                 };

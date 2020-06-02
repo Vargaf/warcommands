@@ -1,10 +1,17 @@
-<div class="variable-content">
-    <form [formGroup]="variableCommandForm">
-        <mat-form-field>
-            <mat-select formControlName="variable">
-                <mat-option [value]="''">Select a variable</mat-option>
-                <mat-option *ngFor="let option of variableOptionList" [value]="option.value">{{ option.label }}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </form>
+<div class="variable-content" fxLayout="row" fxLayoutAlign="center center">
+    <div class="warcommands-command-panel-input-height">
+        <form [formGroup]="variableCommandForm">
+            <mat-form-field>
+                <mat-select formControlName="variable">
+                    <mat-option [value]="''">Select a variable</mat-option>
+                    <mat-option *ngFor="let option of variableOptionList" [value]="option.value">{{ option.label }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+    <div>
+        <ng-container *ngIf="hasMemberOptions">
+            <ng-template class-member></ng-template>
+        </ng-container>
+    </div>
 </div>

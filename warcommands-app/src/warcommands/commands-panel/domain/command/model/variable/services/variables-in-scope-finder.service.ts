@@ -5,6 +5,7 @@ import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/comma
 import { GenericCommandDTO } from '../../generic-command.dto';
 import { CommandType } from '../../command-type.enum';
 
+interface VariableOption { value: string, label: string };
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +17,19 @@ export class VariableInScopeFinderService {
         private readonly commandRepositoryService: CommandRepositoryService
     ) {}
 
-    getVariablesInScope(currentCommand: GenericCommandDTO): GenericCommandDTO[] {
-        return this.findVariablesInCurrentScope(currentCommand);
+    getVariablesInScope(currentCommand: GenericCommandDTO): VariableOption[] {
+
+        const variableListInScope: GenericCommandDTO[] = this.findVariablesInCurrentScope(currentCommand);
+
+        const newVariableOptionList: VariableOption[] = [];
+
+        variableListInScope.forEach((variableCommand) => {
+            if (variableCommand.data.varName) {
+                newVariableOptionList.push({ value: variableCommand.id, label: variableCommand.data.varName });
+            }
+        });
+
+        return newVariableOptionList;
     }
 
     private findVariablesInCurrentScope(currentCommand: GenericCommandDTO): GenericCommandDTO[] {

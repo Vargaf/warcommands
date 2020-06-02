@@ -4,5 +4,6 @@ import { WorkerListMembersENUM } from '../worker-list-members-enum';
 
 export interface WorkerFilterByRoleClassMethodMember extends ClassMemberDTO {
     className: ClassNameENUM.Worker;
+    returnClassName: ClassNameENUM.Array;
     memberName: WorkerListMembersENUM.FilterByRole;
 }

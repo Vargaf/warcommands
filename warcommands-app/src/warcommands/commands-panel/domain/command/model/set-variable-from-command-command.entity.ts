@@ -1,10 +1,13 @@
 import { CommandType } from './command-type.enum';
-import { GenericCommandDTO } from './generic-command.dto';
+import { ClassNameENUM } from './class-definition/class-name.enum';
+import { BaseSetVariableCommandEntity } from './set-variable-command.entity';
 
-export interface SetVariableFromCommandCommandEntity extends GenericCommandDTO {
+export interface SetVariableFromCommandCommandEntity extends BaseSetVariableCommandEntity {
     type: CommandType.SetVariableFromCommand;
     data: {
         varName: string;
+        innerCommandId: string;
+        className: ClassNameENUM;
     }
     innerCommandContainerIdList: {
         command: string

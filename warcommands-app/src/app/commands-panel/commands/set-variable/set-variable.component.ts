@@ -6,6 +6,7 @@ import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/comm
 import * as _ from 'lodash';
 import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service';
 import { Subscription } from 'rxjs';
+import { ClassNameENUM } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-name.enum';
 
 interface CommandContentDinamicClass {
     'set-variable-content-valid': boolean;
@@ -62,6 +63,7 @@ export class SetVariableComponent implements OnInit, OnDestroy {
             }
 
             this.setVariableCommand.data = {
+                className: ClassNameENUM.String,
                 varName: this.setVarForm.get('varName').value,
                 varValue: this.setVarForm.get('varValue').value
             }

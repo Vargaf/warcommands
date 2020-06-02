@@ -78,7 +78,6 @@ export class GetWorkersComponent implements OnInit, OnDestroy {
 
     private onValidFormChangeListener(): void {
         this.memberSelected = this.componentFormGroup.get('memberSelected').value;
-        this.emitSelectedMember();
     }
 
     private onMemberSelectionChanged(value: string): void {

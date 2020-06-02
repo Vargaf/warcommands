@@ -77,6 +77,7 @@ export class JSONFileGeneratorService {
         } else {
             return {
                 className: classMember.className,
+                returnClassName: classMember.returnClassName,
                 memberName: classMember.memberName,
                 args: classMember.args || [],
                 methodChained: this.buildClassMember(classMember.methodChained)

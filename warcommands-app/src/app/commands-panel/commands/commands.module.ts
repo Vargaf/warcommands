@@ -26,6 +26,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SetVariableFromCommandComponent } from './set-variable-from-command/set-variable-from-command.component';
 import { LogicOperatorCommandComponent } from './logic-operator-command/logic-operator-command.component';
 import { VariableInScopeFinderService } from 'src/warcommands/commands-panel/domain/command/model/variable/services/variables-in-scope-finder.service';
+import { GetClassNameFromCommandService } from 'src/warcommands/commands-panel/domain/command/model/set-variable-from-command/get-class-name-from-command.service';
+import { ClassMemberDirective } from './class-member.directive';
+import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/domain/command/services/class-member-component/class-member-component-factory.service';
 
 
 
@@ -39,6 +42,7 @@ import { VariableInScopeFinderService } from 'src/warcommands/commands-panel/dom
         VariableComponent,
         SetVariableFromCommandComponent,
         LogicOperatorCommandComponent,
+        ClassMemberDirective
     ],
     imports: [
         CommonModule,
@@ -58,6 +62,8 @@ import { VariableInScopeFinderService } from 'src/warcommands/commands-panel/dom
         CommandDropRemoveManagerService,
         CommandRemovalEventChainGeneratorService,
         VariableInScopeFinderService,
+        GetClassNameFromCommandService,
+        ClassMemberComponentFactory,
         { provide: CommandDropRepository, useClass: AngularCommandDropRepositoryService },
         { provide: CommandDraggableElementRepositoryService, useClass: AngularCommandDraggableElementRepositoryService }
     ],
