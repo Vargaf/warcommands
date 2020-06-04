@@ -1,7 +1,7 @@
 import { Injectable, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from "@angular/core";
 import { ClassNameENUM } from '../../model/class-definition/class-name.enum';
 import { ClassMemberDirective } from 'src/app/commands-panel/commands/class-member.directive';
-import { GameClassMemberOptionsListComponent } from 'src/app/commands-panel/commands/game-command/game-class-member-options-list/game-class-member-options-list.component';
+import { GameClassMemberOptionsListComponent } from 'src/app/commands-panel/class-definition/game/game-class-member-options-list/game-class-member-options-list.component';
 import { BaseClassMemberOptionListComponent } from 'src/app/commands-panel/class-definition/base/base-class-member-option-list/base-class-member-option-list.component';
 
 @Injectable({
