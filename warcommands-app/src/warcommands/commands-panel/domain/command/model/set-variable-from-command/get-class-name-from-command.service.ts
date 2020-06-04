@@ -36,10 +36,13 @@ export class GetClassNameFromCommandService {
                 break;
             }
             case CommandType.Variable: {
+                const variableCommand: VariableCommandEntity = (command as VariableCommandEntity);
                 if (command.classMember) {
                     className = this.getClasNameByClassMember(command.classMember);
                 } else {
-                    className = this.getClassName((command as VariableCommandEntity).data.variableCommandId);
+                    if (variableCommand.data?.variableCommandId) {
+                        className = this.getClassName(variableCommand.data.variableCommandId);
+                    }
                 }
                 break;
             }
