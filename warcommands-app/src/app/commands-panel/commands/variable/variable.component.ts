@@ -29,7 +29,7 @@ interface VariableOption { value: string, label: string };
 export class VariableComponent implements OnInit, OnDestroy {
 
     @ViewChild(ClassMemberDirective)
-    classMember: ClassMemberDirective;
+    classMemberDirecitve: ClassMemberDirective;
 
     @Input() commandData: VariableCommandEntity;
     variableCommandData: VariableCommandEntity;
@@ -95,6 +95,7 @@ export class VariableComponent implements OnInit, OnDestroy {
                 this.variableCommandData.data = {
                     variableCommandId: this.varSelected
                 };
+                this.variableCommandData.classMember = null;
                 this.commandUpdatedEvents.commandUpdatedDispatch(this.variableCommandData);
             } 
             
@@ -121,6 +122,11 @@ export class VariableComponent implements OnInit, OnDestroy {
                 }
                 default: {
                     this.hasMemberOptions = false;
+                    if (this.variableCommandData.classMember) {
+                        this.variableCommandData.classMember = null;
+                        this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, null);   
+                        
+                    }
                 }
             }
 
@@ -133,10 +139,13 @@ export class VariableComponent implements OnInit, OnDestroy {
     }
 
     private initializeClassMemberComponent(variable: BaseSetVariableCommandEntity): void {
-        this.classMemberComponent = this.classMemberComponentFactory.getComponent(variable.data.className, this.classMember);
+        this.classMemberComponent = this.classMemberComponentFactory.getComponent(variable.data.className, this.classMemberDirecitve);
         (this.classMemberComponent.instance as ClassMemberComponent).classMember = this.variableCommandData.classMember;
         (this.classMemberComponent.instance as ClassMemberComponent).classMemberChange.subscribe((componentClassMember) => {
-            this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, componentClassMember);
+            if (!_.isEqual(this.variableCommandData.classMember, componentClassMember)) {
+                this.variableCommandData.classMember = componentClassMember;
+                this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, componentClassMember);   
+            }
         });
     }
 
@@ -158,6 +167,9 @@ export class VariableComponent implements OnInit, OnDestroy {
         if (!isCurrentSelecteVariableAvailable) {
             this.varSelected = '';
             this.variableCommandForm.get('variable').setValue('');
+            this.variableCommandData.classMember = null;
+        } else {
+            this.loadClassMembersIfNeeded();
         }
 
         this.variableOptionList = newVariableOptionList;

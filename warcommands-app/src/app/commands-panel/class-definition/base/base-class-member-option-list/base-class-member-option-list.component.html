@@ -1,0 +1,52 @@
+<div class="base-class-member-option-list-content" fxLayout="row" fxLayoutAlign="center center">
+    <div *ngIf="!areMemberOptionsVisible; else memberOptionList">
+        <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
+            <mat-icon>arrow_drop_down_circle</mat-icon>
+        </button>
+    </div>
+    <ng-template #memberOptionList>
+        <div>
+            <form [formGroup]="componentFormGroup">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <div>
+                        .
+                    </div>
+                    <div class="warcommands-command-panel-input-height">
+                        <mat-form-field appearance="">
+                            <mat-select formControlName="memberSelected" #memberSelectElement>
+                                <mat-option>Select an option</mat-option>
+                                <mat-option value="-1">none</mat-option>
+                                <mat-optgroup label="Methods">
+                                    <mat-option *ngFor="let member of baseClassOptionsDefinition.methods" [value]="member.value">
+                                        {{ member.label }}
+                                    </mat-option>
+                                </mat-optgroup>
+                                <mat-optgroup label="Properties">
+                                    <mat-option *ngFor="let member of baseClassOptionsDefinition.properties" [value]="member.value">
+                                        {{ member.label }}
+                                    </mat-option>
+                                </mat-optgroup>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div>
+            <container-element [ngSwitch]="memberSelected">
+                <app-create-worker 
+                    *ngSwitchCase="'createWorker'"
+                    (classMemberChange)="onClassMemberSelected($event)"
+                    [classMember]="classMember">
+                </app-create-worker>
+                <app-get-workers 
+                    *ngSwitchCase="'getWorkers'"
+                    (classMemberChange)="onClassMemberSelected($event)"
+                    [classMember]="classMember">
+                </app-get-workers>
+                <div *ngSwitchDefault></div>
+            </container-element>
+        </div>
+    </ng-template>
+</div>

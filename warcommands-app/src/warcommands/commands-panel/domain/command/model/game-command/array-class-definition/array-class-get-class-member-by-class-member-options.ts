@@ -14,7 +14,9 @@ export class ArrayClassGetClassMemberByClassMemberOptions {
                 classMember = {
                     className: ClassNameENUM.Array,
                     returnClassName: ClassNameENUM.Number,
-                    memberName: ArrayMembersENUM.Count
+                    memberName: ArrayMembersENUM.Count,
+                    methodChained: null,
+                    args: []
                 };
                 break;
             }

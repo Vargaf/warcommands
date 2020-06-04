@@ -21,14 +21,4 @@
             </form>
         </div>
     </ng-template>
-    <div>
-        <container-element [ngSwitch]="memberSelected">
-            <app-filter-by-role
-                *ngSwitchCase="'filterByRole'"
-                (classMemberChange)="onClassMemberSelected($event)"
-                [classMember]="getWorkersClassMethodMember.methodChained">
-            </app-filter-by-role>
-            <div *ngSwitchDefault></div>
-        </container-element>
-    </div>
 </div>

@@ -2,6 +2,7 @@ import { Injectable, ComponentFactoryResolver, ViewContainerRef, ComponentRef } 
 import { ClassNameENUM } from '../../model/class-definition/class-name.enum';
 import { ClassMemberDirective } from 'src/app/commands-panel/commands/class-member.directive';
 import { GameClassMemberOptionsListComponent } from 'src/app/commands-panel/commands/game-command/game-class-member-options-list/game-class-member-options-list.component';
+import { BaseClassMemberOptionListComponent } from 'src/app/commands-panel/class-definition/base/base-class-member-option-list/base-class-member-option-list.component';
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +20,10 @@ export class ClassMemberComponentFactory {
         switch (className) {
             case ClassNameENUM.Game: {
                 component = GameClassMemberOptionsListComponent;
+                break;
+            }
+            case ClassNameENUM.Base: {
+                component = BaseClassMemberOptionListComponent;
                 break;
             }
             default: {

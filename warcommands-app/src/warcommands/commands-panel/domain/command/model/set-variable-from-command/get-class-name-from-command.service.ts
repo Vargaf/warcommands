@@ -39,7 +39,7 @@ export class GetClassNameFromCommandService {
                 if (command.classMember) {
                     className = this.getClasNameByClassMember(command.classMember);
                 } else {
-                    className = (command as VariableCommandEntity).classMember?.className;
+                    className = this.getClassName((command as VariableCommandEntity).data.variableCommandId);
                 }
                 break;
             }
@@ -66,7 +66,7 @@ export class GetClassNameFromCommandService {
         let className: ClassNameENUM = null;
 
         if (classMember.methodChained) {
-            this.getClasNameByClassMember(classMember.methodChained);
+            className = this.getClasNameByClassMember(classMember.methodChained);
         } else {
             className = classMember.returnClassName;
         }

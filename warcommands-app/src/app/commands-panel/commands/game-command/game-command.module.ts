@@ -7,11 +7,10 @@ import { GetBaseByIndexComponent } from './get-base-by-index/get-base-by-index.c
 import { ReactiveFormsModule } from '@angular/forms';
 import { GetWorkerComponent } from './get-worker/get-worker.component';
 import { SetRoleComponent } from './get-worker/set-role/set-role.component';
-import { CreateWorkerComponent } from './get-base-by-index/create-worker/create-worker.component';
-import { GetWorkersComponent } from './get-base-by-index/get-workers/get-workers.component';
-import { FilterByRoleComponent } from './get-base-by-index/get-workers/filter-by-role/filter-by-role.component';
+import { FilterByRoleComponent } from '../../class-definition/base/get-workers/filter-by-role/filter-by-role.component';
 import { ArrayCountComponent } from './array/array-count/array-count.component';
 import { GameClassMemberOptionsListComponent } from './game-class-member-options-list/game-class-member-options-list.component';
+import { ClassDefinitionModule } from '../../class-definition/class-definition.module';
 
 
 
@@ -21,8 +20,6 @@ import { GameClassMemberOptionsListComponent } from './game-class-member-options
     GetBaseByIndexComponent,
     GetWorkerComponent,
     SetRoleComponent,
-    CreateWorkerComponent,
-    GetWorkersComponent,
     FilterByRoleComponent,
     ArrayCountComponent,
     GameClassMemberOptionsListComponent],
@@ -30,7 +27,8 @@ import { GameClassMemberOptionsListComponent } from './game-class-member-options
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ClassDefinitionModule
   ],
   exports: [
     GameCommandComponent

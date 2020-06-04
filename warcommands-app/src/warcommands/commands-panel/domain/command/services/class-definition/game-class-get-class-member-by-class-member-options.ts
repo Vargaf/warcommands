@@ -15,6 +15,7 @@ export class GameClassGetClassMemberByClassMemberOption {
                     className: ClassNameENUM.Game,
                     returnClassName: ClassNameENUM.Base,
                     memberName: GameMembersENUM.GetBaseByName,
+                    methodChained: null,
                     args: []
                 };
                 break;
@@ -23,7 +24,9 @@ export class GameClassGetClassMemberByClassMemberOption {
                 classMember = {
                     className: ClassNameENUM.Game,
                     returnClassName: ClassNameENUM.Number,
-                    memberName: GameMembersENUM.Resources
+                    memberName: GameMembersENUM.Resources,
+                    methodChained: null,
+                    args: []
                 };
                 break;
             }
@@ -32,6 +35,7 @@ export class GameClassGetClassMemberByClassMemberOption {
                     className: ClassNameENUM.Game,
                     returnClassName: ClassNameENUM.Worker,
                     memberName: GameMembersENUM.GetWorker,
+                    methodChained: null,
                     args: []
                 }
                 break;

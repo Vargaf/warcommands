@@ -74,6 +74,12 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy {
                 this.setVariableCommand.data.innerCommandId = command.id;
                 this.setVariableCommand.data.className = this.getClassNameFromCommandService.getClassName(command.id);
                 this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
+            } else {
+                if (this.setVariableCommand.data.innerCommandId) {
+                    this.setVariableCommand.data.innerCommandId = null;
+                    this.setVariableCommand.data.className = null;
+                    this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
+                }
             }
         });
     }
@@ -92,12 +98,7 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy {
         });
 
         this.setVarForm.valueChanges.subscribe(() => {
-            this.setVariableCommand.data = {
-                varName: this.setVarForm.get('varName').value,
-                innerCommandId: null,
-                className: null
-            }
-
+            this.setVariableCommand.data.varName = this.setVarForm.get('varName').value;
             this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
         });
         

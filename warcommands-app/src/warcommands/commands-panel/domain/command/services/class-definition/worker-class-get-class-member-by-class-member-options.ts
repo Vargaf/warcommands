@@ -16,7 +16,8 @@ export class WorkerClassGetClassMemberByClassMemberOptions {
                     className: ClassNameENUM.Worker,
                     returnClassName: ClassNameENUM.Worker,
                     memberName: WorkerMembersENUM.SetRole,
-                    args: []
+                    args: [],
+                    methodChained: null
                 };
                 break;
             }
@@ -25,7 +26,8 @@ export class WorkerClassGetClassMemberByClassMemberOptions {
                     className: ClassNameENUM.Worker,
                     returnClassName: ClassNameENUM.Array,
                     memberName: WorkerListMembersENUM.FilterByRole,
-                    args: []
+                    args: [],
+                    methodChained: null
                 };
                 break;
             }

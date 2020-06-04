@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -6,13 +6,14 @@ import { GameClassOptionsDefinition } from 'src/warcommands/commands-panel/domai
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 import * as _ from 'lodash';
+import { ClassMemberOptionDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member-option.dto';
 
 @Component({
     selector: 'app-game-class-member-options-list',
     templateUrl: './game-class-member-options-list.component.html',
     styleUrls: ['./game-class-member-options-list.component.scss']
 })
-export class GameClassMemberOptionsListComponent implements OnInit, ClassMemberComponent {
+export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
     classMember: ClassMemberDTO;
@@ -47,6 +48,10 @@ export class GameClassMemberOptionsListComponent implements OnInit, ClassMemberC
         this.setMemberOptionOnChangeListener();
     }
 
+    ngOnDestroy() {
+        this.onMememberOptionChangeSubscription?.unsubscribe();
+    }
+
     showMemberOptions(): void {
         this.areMemberOptionsVisible = true;
         this.componentFormGroup.get('memberSelected').enable();
@@ -65,9 +70,34 @@ export class GameClassMemberOptionsListComponent implements OnInit, ClassMemberC
         this.gameClassMember = _.cloneDeep(this.classMember);
 
         if (this.classMember) {
-            this.memberSelected = this.gameClassMember.memberName;
-            this.areMemberOptionsVisible = true;
+
+            if (this.isClassMemberAvailable()) {
+                this.memberSelected = this.gameClassMember.memberName;
+                this.areMemberOptionsVisible = true;
+            } else {
+                this.gameClassMember = null;
+                this.emitSelectedMember();
+            }
+            
         }
+    }
+
+    private isClassMemberAvailable(): boolean {
+        let isClassMemberAvailable = false;
+
+        this.gameCommandClassDefinition.methods.forEach((method: ClassMemberOptionDTO) => {
+            if (method.value === this.classMember.memberName) {
+                isClassMemberAvailable = true;
+            }
+        });
+
+        this.gameCommandClassDefinition.properties.forEach((property: ClassMemberOptionDTO) => {
+            if (property.value === this.classMember.memberName) {
+                isClassMemberAvailable = true;
+            }
+        });
+
+        return isClassMemberAvailable;
     }
 
     private setMemberOptionOnChangeListener(): void {
