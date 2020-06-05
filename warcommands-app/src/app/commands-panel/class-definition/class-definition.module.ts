@@ -10,6 +10,8 @@ import { GameClassMemberOptionsListComponent } from './game/game-class-member-op
 import { GetBaseByIndexComponent } from './game/get-base-by-index/get-base-by-index.component';
 import { GetWorkerComponent } from './base/get-worker/get-worker.component';
 import { SetRoleComponent } from './base/get-worker/set-role/set-role.component';
+import { ArrayClassMemberOptionListComponent } from './array/array-class-member-option-list/array-class-member-option-list.component';
+import { ArrayCountComponent } from './array/array-count/array-count.component';
 
 
 
@@ -21,7 +23,9 @@ import { SetRoleComponent } from './base/get-worker/set-role/set-role.component'
         GetWorkersComponent,
         GetBaseByIndexComponent,
         GetWorkerComponent,
-        SetRoleComponent
+        SetRoleComponent,
+        ArrayClassMemberOptionListComponent,
+        ArrayCountComponent
     ],
     imports: [
         CommonModule,
@@ -32,10 +36,12 @@ import { SetRoleComponent } from './base/get-worker/set-role/set-role.component'
     exports: [
         BaseClassMemberOptionListComponent,
         GameClassMemberOptionsListComponent,
+        ArrayClassMemberOptionListComponent,
     ],
     entryComponents: [
         BaseClassMemberOptionListComponent,
-        GameClassMemberOptionsListComponent
+        GameClassMemberOptionsListComponent,
+        ArrayClassMemberOptionListComponent,
     ]
 })
 export class ClassDefinitionModule { }

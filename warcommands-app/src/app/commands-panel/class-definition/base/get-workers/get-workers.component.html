@@ -1,24 +1,21 @@
 <div class="get-workers-content" fxLayout="row" fxLayoutAlign="center center">
-    <div>()</div>
-    <div *ngIf="!areMemberOptionsVisible; else memberOptionList">
-        <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
-            <mat-icon>arrow_drop_down_circle</mat-icon>
-        </button>
+    <div>(</div>
+    <div class="warcommands-command-panel-input-height">
+        <form [formGroup]="componentFormGroup">
+            <mat-form-field appearance="">
+                <mat-select formControlName="role" #memberSelectElement>
+                    <mat-option>Select an option</mat-option>
+                    <mat-option *ngFor="let member of workerRoleOptions" [value]="member.value">
+                        {{ member.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
     </div>
-    <ng-template #memberOptionList>
-        <div>.</div>
-        <div class="warcommands-command-panel-input-height">
-            <form [formGroup]="componentFormGroup">
-                <mat-form-field appearance="">
-                    <mat-select formControlName="memberSelected" #memberSelectElement>
-                        <mat-option>Select an option</mat-option>
-                        <mat-option value="-1">none</mat-option>
-                        <mat-option *ngFor="let member of workerListClassOptionsDefinition.methods" [value]="member.value">
-                            {{ member.label }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </form>
-        </div>
-    </ng-template>
+    <div>)</div>
+
+    <app-array-class-member-option-list
+        (classMemberChange)="onClassMemberSelected($event)"
+        [classMember]="getWorkersClassMethodMember.methodChained">
+    </app-array-class-member-option-list>
 </div>

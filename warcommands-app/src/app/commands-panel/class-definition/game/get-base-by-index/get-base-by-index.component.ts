@@ -62,7 +62,7 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy {
         if(this.classMember) {
             this.baseName = this.classMember.args[0];
             this.baseByNameClassMethodMember.methodChained = this.classMember.methodChained;
-            this.baseByNameClassMethodMember.args[0] = this.classMember.args[0] || [];
+            this.baseByNameClassMethodMember.args[0] = this.baseName;
         } else {
             this.baseName = 'main';
             this.baseByNameClassMethodMember.args[0] = this.baseName;

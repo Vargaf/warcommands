@@ -1,14 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 import { WorkerGetWorkersClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/worker-get-workers-class-method-member';
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
 import { BaseClassGetWorkersMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/methods/base-class-get-workers-method-option';
 import * as _ from 'lodash';
-import { WorkerListClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/worker-list-class-options-definition';
-import { MatSelect } from '@angular/material/select';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ArrayClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/array-class-definition/array-class-options-definition';
+import { workerRoleSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-role-select-options';
 
 @Component({
     selector: 'app-get-workers',
@@ -23,93 +21,52 @@ export class GetWorkersComponent implements OnInit, OnDestroy {
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
-    @ViewChild('memberSelectElement', {static: false})
-    memberSelectElement: MatSelect;
+    workerRoleOptions = workerRoleSelectOptions;
 
     componentFormGroup: FormGroup;
-    workerListClassOptionsDefinition = WorkerListClassOptionsDefinition;
-
-
-    arrayClassOptionsDefinition = ArrayClassOptionsDefinition;
-
-    memberSelected: string;
-    areMemberOptionsVisible = false;
-    onMememberOptionChangeSubscription: Subscription;
     onFormValueChangeSubscription: Subscription;
 
     getWorkersClassMethodMember: WorkerGetWorkersClassMethodMember;
+    roleSelected: string;
 
     constructor(
-        private readonly formBuilder: FormBuilder,
-        private changeDetectorRef: ChangeDetectorRef
+        private readonly formBuilder: FormBuilder
     ) { }
 
     ngOnInit(): void {
         this.initializeClassMember();
 
         this.componentFormGroup = this.formBuilder.group({
-            memberSelected: [this.memberSelected, [Validators.required]]
+            role: [this.roleSelected]
         });
 
-        if (!this.memberSelected) {
-            this.componentFormGroup.get('memberSelected').disable();
-        }
-
-        this.setMemberOptionOnChangeListener();
-
         this.onFormValueChangeSubscription = this.componentFormGroup.valueChanges.subscribe((event) => {
-            if (this.componentFormGroup.valid) {
-                this.onValidFormChangeListener();
-            }
+            this.onRoleChangeListener();
         });
     }
 
     ngOnDestroy() {
-        this.onMememberOptionChangeSubscription.unsubscribe();
         this.onFormValueChangeSubscription.unsubscribe();
     }
 
-    showMemberOptions(): void {
-        this.areMemberOptionsVisible = true;
-        this.componentFormGroup.get('memberSelected').enable();
-        this.changeDetectorRef.detectChanges();
-        this.memberSelectElement.open();
-    }
-
-    private onValidFormChangeListener(): void {
-        this.memberSelected = this.componentFormGroup.get('memberSelected').value;
-    }
-
-    private onMemberSelectionChanged(value: string): void {
-        if (value === '-1' && this.areMemberOptionsVisible) {
-            this.areMemberOptionsVisible = false;
-            this.componentFormGroup.get('memberSelected').setValue('');
-            this.componentFormGroup.get('memberSelected').disable();
-        }
-
-        this.getWorkersClassMethodMember.methodChained = null;
-    }
-
-    private setMemberOptionOnChangeListener(): void {
-        this.onMememberOptionChangeSubscription = this.componentFormGroup.get('memberSelected').valueChanges.subscribe((event) => {
-            this.onMemberSelectionChanged(event);
-        });
-    }
+   private onRoleChangeListener(): void {
+       this.getWorkersClassMethodMember.args[0] = this.componentFormGroup.get('role').value;
+       this.roleSelected = this.componentFormGroup.get('role').value;
+       this.emitSelectedMember();
+   }
 
     private initializeClassMember(): void {
         this.getWorkersClassMethodMember =
             (GetClassMemberByclassMemberOption.getClassMember(BaseClassGetWorkersMethodOption) as WorkerGetWorkersClassMethodMember);
 
         if (this.classMember) {
-            this.memberSelected = this.classMember.methodChained?.memberName || '';
+            this.roleSelected = this.classMember.args[0];
             this.getWorkersClassMethodMember.methodChained = this.classMember.methodChained;
+            this.getWorkersClassMethodMember.args[0] = this.roleSelected;
         } else {
-            this.memberSelected = '';
+            this.roleSelected = 'all';
+            this.getWorkersClassMethodMember.args[0] = this.roleSelected;
             this.emitSelectedMember();
-        }
-
-        if (this.memberSelected) {
-            this.areMemberOptionsVisible = true;
         }
     }
 
