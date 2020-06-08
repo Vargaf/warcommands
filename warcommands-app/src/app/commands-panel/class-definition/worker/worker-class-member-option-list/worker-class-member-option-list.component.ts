@@ -1,24 +1,23 @@
-import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
+import { WorkerClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-class-options-definition';
 import { MatSelect } from '@angular/material/select';
-import { Subscription } from 'rxjs';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
-import { BaseClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/base-class-options-definition';
 import { ClassMemberOptionDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member-option.dto';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-base-class-member-option-list',
-    templateUrl: './base-class-member-option-list.component.html',
-    styleUrls: ['./base-class-member-option-list.component.scss']
+    selector: 'app-worker-class-member-option-list',
+    templateUrl: './worker-class-member-option-list.component.html',
+    styleUrls: ['./worker-class-member-option-list.component.scss']
 })
-export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, ClassMemberComponent {
+export class WorkerClassMemberOptionListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
     classMember: ClassMemberDTO;
-
-    baseClassMember: ClassMemberDTO;
+    workerClassMember: ClassMemberDTO;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
@@ -26,11 +25,11 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
     @ViewChild('memberSelectElement', {static: false})
     memberSelectElement: MatSelect;
 
-    baseClassOptionsDefinition = BaseClassOptionsDefinition;
-
-    memberSelected: string;
     componentFormGroup: FormGroup;
+
+    workerClassOptionsDefinition = WorkerClassOptionsDefinition;
     areMemberOptionsVisible = false;
+    memberSelected: string;
     onMememberOptionChangeSubscription: Subscription;
 
     constructor(
@@ -47,6 +46,7 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
         });
 
         this.setMemberOptionOnChangeListener();
+
     }
 
     ngOnDestroy() {
@@ -62,8 +62,44 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
     }
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {
-        this.baseClassMember = classMember;
+        this.workerClassMember = classMember;
         this.emitSelectedMember();
+    }
+
+    private initializeClassMember(): void {
+        
+        this.workerClassMember = _.cloneDeep(this.classMember);
+
+        if(this.classMember) {
+            if (this.isClassMemberAvailable()) {
+                this.memberSelected = this.workerClassMember.memberName;
+                this.areMemberOptionsVisible = true;
+            } else {
+                this.workerClassMember = null;
+                this.emitSelectedMember();
+            }
+        } else {
+            this.memberSelected = '';
+        }
+    }
+
+    private isClassMemberAvailable(): boolean {
+        let isClassMemberAvailable = false;
+
+        this.workerClassOptionsDefinition.methods.forEach((method: ClassMemberOptionDTO) => {
+            if (method.value === this.classMember.memberName) {
+                isClassMemberAvailable = true;
+            }
+        });
+
+        return isClassMemberAvailable;
+    }
+
+    private emitSelectedMember(): void {
+        // To avoid ExpressionChangedAfterItHasBeenCheckedError
+        setTimeout(() => {
+            this.classMemberChange.emit(_.cloneDeep(this.workerClassMember));
+        }, 0);
     }
 
     private setMemberOptionOnChangeListener(): void {
@@ -78,54 +114,12 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
             this.componentFormGroup.get('memberSelected').setValue('');
             this.componentFormGroup.get('memberSelected').disable();
             this.memberSelected = null;
-            this.baseClassMember = null;
+            this.workerClassMember = null;
             this.emitSelectedMember();
         } else {
             this.memberSelected = this.componentFormGroup.get('memberSelected').value;
         }
 
-    }
-
-    private initializeClassMember(): void {
-        
-        this.baseClassMember = _.cloneDeep(this.classMember);
-
-        if(this.classMember) {
-            if (this.isClassMemberAvailable()) {
-                this.memberSelected = this.baseClassMember.memberName;
-                this.areMemberOptionsVisible = true;
-            } else {
-                this.baseClassMember = null;
-                this.emitSelectedMember();
-            }
-        } else {
-            this.memberSelected = '';
-        }
-    }
-
-    private isClassMemberAvailable(): boolean {
-        let isClassMemberAvailable = false;
-
-        this.baseClassOptionsDefinition.methods.forEach((method: ClassMemberOptionDTO) => {
-            if (method.value === this.classMember.memberName) {
-                isClassMemberAvailable = true;
-            }
-        });
-
-        this.baseClassOptionsDefinition.properties.forEach((property: ClassMemberOptionDTO) => {
-            if (property.value === this.classMember.memberName) {
-                isClassMemberAvailable = true;
-            }
-        });
-
-        return isClassMemberAvailable;
-    }
-
-    private emitSelectedMember(): void {
-        // To avoid ExpressionChangedAfterItHasBeenCheckedError
-        setTimeout(() => {
-            this.classMemberChange.emit(_.cloneDeep(this.baseClassMember));
-        }, 0);
     }
 
 }

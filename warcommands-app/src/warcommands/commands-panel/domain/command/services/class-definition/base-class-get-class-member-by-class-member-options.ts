@@ -21,6 +21,16 @@ export class BaseClassGetClassMemberByClassMemberOption {
                 };
                 break;
             }
+            case BaseMembersENUM.GetWorker: {
+                classMember = {
+                    className: ClassNameENUM.Base,
+                    returnClassName: ClassNameENUM.Worker,
+                    memberName: BaseMembersENUM.GetWorker,
+                    methodChained: null,
+                    args: []
+                };
+                break;
+            }
             case BaseMembersENUM.NumberOfWorkers: {
                 classMember = {
                     className: ClassNameENUM.Base,
@@ -31,11 +41,11 @@ export class BaseClassGetClassMemberByClassMemberOption {
                 };
                 break;
             }
-            case BaseMembersENUM.GetWorkers: {
+            case BaseMembersENUM.GetWorkerList: {
                 classMember = {
                     className: ClassNameENUM.Worker,
                     returnClassName: ClassNameENUM.Array,
-                    memberName: WorkerMembersENUM.GetWorkers,
+                    memberName: WorkerMembersENUM.GetWorkerList,
                     methodChained: null,
                     args: []
                 }

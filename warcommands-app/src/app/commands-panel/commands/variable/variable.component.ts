@@ -18,6 +18,7 @@ import { ClassMemberDirective } from '../class-member.directive';
 import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/domain/command/services/class-member-component/class-member-component-factory.service';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 import { CommandClassMemberAddedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-class-member-added-events';
+import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service';
 
 interface VariableOption { value: string, label: string };
 
@@ -47,6 +48,7 @@ export class VariableComponent implements OnInit, OnDestroy {
     private onCommandMovedListenerSubscription: Subscription;
     private onCommandRemoveListenerSubscription: Subscription;
     private onCommandUpdatedListenerSubscription: Subscription;
+    private commandDataSubscription: Subscription;
 
     constructor(
         private readonly variablesInScopeFinderService: VariableInScopeFinderService,
@@ -58,6 +60,7 @@ export class VariableComponent implements OnInit, OnDestroy {
         private readonly commandRepositoryService: CommandRepositoryService,
         private readonly classMemberComponentFactory: ClassMemberComponentFactory,
         private readonly commandClassMemberAddedEvent: CommandClassMemberAddedEvents,
+        private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService
     ) { }
 
     ngOnInit() {
@@ -68,6 +71,10 @@ export class VariableComponent implements OnInit, OnDestroy {
         this.generateVariableOptionList();
 
         this.setCommandListeners();
+
+        this.commandDataSubscription = this.commandNgrxRepositoryService.getCommand(this.commandData.id).subscribe((command) => {
+            this.variableCommandData = _.cloneDeep((command as VariableCommandEntity));
+        });
     }
 
     ngOnDestroy() {
@@ -76,6 +83,7 @@ export class VariableComponent implements OnInit, OnDestroy {
         this.onCommandMovedListenerSubscription.unsubscribe();
         this.onCommandRemoveListenerSubscription.unsubscribe();
         this.onCommandUpdatedListenerSubscription.unsubscribe();
+        this.commandDataSubscription.unsubscribe();
     }
 
     private initializeForm(): void {
@@ -90,14 +98,16 @@ export class VariableComponent implements OnInit, OnDestroy {
         this.onVarSelectedChangeSubscription = this.variableCommandForm.valueChanges.subscribe(() => {
             this.varSelected = this.variableCommandForm.get('variable').value;
 
-            // To avoid circular updates between the component variable.component and set-variable-from-command.component
-            if (this.variableCommandData.data?.variableCommandId !== this.varSelected) {
-                this.variableCommandData.data = {
-                    variableCommandId: this.varSelected
-                };
-                this.variableCommandData.classMember = null;
-                this.commandUpdatedEvents.commandUpdatedDispatch(this.variableCommandData);
-            } 
+            if (this.variableCommandForm.valid) {
+                // To avoid circular updates between the component variable.component and set-variable-from-command.component
+                if (this.variableCommandData.data?.variableCommandId !== this.varSelected) {
+                    this.variableCommandData.data = {
+                        variableCommandId: this.varSelected
+                    };
+                    this.variableCommandData.classMember = null;
+                    this.commandUpdatedEvents.commandUpdatedDispatch(this.variableCommandData);
+                }
+            }
             
             this.loadClassMembersIfNeeded();
         });
@@ -115,7 +125,9 @@ export class VariableComponent implements OnInit, OnDestroy {
             const variable: BaseSetVariableCommandEntity = (this.commandRepositoryService.findById(this.varSelected) as BaseSetVariableCommandEntity);
             
             switch (variable.data.className) {
-                case ClassNameENUM.Game: 
+                case ClassNameENUM.Game:
+                case ClassNameENUM.Array:
+                case ClassNameENUM.Worker: 
                 case ClassNameENUM.Base: {
                     this.hasMemberOptions = true;
                     break;
@@ -139,19 +151,21 @@ export class VariableComponent implements OnInit, OnDestroy {
     }
 
     private initializeClassMemberComponent(variable: BaseSetVariableCommandEntity): void {
-        this.classMemberComponent = this.classMemberComponentFactory.getComponent(variable.data.className, this.classMemberDirecitve);
-        (this.classMemberComponent.instance as ClassMemberComponent).classMember = this.variableCommandData.classMember;
-        (this.classMemberComponent.instance as ClassMemberComponent).classMemberChange.subscribe((componentClassMember) => {
-            if (!_.isEqual(this.variableCommandData.classMember, componentClassMember)) {
-                this.variableCommandData.classMember = componentClassMember;
-                this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, componentClassMember);   
-            }
-        });
+        if (this.classMemberDirecitve) {
+            this.classMemberComponent = this.classMemberComponentFactory.getComponent(variable.data.className, this.classMemberDirecitve);
+            (this.classMemberComponent.instance as ClassMemberComponent).classMember = this.variableCommandData.classMember;
+            (this.classMemberComponent.instance as ClassMemberComponent).classMemberChange.subscribe((componentClassMember) => {
+                if (!_.isEqual(this.variableCommandData.classMember, componentClassMember)) {
+                    this.variableCommandData.classMember = componentClassMember;
+                    this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, componentClassMember);   
+                }
+            });
+        }
     }
 
     private generateVariableOptionListIfRequired(commandId: string): void {
         // To avoid circular updates
-        if (commandId !== this.variableCommandData.id) {
+        if (this.variableCommandData && commandId !== this.variableCommandData.id) {
             this.generateVariableOptionList();
         }
     }

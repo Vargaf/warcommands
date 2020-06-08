@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetWorkersComponent } from './get-workers.component';
+import { GetWorkerListComponent } from './get-worker-list.component';
 
 describe('GetWorkersComponent', () => {
-  let component: GetWorkersComponent;
-  let fixture: ComponentFixture<GetWorkersComponent>;
+  let component: GetWorkerListComponent;
+  let fixture: ComponentFixture<GetWorkerListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GetWorkersComponent ]
+      declarations: [ GetWorkerListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GetWorkersComponent);
+    fixture = TestBed.createComponent(GetWorkerListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

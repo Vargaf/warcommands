@@ -1,0 +1,26 @@
+<div class="set-role-content" fxLayout="row" fxLayoutAlign="center center">
+    <div class="warcommands-command-panel-input-height">
+        <form [formGroup]="componentFormGroup">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div>(</div>
+                <div>
+                    <mat-form-field>
+                        <mat-select formControlName="roleSelected">
+                            <mat-option>Select an option</mat-option>
+                            <mat-option *ngFor="let option of workerRoleOptions" [value]="option.value">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>)</div>
+            </div>
+        </form>
+    </div>
+    <diV>
+        <app-worker-class-member-option-list
+            (classMemberChange)="onClassMemberSelected($event)"
+            [classMember]="setRoleClassMethodMember.methodChained">
+        </app-worker-class-member-option-list>
+    </diV>
+</div>

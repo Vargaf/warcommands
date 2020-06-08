@@ -134,8 +134,9 @@ export class CommandContainerDragDropManagerService {
                 const commandContainerId: string = (event.container.element as any).getAttribute('id');
                 const commandWrapper = this.buildCommandWrapper(event);
                 const command = this.commandRepositoryService.findById(event.item.data.id);
+                command.parentCommandContainerId = commandContainerId;
                 commandWrapper.command = command;
-                commandWrapper.command.parentCommandContainerId = commandContainerId;
+                this.commandRepositoryService.save(command);
                 commandWrapper.dropType = DropType.MoveSameList;
                 this.commandDragDropManagerEvents.commandMovedDispatch(commandWrapper);
             }

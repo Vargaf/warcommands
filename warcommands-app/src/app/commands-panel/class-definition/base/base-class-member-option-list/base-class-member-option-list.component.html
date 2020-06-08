@@ -40,11 +40,16 @@
                     (classMemberChange)="onClassMemberSelected($event)"
                     [classMember]="classMember">
                 </app-create-worker>
-                <app-get-workers 
-                    *ngSwitchCase="'getWorkers'"
+                <app-get-worker
+                    *ngSwitchCase="'getWorker'"
                     (classMemberChange)="onClassMemberSelected($event)"
                     [classMember]="classMember">
-                </app-get-workers>
+                </app-get-worker>
+                <app-get-worker-list 
+                    *ngSwitchCase="'getWorkerList'"
+                    (classMemberChange)="onClassMemberSelected($event)"
+                    [classMember]="classMember">
+                </app-get-worker-list>
                 <div *ngSwitchDefault></div>
             </container-element>
         </div>

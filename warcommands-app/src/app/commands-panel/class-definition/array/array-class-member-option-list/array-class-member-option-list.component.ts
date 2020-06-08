@@ -66,6 +66,7 @@ export class ArrayClassMemberOptionListComponent implements OnInit, OnDestroy, C
             this.onMemberSelectionChanged(event);
         });
     }
+    
     private onMemberSelectionChanged(value: string): void {
         if (value === '-1' && this.areMemberOptionsVisible) {
             this.areMemberOptionsVisible = false;
@@ -107,7 +108,7 @@ export class ArrayClassMemberOptionListComponent implements OnInit, OnDestroy, C
         });
 
         return isClassMemberAvailable;
-    }fl
+    }
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {
         this.arrayClassMember = classMember;

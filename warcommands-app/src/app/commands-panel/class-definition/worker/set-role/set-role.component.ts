@@ -7,13 +7,14 @@ import * as _ from 'lodash';
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
 import { WorkerClassSetRoleMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/worker-class-set-role-method-option';
 import { Subscription } from 'rxjs';
+import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 
 @Component({
     selector: 'app-set-role',
     templateUrl: './set-role.component.html',
     styleUrls: ['./set-role.component.scss']
 })
-export class SetRoleComponent implements OnInit, OnDestroy {
+export class SetRoleComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
     classMember: ClassMemberDTO;
@@ -44,7 +45,7 @@ export class SetRoleComponent implements OnInit, OnDestroy {
 
         this.componentFormGroup.statusChanges.subscribe(data => {
             if (this.componentFormGroup.valid) {
-                this.emitmember();
+                this.emitMember();
             }
         });
 
@@ -59,6 +60,11 @@ export class SetRoleComponent implements OnInit, OnDestroy {
         this.roleSelectedSubscription.unsubscribe();
     }
 
+    onClassMemberSelected(classMember: ClassMemberDTO): void {
+        this.setRoleClassMethodMember.methodChained = classMember;
+        this.emitMember();
+    }
+
     private initialize(): void {
         this.setRoleClassMethodMember = 
             (GetClassMemberByclassMemberOption.getClassMember(WorkerClassSetRoleMethodOption) as SetRoleClassMethodMember);
@@ -68,10 +74,11 @@ export class SetRoleComponent implements OnInit, OnDestroy {
         } else {
             this.roleSelected = '';
             this.setRoleClassMethodMember.args = [];
+            this.emitMember();
         }
     }
 
-    private emitmember(): void {
+    private emitMember(): void {
         this.classMemberChange.emit(this.setRoleClassMethodMember);
     }
 
