@@ -100,14 +100,20 @@ export class GameService {
     private runPlayerCommands(): void {
         if (this.isGameRunning) {
             setTimeout(() => {this.runPlayerCommands()}, 300);
+            //const pre = (performance || Date ).now();
             this.playerCommandsManagerService.runPlayerCommands();    
+            //const post = (performance || Date ).now();
+            //console.log('Player commands: ' + (post - pre));
         }
     }
 
     private gameLogic(): void {
         if (this.isGameRunning) {
             setTimeout(() => this.gameLogic(), 150);
+            //const pre = (performance || Date ).now();
             this.gameLogicService.gameLogicLoop();
+            //const post = (performance || Date ).now();
+            //console.log('Game logic: ' + (post - pre));
         }
     }
 

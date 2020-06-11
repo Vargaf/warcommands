@@ -6,6 +6,7 @@ import { WorkerConfiguration } from '../../units/worker/worker-configuration';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { WorkerUnitDTO } from '../../units/worker/worker-unit.dto';
 import { v4 as uuid } from 'uuid';
+import { UnitSpawningStatusENUM } from '../../units/model/unit-spawning-status.enum';
 
 export class BaseBuildingSpawnerService implements BuildingSpawnerService {
 
@@ -34,6 +35,7 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
             playerId: spawnerBuilding.playerId,
             baseId: spawnerBuilding.baseId,
             spawnerBuildingId: spawnerBuilding.id,
+            spawningStatus: UnitSpawningStatusENUM.Enqueued,
             type: UnitTypeENUM.Worker,
             action: null,
             role: null,

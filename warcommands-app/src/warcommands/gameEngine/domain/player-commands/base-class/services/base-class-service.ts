@@ -1,18 +1,16 @@
 import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
-import { GameEventBusService } from '../../../game-event-bus/services/game-event-bus.service';
-import { CreateUnitOnBuildingEvent } from '../../../building/events/create-unit-on-building.event';
 import { UnitTypeENUM } from '../../../units/model/unit-type.enum';
+import { EnqueueUnitsManagerService } from '../../../game-engine/sevices/enqueue-units-manager.service';
+import { UnitGenericDTO } from '../../../units/model/unit-generic.dto';
 
 export class BaseClassService {
 
     constructor(
-        private readonly gameEventBusService: GameEventBusService,
+        private readonly enqueueUnitsManagerService: EnqueueUnitsManagerService
     ) {}
 
-    createWorker(base: BaseBuildingDTO): void {
-        const event: CreateUnitOnBuildingEvent = new CreateUnitOnBuildingEvent(base.id, UnitTypeENUM.Worker);
-        this.gameEventBusService.cast(event);
-
+    createWorker(base: BaseBuildingDTO): UnitGenericDTO {
+        return this.enqueueUnitsManagerService.enqueueUnit(UnitTypeENUM.Worker, base.id);
     }
 
 }

@@ -22,15 +22,10 @@ export class GameLogicService {
         let post = (performance || Date ).now();
         //console.log('Spawning units: ' + (post - pre));
 
-        pre = (performance || Date ).now();
-        this.gameLogicSpawningUnitsManager.enqueueUnits();
-        post = (performance || Date ).now();
-        //console.log('Enqueueing units: ' + (post - pre));
         
         
         
         
-        // A lo mismo debemos pasar de un workerAction a un initializeActions y petarnos una clase
         pre = (performance || Date ).now();
         this.gameLogicWorkerActionsManager.initializeWorkerActions();
         post = (performance || Date ).now();

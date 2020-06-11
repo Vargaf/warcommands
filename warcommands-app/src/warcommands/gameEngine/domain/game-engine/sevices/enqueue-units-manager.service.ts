@@ -1,5 +1,3 @@
-import { UnitsToCreateRepositoryService } from '../../units/services/units-to-create-repository.service';
-import { UnitToCreateOnBuildingDTO } from '../../units/model/unit-to-create-on-building.dto';
 import { BuildingSpawnerServiceFactory } from './building-spawner-service.factory';
 import { BuildingSpawnerService } from '../../building/services/building-spawner.service';
 import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
@@ -14,63 +12,70 @@ import { BuildingQueueingUnitEvent } from '../events/building-queueing-unit.even
 import { SpawingBuildingsRepositoryservice } from '../../building/services/spawning-buildings-repository.service';
 import { BuildingTypeEnum } from '../../building/model/building-type.enum';
 import { BaseResourcesUpdateEvent } from '../events/base-resources-updated.event';
+import { UnitTypeENUM } from '../../units/model/unit-type.enum';
+import { UnitSpawningStatusENUM } from '../../units/model/unit-spawning-status.enum';
+import { UnitsRepositoryService } from '../../units/services/units-repository.service';
 
 export class EnqueueUnitsManagerService {
 
     constructor(
-        private readonly unitsToCreateRepositoryService: UnitsToCreateRepositoryService,
         private readonly buildingSpawnerServiceFactory: BuildingSpawnerServiceFactory,
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
         private readonly gameEventBusService: GameEventBusService,
         private readonly spawningBuildngsRepositoryService: SpawingBuildingsRepositoryservice,
+        private readonly unitsRepositoryService: UnitsRepositoryService
     ) {}
 
-    enqueueUnits(): void {
-        const unitList: UnitToCreateOnBuildingDTO[] = this.unitsToCreateRepositoryService.getAll();
+    enqueueUnit(unitType: UnitTypeENUM, buildingId: string): UnitGenericDTO {
+        
+        const buildingSpawnerService: BuildingSpawnerService = 
+            this.buildingSpawnerServiceFactory.getBuildingSpawnerService(unitType);
 
-        for (const unitToCreate of unitList) {
-            const buildingSpawnerService: BuildingSpawnerService = 
-                this.buildingSpawnerServiceFactory.getBuildingSpawnerService(unitToCreate.unitType);
+        let unit: UnitGenericDTO = null;
+        let spawnerBuilding: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(buildingId) as SpawnerBuildingDTO);
+        const playerBase: BaseBuildingDTO = (this.buildingsRepositoryService.findById(spawnerBuilding.baseId) as BaseBuildingDTO);
+        const unitCost: ResourcesDTO = buildingSpawnerService.getUnitCost(unitType);
 
-            let spawnerBuilding: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(unitToCreate.buildingId) as SpawnerBuildingDTO);
-            const playerBase: BaseBuildingDTO = (this.buildingsRepositoryService.findById(spawnerBuilding.baseId) as BaseBuildingDTO);
-            const unitCost: ResourcesDTO = buildingSpawnerService.getUnitCost(unitToCreate.unitType);
+        const isSpawningAvailable: boolean =
+            this.hasBaseEnoughResources(playerBase, unitCost) &&
+            buildingSpawnerService.hasSpawnerBuildingQueueRoom(spawnerBuilding);
 
-            if (this.hasBaseEnoughResources(playerBase, unitCost)) {
-                if (buildingSpawnerService.hasSpawnerBuildingQueueRoom(spawnerBuilding)) {
-                    const unit: UnitGenericDTO = buildingSpawnerService.createUnit(spawnerBuilding);
+        if (isSpawningAvailable) {
 
-                    if (!buildingSpawnerService.isSpawnerBuildingAlreadySpawning(spawnerBuilding)) {
-                        spawnerBuilding = buildingSpawnerService.startUnitSpawning(spawnerBuilding, unit, this.gameLogicTimeFrameService.getCurrentTime());
-                        const event = new BuildingSpawningUnitEvent(
-                            unit,
-                            spawnerBuilding.unitSpawning.spawnFinish,
-                            spawnerBuilding.unitSpawning.spawnStart);
-                        this.gameEventBusService.cast(event);
-                    } else {
-                        spawnerBuilding = buildingSpawnerService.addUnitToSpawningQueue(spawnerBuilding, unit);
-                        const event = new BuildingQueueingUnitEvent(spawnerBuilding, unit);
-                        this.gameEventBusService.cast(event);
-                    }
+            unit = buildingSpawnerService.createUnit(spawnerBuilding);
 
-                    if (spawnerBuilding.type === BuildingTypeEnum.Base) {
-                        (spawnerBuilding as BaseBuildingDTO).resources.matter -= unitCost.matter;
-                        (spawnerBuilding as BaseBuildingDTO).resources.energy -= unitCost.energy;
-                        this.launchResourcesUpdateEvent(spawnerBuilding.id, (spawnerBuilding as BaseBuildingDTO).resources);
-                    } else {
-                        playerBase.resources.matter -= unitCost.matter;
-                        playerBase.resources.energy -= unitCost.energy;
-                        this.buildingsRepositoryService.save(playerBase);
-                        this.launchResourcesUpdateEvent(playerBase.id, playerBase.resources);
-                    }
-                    
-                    this.buildingsRepositoryService.save(spawnerBuilding);
-                    this.spawningBuildngsRepositoryService.save(spawnerBuilding.id);
-                }
+            if (!buildingSpawnerService.isSpawnerBuildingAlreadySpawning(spawnerBuilding)) {
+                unit.spawningStatus = UnitSpawningStatusENUM.Spawning;
+                spawnerBuilding = buildingSpawnerService.startUnitSpawning(spawnerBuilding, unit, this.gameLogicTimeFrameService.getCurrentTime());
+                const event = new BuildingSpawningUnitEvent(
+                    unit,
+                    spawnerBuilding.unitSpawning.spawnFinish,
+                    spawnerBuilding.unitSpawning.spawnStart);
+                this.gameEventBusService.cast(event);
+            } else {
+                spawnerBuilding = buildingSpawnerService.addUnitToSpawningQueue(spawnerBuilding, unit);
+                const event = new BuildingQueueingUnitEvent(spawnerBuilding, unit);
+                this.gameEventBusService.cast(event);
             }
-            this.unitsToCreateRepositoryService.remove(unitToCreate);
+
+            if (spawnerBuilding.type === BuildingTypeEnum.Base) {
+                (spawnerBuilding as BaseBuildingDTO).resources.matter -= unitCost.matter;
+                (spawnerBuilding as BaseBuildingDTO).resources.energy -= unitCost.energy;
+                this.launchResourcesUpdateEvent(spawnerBuilding.id, (spawnerBuilding as BaseBuildingDTO).resources);
+            } else {
+                playerBase.resources.matter -= unitCost.matter;
+                playerBase.resources.energy -= unitCost.energy;
+                this.buildingsRepositoryService.save(playerBase);
+                this.launchResourcesUpdateEvent(playerBase.id, playerBase.resources);
+            }
+            
+            this.buildingsRepositoryService.save(spawnerBuilding);
+            this.spawningBuildngsRepositoryService.save(spawnerBuilding.id);
+            this.unitsRepositoryService.save(unit);
         }
+
+        return unit;
     }
 
     private hasBaseEnoughResources(base: BaseBuildingDTO, unitCost: ResourcesDTO): boolean {

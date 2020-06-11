@@ -8,6 +8,7 @@ import { BuildingSpawnerService } from '../../building/services/building-spawner
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { BuildingSpawningUnitEvent } from '../events/building-spawning-unit.event';
 import { BuildingRemovedUnitFromQueueEvent } from '../events/building-removed-unit-from-queue.event';
+import { UnitSpawningStatusENUM } from '../../units/model/unit-spawning-status.enum';
 
 export class SpawnUnitsManagerService {
 
@@ -53,7 +54,9 @@ export class SpawnUnitsManagerService {
     }
 
     private spawnUnit(building: SpawnerBuildingDTO): void {
-        const unit = building.unitSpawning.unit;
+        const unitId: string = building.unitSpawning.unit.id;
+        const unit = this.unitsRepositoryService.findById(unitId);
+        unit.spawningStatus = UnitSpawningStatusENUM.Spawned;
         this.unitsRepositoryService.save(unit);
 
         building.unitSpawning.unit = null;
