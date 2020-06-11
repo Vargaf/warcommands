@@ -1,6 +1,6 @@
 
 export enum WorkerClassMemberNameENUM {
     SetRole = 'setRole',
-    GetWorkers = 'getWorkers',
+    GetWorkerList = 'getWorkerList',
     FilterByRole = 'filterByRole'
 }

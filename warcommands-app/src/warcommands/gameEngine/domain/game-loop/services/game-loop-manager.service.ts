@@ -159,8 +159,12 @@ export class GameLoopManagerService {
                 break;
             }
             case CommandType.Variable: {
-                const variableCommandId: string = (command as VariableCommandDTO).data.variableCommandId;
+                const variableCommand: VariableCommandDTO = (command as VariableCommandDTO);
+                const variableCommandId: string = variableCommand.data.variableCommandId;
                 returnValue = this.playerCommandScopeManager.getPlayerCommandScopeVarValue(variableCommandId, command.playerId);
+                if (variableCommand.classMember) {
+                    returnValue = this.classFactoryService.runClass(variableCommand.classMember, command.playerId, (returnValue as any).value);
+                }
                 break;
             }
             default: {

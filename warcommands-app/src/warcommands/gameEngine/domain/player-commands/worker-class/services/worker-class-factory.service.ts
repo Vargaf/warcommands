@@ -17,8 +17,8 @@ export class WorkerClassFactoryService implements AbstractClassFactoryDefinition
                 returnValue = this.workerClassService.setRole(previousMethodChainReturn, classMember.args[0]);
                 break;
             }
-            case WorkerClassMemberNameENUM.GetWorkers: {
-                returnValue = this.workerClassService.getWorkers(previousMethodChainReturn);
+            case WorkerClassMemberNameENUM.GetWorkerList: {
+                returnValue = this.workerClassService.getWorkerList(classMember.args, previousMethodChainReturn);
                 break;
             }
             case WorkerClassMemberNameENUM.FilterByRole: {

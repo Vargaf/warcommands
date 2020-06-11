@@ -21,12 +21,13 @@ export class WorkerClassService {
         }
     }
 
-    getWorkers(base: BaseBuildingDTO): WorkerUnitDTO[] {
+    getWorkerList(args: any[], base: BaseBuildingDTO): WorkerUnitDTO[] {
 
         const queryFilter: QueryFilterDTO = {
             playerId: base.playerId,
             baseId: base.id,
-            type: UnitTypeENUM.Worker
+            type: UnitTypeENUM.Worker,
+            role: args[0]
         };
 
         const workerList: WorkerUnitDTO[] = (this.unitsRepositoryService.findBy(queryFilter) as WorkerUnitDTO[]);

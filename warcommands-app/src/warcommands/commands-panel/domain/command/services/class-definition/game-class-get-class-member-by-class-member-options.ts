@@ -30,16 +30,6 @@ export class GameClassGetClassMemberByClassMemberOption {
                 };
                 break;
             }
-            case GameMembersENUM.GetWorker: {
-                classMember = {
-                    className: ClassNameENUM.Game,
-                    returnClassName: ClassNameENUM.Worker,
-                    memberName: GameMembersENUM.GetWorker,
-                    methodChained: null,
-                    args: []
-                }
-                break;
-            }
             default: {
                 throw new Error('The given member does not exists in Game class: ' + classMemberOption.value);
             }
