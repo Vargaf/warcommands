@@ -38,6 +38,7 @@ export class CommandListDragDropManagerService {
 
         const dragRefElement: DragRef = this.angularDragDropService.createDrag(dragableElement);
         dragRefElement.data = commandType;
+        dragRefElement.dragStartDelay = 200;
 
         this.setDragManagmentEvents(dragRefElement);
 

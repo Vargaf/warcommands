@@ -11,7 +11,7 @@ export class WorkerClassService {
         private readonly unitsRepositoryService: UnitsRepositoryService,
     ) {}
 
-    setRole(unit: WorkerUnitDTO, role: WorkerUnitRoleENUM): void {
+    setRole(unit: WorkerUnitDTO, role: WorkerUnitRoleENUM): WorkerUnitDTO {
         if (unit) {
             if (unit.role !== role) {
                 unit.action = null;
@@ -19,6 +19,8 @@ export class WorkerClassService {
                 this.unitsRepositoryService.save(unit);
             }
         }
+
+        return unit;
     }
 
     getWorkerList(args: any[], base: BaseBuildingDTO): WorkerUnitDTO[] {

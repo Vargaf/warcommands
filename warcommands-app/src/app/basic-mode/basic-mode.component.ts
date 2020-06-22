@@ -1,27 +1,40 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentInit, ElementRef, OnDestroy } from '@angular/core';
 import { BasicModeComponentDirective } from './basic-mode.directive';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { MapType } from 'src/warcommands/gameEngine/domain/maps/model/map-type.enum';
 import { DifficultyLevel } from 'src/warcommands/gameEngine/domain/player/model/difficulty-level.enum';
 import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/domain/current-player/current-player-manager-service';
 import { CurrentPlayerDTO } from 'src/warcommands/commands-panel/domain/current-player/model/current-player.dto';
+import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
+import { Subscription } from 'rxjs';
+import { UxUiNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/ux-ui/ux-ui-ngrx-repository.service';
 
 @Component({
     selector: 'app-basic-mode',
     templateUrl: './basic-mode.component.html',
     styleUrls: ['./basic-mode.component.scss']
 })
-export class BasicModeComponent implements OnInit {
+export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
 
-    @ViewChild(BasicModeComponentDirective, {static: true})
+    @ViewChild(BasicModeComponentDirective, { static: true })
     public basicModeGraphicsWrapper: BasicModeComponentDirective;
+
+    @ViewChild('basicModeElement', { static: true })
+    public basicModeElement: ElementRef<HTMLDivElement>;
+
+    isCommandsPanelOppened: boolean;
+    commandPanelVisibleListenerSubscription: Subscription;
 
     constructor(
         private readonly gameMiddlewareService: GameMiddlewareService,
-        private readonly currentPlayerManager: CurrentPlayerManagerService
+        private readonly currentPlayerManager: CurrentPlayerManagerService,
+        private readonly toggleCommandsPanelService: ToggleCommandsPanelService,
+        private readonly uxUiNgrxRepository: UxUiNgrxRepositoryService
     ) { }
 
     ngOnInit() {
+        this.setWindowsSize();
+
         const currentPlayer: CurrentPlayerDTO = this.currentPlayerManager.initializePlayer();
         const viewContainerRef = this.basicModeGraphicsWrapper.viewContainerRef;
         this.gameMiddlewareService.setMap(MapType.TutorialFirstMap);
@@ -29,6 +42,33 @@ export class BasicModeComponent implements OnInit {
         this.gameMiddlewareService.addIAPlayer(DifficultyLevel.Mirror);
         this.gameMiddlewareService.initialize(viewContainerRef);
 
-  }
+        this.commandPanelVisibleListenerSubscription = 
+            this.toggleCommandsPanelService.commandPanelVisibleListener().subscribe((isCommandsPanelOppened) => {
+                this.isCommandsPanelOppened = isCommandsPanelOppened;
+            });
+    }
+
+    ngOnDestroy() {
+        this.commandPanelVisibleListenerSubscription.unsubscribe();
+    }
+
+    ngAfterContentInit() {
+        
+    }
+
+    onResize(event: Event): void {
+        this.setWindowsSize();
+    }
+
+    showCommandsPanel(): void {
+        this.toggleCommandsPanelService.showPanel();
+    }
+
+    private setWindowsSize(): void {
+        this.uxUiNgrxRepository.loadWindowSize(
+            this.basicModeElement.nativeElement.offsetWidth,
+            this.basicModeElement.nativeElement.offsetHeight
+        );
+    }
 
 }

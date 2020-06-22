@@ -1,6 +1,7 @@
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { EventInterface } from '../../game-event-bus/model/event.interface';
 import { EventType } from '../../game-event-bus/model/event-type.enum';
+import * as _ from 'lodash';
 
 interface BuildingSpawningUnitEventDTO {
     unit: UnitGenericDTO,
@@ -20,7 +21,7 @@ export class BuildingSpawningUnitEvent implements EventInterface {
 
     constructor(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number) {
         this._data = {
-            unit,
+            unit: _.cloneDeep(unit),
             spawnFinish,
             spawnStart
         }

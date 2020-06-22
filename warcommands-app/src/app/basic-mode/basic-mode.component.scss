@@ -1,12 +1,14 @@
 
 .basic-mode-content {
-    display: initial;
+    display: block;
+    height: 100vh;
+    width: 100%;
 }
 
 .basic-mode-content-gt-sm {
     
     .mat-sidenav {
-        width: 50%;
+        
     }
 }
 
@@ -14,21 +16,25 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow: initial;
     
 }
 
 .side-nav-container {
     height: 100%;
+    background-color: #282a36;
 }
 
 .show-pannel-icon {
     position: relative;
     float: right;
-    padding: 7px;
     z-index: 10;
-    color: black;
+    color: #f8f8f2;
     cursor: pointer;
+    background-color: #44475a;
+    margin-top: 10px;
+    border-radius: 10px 0px 0px 10px;
+    padding: 11px 7px 7px 7px;
 }
 
 .sidenav-gt-sm-size {

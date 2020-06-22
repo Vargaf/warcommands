@@ -7,6 +7,7 @@ import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { WorkerUnitDTO } from '../../units/worker/worker-unit.dto';
 import { v4 as uuid } from 'uuid';
 import { UnitSpawningStatusENUM } from '../../units/model/unit-spawning-status.enum';
+import * as _ from 'lodash';
 
 export class BaseBuildingSpawnerService implements BuildingSpawnerService {
 
@@ -88,7 +89,8 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
 
     addUnitToSpawningQueue(building: SpawnerBuildingDTO, unit: UnitGenericDTO): SpawnerBuildingDTO
     {
-        building.queueList.push((unit as UnitGenericDTO));
+        const unitClone = _.cloneDeep(unit);
+        building.queueList.push((unitClone as UnitGenericDTO));
         return building;
     }
 

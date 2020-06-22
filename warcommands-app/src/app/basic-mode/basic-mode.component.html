@@ -1,12 +1,13 @@
-<div class="basic-mode-content" [ngClass.gt-sm]="['basic-mode-content-gt-sm']">
+<div class="basic-mode-content" [ngClass.gt-sm]="['basic-mode-content-gt-sm']" (window:resize)="onResize($event)" #basicModeElement>
+
     <mat-sidenav-container class="side-nav-container">
-        <mat-sidenav #sidenav mode="over" position="end" opened="true">
+        <mat-sidenav #sidenav mode="over" position="end" [opened]="isCommandsPanelOppened" style="width: 100%;">
             <app-commands-panel></app-commands-panel>
         </mat-sidenav>
         <mat-sidenav-content>
             <app-stats></app-stats>
-            <div class="show-pannel-icon">
-                <mat-icon (click)="sidenav.toggle()">add_circle</mat-icon>
+            <div class="show-pannel-icon" (click)="showCommandsPanel()">
+                <mat-icon>engineering</mat-icon>
             </div>
             <div>
                 <div class="basic-mode-map">

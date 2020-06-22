@@ -1,7 +1,22 @@
 
-.delete-button-wrapper {
-    text-align: center;
-    border: 1px dashed grey;
-    border-radius: 10px;
-    padding: 10px;
+.file-manager-content {
+
+    .file-manager-buttons {
+        padding-top: 10px;
+
+        .hidde-commands-panel-icon {
+            color: #f8f8f2;
+            cursor: pointer;
+            background-color: #44475a;
+            border-radius: 0px 10px 10px 0px;
+            padding: 11px 7px 7px 7px;
+        }
+    
+        .delete-button-wrapper {
+            text-align: center;
+            border: 1px dashed grey;
+            border-radius: 10px;
+        }
+    }
 }
+

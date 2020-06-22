@@ -1,7 +1,6 @@
 import { CommandContainerListDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { createReducer, on, Action } from '@ngrx/store';
 import * as CommandContainerActions from './actions';
-import { state } from '@angular/animations';
 
 export const CommandContainerStoreKey = 'commandContainer';
 

@@ -31,8 +31,12 @@ export class CommandContainerDragDropManagerService {
         private readonly mouseDragDropHelperService: MouseDragDropHelperService,
     ) {}
 
-    createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO): void {
+    createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO, scrollableElement: HTMLElement): void {
         const commandContainerDropRef: DropListRef = this.angularDragDropService.createDropList(commandContainerDivElement);
+        if (scrollableElement) {
+            commandContainerDropRef.autoScrollDisabled = false;
+            commandContainerDropRef.withScrollableParents([scrollableElement]);
+        }
         commandContainerDropRef.withItems([]);
         this.setDropAvailavilityFlagListener(commandContainerDropRef);
         this.commandDropRepositoryService.save(commandContainerDropRef, commandContainer.id);
@@ -44,6 +48,7 @@ export class CommandContainerDragDropManagerService {
     addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {
         const dragRefElement: DragRef = this.angularDragDropService.createDrag(dragableElement);
         dragRefElement.data = command;
+        dragRefElement.dragStartDelay = 200;
 
         if (command.type !== CommandType.GameLoop) {
             const previewTemplate = this.dragCustomPreviewService.getDragHelperTemplate(command.type);

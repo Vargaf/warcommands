@@ -20,6 +20,9 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input()
     commandContainerId: string;
 
+    @Input()
+    fileContentElement: HTMLElement = null;
+
     @ViewChild('commandsDropContainer', { static: true })
     commandsDropContainer: ElementRef<HTMLDivElement>;
 
@@ -54,7 +57,14 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit() {
-        this.commandDragDropManagerService.createCommandContainerDrop(this.commandsDropContainer, this.commandContainer);
+
+        let scrollableElement: HTMLElement = null;
+        if (this.fileContentElement) {
+            console.log(this.fileContentElement);
+            scrollableElement = this.fileContentElement;
+        }
+
+        this.commandDragDropManagerService.createCommandContainerDrop(this.commandsDropContainer, this.commandContainer, scrollableElement);
         const subscription = this.commandContainerView.changes.subscribe((changeEvent) => {
             this.addCommandComponent(changeEvent);
         });

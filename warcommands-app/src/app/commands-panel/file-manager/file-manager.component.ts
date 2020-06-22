@@ -5,6 +5,7 @@ import { FileManagerEvents } from 'src/warcommands/commands-panel/domain/file/se
 import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
 import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
+import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 
 @Component({
     selector: 'app-file-manager',
@@ -31,7 +32,8 @@ export class FileManagerComponent implements OnInit {
         private readonly commandsPanelManagerService: CommandsPanelManagerService,
         private readonly fileManagerEvents: FileManagerEvents,
         private readonly commandDragDropManager: CommandDragDropManagerService,
-        private readonly gameMiddlewareService: GameMiddlewareService
+        private readonly gameMiddlewareService: GameMiddlewareService,
+        private readonly toggleCommandsPanelService: ToggleCommandsPanelService
     ) { }
 
     ngOnInit() {
@@ -62,6 +64,10 @@ export class FileManagerComponent implements OnInit {
     onResumeGame(): void {
         this.isGamePaused = false;
         this.gameMiddlewareService.resumeGame();
+    }
+    
+    hideCommandsPanel(): void {
+        this.toggleCommandsPanelService.hidePanel();
     }
 
 }

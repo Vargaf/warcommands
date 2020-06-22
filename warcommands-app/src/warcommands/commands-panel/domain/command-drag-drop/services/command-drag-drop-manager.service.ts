@@ -27,8 +27,8 @@ export class CommandDragDropManagerService {
         this.commandListDragDropManager.addDraggableItem(dragableElement, commandType, position);
     }
 
-    createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO): void {
-        this.commandContainerDragDropManager.createCommandContainerDrop(commandContainerDivElement, commandContainer);
+    createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO, scrollableElement: HTMLElement): void {
+        this.commandContainerDragDropManager.createCommandContainerDrop(commandContainerDivElement, commandContainer, scrollableElement);
     }
 
     createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>, deleteButtonDragElement: ElementRef<HTMLDivElement>): void {

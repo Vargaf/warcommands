@@ -19,6 +19,7 @@ import { InMmeoryModule } from '../in-mmeory/in-mmeory.module';
 import { JSONFileGeneratorService } from 'src/warcommands/commands-panel/domain/file/services/json-file-generator.service';
 import { CommandRepositoryListenersService } from 'src/warcommands/commands-panel/domain/command/services/command-repository-listeners.service';
 import { CommandContainerRepositoryListenersService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-repository-listeners.service';
+import { UxUiNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/ux-ui/ux-ui-ngrx-repository.service';
 
 
 
@@ -47,7 +48,8 @@ import { CommandContainerRepositoryListenersService } from 'src/warcommands/comm
         InitializeMainPageService,
         JSONFileGeneratorService,
         CommandRepositoryListenersService,
-        CommandContainerRepositoryListenersService
+        CommandContainerRepositoryListenersService,
+        UxUiNgrxRepositoryService
     ],
     exports: [
         FileManagerComponent

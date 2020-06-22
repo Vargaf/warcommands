@@ -7,5 +7,5 @@ export interface GameEngineBasicModeConfiguration {
 }
 
 export const GAME_ENGINE_BASIC_MODE_CONFIGURATION: GameEngineBasicModeConfiguration = {
-    tileSize: 20,
+    tileSize: 40,
 };
