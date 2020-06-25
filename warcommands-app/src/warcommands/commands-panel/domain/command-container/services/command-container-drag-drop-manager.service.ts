@@ -81,16 +81,25 @@ export class CommandContainerDragDropManagerService {
             }
         });
 
+        /**
+         * For touchable devices, we disable all command container to activate only one at a time
+         * with the MouseDragDromHelperService
+         */
         dragRefElement.started.subscribe((event) => {
             const dropList: DropListRef[] = this.commandDropRepositoryService.getDropItemList();
             
             for (const drop of dropList) {
+                
                 const commandContainerId = (drop.element as any).id;
                 drop.disabled = true;
                 this.commandDropRepositoryService.save(drop, commandContainerId);
             }
         });
 
+        /**
+         * For touchable devices, we enable all command container to be albe to start dragging
+         * any element
+         */
         dragRefElement.ended.subscribe((event) => {
             const dropList: DropListRef[] = this.commandDropRepositoryService.getDropItemList();
             

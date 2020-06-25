@@ -6,13 +6,13 @@
     </div>
     <ng-template #memberOptionList>
         <div>
-            <form [formGroup]="componentFormGroup">
+            <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <div>
                         .
                     </div>
-                    <div class="warcommands-command-panel-input-height">
-                        <mat-form-field appearance="">
+                    <div>
+                        <mat-form-field>
                             <mat-select formControlName="memberSelected" #memberSelectElement>
                                 <mat-option>Select an option</mat-option>
                                 <mat-option value="-1">none</mat-option>

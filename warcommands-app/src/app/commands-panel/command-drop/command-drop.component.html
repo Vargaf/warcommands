@@ -1,6 +1,6 @@
 <div #commandsDropContainer 
     class="commands-drop-container"
-    [ngClass]="{'scroll-gap': fileContentElement}"
+    [ngClass]="{'scroll-gap': fileContentElement, 'commands-drop-container-single-command': isSingleCommand}"
     id="{{ commandContainer.id }}"
     [attr.fileId]="commandContainer.fileId"
     [attr.MouseHelperDetectorCommandContainerId]="commandContainer.id">

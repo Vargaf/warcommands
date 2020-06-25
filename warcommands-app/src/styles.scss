@@ -3,6 +3,42 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.warcommands-command-panel-input-height {
-    height: 58px;
+.warcommands-command-panel-command {
+    min-height: 60px;
+}
+
+.commands-drop-container .command {
+    margin-bottom: 10px;
+}
+
+.commands-drop-container .command:first-child {
+    
+}
+
+.commands-drop-container .command:last-child {
+    margin-bottom: 0;
+}
+
+.commands-drop-container .command:only-child {
+    margin: 0;
+}
+
+.warcommands-command-panel-command-mat-form {
+
+    .mat-form-field-infix {
+        padding: 0px;
+        border-top: 0;
+    }
+
+    .mat-form-field {
+        line-height: 1em;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+
+    .mat-form-field-underline {
+        bottom: 0;
+    }
 }

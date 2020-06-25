@@ -1,18 +1,18 @@
-<div class="if-then-content">
+<div class="if-then-content warcommands-command-panel-command">
     <div class="if-then-start">
         <div class="if-then-label" fxLayout="row" fxLayoutAlign="start center">
             <div>
                 if (
             </div>
-            <div [attr.MouseHelperDetectorCommandContainerId]="conditionCommandContainerId" class="condition-command-container-wrapper">
-                <app-command-drop  [commandContainerId]="conditionCommandContainerId"></app-command-drop>
+            <div class="condition-command-container-wrapper">
+                <app-command-drop [commandContainerId]="conditionCommandContainerId" [isSingleCommand]="true"></app-command-drop>
             </div>
             <div>
                 )
             </div>
         </div>
     </div>
-    <div class="if-then-body" [attr.MouseHelperDetectorCommandContainerId]="thenCommandContainerId">
+    <div class="if-then-body">
         <div class="if-then-body-content">
 
             <app-command-drop  [commandContainerId]="thenCommandContainerId"></app-command-drop>

@@ -23,6 +23,9 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input()
     fileContentElement: HTMLElement = null;
 
+    @Input()
+    isSingleCommand = false;
+
     @ViewChild('commandsDropContainer', { static: true })
     commandsDropContainer: ElementRef<HTMLDivElement>;
 
@@ -60,7 +63,6 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
         let scrollableElement: HTMLElement = null;
         if (this.fileContentElement) {
-            console.log(this.fileContentElement);
             scrollableElement = this.fileContentElement;
         }
 

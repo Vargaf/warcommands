@@ -1,8 +1,8 @@
 .commands-drop-container {
     min-width: fit-content;
-    border:dashed 1px #ccc;
-    padding: 5px 10px;
-    min-height:50px;
+    /*border:dashed 1px #ccc;*/
+    padding: 10px 0 10px 20px;
+    min-height:60px;
     border-radius:10px;
     overflow:hidden;
     background-color: #424242;
@@ -12,10 +12,14 @@
     }
 
     .command {
-        padding: 5px 0px;
+        /*padding: 5px 0px;*/
     }
 }
 
+.commands-drop-container-single-command {
+    padding: 0;
+}
+
 .scroll-gap {
-    padding-left: 20px;
+    border:dashed 1px #ccc
 }

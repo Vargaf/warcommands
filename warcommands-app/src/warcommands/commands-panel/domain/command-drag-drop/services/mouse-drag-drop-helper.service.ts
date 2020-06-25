@@ -25,7 +25,11 @@ export class MouseDragDropHelperService {
     }
 
     private setActiveCommandContainer(path: any[]): void {
-        for (const index in path) {
+        
+        
+        const index = 0;
+        
+        //for (const index in path) {
             const item = path[index];
             if (item.hasAttribute && item.hasAttribute('MouseHelperDetectorCommandContainerId')) {
                 const commandContainerId = item.getAttribute('MouseHelperDetectorCommandContainerId');
@@ -35,9 +39,9 @@ export class MouseDragDropHelperService {
                     this.activeContainerId = commandContainerId;
                 }
 
-                break;
+        //        break;
             }
-        }
+        //}
     }
 
     private desactivateThePreviousCommandContainer(commandContainerId: string): void {

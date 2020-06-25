@@ -6,9 +6,9 @@
     </div>
     <ng-template #memberOptionList>
         <div>.</div>
-        <form [formGroup]="componentFormGroup">
-            <div class="warcommands-command-panel-input-height">
-                <mat-form-field appearance="">
+        <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
+            <div>
+                <mat-form-field>
                     <mat-select formControlName="memberSelected" #memberSelectElement>
                         <mat-option>Select an option</mat-option>
                         <mat-option value="-1">none</mat-option>

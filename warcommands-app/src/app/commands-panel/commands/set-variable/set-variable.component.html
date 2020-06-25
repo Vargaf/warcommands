@@ -1,18 +1,18 @@
 
-<div class="set-variable-content" [ngClass]="commandContentDynamicClass" fxLayout="row" fxLayoutAlign="center center">
+<div class="set-variable-content warcommands-command-panel-command" [ngClass]="commandContentDynamicClass" fxLayout="row" fxLayoutAlign="center center">
     <mat-icon *ngIf="!isCommandValid">bug_report</mat-icon>
     <div>set</div>
     <div>
-        <form [formGroup]="setVarForm">
+        <form [formGroup]="setVarForm" class="warcommands-command-panel-command-mat-form">
             <div fxLayout="row" fxLayoutAlign="center center">
                 <div>
-                    <mat-form-field class="var-name-input warcommands-command-panel-input-height">
+                    <mat-form-field class="var-name-input">
                         <input matInput type="text" formControlName="varName">
                     </mat-form-field>
                 </div>
                 <div>=</div>
                 <div>
-                    <mat-form-field class="var-value-input warcommands-command-panel-input-height">
+                    <mat-form-field class="var-value-input">
                         <input matInput type="text" formControlName="varValue">
                     </mat-form-field>
                 </div>

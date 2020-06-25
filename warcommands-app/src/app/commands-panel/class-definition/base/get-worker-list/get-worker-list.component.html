@@ -1,8 +1,8 @@
 <div class="get-workers-content" fxLayout="row" fxLayoutAlign="center center">
     <div>(</div>
-    <div class="warcommands-command-panel-input-height">
-        <form [formGroup]="componentFormGroup">
-            <mat-form-field appearance="">
+    <div>
+        <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
+            <mat-form-field>
                 <mat-select formControlName="role" #memberSelectElement>
                     <mat-option>Select an option</mat-option>
                     <mat-option *ngFor="let member of workerRoleOptions" [value]="member.value">

@@ -1,6 +1,6 @@
-<div class="variable-content" fxLayout="row" fxLayoutAlign="center center">
-    <div class="warcommands-command-panel-input-height">
-        <form [formGroup]="variableCommandForm">
+<div class="variable-content warcommands-command-panel-command" fxLayout="row" fxLayoutAlign="center center">
+    <div>
+        <form [formGroup]="variableCommandForm" class="warcommands-command-panel-command-mat-form">
             <mat-form-field>
                 <mat-select formControlName="variable">
                     <mat-option [value]="''">Select a variable</mat-option>

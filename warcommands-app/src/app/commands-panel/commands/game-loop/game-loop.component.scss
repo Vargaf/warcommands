@@ -1,8 +1,13 @@
 
+.game-loop-content {
+    /*margin-left: 20px;*/
+}
+
 .game-loop-start {
     background-color: blue;
     border-radius: 10px 10px 10px 0;
-    padding: 10px;
+    padding-left: 20px;
+    height: 60px;
 
     .game-loop-label {
         min-width: max-content;
@@ -11,20 +16,20 @@
 
 .game-loop-body {
     background-color: blue;
-    padding-left: 5px;
+    padding-left: 10px;
     border-radius: 0 15px 15px 0;
 }
 
 .game-loop-body-content {
     background-color: #424242;
     border-radius: 10px;
-    padding: 10px 10px 10px 7px;
+    /*padding: 10px 0 10px 0;*/
 }
 
 .game-loop-end {
     background-color: blue;
     border-radius: 0 10px 10px 10px;
-    padding: 10px;
+    height: 60px;
     text-align: center;
 }
 

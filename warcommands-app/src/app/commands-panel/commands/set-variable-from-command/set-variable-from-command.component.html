@@ -1,10 +1,10 @@
-<div class="set-variable-from-command-content" fxLayout="row" fxLayoutAlign="center center">
+<div class="set-variable-from-command-content warcommands-command-panel-command" fxLayout="row" fxLayoutAlign="center center">
     <div class="set-label">
         set
     </div>
     <div>
-        <form [formGroup]="setVarForm">
-            <mat-form-field class="var-name-input warcommands-command-panel-input-height">
+        <form [formGroup]="setVarForm" class="warcommands-command-panel-command-mat-form">
+            <mat-form-field class="var-name-input">
                 <input matInput type="text" formControlName="varName">
             </mat-form-field>
         </form>
@@ -13,6 +13,6 @@
         =
     </div>
     <div [attr.MouseHelperDetectorCommandContainerId]="setVarCommandContainerId" class="set-var-command-container-wrapper">
-        <app-command-drop [commandContainerId]="setVarCommandContainerId"></app-command-drop>
+        <app-command-drop [commandContainerId]="setVarCommandContainerId" [isSingleCommand]="true"></app-command-drop>
     </div>
 </div>
