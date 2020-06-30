@@ -1,10 +1,36 @@
-<div class="commands-panel-content">
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign=" none">
-        <div fxFlex="100" fxFlex.gt-sm="none" class="commands-list">
-            <app-commands></app-commands>
-        </div>
-        <div fxFlex="100" fxFlex.gt-sm class="commands-panel">
-            <app-file-manager></app-file-manager>
+<div class="commands-panel-content" (window:resize)="onResize($event)" #commandsPanelContentElement>
+    <div>
+        <div fxLayout="row">
+            <div>
+                <div fxLayout="column" class="activity-bar">
+                    <div class="activity-bar-button" (click)="hideCommandsPanel()">
+                        <mat-icon>sports_esports</mat-icon>
+                    </div>
+                    <div class="activity-bar-button" *ngIf="isGamePaused" (click)="onResumeGame()">
+                            <mat-icon>play_arrow</mat-icon>
+                    </div>
+                    <div class="activity-bar-button" *ngIf="!isGamePaused" (click)="onPauseGame()">
+                        <mat-icon>pause</mat-icon>
+                    </div>
+                    <div class="activity-bar-button">
+                        <mat-icon (click)="toggleCommandList()">table_rows</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="commands-editor" #commandsEditorPanelElement>
+                <div>
+                    <div class="side-bar collapsible-bar" #commandListElement>
+                        <div class="side-bar-content">
+                            <app-commands></app-commands>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="editor-panel" #editorPanelElement>
+                        <app-file-manager></app-file-manager>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

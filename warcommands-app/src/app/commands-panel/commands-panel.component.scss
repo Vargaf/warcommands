@@ -1,6 +1,55 @@
 
 .commands-panel-content {
     width: 100%;
+    background-color: #282a36;
+
+    .activity-bar {
+        background-color: #343746;
+        color: #6272A4;
+        height: 100vh;
+
+        .activity-bar-button {
+            padding: 10px 10px 0 10px;
+        }
+
+        .activity-bar-button:hover {
+            color: #F8F8F2;
+        }
+    }
+
+    .side-bar {
+        background-color: #21222C;
+        color: #F8F8F2;
+        height: 100vh;
+
+        .side-bar-content {
+            border-left: 1px solid #191A21;
+            padding: 10px 10px 0 10px;
+        }
+    }
+
+    .editor-panel {
+        background-color: #282A36;
+        border-left: 1px solid #191A21;
+        height: 100vh;
+        transition: margin-left .5s;
+    }
+
+    .collapsible-bar {
+        width: 0;
+        overflow-x: hidden;
+        transition: 0.5s;
+        position: absolute;
+        z-index: 2;
+    }
+
+    .extend-bar {
+        width: 347px;
+    }
+
+    .move-editor-panel {
+        margin-left: 347px;
+    }
 }
 
 .commands-panel {

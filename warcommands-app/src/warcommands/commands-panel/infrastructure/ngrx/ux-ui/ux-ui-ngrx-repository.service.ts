@@ -26,4 +26,16 @@ export class UxUiNgrxRepositoryService {
         return this.store.pipe(select(UxUiSelectors.windowSizeSelector));
     }
 
+    startDraggingACommandFromCommandList(): void {
+        this.store.dispatch(UxUiActions.setCommandListDraggingStatus({ isDragging: true }));
+    }
+
+    endDraggingACommandFromCommandList(): void {
+        this.store.dispatch(UxUiActions.setCommandListDraggingStatus({ isDragging: false }));
+    }
+
+    watchIsUserDraggingACommandFromCommandList(): Observable<boolean> {
+        return this.store.pipe(select(UxUiSelectors.isUserDraggingACommand));
+    }
+
 }

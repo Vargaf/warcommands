@@ -26,14 +26,11 @@ export class FileManagerComponent implements OnInit {
     fileList: FileDTO[] = [];
 
     isDeleteCommandDropContainer = true;
-    isGamePaused = true;
 
     constructor(
         private readonly commandsPanelManagerService: CommandsPanelManagerService,
         private readonly fileManagerEvents: FileManagerEvents,
         private readonly commandDragDropManager: CommandDragDropManagerService,
-        private readonly gameMiddlewareService: GameMiddlewareService,
-        private readonly toggleCommandsPanelService: ToggleCommandsPanelService
     ) { }
 
     ngOnInit() {
@@ -54,20 +51,6 @@ export class FileManagerComponent implements OnInit {
         const selectedFile = this.filesTabGroup.selectedIndex;
         const file: FileDTO = this.fileList[selectedFile];
         this.commandsPanelManagerService.saveFile(file);
-    }
-
-    onPauseGame(): void {
-        this.isGamePaused = true;
-        this.gameMiddlewareService.pauseGame();
-    }
-
-    onResumeGame(): void {
-        this.isGamePaused = false;
-        this.gameMiddlewareService.resumeGame();
-    }
-    
-    hideCommandsPanel(): void {
-        this.toggleCommandsPanelService.hidePanel();
     }
 
 }

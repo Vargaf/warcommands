@@ -5,6 +5,7 @@ import { CommandDraggableElementRepositoryService } from './command-draggable-el
 import { CommandType } from '../../command/model/command-type.enum';
 import { DragCustomPreviewService } from './drag-custom-preview.service';
 import { MouseDragDropHelperService } from './mouse-drag-drop-helper.service';
+import { UxUiNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/ux-ui/ux-ui-ngrx-repository.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +20,7 @@ export class CommandListDragDropManagerService {
         private readonly angularDragDropService: DragDrop,
         private readonly dragCustomPreviewService: DragCustomPreviewService,
         private readonly mouseDragDropHelperService: MouseDragDropHelperService,
+        private readonly uxUiNgrxRepositoryService: UxUiNgrxRepositoryService
     ) {}
 
     createCommandListDrop(commandListDivElement: ElementRef<HTMLDivElement>): void {
@@ -76,6 +78,8 @@ export class CommandListDragDropManagerService {
                 drop.disabled = true;
                 this.commandDropRepositoryService.save(drop, commandContainerId);
             }
+
+            this.uxUiNgrxRepositoryService.startDraggingACommandFromCommandList();
         });
 
         dragRefElement.ended.subscribe((event) => {
@@ -86,6 +90,8 @@ export class CommandListDragDropManagerService {
                 drop.disabled = false;
                 this.commandDropRepositoryService.save(drop, commandContainerId);
             }
+
+            this.uxUiNgrxRepositoryService.endDraggingACommandFromCommandList();
         });
     }
 

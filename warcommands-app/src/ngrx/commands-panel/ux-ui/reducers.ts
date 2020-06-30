@@ -4,13 +4,15 @@ import * as UxUiActions from './actions';
 export const UxUiStoreKey = 'ux_ui';
 
 export interface UxUiState {
+    isUserDraggingACommand: boolean;
     windowSize: {
-        width: number,
-        height: number
-    }
+        width: number;
+        height: number;
+    };
 }
 
 const initialState: UxUiState = {
+    isUserDraggingACommand: false,
     windowSize: {
         width: null,
         height: null
@@ -21,7 +23,14 @@ const uxUiReducer = createReducer(
     initialState,
     on(UxUiActions.loadWindowsSize, (state, { width, height }) => {
         return {
-            windowSize: { width, height }
+            ...state,
+            windowSize: { width, height },
+        }
+    }),
+    on(UxUiActions.setCommandListDraggingStatus, (state, { isDragging }) => {
+        return {
+            ...state,
+            isUserDraggingACommand: isDragging
         }
     })
 );

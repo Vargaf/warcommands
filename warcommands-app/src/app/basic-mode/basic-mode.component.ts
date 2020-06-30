@@ -7,7 +7,6 @@ import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/doma
 import { CurrentPlayerDTO } from 'src/warcommands/commands-panel/domain/current-player/model/current-player.dto';
 import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 import { Subscription } from 'rxjs';
-import { UxUiNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/ux-ui/ux-ui-ngrx-repository.service';
 
 @Component({
     selector: 'app-basic-mode',
@@ -19,22 +18,16 @@ export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
     @ViewChild(BasicModeComponentDirective, { static: true })
     public basicModeGraphicsWrapper: BasicModeComponentDirective;
 
-    @ViewChild('basicModeElement', { static: true })
-    public basicModeElement: ElementRef<HTMLDivElement>;
-
     isCommandsPanelOppened: boolean;
     commandPanelVisibleListenerSubscription: Subscription;
 
     constructor(
         private readonly gameMiddlewareService: GameMiddlewareService,
         private readonly currentPlayerManager: CurrentPlayerManagerService,
-        private readonly toggleCommandsPanelService: ToggleCommandsPanelService,
-        private readonly uxUiNgrxRepository: UxUiNgrxRepositoryService
+        private readonly toggleCommandsPanelService: ToggleCommandsPanelService
     ) { }
 
     ngOnInit() {
-        this.setWindowsSize();
-
         const currentPlayer: CurrentPlayerDTO = this.currentPlayerManager.initializePlayer();
         const viewContainerRef = this.basicModeGraphicsWrapper.viewContainerRef;
         this.gameMiddlewareService.setMap(MapType.TutorialFirstMap);
@@ -56,19 +49,8 @@ export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
         
     }
 
-    onResize(event: Event): void {
-        this.setWindowsSize();
-    }
-
     showCommandsPanel(): void {
         this.toggleCommandsPanelService.showPanel();
-    }
-
-    private setWindowsSize(): void {
-        this.uxUiNgrxRepository.loadWindowSize(
-            this.basicModeElement.nativeElement.offsetWidth,
-            this.basicModeElement.nativeElement.offsetHeight
-        );
     }
 
 }

@@ -1,30 +1,15 @@
 <div class="file-manager-content">
     <div fxLayout="row wrap" class="file-manager-buttons">
-        <div fxFlex="none">
-            <div class="hidde-commands-panel-icon" (click)="hideCommandsPanel()">
-                <mat-icon>sports_esports</mat-icon>
-            </div>
-        </div>
         <div fxFlex="">
             <div fxLayout="row" fxLayoutAlign="space-evenly center">
                 <div class="save-button-wrapper">
-                    <button mat-icon-button color="primary" aria-label="Save file" (click)="saveFile()">
+                    <div aria-label="Save file" (click)="saveFile()">
                         <mat-icon>save</mat-icon>
-                    </button>
-                </div>
-                <div>
-                    <button mat-icon-button aria-label="Resume game" *ngIf="isGamePaused" (click)="onResumeGame()">
-                        <mat-icon>play_arrow</mat-icon>
-                    </button>
-                    <button mat-icon-button aria-label="Pause game" *ngIf="!isGamePaused" (click)="onPauseGame()">
-                        <mat-icon>pause</mat-icon>
-                    </button>    
+                    </div>
                 </div>
                 <div #deleteButtonWrapper class="delete-button-wrapper">
                     <div #deleteButtonDragableElement>
-                        <button mat-icon-button aria-label="Save file">
-                            <mat-icon>delete</mat-icon>
-                        </button>    
+                        <mat-icon>delete</mat-icon>
                     </div>
                 </div>
             </div>

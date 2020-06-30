@@ -20,3 +20,8 @@ export const windowSizeSelector = createSelector(
     uxUiFeatureSelector,
     (state: UxUiState) => state.windowSize
 );
+
+export const isUserDraggingACommand = createSelector(
+    uxUiFeatureSelector,
+    (state: UxUiState) => state.isUserDraggingACommand
+);
