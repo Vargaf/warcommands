@@ -18,6 +18,7 @@ import { CommandContainerDragDropManagerService } from 'src/warcommands/commands
 import { CommandDropModule } from '../command-drop/command-drop.module';
 import { DragCustomPreviewService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/drag-custom-preview.service';
 import { CommandDropRemoveManagerService } from 'src/warcommands/commands-panel/domain/command/services/command-drop-remove-manager.service';
+import { CommandDropCancelManagerService } from 'src/warcommands/commands-panel/domain/command/services/command-drop-cancel-manager.service';
 import { CommandRemovalEventChainGeneratorService } from 'src/warcommands/commands-panel/domain/command/services/command-removal-event-chain-generator.service';
 import { GameCommandModule } from './game-command/game-command.module';
 import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
@@ -60,6 +61,7 @@ import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/doma
         CommandContainerDragDropManagerService,
         DragCustomPreviewService,
         CommandDropRemoveManagerService,
+        CommandDropCancelManagerService,
         CommandRemovalEventChainGeneratorService,
         VariableInScopeFinderService,
         GetClassNameFromCommandService,

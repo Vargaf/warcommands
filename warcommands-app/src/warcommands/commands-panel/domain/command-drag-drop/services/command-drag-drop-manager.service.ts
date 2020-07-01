@@ -6,6 +6,7 @@ import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 import { CommandComponentManagerService } from '../../command-component/services/command-component-manager.service';
 import { CommandContainerDragDropManagerService } from '../../command-container/services/command-container-drag-drop-manager.service';
 import { CommandDropRemoveManagerService } from '../../command/services/command-drop-remove-manager.service';
+import { CommandDropCancelManagerService } from '../../command/services/command-drop-cancel-manager.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,8 @@ export class CommandDragDropManagerService {
         private readonly commandListDragDropManager: CommandListDragDropManagerService,
         private readonly commandContainerDragDropManager: CommandContainerDragDropManagerService,
         private readonly commandComponentManagerService: CommandComponentManagerService,
-        private readonly commandRemoveManager: CommandDropRemoveManagerService
+        private readonly commandRemoveManager: CommandDropRemoveManagerService,
+        private readonly commandCancelManager: CommandDropCancelManagerService,
     ) {}
 
     createCommandListDrop(commandListDivElement: ElementRef<HTMLDivElement>): void {
@@ -33,6 +35,10 @@ export class CommandDragDropManagerService {
 
     createDeleteCommandDropContainer(deleteCommandContainerDivElement: ElementRef<HTMLDivElement>, deleteButtonDragElement: ElementRef<HTMLDivElement>): void {
         this.commandRemoveManager.createDeleteCommandDropContainer(deleteCommandContainerDivElement, deleteButtonDragElement);
+    }
+
+    createCancelCommandDragContainer(cancelCommandContainerDivElement: ElementRef<HTMLDivElement>, cancelButtonDragElement: ElementRef<HTMLDivElement>): void {
+        this.commandCancelManager.createCancelCommandDropContainer(cancelCommandContainerDivElement, cancelButtonDragElement);
     }
 
     addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {

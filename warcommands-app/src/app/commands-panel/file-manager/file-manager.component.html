@@ -2,18 +2,23 @@
     <div fxLayout="row wrap" class="file-manager-buttons">
         <div fxFlex="">
             <div fxLayout="row" fxLayoutAlign="space-evenly center">
-                <div class="save-button-wrapper" matRipple [matRippleColor]="saveButtonRippleColor" [matRippleCentered]="true" [matRippleRadius]="14">
+                <div #cancelButtonWrapper class="delete-button-wrapper">
+                    <div #cancelButtonDraggableElement>
+                        <mat-icon>cancel_presentation</mat-icon>
+                    </div>
+                </div>
+                <div class="save-button-wrapper">
                     <div *ngIf="!isSavingFile">
-                        <div aria-label="Save file" (click)="saveFile()">
+                        <button mat-icon-button aria-label="Save file" (click)="saveFile()">
                             <mat-icon>save</mat-icon>
-                        </div>
+                        </button>
                     </div>
                     <div class="warcommands-command-panel-loader" *ngIf="isSavingFile">
                         <mat-spinner [diameter]="24"></mat-spinner>
                     </div>
                 </div>
                 <div #deleteButtonWrapper class="delete-button-wrapper">
-                    <div #deleteButtonDragableElement>
+                    <div #deleteButtonDraggableElement>
                         <mat-icon>delete</mat-icon>
                     </div>
                 </div>

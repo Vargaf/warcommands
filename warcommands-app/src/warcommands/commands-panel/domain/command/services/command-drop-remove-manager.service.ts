@@ -8,7 +8,7 @@ import { CommandRemovalEventChainGeneratorService } from './command-removal-even
 })
 export class CommandDropRemoveManagerService {
 
-    private readonly deleteCommandDropContianerIndex = 'delete-container';
+    private readonly deleteCommandDropContainerIndex = 'delete-container';
 
     constructor(
         private readonly commandDropRepositoryService: CommandDropRepository,
@@ -28,12 +28,12 @@ export class CommandDropRemoveManagerService {
         const dropItemList = this.commandDropRepositoryService.getDropItemList();
         deleteCommandDropListRef.connectedTo(dropItemList);
 
-        this.commandDropRepositoryService.save(deleteCommandDropListRef, this.deleteCommandDropContianerIndex);
+        this.commandDropRepositoryService.save(deleteCommandDropListRef, this.deleteCommandDropContainerIndex);
         this.setDeleteCommandDropContainerDroppedObserver(deleteCommandDropListRef);
     }
 
     getDeleteCommandDropContainer(): DropListRef {
-        return this.commandDropRepositoryService.getDropItem(this.deleteCommandDropContianerIndex);
+        return this.commandDropRepositoryService.getDropItem(this.deleteCommandDropContainerIndex);
     }
 
     private setDeleteCommandDropContainerDroppedObserver(dropListRef: DropListRef): void {

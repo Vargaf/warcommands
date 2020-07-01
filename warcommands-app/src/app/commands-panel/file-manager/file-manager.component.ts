@@ -4,8 +4,6 @@ import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.d
 import { FileManagerEvents } from 'src/warcommands/commands-panel/domain/file/services/file-manager.events';
 import { CommandsPanelManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/commands-panel-manager.service';
 import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service';
-import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
-import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 
 @Component({
     selector: 'app-file-manager',
@@ -17,8 +15,14 @@ export class FileManagerComponent implements OnInit {
     @ViewChild('deleteButtonWrapper', { static: true })
     deleteButtonWrapper: ElementRef<HTMLDivElement>;
 
-    @ViewChild('deleteButtonDragableElement', { static: true })
-    deleteButtonDragableElement: ElementRef<HTMLDivElement>;
+    @ViewChild('deleteButtonDraggableElement', { static: true })
+    deleteButtonDraggableElement: ElementRef<HTMLDivElement>;
+
+    @ViewChild('cancelButtonWrapper', { static: true })
+    cancelButtonWrapper: ElementRef<HTMLDivElement>;
+
+    @ViewChild('cancelButtonDraggableElement', { static: true })
+    cancelButtonDraggableElement: ElementRef<HTMLDivElement>;
 
     @ViewChild('filesTabGroup', { static: true })
     filesTabGroup: MatTabGroup;
@@ -27,7 +31,6 @@ export class FileManagerComponent implements OnInit {
 
     isDeleteCommandDropContainer = true;
     isSavingFile = false;
-    saveButtonRippleColor = "#c0ffff";
 
     constructor(
         private readonly commandsPanelManagerService: CommandsPanelManagerService,
@@ -40,7 +43,8 @@ export class FileManagerComponent implements OnInit {
             this.addFile(file);
         });
 
-        this.commandDragDropManager.createDeleteCommandDropContainer(this.deleteButtonWrapper, this.deleteButtonDragableElement);
+        this.commandDragDropManager.createDeleteCommandDropContainer(this.deleteButtonWrapper, this.deleteButtonDraggableElement);
+        this.commandDragDropManager.createCancelCommandDragContainer(this.cancelButtonWrapper, this.cancelButtonDraggableElement);
         this.commandsPanelManagerService.loadOpennedFiles();
 
     }
