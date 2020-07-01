@@ -24,6 +24,7 @@ export class CommandsPanelComponent implements OnInit, AfterViewInit {
     @ViewChild('commandsPanelContentElement', { static: true })
     commandsPanelContentElement: ElementRef<HTMLDivElement>;
 
+    isCommandListVisibleAtStart = true;
     isCommandListVisible = false;
     isEditorMoved = false;
     isGamePaused = true;
@@ -44,6 +45,7 @@ export class CommandsPanelComponent implements OnInit, AfterViewInit {
         this.mediaObserver.media$.subscribe((change: MediaChange) => {
             this.setCommandListMediaQueryClases();
         });
+
     }
 
     ngAfterViewInit() {
@@ -54,6 +56,10 @@ export class CommandsPanelComponent implements OnInit, AfterViewInit {
                 this.toggleCommandList();
             }
         });
+
+        if (this.isCommandListVisibleAtStart) {
+            this.toggleCommandList();
+        }
     }
 
     toggleCommandList(): void {
@@ -109,12 +115,11 @@ export class CommandsPanelComponent implements OnInit, AfterViewInit {
         const activityBarWidth = 44;
 
         this.renderer.setStyle(this.commandsEditorPanelElement.nativeElement, 'width', windowWidth - activityBarWidth + 'px');
+        
+        if (!this.isScreenAtLeastMediumSize()) {
+            this.renderer.setStyle(this.commandListElement.nativeElement, 'max-width', windowWidth - activityBarWidth + 'px');
+        }
     }
-
-
-
-
-
 
     private setCommandListMediaQueryClases(): void {
         if (this.isEditorMoved && !this.isScreenAtLeastMediumSize()) {

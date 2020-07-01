@@ -28,7 +28,7 @@ export const logicOperatorSelectOptions: SelectOptionDTO[] = [
         label_id: 'greather_than_or_equal_option'
     },
     {
-        value: LogicOperatorENUM.LessThan,
+        value: LogicOperatorENUM.LessThanOrEqualTo,
         label: '<=',
         label_id: 'less_than_or_equal_option'
     },

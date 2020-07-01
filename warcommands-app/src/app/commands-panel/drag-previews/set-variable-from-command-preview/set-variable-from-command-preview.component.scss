@@ -1,18 +1,18 @@
 .drag-command-preview {
-    background-color: rgb(140, 207, 39);
+    background-color: #BD93F9;
     color: black;
     border-radius: 10px;
-    padding: 10px;
+    padding: 0 20px;
     inline-size: max-content;
+    height: 40px;
 
     .commands-drop-container {
-        border:dashed 1px #7fff00;
-        padding: 5px 10px;
+        padding: 0 20px;
         border-radius:10px;
-        overflow:hidden;
-        background-color: #424242;
-        color: white;
+        background-color: #343746;
+        color: #6272A4;
         margin-left: 5px;
+        height: 40px;
     }
 
 }

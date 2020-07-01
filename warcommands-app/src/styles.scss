@@ -32,6 +32,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
     .mat-form-field {
         line-height: 1em;
+        
     }
 
     .mat-form-field-wrapper {
@@ -41,4 +42,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .mat-form-field-underline {
         bottom: 0;
     }
+    
 }
+
+.warcommands-command-panel-command-mat-form-black-font-color {
+    
+    .mat-select-value {
+        color: black;
+    }
+
+    .mat-select-arrow {
+        color: black;
+    }
+
+    .mat-form-field-underline {
+        background-color: black;
+    }
+    
+}
+
+.commands-drop-container-single-command {
+    .warcommands-command-panel-command {
+        border-radius: 0 !important;
+    }
+}
+
+.commands-list-content {
+
+    .draggable-command, .drag-command-preview {
+        margin-bottom: 10px;
+    }
+    
+}
+
+

@@ -1,14 +1,14 @@
 .commands-drop-container {
     min-width: fit-content;
     /*border:dashed 1px #ccc;*/
-    padding: 10px 0 10px 20px;
+    padding: 10px 10px 10px 20px;
     min-height:60px;
     border-radius:10px;
     overflow:hidden;
-    background-color: #424242;
+    background-color: #343746;
 
     &:hover {
-        background-color: #575555;
+        background-color: #21222C;
     }
 
     .command {
@@ -21,5 +21,5 @@
 }
 
 .scroll-gap {
-    border:dashed 1px #ccc
+    border:dashed 1px #6272A4
 }

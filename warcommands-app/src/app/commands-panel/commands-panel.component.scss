@@ -2,7 +2,7 @@
 .commands-panel-content {
     width: 100%;
     background-color: #282a36;
-
+    
     .activity-bar {
         background-color: #343746;
         color: #6272A4;
@@ -21,7 +21,7 @@
         background-color: #21222C;
         color: #F8F8F2;
         height: 100vh;
-
+        
         .side-bar-content {
             border-left: 1px solid #191A21;
             padding: 10px 10px 0 10px;
@@ -44,11 +44,12 @@
     }
 
     .extend-bar {
-        width: 347px;
+        width: 383px;
+        overflow: auto;
     }
 
     .move-editor-panel {
-        margin-left: 347px;
+        margin-left: 383px;
     }
 }
 

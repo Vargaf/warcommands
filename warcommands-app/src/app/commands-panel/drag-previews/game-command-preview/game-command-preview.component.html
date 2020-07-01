@@ -1,6 +1,8 @@
-<ng-template #dragCommandPreview>
-    <div class="drag-command-preview">Game...</div>
-</ng-template>
 
-<div class="drag-command-preview">Game...</div>
+<ng-container *ngTemplateOutlet="dragCommandPreview"></ng-container>
+<ng-template #dragCommandPreview>
+    <div class="drag-command-preview command" fxLayoutAlign="center center">
+        Game
+    </div>
+</ng-template>
 
