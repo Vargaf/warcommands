@@ -75,4 +75,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     
 }
 
+.warcommands-command-panel-loader {
+    .mat-progress-spinner circle,.mat-spinner circle {
+        stroke: #6272A4;
+    }
+}
+
 

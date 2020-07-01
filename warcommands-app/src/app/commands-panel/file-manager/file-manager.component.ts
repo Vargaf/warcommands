@@ -26,6 +26,8 @@ export class FileManagerComponent implements OnInit {
     fileList: FileDTO[] = [];
 
     isDeleteCommandDropContainer = true;
+    isSavingFile = false;
+    saveButtonRippleColor = "#c0ffff";
 
     constructor(
         private readonly commandsPanelManagerService: CommandsPanelManagerService,
@@ -48,9 +50,13 @@ export class FileManagerComponent implements OnInit {
     }
 
     saveFile(): void {
+        this.isSavingFile = true;
+
         const selectedFile = this.filesTabGroup.selectedIndex;
         const file: FileDTO = this.fileList[selectedFile];
         this.commandsPanelManagerService.saveFile(file);
+
+        this.isSavingFile = false;
     }
 
 }

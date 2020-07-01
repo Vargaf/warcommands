@@ -11,6 +11,14 @@
             padding: 4px 4px 0 4px;
             text-align: center;
         }
+
+        .save-button-wrapper {
+            cursor: pointer;
+        }
+
+        .save-button-wrapper:hover {
+            color: white;
+        }
     }
 }
 
