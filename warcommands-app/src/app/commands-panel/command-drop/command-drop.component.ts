@@ -33,6 +33,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
     public commandContainerView: QueryList<ViewContainerRef>;
 
     commandContainer: CommandContainerDTO;
+    numberOfLines: Array<number> =[];
 
     commandList: GenericCommandDTO[] = [];
 
@@ -57,6 +58,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setMoveCommandFromCommandContainerListener();
         this.setMoveCommandToCommandContainerListener();
         this.setRemovedCommandFromContainerListener();
+        this.setNewCommandListener();
     }
 
     ngAfterViewInit() {
@@ -74,12 +76,22 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadCommandList();
 
         this.subscribers.push(subscription);
+
+        this.refreshNumberLines(3000);
     }
 
     ngOnDestroy() {
         for (const subscription of this.subscribers) {
             subscription.unsubscribe();
         }
+    }
+
+    private setNewCommandListener(): void {
+        const subsciption = this.commandCreatedEvents.commandCreatedListener().subscribe(() => {
+            this.refreshNumberLines();
+        });
+
+        this.subscribers.push(subsciption);
     }
 
     private setNewCommandDroppedToContainerListener(): void {
@@ -142,6 +154,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         }
 
+        this.refreshNumberLines();
     }
 
     private loadCommandList(): void {
@@ -150,6 +163,21 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         for (const index in commandIdList) {
             const command = this.commandRepositoryService.findById(commandIdList[index]);
             this.addCommandWrapper(command, +index);
+        }
+    }
+
+    private refreshNumberLines(gapTime?: number): void {
+
+        const gapTimeRefresh = gapTime || 1000;
+
+        if (this.fileContentElement) {
+            setTimeout(() =>{
+                const bottomPadding = 10;
+                const lineHeight = 70;
+                const scrollHeight: number = this.commandsDropContainer.nativeElement.scrollHeight - bottomPadding;
+                const numberOfLines = Math.ceil(scrollHeight / lineHeight);
+                this.numberOfLines = Array(numberOfLines).fill(0).map((x, i) => ++i);
+            }, gapTimeRefresh);
         }
     }
 

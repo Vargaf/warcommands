@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommandDropComponent } from './command-drop.component';
 import { CommandDirective } from '../command.directive';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
@@ -12,6 +13,7 @@ import { CommandDirective } from '../command.directive';
     ],
     imports: [
         CommonModule,
+        FlexLayoutModule
     ],
     exports: [
         CommandDropComponent

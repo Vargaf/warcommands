@@ -1,8 +1,7 @@
 .commands-drop-container {
     min-width: fit-content;
-    /*border:dashed 1px #ccc;*/
     padding: 10px 10px 10px 20px;
-    min-height:60px;
+    min-height:80px;
     border-radius:10px;
     overflow:hidden;
     background-color: #343746;
@@ -11,13 +10,20 @@
         background-color: #21222C;
     }
 
-    .command {
-        /*padding: 5px 0px;*/
+    .line-number {
+        margin: 22px 10px 29px 0;
+        color: #6272A4;
+    }
+
+    .line-number:last-child {
+        margin: 22px 10px 0 0;
+        color: #6272A4;
     }
 }
 
 .commands-drop-container-single-command {
     padding: 0;
+    min-height:60px;
 }
 
 .scroll-gap {
