@@ -15,6 +15,7 @@ import { AngularCommandDraggableElementRepositoryService } from 'src/warcommands
 import { CommandDraggableElementRepositoryService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-draggable-element-repository.service';
 import { CommandComponentManagerService } from 'src/warcommands/commands-panel/domain/command-component/services/command-component-manager.service';
 import { CommandContainerDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-container/services/command-container-drag-drop-manager.service';
+import { CommandEnterPredicateAvalabilityService } from 'src/warcommands/commands-panel/domain/command-container/services/command-enter-predicate-availability.service';
 import { CommandDropModule } from '../command-drop/command-drop.module';
 import { DragCustomPreviewService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/drag-custom-preview.service';
 import { CommandDropRemoveManagerService } from 'src/warcommands/commands-panel/domain/command/services/command-drop-remove-manager.service';
@@ -57,6 +58,7 @@ import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/doma
     providers: [
         CommandDragDropManagerService,
         CommandListDragDropManagerService,
+        CommandEnterPredicateAvalabilityService,
         CommandComponentManagerService,
         CommandContainerDragDropManagerService,
         DragCustomPreviewService,

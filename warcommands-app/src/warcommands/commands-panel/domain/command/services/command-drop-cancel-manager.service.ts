@@ -26,12 +26,6 @@ export class CommandDropCancelManagerService {
         cancelCommandDropListRef.connectedTo(dropItemList);
 
         this.commandDropRepositoryService.save(cancelCommandDropListRef, this.cancelCommandDropContainerIndex);
-        this.setCancelCommandDropContainerDroppedObserver(cancelCommandDropListRef);
-    }
-    private setCancelCommandDropContainerDroppedObserver(dropListRef: DropListRef): void {
-        dropListRef.dropped.subscribe(event => {
-            console.log('cancel drag');
-        });
     }
 
 }

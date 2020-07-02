@@ -13,6 +13,7 @@ import { CommandDragDropManagerEvents } from '../../command-drag-drop/events/com
 import { DragCustomPreviewService } from '../../command-drag-drop/services/drag-custom-preview.service';
 import { CommandType } from '../../command/model/command-type.enum';
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
+import { CommandEnterPredicateAvalabilityService } from './command-enter-predicate-availability.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class CommandContainerDragDropManagerService {
         private readonly dragCustomPreviewService: DragCustomPreviewService,
         private readonly commandRepositoryService: CommandRepositoryService,
         private readonly mouseDragDropHelperService: MouseDragDropHelperService,
+        private readonly commandEnterPredicateAvalabilityService: CommandEnterPredicateAvalabilityService,
     ) {}
 
     createCommandContainerDrop(commandContainerDivElement: ElementRef<HTMLDivElement>, commandContainer: CommandContainerDTO, scrollableElement: HTMLElement): void {
@@ -48,7 +50,7 @@ export class CommandContainerDragDropManagerService {
     addDragableElementToCommandContainer(dragableElement: ElementRef<HTMLDivElement>, command: GenericCommandDTO, position: number): void {
         const dragRefElement: DragRef = this.angularDragDropService.createDrag(dragableElement);
         dragRefElement.data = command;
-        dragRefElement.dragStartDelay = 200;
+        dragRefElement.dragStartDelay = 100;
 
         if (command.type !== CommandType.GameLoop) {
             const previewTemplate = this.dragCustomPreviewService.getDragHelperTemplate(command.type);
@@ -90,9 +92,11 @@ export class CommandContainerDragDropManagerService {
             
             for (const drop of dropList) {
                 
-                const commandContainerId = (drop.element as any).id;
-                drop.disabled = true;
-                this.commandDropRepositoryService.save(drop, commandContainerId);
+                const commandContainerId = (drop.element as any).getAttribute('id');
+                if (this.mouseHelperService.activeContainerId !== commandContainerId) {
+                    drop.disabled = true;
+                    this.commandDropRepositoryService.save(drop, commandContainerId);
+                }
             }
         });
 
@@ -104,7 +108,7 @@ export class CommandContainerDragDropManagerService {
             const dropList: DropListRef[] = this.commandDropRepositoryService.getDropItemList();
             
             for (const drop of dropList) {
-                const commandContainerId = (drop.element as any).id;
+                const commandContainerId = (drop.element as any).getAttribute('id');
                 drop.disabled = false;
                 this.commandDropRepositoryService.save(drop, commandContainerId);
             }
@@ -113,8 +117,32 @@ export class CommandContainerDragDropManagerService {
 
     private setDropAvailavilityFlagListener(dropList: DropListRef): void {
         dropList.enterPredicate = (drag, drop) => {
-            return (drop.element as any).getAttribute('id') === this.mouseHelperService.activeContainerId;
+
+            let isCommandContainerAvailable = false;
+
+            const isTheSameCommandContainerPointedByUser = (drop.element as any).getAttribute('id') === this.mouseHelperService.activeContainerId;
+
+            if (isTheSameCommandContainerPointedByUser) {
+                isCommandContainerAvailable = true;
+
+                let commandDraggedType = null;
+                if (this.isNewCommand(drag)) {
+                    commandDraggedType = drag.data;
+                } else {
+                    commandDraggedType = (drag.data as GenericCommandDTO).type;
+                }
+                const commandContainerId = (drop.element as any).getAttribute('id');
+
+                isCommandContainerAvailable = isCommandContainerAvailable &&
+                    this.commandEnterPredicateAvalabilityService.isDraggedCommandAvailableToDrop(commandDraggedType, commandContainerId);
+            }
+
+            return isCommandContainerAvailable;
         };
+    }
+
+    private isNewCommand(drag: DragRef): boolean {
+        return !isNaN(drag.data);
     }
 
     private updateDropList(commandContainerId: string): void {

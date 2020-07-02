@@ -26,8 +26,8 @@ export class MouseDragDropHelperService {
 
     private setActiveCommandContainer(path: any[]): void {
         
-        
-        const index = 0;
+        if (path.length > 0) {
+            const index = 0;
         
         //for (const index in path) {
             const item = path[index];
@@ -42,6 +42,7 @@ export class MouseDragDropHelperService {
         //        break;
             }
         //}
+        }
     }
 
     private desactivateThePreviousCommandContainer(commandContainerId: string): void {

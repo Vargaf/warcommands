@@ -40,7 +40,7 @@ export class CommandListDragDropManagerService {
 
         const dragRefElement: DragRef = this.angularDragDropService.createDrag(dragableElement);
         dragRefElement.data = commandType;
-        dragRefElement.dragStartDelay = 200;
+        dragRefElement.dragStartDelay = 100;
 
         this.setDragManagmentEvents(dragRefElement);
 
@@ -75,8 +75,10 @@ export class CommandListDragDropManagerService {
             
             for (const drop of dropList) {
                 const commandContainerId = (drop.element as any).id;
-                drop.disabled = true;
-                this.commandDropRepositoryService.save(drop, commandContainerId);
+                if (this.mouseDragDropHelperService.activeContainerId !== commandContainerId) {
+                    drop.disabled = true;
+                    this.commandDropRepositoryService.save(drop, commandContainerId);
+                }
             }
 
             this.uxUiNgrxRepositoryService.startDraggingACommandFromCommandList();

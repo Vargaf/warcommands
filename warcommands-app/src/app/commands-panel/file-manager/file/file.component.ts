@@ -32,7 +32,7 @@ export class FileComponent implements OnInit, AfterContentInit {
         this.uxUiNgrxRepository.watchWindowsSize().subscribe((windowSize) => {
             if (windowSize) {
                 setTimeout(() => {
-                    const upperBarHeight = 109;
+                    const upperBarHeight = 115;
                     const fileContentElementHeight = windowSize.height - upperBarHeight;
                     this.renderer.setStyle(this.fileContentElement.nativeElement, 'height', fileContentElementHeight + 'px');
                 }, 0);
