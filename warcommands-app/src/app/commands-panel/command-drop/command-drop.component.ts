@@ -9,6 +9,7 @@ import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/comman
 import { CommandRepositoryService } from 'src/warcommands/commands-panel/domain/command/services/command-repository.service';
 import { Subscription } from 'rxjs';
 import { CommandRemovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-removed-events';
+import { ContentObserver } from '@angular/cdk/observers';
 
 @Component({
     selector: 'app-command-drop',
@@ -29,6 +30,9 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('commandsDropContainer', { static: true })
     commandsDropContainer: ElementRef<HTMLDivElement>;
 
+    @ViewChild('commandsEditorElement', { static: true })
+    commandsEditorElement: ElementRef<HTMLDivElement>;
+
     @ViewChildren(CommandDirective, {read: ViewContainerRef})
     public commandContainerView: QueryList<ViewContainerRef>;
 
@@ -46,6 +50,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly commandMovedEvents: CommandMovedEvents,
         private readonly commandRemovedEvents: CommandRemovedEvents,
         private readonly commandRepositoryService: CommandRepositoryService,
+        private readonly contentObserver: ContentObserver
     ) { }
 
     ngOnInit() {
@@ -58,7 +63,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setMoveCommandFromCommandContainerListener();
         this.setMoveCommandToCommandContainerListener();
         this.setRemovedCommandFromContainerListener();
-        this.setNewCommandListener();
+        this.setCommandEditorContentChangeListener();
     }
 
     ngAfterViewInit() {
@@ -76,8 +81,6 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadCommandList();
 
         this.subscribers.push(subscription);
-
-        this.refreshNumberLines(3000);
     }
 
     ngOnDestroy() {
@@ -86,12 +89,14 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private setNewCommandListener(): void {
-        const subsciption = this.commandCreatedEvents.commandCreatedListener().subscribe(() => {
-            this.refreshNumberLines();
-        });
+    private setCommandEditorContentChangeListener(): void {
+        if (this.fileContentElement) {
+            const subscription = this.contentObserver.observe(this.commandsEditorElement).subscribe((event) => {
+                this.refreshNumberLines();
+            });
 
-        this.subscribers.push(subsciption);
+            this.subscribers.push(subscription);
+        }
     }
 
     private setNewCommandDroppedToContainerListener(): void {
@@ -153,8 +158,6 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
             }
         }
-
-        this.refreshNumberLines();
     }
 
     private loadCommandList(): void {
@@ -166,19 +169,12 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private refreshNumberLines(gapTime?: number): void {
-
-        const gapTimeRefresh = gapTime || 1000;
-
-        if (this.fileContentElement) {
-            setTimeout(() =>{
-                const bottomPadding = 10;
-                const lineHeight = 70;
-                const scrollHeight: number = this.commandsDropContainer.nativeElement.scrollHeight - bottomPadding;
-                const numberOfLines = Math.ceil(scrollHeight / lineHeight);
-                this.numberOfLines = Array(numberOfLines).fill(0).map((x, i) => ++i);
-            }, gapTimeRefresh);
-        }
+    private refreshNumberLines(): void {
+        const bottomPadding = 10;
+        const lineHeight = 70;
+        const scrollHeight: number = this.commandsEditorElement.nativeElement.offsetHeight - bottomPadding;
+        const numberOfLines = Math.ceil(scrollHeight / lineHeight);
+        this.numberOfLines = Array(numberOfLines).fill(0).map((x, i) => ++i);
     }
 
 }

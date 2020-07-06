@@ -10,7 +10,7 @@
             {{ number }}
         </div>
     </div>
-    <div>
+    <div #commandsEditorElement>
         <div *ngFor="let command of commandList"
         class="command"
         [attr.dirty]="true"

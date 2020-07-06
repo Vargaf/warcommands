@@ -1,6 +1,6 @@
 .commands-drop-container {
     min-width: fit-content;
-    padding: 10px 10px 10px 20px;
+    padding: 10px 20px 10px 20px;
     min-height:80px;
     border-radius:10px;
     overflow:hidden;
@@ -27,5 +27,6 @@
 }
 
 .scroll-gap {
-    border:dashed 1px #6272A4
+    border:dashed 1px #6272A4;
+    padding-left: 10px;
 }
