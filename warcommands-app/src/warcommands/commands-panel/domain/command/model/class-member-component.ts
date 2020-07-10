@@ -5,5 +5,6 @@ export interface ClassMemberComponent {
 
     classMember: ClassMemberDTO;
     classMemberChange: EventEmitter<ClassMemberDTO>;
+    commandId: string;
 
 }

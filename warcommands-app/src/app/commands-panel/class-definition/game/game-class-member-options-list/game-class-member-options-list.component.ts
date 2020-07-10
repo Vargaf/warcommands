@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { GameClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/game-class-options-definition';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 import * as _ from 'lodash';
 import { ClassMemberOptionDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member-option.dto';
+import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
 
 @Component({
     selector: 'app-game-class-member-options-list',
@@ -19,6 +20,9 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
     classMember: ClassMemberDTO;
     gameClassMember: ClassMemberDTO;
 
+    @Input()
+    commandId: string;
+
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
     
@@ -26,36 +30,34 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
     memberSelectElement: MatSelect;
 
     gameCommandClassDefinition = GameClassOptionsDefinition;
+
+    private subscriptionManager: Subscription = new Subscription();
     
     memberSelected: string;
     componentFormGroup: FormGroup;
+    formErrorMessage: string;
+    isCommandValid = true;
     areMemberOptionsVisible = false;
-    onMememberOptionChangeSubscription: Subscription;
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private changeDetectorRef: ChangeDetectorRef
+        private changeDetectorRef: ChangeDetectorRef,
+        private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }
 
     ngOnInit(): void {
 
         this.initializeClassMember();
-
-        this.componentFormGroup = this.formBuilder.group({
-            memberSelected: [this.memberSelected, [Validators.required]]
-        });
-
-        this.setMemberOptionOnChangeListener();
+        this.initializeForm();
     }
 
     ngOnDestroy() {
-        this.onMememberOptionChangeSubscription?.unsubscribe();
+        this.subscriptionManager.unsubscribe();
     }
 
     showMemberOptions(): void {
         this.areMemberOptionsVisible = true;
         this.componentFormGroup.get('memberSelected').enable();
-        this.setMemberOptionOnChangeListener();
         this.changeDetectorRef.detectChanges();
         this.memberSelectElement.open();
     }
@@ -63,6 +65,50 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
     onClassMemberSelected(classMember: ClassMemberDTO): void {
         this.gameClassMember = classMember;
         this.emitSelectedMember();
+    }
+
+    private initializeForm(): void {
+        this.componentFormGroup = this.formBuilder.group({
+            memberSelected: [this.memberSelected, [Validators.required]]
+        });
+
+        const valueChangesSubscription = this.componentFormGroup.valueChanges.subscribe(() => {
+            const memberSelected = this.componentFormGroup.get('memberSelected').value;
+            this.onMemberSelectionChanged(memberSelected);
+        });
+
+        const statusChangesSubscription = this.componentFormGroup.statusChanges.subscribe(() => {
+            const previousFormStatus = this.isCommandValid;
+
+            if (!this.areMemberOptionsVisible) {
+                this.isCommandValid = true;
+            } else {
+                if (this.componentFormGroup.valid) {
+                    this.isCommandValid = true;
+                } else {
+                    this.isCommandValid = false;
+                    this.buildCommandErrorMessage();
+                }
+            }
+
+            this.commandPathErrorManagerService.setCommandPathError(this.commandId, previousFormStatus, this.isCommandValid);
+        });
+
+        this.subscriptionManager.add(valueChangesSubscription);
+        this.subscriptionManager.add(statusChangesSubscription);
+    }
+
+    private buildCommandErrorMessage(): void {
+        let errorFormMessage: Array<string> = [];
+        const memberSelectedInput: AbstractControl = this.componentFormGroup.get('memberSelected');
+
+        if(memberSelectedInput.errors) {
+            if (memberSelectedInput.errors.required) {
+                errorFormMessage.push('- Select a method or property.');
+            }
+        }
+
+        this.formErrorMessage = errorFormMessage.join('\n\n');
     }
 
     private initializeClassMember(): void {
@@ -98,12 +144,6 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
         });
 
         return isClassMemberAvailable;
-    }
-
-    private setMemberOptionOnChangeListener(): void {
-        this.onMememberOptionChangeSubscription = this.componentFormGroup.get('memberSelected').valueChanges.subscribe((event) => {
-            this.onMemberSelectionChanged(event);
-        });
     }
 
     private onMemberSelectionChanged(value: string): void {

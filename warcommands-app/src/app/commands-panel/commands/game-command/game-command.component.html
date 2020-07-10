@@ -1,4 +1,5 @@
 <div class="variable-content warcommands-command-panel-command warcommands-command-panel-command-mat-form-black-font-color"
+    [ngClass]="{ 'warcommands-command-panel-command-invalid': showCommandInvalidBackground }"
     fxLayout="row"
     fxLayoutAlign="center center">
     <div>
@@ -6,6 +7,7 @@
     </div>
     <app-game-class-member-options-list
         (classMemberChange)="onClassMemberSelected($event)"
-        [classMember]="gameCommand.classMember">
+        [classMember]="gameCommand.classMember"
+        [commandId]="gameCommand.id">
     </app-game-class-member-options-list>
 </div>

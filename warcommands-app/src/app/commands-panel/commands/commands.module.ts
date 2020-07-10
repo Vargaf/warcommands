@@ -31,6 +31,8 @@ import { VariableInScopeFinderService } from 'src/warcommands/commands-panel/dom
 import { GetClassNameFromCommandService } from 'src/warcommands/commands-panel/domain/command/model/set-variable-from-command/get-class-name-from-command.service';
 import { ClassMemberDirective } from './class-member.directive';
 import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/domain/command/services/class-member-component/class-member-component-factory.service';
+import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
+import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
 
 
 
@@ -68,6 +70,8 @@ import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/doma
         VariableInScopeFinderService,
         GetClassNameFromCommandService,
         ClassMemberComponentFactory,
+        CommandPathFinderService,
+        CommandPathErrorManagerService,
         { provide: CommandDropRepository, useClass: AngularCommandDropRepositoryService },
         { provide: CommandDraggableElementRepositoryService, useClass: AngularCommandDraggableElementRepositoryService }
     ],

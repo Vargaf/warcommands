@@ -11,10 +11,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-bottom: 10px;
 }
 
-.commands-drop-container .command:first-child {
-    
-}
-
 .commands-drop-container .command:last-child {
     margin-bottom: 0;
 }
@@ -79,6 +75,36 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .mat-progress-spinner circle,.mat-spinner circle {
         stroke: #6272A4;
     }
+}
+
+.warcommands-command-panel-tooltip {
+    white-space: pre-line;
+    background: #424450;
+    font-size: inherit;
+    border: 1px solid #191A21;
+}
+
+.warcommands-command-panel-command-error-icon {
+    margin-right: 10px;
+}
+
+.warcommands-command-panel-command-invalid {
+    
+    background-color: red !important;
+    color: white !important;
+
+    .mat-select-value {
+        color: white;
+    }
+
+    .mat-select-arrow {
+        color: white;
+    }
+
+    .mat-form-field-underline {
+        background-color: white;
+    }
+    
 }
 
 

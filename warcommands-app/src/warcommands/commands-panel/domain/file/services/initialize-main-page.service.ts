@@ -78,7 +78,8 @@ export class InitializeMainPageService {
             parentCommandContainerId: commandContainer.id,
             innerCommandContainerIdList: {
                 commandContainerId: uuid()
-            }
+            },
+            commandPathErrorsCounter: 0,
         };
 
         return command;

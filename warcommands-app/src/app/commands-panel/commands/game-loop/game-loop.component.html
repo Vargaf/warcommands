@@ -1,11 +1,11 @@
 <div class="game-loop-content warcommands-command-panel-command">
-    <div class="game-loop-start" fxLayout="row" fxLayoutAlign="start center">
+    <div class="game-loop-start" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{ 'warcommands-command-panel-command-invalid': showCommandInvalidBackground }">
         <div class="game-loop-label">gameLoop ()</div>
     </div>
-    <div class="game-loop-body">
+    <div class="game-loop-body" [ngClass]="{ 'warcommands-command-panel-command-invalid': showCommandInvalidBackground }">
         <div class="game-loop-body-content">
             <app-command-drop [commandContainerId]="commandContainerId" *ngIf=commandContainerId></app-command-drop>
         </div>
     </div>
-    <div class="game-loop-end"></div>
+    <div class="game-loop-end" [ngClass]="{ 'warcommands-command-panel-command-invalid': showCommandInvalidBackground }"></div>
 </div>

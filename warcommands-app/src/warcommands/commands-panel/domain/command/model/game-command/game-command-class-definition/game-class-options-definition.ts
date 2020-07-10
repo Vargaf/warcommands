@@ -4,5 +4,5 @@ import { GameClassPropertyOptionList } from './properties/game-class-property-op
 
 export const GameClassOptionsDefinition: ClassOptionDefinition = {
     methods: GameClassMethodOptionList,
-    properties: GameClassPropertyOptionList
+    properties: [], //GameClassPropertyOptionList
 }

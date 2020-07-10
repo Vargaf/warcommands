@@ -6,6 +6,9 @@
     padding: 0px 20px;
     inline-size: max-content;
 
+    background-color: #BD93F9;
+    color: black;
+
     .var-name-input {
         padding: 0px 10px;
     }
@@ -13,14 +16,4 @@
     .var-value-input {
         padding-left: 10px;
     }
-}
-
-.set-variable-content-valid {
-    background-color: #BD93F9;
-    color: black;
-}
-
-.set-variable-content-invalid {
-    background-color: red;
-    color: white;
 }

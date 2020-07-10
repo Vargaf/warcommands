@@ -38,17 +38,20 @@
                 <app-create-worker 
                     *ngSwitchCase="'createWorker'"
                     (classMemberChange)="onClassMemberSelected($event)"
-                    [classMember]="classMember">
+                    [classMember]="classMember"
+                    [commandId]="commandId">
                 </app-create-worker>
                 <app-get-worker
                     *ngSwitchCase="'getWorker'"
                     (classMemberChange)="onClassMemberSelected($event)"
-                    [classMember]="classMember">
+                    [classMember]="classMember"
+                    [commandId]="commandId">
                 </app-get-worker>
                 <app-get-worker-list 
                     *ngSwitchCase="'getWorkerList'"
                     (classMemberChange)="onClassMemberSelected($event)"
-                    [classMember]="classMember">
+                    [classMember]="classMember"
+                    [commandId]="commandId">
                 </app-get-worker-list>
                 <div *ngSwitchDefault></div>
             </container-element>

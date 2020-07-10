@@ -6,6 +6,13 @@
     </div>
     <ng-template #memberOptionList>
         <div>.</div>
+        <div #errorsTooltip='matTooltip'
+            [matTooltip]="formErrorMessage"
+            [matTooltipClass]="'warcommands-command-panel-tooltip'"
+            *ngIf="!isCommandValid" (click)="errorsTooltip.toggle()"
+        >
+            <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+        </div>
         <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
             <div>
                 <mat-form-field>
@@ -14,11 +21,6 @@
                         <mat-option value="-1">none</mat-option>
                         <mat-optgroup label="Methods">
                             <mat-option *ngFor="let member of gameCommandClassDefinition.methods" [value]="member.value">
-                                {{ member.label }}
-                            </mat-option>
-                        </mat-optgroup>
-                        <mat-optgroup label="Properties">
-                            <mat-option *ngFor="let member of gameCommandClassDefinition.properties" [value]="member.value">
                                 {{ member.label }}
                             </mat-option>
                         </mat-optgroup>
@@ -31,7 +33,8 @@
                 <app-get-base-by-index 
                     *ngSwitchCase="'getBaseByName'"
                     (classMemberChange)="onClassMemberSelected($event)"
-                    [classMember]="classMember">
+                    [classMember]="classMember"
+                    [commandId]="commandId">
                 </app-get-base-by-index>
 
                 <div *ngSwitchCase="'resources'">

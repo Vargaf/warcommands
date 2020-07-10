@@ -7,16 +7,20 @@ import * as _ from 'lodash';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { workerRoleSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-role-select-options';
+import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 
 @Component({
     selector: 'app-get-worker-list',
     templateUrl: './get-worker-list.component.html',
     styleUrls: ['./get-worker-list.component.scss']
 })
-export class GetWorkerListComponent implements OnInit, OnDestroy {
+export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
     classMember: ClassMemberDTO;
+
+    @Input()
+    commandId: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();

@@ -17,8 +17,10 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
 
     @Input()
     classMember: ClassMemberDTO;
-
     baseClassMember: ClassMemberDTO;
+
+    @Input()
+    commandId: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();

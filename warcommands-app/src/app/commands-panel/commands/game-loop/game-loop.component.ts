@@ -14,6 +14,8 @@ export class GameLoopComponent implements OnInit, OnDestroy {
 
     commandContainerId: string;
 
+    showCommandInvalidBackground = false;
+
     private commandDataSubscription: Subscription;
 
     constructor(
@@ -25,6 +27,8 @@ export class GameLoopComponent implements OnInit, OnDestroy {
             this.commandContainerId = this.commandData.innerCommandContainerIdList.commandContainerId;
             this.commandDataSubscription = this.commandNgrxRepositoryService.getCommand(this.commandData.id).subscribe((command) => {
                 this.commandData = (command as GameLoopCommandEntity);
+
+                this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
             });
         }
     }

@@ -24,7 +24,8 @@
                 <app-set-role
                     *ngSwitchCase="'setRole'"
                     (classMemberChange)="onClassMemberSelected($event)"
-                    [classMember]="classMember">
+                    [classMember]="classMember"
+                    [commandId]="commandId">
                 </app-set-role>
                 <div *ngSwitchDefault></div>
             </container-element>

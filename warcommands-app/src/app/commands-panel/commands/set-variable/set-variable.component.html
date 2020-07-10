@@ -1,9 +1,15 @@
 
 <div class="set-variable-content warcommands-command-panel-command warcommands-command-panel-command-mat-form-black-font-color"
-    [ngClass]="commandContentDynamicClass"
+    [ngClass]="{ 'warcommands-command-panel-command-invalid': showCommandInvalidBackground }"
     fxLayout="row"
     fxLayoutAlign="center center">
-    <mat-icon *ngIf="!isCommandValid">bug_report</mat-icon>
+    <div #errorsTooltip='matTooltip'
+        [matTooltip]="formErrorMessage"
+        [matTooltipClass]="'warcommands-command-panel-tooltip'"
+        *ngIf="!isCommandValid" (click)="errorsTooltip.toggle()"
+    >
+        <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+    </div>
     <div>set</div>
     <div>
         <form [formGroup]="setVarForm" class="warcommands-command-panel-command-mat-form">

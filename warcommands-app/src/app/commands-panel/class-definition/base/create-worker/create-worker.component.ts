@@ -17,6 +17,9 @@ export class CreateWorkerComponent implements OnInit, ClassMemberComponent {
     classMember: ClassMemberDTO;
     createWorkerClassMember: ClassMemberDTO;
 
+    @Input()
+    commandId: string;
+
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
     

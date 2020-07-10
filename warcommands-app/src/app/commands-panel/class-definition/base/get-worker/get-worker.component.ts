@@ -5,16 +5,20 @@ import { GetWorkerClassMethodMember } from 'src/warcommands/commands-panel/domai
 import * as _ from 'lodash';
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
 import { BaseClassGetWorkerMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/methods/base-class-get-worker-method-option';
+import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 
 @Component({
     selector: 'app-get-worker',
     templateUrl: './get-worker.component.html',
     styleUrls: ['./get-worker.component.scss']
 })
-export class GetWorkerComponent implements OnInit {
+export class GetWorkerComponent implements OnInit, ClassMemberComponent {
 
     @Input()
     classMember: ClassMemberDTO;
+
+    @Input()
+    commandId: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();

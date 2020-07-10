@@ -21,7 +21,8 @@ export class CommandDataFromCommandDroppedFactory {
             id: uuid(),
             type: commandType,
             fileId,
-            parentCommandContainerId: commandContainerId
+            parentCommandContainerId: commandContainerId,
+            commandPathErrorsCounter: 0,
         };
 
         switch (commandType) {

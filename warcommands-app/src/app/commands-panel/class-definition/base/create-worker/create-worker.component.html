@@ -5,7 +5,8 @@
     <div>
         <app-worker-class-member-option-list
             (classMemberChange)="onClassMemberSelected($event)"
-            [classMember]="createWorkerClassMember.methodChained">
+            [classMember]="createWorkerClassMember.methodChained"
+            [commandId]="commandId">
         </app-worker-class-member-option-list>
     </div>
 </div>

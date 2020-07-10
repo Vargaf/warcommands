@@ -9,6 +9,7 @@ export interface GenericCommandDTO {
     innerCommandContainerIdList?: { [index: string]: string };
     classMember?: ClassMemberDTO;
     data?: any;
+    commandPathErrorsCounter: number;
 }
 
 export interface GenericCommandListDTO {

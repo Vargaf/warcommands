@@ -1,9 +1,20 @@
 <div class="set-variable-from-command-content warcommands-command-panel-command warcommands-command-panel-command-mat-form-black-font-color"
+    [ngClass]="{ 'warcommands-command-panel-command-invalid': showCommandInvalidBackground }"
     fxLayout="row"
     fxLayoutAlign="center center">
+
+    <div #errorsTooltip='matTooltip'
+        [matTooltip]="formErrorMessage"
+        [matTooltipClass]="'warcommands-command-panel-tooltip'"
+        *ngIf="!isCommandValid" (click)="errorsTooltip.toggle()">
+
+        <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+    </div>
+
     <div class="set-label">
         set
     </div>
+
     <div>
         <form [formGroup]="setVarForm" class="warcommands-command-panel-command-mat-form">
             <mat-form-field class="var-name-input">
@@ -11,9 +22,11 @@
             </mat-form-field>
         </form>
     </div>
+
     <div class="assignment-operator">
         =
     </div>
+    
     <div [attr.MouseHelperDetectorCommandContainerId]="setVarCommandContainerId" class="set-var-command-container-wrapper">
         <app-command-drop [commandContainerId]="setVarCommandContainerId" [isSingleCommand]="true"></app-command-drop>
     </div>

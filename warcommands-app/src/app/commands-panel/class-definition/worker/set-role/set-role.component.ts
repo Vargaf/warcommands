@@ -19,6 +19,9 @@ export class SetRoleComponent implements OnInit, OnDestroy, ClassMemberComponent
     @Input()
     classMember: ClassMemberDTO;
 
+    @Input()
+    commandId: string;
+
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 

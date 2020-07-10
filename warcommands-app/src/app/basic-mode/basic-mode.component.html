@@ -1,7 +1,7 @@
 <div class="basic-mode-content" [ngClass.gt-sm]="['basic-mode-content-gt-sm']">
 
     <mat-sidenav-container class="side-nav-container">
-        <mat-sidenav #sidenav mode="over" position="end" [opened]="isCommandsPanelOppened" style="width: 100%;">
+        <mat-sidenav #sidenav mode="over" position="end" disableClose="true" [opened]="isCommandsPanelOppened" style="width: 100%;">
             <app-commands-panel></app-commands-panel>
         </mat-sidenav>
         <mat-sidenav-content>

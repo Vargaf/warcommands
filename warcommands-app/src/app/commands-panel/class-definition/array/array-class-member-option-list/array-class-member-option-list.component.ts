@@ -19,6 +19,9 @@ export class ArrayClassMemberOptionListComponent implements OnInit, OnDestroy, C
     classMember: ClassMemberDTO;
     arrayClassMember: ClassMemberDTO;
 
+    @Input()
+    commandId: string;
+
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 

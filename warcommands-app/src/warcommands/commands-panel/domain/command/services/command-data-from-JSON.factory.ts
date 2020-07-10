@@ -23,6 +23,7 @@ export class CommandDataFromJSONFactory {
             parentCommandContainerId,
             fileId,
             data: rawCommand.data,
+            commandPathErrorsCounter: 0,
         };
 
         switch (rawCommand.type) {

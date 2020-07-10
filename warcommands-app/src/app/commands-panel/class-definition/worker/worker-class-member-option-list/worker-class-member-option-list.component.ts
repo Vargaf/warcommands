@@ -19,6 +19,9 @@ export class WorkerClassMemberOptionListComponent implements OnInit, OnDestroy, 
     classMember: ClassMemberDTO;
     workerClassMember: ClassMemberDTO;
 
+    @Input()
+    commandId: string;
+
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 

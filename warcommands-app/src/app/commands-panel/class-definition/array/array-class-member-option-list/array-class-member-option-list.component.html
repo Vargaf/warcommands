@@ -24,7 +24,8 @@
                 <app-array-count 
                     *ngSwitchCase="'count'"
                     (classMemberChange)="onClassMemberSelected($event)"
-                    [classMember]="classMember">
+                    [classMember]="classMember"
+                    [commandId]="commandId">
                 </app-array-count>
                 <div *ngSwitchDefault></div>
             </container-element>

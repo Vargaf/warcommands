@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatRippleModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -25,7 +25,7 @@ import { MatRippleModule } from '@angular/material/core';
         MatFormFieldModule,
         MatInputModule,
         MatProgressSpinnerModule,
-        MatRippleModule
+        MatTooltipModule
     ]
 })
 export class MaterialModule { }
