@@ -20,3 +20,8 @@ export const buildingSelector = createSelector(
     buildingListFeatureSelector,
     (state: BuildingListState, props) => state.list[props.buildingId]
 );
+
+export const buildingListSelector = createSelector(
+    buildingListFeatureSelector,
+    (state: BuildingListState) => state.list
+);

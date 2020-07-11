@@ -24,6 +24,10 @@ export class BuildingsNgrxRepositoryService {
         return this.store.pipe(select(BuildingSelectors.buildingSelector, { buildingId }));
     }
 
+    watchBuildingList(): Observable<{ [index: string]: BuildingDTO}> {
+        return this.store.pipe(select(BuildingSelectors.buildingListSelector));
+    }
+
     remove(building: BuildingDTO): void {
         this.store.dispatch(BuildingActions.removeBuilding({ building }));
     }

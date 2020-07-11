@@ -13,8 +13,13 @@
                     (
                 </div>
                 <div>
-                    <mat-form-field class="base-name-input">
-                        <input matInput type="text" formControlName="baseName">
+                    <mat-form-field>
+                        <mat-select formControlName="baseName">
+                            <mat-option>Select an option</mat-option>
+                            <mat-option *ngFor="let base of playerBaseList" [value]="base">
+                                {{ base }}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
                 <div>

@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 import { ResourcesDTO } from 'src/warcommands/basic-mode/domain/share/model/resources.dto';
 import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
+import { QueryFilterDTO } from 'src/warcommands/basic-mode/domain/share/model/query-filter.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,29 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
 
     findById(buildingId: string): BuildingDTO {
         return _.cloneDeep(this.buildingList.get(buildingId));
+    }
+
+    findBy(filterList: QueryFilterDTO): BuildingDTO[] {
+        const filteredList: BuildingDTO[] = [];
+        const filterKeyList = Object.keys(filterList);
+
+        this.buildingList.forEach((building) => {
+            
+            let filtersMatch = true;
+
+            for (const filterKey of filterKeyList) {
+                if (building[filterKey] !== filterList[filterKey]) {
+                    filtersMatch = false;
+                    break;
+                }
+            }
+
+            if (filtersMatch) {
+                filteredList.push(_.cloneDeep(building));
+            }
+        });
+
+        return filteredList;
     }
 
     remove(building: BuildingDTO): void {
