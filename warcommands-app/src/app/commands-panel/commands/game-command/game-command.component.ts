@@ -4,7 +4,7 @@ import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/mo
 import { CommandClassMemberAddedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-class-member-added-events';
 import * as _ from 'lodash';
 import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-game-command',

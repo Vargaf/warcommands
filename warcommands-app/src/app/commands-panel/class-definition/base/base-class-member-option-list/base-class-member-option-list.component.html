@@ -1,4 +1,6 @@
-<div class="base-class-member-option-list-content" fxLayout="row" fxLayoutAlign="center center">
+<div class="base-class-member-option-list-content"
+    fxLayout="row"
+    fxLayoutAlign="center center">
     <div *ngIf="!areMemberOptionsVisible; else memberOptionList">
         <button mat-icon-button aria-label="Save file" (click)="showMemberOptions()">
             <mat-icon>arrow_drop_down_circle</mat-icon>
@@ -6,7 +8,7 @@
     </div>
     <ng-template #memberOptionList>
         <div>
-            <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
+            <form [formGroup]="componentFormGroup">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <div>
                         .

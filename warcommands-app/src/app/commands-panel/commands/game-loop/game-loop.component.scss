@@ -4,8 +4,6 @@
 }
 
 .game-loop-start {
-    background-color: #50FA7B;
-    color: black;
     border-radius: 10px 10px 10px 0;
     padding: 0 20px;
     height: 60px;
@@ -16,19 +14,12 @@
 }
 
 .game-loop-body {
-    background-color: #50FA7B;
     padding-left: 10px;
     border-radius: 0 15px 15px 0;
 }
 
 .game-loop-end {
-    background-color: #50FA7B;
     border-radius: 0 10px 10px 10px;
     height: 60px;
     text-align: center;
-}
-
-.command-invalid {
-    background-color: red;
-    color: white;
 }

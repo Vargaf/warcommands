@@ -165,9 +165,11 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy, After
         this.setVarCommandContainerId = this.setVariableCommand.innerCommandContainerIdList.command;
 
         const subscription = this.commandNgrxRepositoryService.getCommand(this.setVariableCommand.id).subscribe((command) => {
-            this.setVariableCommand = (_.cloneDeep(command) as SetVariableFromCommandCommandEntity);
+            if (command) {
+                this.setVariableCommand = (_.cloneDeep(command) as SetVariableFromCommandCommandEntity);
 
-            this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
+                this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
+            }
         });
 
         this.subscriptionManager.add(subscription);

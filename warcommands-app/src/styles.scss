@@ -3,10 +3,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.warcommands-command-panel-command {
-    min-height: 60px;
-}
-
 .commands-drop-container .command {
     margin-bottom: 10px;
 }
@@ -17,44 +13,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .commands-drop-container .command:only-child {
     margin: 0;
-}
-
-.warcommands-command-panel-command-mat-form {
-
-    .mat-form-field-infix {
-        padding: 0px;
-        border-top: 0;
-    }
-
-    .mat-form-field {
-        line-height: 1em;
-        
-    }
-
-    .mat-form-field-wrapper {
-        padding-bottom: 0;
-    }
-
-    .mat-form-field-underline {
-        bottom: 0;
-    }
-    
-}
-
-.warcommands-command-panel-command-mat-form-black-font-color {
-    
-    .mat-select-value {
-        color: black;
-    }
-
-    .mat-select-arrow {
-        color: black;
-    }
-
-    .mat-form-field-underline {
-        background-color: black;
-    }
-    
 }
 
 .commands-drop-container-single-command {
@@ -88,23 +46,78 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-right: 10px;
 }
 
-.warcommands-command-panel-command-invalid {
-    
-    background-color: red !important;
-    color: white !important;
+$purple: #BD93F9;
+$cyan: #8BE9FD;
+$green: #50FA7B;
+$black: #000000;
+$white: #ffffff;
+$red: #ff0000;
 
-    .mat-select-value {
-        color: white;
+@mixin warcommands-command-panel-command-mat-form($fontColor) {
+
+    .mat-form-field-infix {
+        padding: 0px;
+        border-top: 0;
     }
 
-    .mat-select-arrow {
-        color: white;
+    .mat-form-field {
+        line-height: 1em;
+        
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
     }
 
     .mat-form-field-underline {
-        background-color: white;
+        bottom: 0;
+        background-color: $fontColor;
     }
-    
+
+    .mat-select-value {
+        color: $fontColor;
+    }
+
+    .mat-select-arrow {
+        color: $fontColor;
+    }
 }
 
+@mixin command-panel-command-components($backgroundColor, $fontColor) {
+    &__background {
+        min-height: 60px;
+        background-color: $backgroundColor;
+    }
+    
+    &__color {
+        color: $fontColor;
+        
+        @include warcommands-command-panel-command-mat-form($fontColor)
+    }
+}
 
+@mixin command-panel-command($backgroundColor, $fontColor) {
+    
+    &__valid {
+        @include command-panel-command-components($backgroundColor, $fontColor)
+    }
+
+    &__invalid {
+        @include command-panel-command-components($red, $white)
+    }
+}
+
+.set-variable-from-command--command {
+    @include command-panel-command($purple, $black);
+}
+
+.set-variable--command {
+    @include command-panel-command($purple, $black);
+}
+
+.game--command {
+    @include command-panel-command($cyan, $black);
+}
+.game-loop--command {
+    @include command-panel-command($green, $black);
+}
