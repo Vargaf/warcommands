@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, OnDestroy, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SetVariableFromCommandCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/set-variable-from-command-command.entity';
 import * as _ from 'lodash';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
@@ -11,6 +11,8 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { GetClassNameFromCommandService } from 'src/warcommands/commands-panel/domain/command/model/set-variable-from-command/get-class-name-from-command.service';
 import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
+import { CommandComponent } from 'src/warcommands/commands-panel/domain/command-component/composition/command-component';
+import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
 
 
 @Component({
@@ -18,16 +20,12 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
     templateUrl: './set-variable-from-command.component.html',
     styleUrls: ['./set-variable-from-command.component.scss']
 })
-export class SetVariableFromCommandComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SetVariableFromCommandComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input() commandData: GenericCommandDTO;
     setVariableCommand: SetVariableFromCommandCommandEntity;
 
-    setVarForm: FormGroup;
     varName: string;
-    isCommandValid = true;
-    formErrorMessage: string;
-    showCommandInvalidBackground = false;
     setVarCommandContainerId: string;
 
     private subscriptionManager: Subscription = new Subscription();
@@ -42,26 +40,32 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy, After
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,
         private readonly commandRepositoryService: CommandRepositoryService,
         private readonly getClassNameFromCommandService: GetClassNameFromCommandService,
-        private readonly commandPathErrorManagerService: CommandPathErrorManagerService
-    ) { }
+        protected readonly commandPathErrorManagerService: CommandPathErrorManagerService,
+        protected readonly commandPathFinderService: CommandPathFinderService,
+    ) {
+        super(commandPathFinderService, commandPathErrorManagerService);
+    }
 
     ngOnInit(): void {
 
         this.initializeCommand();
         this.initializeForm();
         this.setCommandContainerWatcher();
+
+        this.commandComponentInitialize();
     }
 
     ngOnDestroy(): void {
         this.commandWatcherSubscription?.unsubscribe();
         this.subscriptionManager.unsubscribe();
+
+        this.commandComponentDestroy();
     }
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            this.setVarForm.updateValueAndValidity();
-        }, 0);
-        
+            this.commandForm.updateValueAndValidity();
+        });
     }
 
     private setCommandContainerWatcher(): void {
@@ -87,13 +91,13 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy, After
                 this.setVariableCommand.data.innerCommandId = command.id;
                 this.setVariableCommand.data.className = this.getClassNameFromCommandService.getClassName(command.id);
                 this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
-                this.setVarForm.get('innerCommandId').setValue(command.id);
+                this.commandForm.get('innerCommandId').setValue(command.id);
             } else {
                 if (this.setVariableCommand.data.innerCommandId) {
                     this.setVariableCommand.data.innerCommandId = null;
                     this.setVariableCommand.data.className = null;
                     this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
-                    this.setVarForm.get('innerCommandId').reset();
+                    this.commandForm.get('innerCommandId').reset();
                 }
             }
         });
@@ -107,38 +111,29 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy, After
             );
     }
 
-    private initializeForm(): void {
-        this.setVarForm = this.formBuilder.group({
+    initializeForm(): void {
+        this.commandForm = this.formBuilder.group({
             varName: [this.varName, [Validators.required, Validators.pattern('^[_a-z]\\w*$')]],
             innerCommandId: [this.setVariableCommand.data.innerCommandId, [Validators.required]],
         });
 
-        const valueChangesSubscription = this.setVarForm.valueChanges.subscribe(() => {
-            this.setVariableCommand.data.varName = this.setVarForm.get('varName').value;
+        const valueChangesSubscription = this.commandForm.valueChanges.subscribe(() => {
+            this.setVariableCommand.data.varName = this.commandForm.get('varName').value;
             this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
         });
 
-        const statusChangesSubscription = this.setVarForm.statusChanges.subscribe(() => {
-            const previousFormStatus = this.isCommandValid;
-
-            if (this.setVarForm.valid) {
-                this.isCommandValid = true;
-            } else {
-                this.isCommandValid = false;
-                this.buildCommandErrorMessage();
-            }
-
-            this.commandPathErrorManagerService.setCommandPathError(this.setVariableCommand.id, previousFormStatus, this.isCommandValid);
+        const statusChangesSubscription = this.commandForm.statusChanges.subscribe(() => {
+            this.commandFormStatusManager();
         });
 
         this.subscriptionManager.add(valueChangesSubscription);
         this.subscriptionManager.add(statusChangesSubscription);
     }
 
-    private buildCommandErrorMessage(): void {
-        let errorFormMessage: Array<string> = [];
-        const varNameInput: AbstractControl = this.setVarForm.get('varName');
-        const innerCommandIdInput: AbstractControl = this.setVarForm.get('innerCommandId');
+    getCommandErrorMessages(): String[] {
+        let errorFormMessage: String[] = [];
+        const varNameInput: AbstractControl = this.commandForm.get('varName');
+        const innerCommandIdInput: AbstractControl = this.commandForm.get('innerCommandId');
 
         if (varNameInput.errors) {
             if (varNameInput.errors.required) {
@@ -155,7 +150,7 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy, After
             }
         }
 
-        this.formErrorMessage = errorFormMessage.join('\n\n');
+        return errorFormMessage;
     }
 
     private initializeCommand(): void {
@@ -168,7 +163,7 @@ export class SetVariableFromCommandComponent implements OnInit, OnDestroy, After
             if (command) {
                 this.setVariableCommand = (_.cloneDeep(command) as SetVariableFromCommandCommandEntity);
 
-                this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
+                this.handleInvalidCommandBackground(command);
             }
         });
 

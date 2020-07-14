@@ -33,6 +33,7 @@ import { ClassMemberDirective } from './class-member.directive';
 import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/domain/command/services/class-member-component/class-member-component-factory.service';
 import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
 import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
+import { MixinsModule } from 'src/app/commands-panel/commands/mixins/mixins.module';
 
 
 
@@ -55,7 +56,8 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
         CommandDropModule,
         GameCommandModule,
         FlexLayoutModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MixinsModule,
     ],
     providers: [
         CommandDragDropManagerService,

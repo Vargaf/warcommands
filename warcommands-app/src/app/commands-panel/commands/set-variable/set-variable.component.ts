@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SetVariableCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/set-variable-command.entity';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
@@ -8,83 +8,82 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 import { Subscription } from 'rxjs';
 import { ClassNameENUM } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-name.enum';
 import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
+import { CommandComponent } from 'src/warcommands/commands-panel/domain/command-component/composition/command-component';
+import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
 
 @Component({
     selector: 'app-set-variable',
     templateUrl: './set-variable.component.html',
     styleUrls: ['./set-variable.component.scss']
 })
-export class SetVariableComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SetVariableComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input() commandData: GenericCommandDTO;
     setVariableCommand: SetVariableCommandEntity;
+
     varName: string;
     varValue: string;
 
     private subscriptionManager: Subscription = new Subscription();
 
-    formErrorMessage: string;
-    
-    setVarForm: FormGroup;
-    isCommandValid = true;
-    showCommandInvalidBackground = false;
-    
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly commandUpdatedEvents: CommandUpdatedEvents,
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,
-        private readonly commandPathErrorManagerService: CommandPathErrorManagerService
-    ) { }
+        protected readonly commandPathErrorManagerService: CommandPathErrorManagerService,
+        protected readonly commandPathFinderService: CommandPathFinderService,
+    ) { 
+        super(commandPathFinderService, commandPathErrorManagerService);
+    }
 
     ngOnInit() {
         this.initializeCommand();
         this.initializeForm();
+
+        this.commandComponentInitialize();
     }
 
     ngOnDestroy() {
         this.subscriptionManager.unsubscribe();
+
+        this.commandComponentDestroy();
     }
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            this.setVarForm.updateValueAndValidity();
-        }, 0);
+            this.commandForm.updateValueAndValidity();
+        });
         
     }
 
-    private initializeForm(): void {
-        this.setVarForm = this.formBuilder.group({
+    initializeForm(): void {
+        this.commandForm = this.formBuilder.group({
             varName: [this.varName, [Validators.required, Validators.pattern('^[_a-z]\\w*$')]],
             varValue: [this.varValue, [Validators.required]]
         });
 
-        const subscription = this.setVarForm.statusChanges.subscribe(() => {
-            const previousFormStatus = this.isCommandValid;
-
-            if (this.setVarForm.valid) {
-                this.isCommandValid = true;
-            } else {
-                this.isCommandValid = false;
-                this.buildCommandErrorMessage();
-            }
-
+        const valueChangesSubscription = this.commandForm.valueChanges.subscribe(() => {
             this.setVariableCommand.data = {
                 className: ClassNameENUM.String,
-                varName: this.setVarForm.get('varName').value,
-                varValue: this.setVarForm.get('varValue').value
+                varName: this.commandForm.get('varName').value,
+                varValue: this.commandForm.get('varValue').value
             }
-
             this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
-            this.commandPathErrorManagerService.setCommandPathError(this.setVariableCommand.id, previousFormStatus, this.isCommandValid);
         });
 
-        this.subscriptionManager.add(subscription);
+        const statusChangesSubscription = this.commandForm.statusChanges.subscribe(() => {
+            this.commandFormStatusManager();
+            
+        });
+
+        this.subscriptionManager.add(valueChangesSubscription);
+        this.subscriptionManager.add(statusChangesSubscription);
     }
 
-    private buildCommandErrorMessage(): void {
-        let errorFormMessage: Array<string> = [];
-        const varNameInput: AbstractControl = this.setVarForm.get('varName');
-        const varValeuInput: AbstractControl = this.setVarForm.get('varValue');
+    getCommandErrorMessages(): String[] {
+        let errorFormMessage: String[] = [];
+        const varNameInput: AbstractControl = this.commandForm.get('varName');
+        const varValeuInput: AbstractControl = this.commandForm.get('varValue');
 
         if(varNameInput.errors) {
             if (varNameInput.errors.required) {
@@ -101,7 +100,7 @@ export class SetVariableComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         }
 
-        this.formErrorMessage = errorFormMessage.join('\n\n');
+        return errorFormMessage;
     }
 
     private initializeCommand(): void {
@@ -113,7 +112,7 @@ export class SetVariableComponent implements OnInit, OnDestroy, AfterViewInit {
         const subscription = this.commandNgrxRepositoryService.getCommand(this.setVariableCommand.id).subscribe((command) => {
             this.setVariableCommand = (_.cloneDeep(command) as SetVariableCommandEntity);
 
-            this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
+            this.handleInvalidCommandBackground(command);
             
         });
 

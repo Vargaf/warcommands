@@ -91,7 +91,7 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
                 }
             }
 
-            this.commandPathErrorManagerService.setCommandPathError(this.commandId, previousFormStatus, this.isCommandValid);
+            this.commandPathErrorManagerService.buildCommandPathError(this.commandId, previousFormStatus, this.isCommandValid);
         });
 
         this.subscriptionManager.add(valueChangesSubscription);

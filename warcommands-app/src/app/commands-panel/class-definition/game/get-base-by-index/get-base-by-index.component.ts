@@ -107,7 +107,7 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
                 this.buildCommandErrorMessage();
             }
 
-            this.commandPathErrorManagerService.setCommandPathError(this.commandId, previousFormStatus, this.isCommandValid);
+            this.commandPathErrorManagerService.buildCommandPathError(this.commandId, previousFormStatus, this.isCommandValid);
         });
 
         this.subscriptionManager.add(valueChangesSubscription);

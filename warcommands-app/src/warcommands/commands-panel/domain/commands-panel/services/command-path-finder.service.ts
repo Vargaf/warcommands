@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { CommandContainerRepositoryService } from '../../command-container/services/command-container-repository.service';
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
-import { CommandPathItemDTO } from '../model/comand-path-item.dto';
+import { CommandPathItemDTO } from '../model/command-path-item.dto';
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
-import { CommandPathItemType } from '../model/command-path-tiem-type.enum';
+import { CommandPathItemType } from '../model/command-path-item-type.enum';
 import { CommandContainerDTO } from '../../command-container/model/command-container.dto';
 
 @Injectable({
