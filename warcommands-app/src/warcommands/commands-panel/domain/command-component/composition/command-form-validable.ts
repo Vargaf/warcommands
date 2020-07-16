@@ -6,8 +6,8 @@ export abstract class CommandFormValidable {
     formErrorMessage: string;
     commandForm: FormGroup;
 
-    abstract initializeForm(): void;
-    abstract getCommandErrorMessages(): String[];
+    protected abstract initializeForm(): void;
+    protected abstract getCommandErrorMessages(): String[];
 
     commandFormStatusChange(): void {
         if (this.commandForm.valid) {

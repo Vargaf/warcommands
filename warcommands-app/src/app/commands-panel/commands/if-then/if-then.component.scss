@@ -1,11 +1,9 @@
 
 .if-then-content {
     display: inline-block;
-    color: black;
 }
 
 .if-then-start {
-    background-color: #c94695;
     border-radius: 10px 10px 10px 0;
     padding: 0 20px;
 
@@ -18,18 +16,15 @@
 }
 
 .if-then-body {
-    background-color: #c94695;
     padding-left: 10px;
     border-radius: 0px 15px 15px 0;
 }
 
 .if-then-body-content {
-    background-color: #424242;
     border-radius: 10px;
 }
 
 .if-then-end {
-    background-color: #c94695;
     border-radius: 0 10px 10px 10px;
     height: 60px;
     text-align: center;

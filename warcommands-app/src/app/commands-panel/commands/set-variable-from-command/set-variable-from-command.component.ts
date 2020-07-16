@@ -50,12 +50,8 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
     }
 
     ngOnInit(): void {
-
-        this.initializeCommand();
-        this.initializeForm();
-        this.setCommandContainerWatcher();
-
         this.commandComponentInitialize();
+        this.setCommandContainerWatcher();
     }
 
     ngOnDestroy(): void {
@@ -114,7 +110,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
             );
     }
 
-    initializeForm(): void {
+    protected initializeForm(): void {
         this.commandForm = this.formBuilder.group({
             varName: [this.varName, [Validators.required, Validators.pattern('^[_a-z]\\w*$'), this.uniqueVarNameValidator.createValidator(this.commandData.id)]],
             innerCommandId: [this.setVariableCommand.data.innerCommandId, [Validators.required]],
@@ -139,7 +135,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
         this.commandForm.get('varName').updateValueAndValidity();
     }
 
-    getCommandErrorMessages(): String[] {
+    protected getCommandErrorMessages(): String[] {
         let errorFormMessage: String[] = [];
         const varNameInput: AbstractControl = this.commandForm.get('varName');
         const innerCommandIdInput: AbstractControl = this.commandForm.get('innerCommandId');
@@ -169,7 +165,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
         return this.setVariableCommand.data.varName !== this.commandForm.get('varName').value;
     }
 
-    private initializeCommand(): void {
+    protected initializeCommand(): void {
         this.setVariableCommand = (_.cloneDeep(this.commandData) as SetVariableFromCommandCommandEntity);
 
         this.varName = this.setVariableCommand.data?.varName || '';

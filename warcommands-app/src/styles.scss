@@ -52,6 +52,7 @@ $green: #50FA7B;
 $black: #000000;
 $white: #ffffff;
 $red: #ff0000;
+$dark-pink: #c94695;
 
 @mixin warcommands-command-panel-command-mat-form($fontColor) {
 
@@ -120,4 +121,8 @@ $red: #ff0000;
 }
 .game-loop--command {
     @include command-panel-command($green, $black);
+}
+
+.if-then--command {
+    @include command-panel-command($dark-pink, $black);
 }

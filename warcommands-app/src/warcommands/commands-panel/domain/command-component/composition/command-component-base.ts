@@ -7,7 +7,7 @@ import { Subscription, Subject } from 'rxjs';
 
 export interface CommandComponentBase extends CommandPathManageable, CommandFormValidable {}
 
-export class CommandComponentBase {
+export abstract class CommandComponentBase {
 
     commandData: GenericCommandDTO;
 
@@ -17,7 +17,11 @@ export class CommandComponentBase {
     protected subscriptionManager: Subscription = new Subscription();
     protected commandComponentInitializationObserver: Subject<boolean> = new Subject();
 
+    protected abstract initializeCommand(): void;
+
     commandComponentInitialize(): void {
+        this.initializeCommand();
+        this.initializeForm();
         this.loadCommandPath(this.commandData.id);
         this.commandComponentInitializationObserver.next(true);
     }

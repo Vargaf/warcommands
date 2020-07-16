@@ -38,9 +38,6 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
     }
 
     ngOnInit() {
-        this.initializeCommand();
-        this.initializeForm();
-
         this.commandComponentInitialize();
     }
 
@@ -57,7 +54,7 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
         
     }
 
-    initializeForm(): void {
+    protected initializeForm(): void {
         this.commandForm = this.formBuilder.group({
             varName: [this.varName, [Validators.required, Validators.pattern('^[_a-z]\\w*$'), this.uniqueVarNameValidator.createValidator(this.commandData.id)]],
             varValue: [this.varValue, [Validators.required]]
@@ -82,7 +79,7 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
         this.subscriptionManager.add(statusChangesSubscription);
     }
 
-    getCommandErrorMessages(): String[] {
+    protected getCommandErrorMessages(): String[] {
         let errorFormMessage: String[] = [];
         const varNameInput: AbstractControl = this.commandForm.get('varName');
         const varValeuInput: AbstractControl = this.commandForm.get('varValue');
@@ -117,7 +114,7 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
             this.setVariableCommand.data.varValue !== this.commandForm.get('varValue').value;
     }
 
-    private initializeCommand(): void {
+    protected initializeCommand(): void {
         this.setVariableCommand = (_.cloneDeep(this.commandData) as SetVariableCommandEntity);
 
         this.varName = this.setVariableCommand.data?.varName || '';
