@@ -172,7 +172,7 @@ export class VariableComponent implements OnInit, OnDestroy {
 
     private generateVariableOptionList(): void {
 
-        const newVariableOptionList: VariableOption[] = this.variablesInScopeFinderService.getVariablesInScope(this.commandData);
+        const newVariableOptionList: VariableOption[] = this.variablesInScopeFinderService.getVariablesInPreviuosScope(this.commandData);
 
         const isCurrentSelecteVariableAvailable = newVariableOptionList.some((option) => {
             return option.value === this.varSelected;

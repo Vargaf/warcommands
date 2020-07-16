@@ -1,14 +1,14 @@
 import { CommandPathManageable } from 'src/warcommands/commands-panel/domain/command-component/composition/command-path-manageable';
-import { CommandPathValidable } from 'src/warcommands/commands-panel/domain/command-component/composition/command-path-validable';
+import { CommandFormValidable } from 'src/warcommands/commands-panel/domain/command-component/composition/command-form-validable';
 import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
 import { CommandPathErrorManagerService } from '../../commands-panel/services/command-path-error-manager.service';
-import { GenericCommandDTO } from '../../command/model/generic-command.dto';
+import { CommandComponentBase } from 'src/warcommands/commands-panel/domain/command-component/composition/command-component-base';
 
-export interface CommandComponent extends CommandPathManageable, CommandPathValidable {}
+export interface CommandComponent extends CommandPathManageable, CommandFormValidable, CommandComponentBase {}
 
 export class CommandComponent {
 
-    commandData: GenericCommandDTO;
+    
 
     constructor(
         protected readonly commandPathFinderService: CommandPathFinderService,
@@ -17,20 +17,6 @@ export class CommandComponent {
 
     }
 
-    commandComponentInitialize(): void {
-        this.loadCommandPath(this.commandData.id);
-    }
-
-    commandComponentDestroy(): void {
-        this.resetCommandPathError();
-    }
-
-    commandFormStatusManager(): void {
-        const previousStatus = this.isCommandValid;
-
-        this.commandFormStatusChange();
-        this.setCommandPathError(this.commandData.id, previousStatus, this.commandForm.valid);
-
-    }
+    
 
 }

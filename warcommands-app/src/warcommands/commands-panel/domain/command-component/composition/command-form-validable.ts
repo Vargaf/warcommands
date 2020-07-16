@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 
-export abstract class CommandPathValidable {
+export abstract class CommandFormValidable {
 
     isCommandValid = true;
     formErrorMessage: string;

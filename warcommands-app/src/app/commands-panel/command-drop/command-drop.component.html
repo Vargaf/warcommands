@@ -1,22 +1,15 @@
-<div #commandsDropContainer 
-    class="commands-drop-container"
+<div #commandsDropContainer class="commands-drop-container"
     [ngClass]="{'scroll-gap': fileContentElement, 'commands-drop-container-single-command': isSingleCommand}"
-    id="{{ commandContainer.id }}"
-    [attr.fileId]="commandContainer.fileId"
-    [attr.MouseHelperDetectorCommandContainerId]="commandContainer.id"
-    fxLayout="row" fxLayoutAlign="start start">
+    id="{{ commandContainer.id }}" [attr.fileId]="commandContainer.fileId"
+    [attr.MouseHelperDetectorCommandContainerId]="commandContainer.id" fxLayout="row" fxLayoutAlign="start start">
     <div *ngIf="fileContentElement" fxLayout="column">
         <div *ngFor="let number of numberOfLines" class="line-number">
             {{ number }}
         </div>
     </div>
     <div #commandsEditorElement fxLayout="column">
-        <div *ngFor="let command of commandList"
-        class="command"
-        [attr.dirty]="true"
-        [attr.itemId] = "command.id"
-    >
-        <ng-template command-directive></ng-template>
-    </div>
+        <div *ngFor="let command of commandList" class="command" [attr.dirty]="true" [attr.itemId]="command.id">
+            <ng-template command-directive></ng-template>
+        </div>
     </div>
 </div>

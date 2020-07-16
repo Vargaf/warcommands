@@ -34,6 +34,7 @@ import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/doma
 import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
 import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
 import { MixinsModule } from 'src/app/commands-panel/commands/mixins/mixins.module';
+import { UniqueVarNameValidator } from 'src/warcommands/commands-panel/infrastructure/angular/commands/unique-var-name.validator';
 
 
 
@@ -74,6 +75,7 @@ import { MixinsModule } from 'src/app/commands-panel/commands/mixins/mixins.modu
         ClassMemberComponentFactory,
         CommandPathFinderService,
         CommandPathErrorManagerService,
+        UniqueVarNameValidator,
         { provide: CommandDropRepository, useClass: AngularCommandDropRepositoryService },
         { provide: CommandDraggableElementRepositoryService, useClass: AngularCommandDraggableElementRepositoryService }
     ],

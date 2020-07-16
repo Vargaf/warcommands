@@ -17,9 +17,9 @@ export class VariableInScopeFinderService {
         private readonly commandRepositoryService: CommandRepositoryService
     ) {}
 
-    getVariablesInScope(currentCommand: GenericCommandDTO): VariableOption[] {
+    getVariablesInPreviuosScope(currentCommand: GenericCommandDTO): VariableOption[] {
 
-        const variableListInScope: GenericCommandDTO[] = this.findVariablesInCurrentScope(currentCommand);
+        const variableListInScope: GenericCommandDTO[] = this.findPreviousVariablesInCurrentScope(currentCommand);
 
         const newVariableOptionList: VariableOption[] = [];
 
@@ -32,7 +32,21 @@ export class VariableInScopeFinderService {
         return newVariableOptionList;
     }
 
-    private findVariablesInCurrentScope(currentCommand: GenericCommandDTO): GenericCommandDTO[] {
+    getAllVariablesInCurrentScope(currentCommand: GenericCommandDTO): VariableOption[] {
+        const variableListInScope: GenericCommandDTO[] = this.findAllVariablesInCurrentScope(currentCommand);
+
+        const newVariableOptionList: VariableOption[] = [];
+
+        variableListInScope.forEach((variableCommand) => {
+            if (variableCommand.data.varName) {
+                newVariableOptionList.push({ value: variableCommand.id, label: variableCommand.data.varName });
+            }
+        });
+
+        return newVariableOptionList;
+    }
+
+    private findPreviousVariablesInCurrentScope(currentCommand: GenericCommandDTO): GenericCommandDTO[] {
         const currentCommandContainer: CommandContainerDTO = this.commandContainerRepositoryService.findById(currentCommand.parentCommandContainerId);
         const currentCommandIndex = currentCommandContainer.commands.findIndex((commandId) => {
             return commandId === currentCommand.id;
@@ -52,7 +66,29 @@ export class VariableInScopeFinderService {
 
         const parentCommand = this.getParentCommand(currentCommand.parentCommandContainerId);
         if (parentCommand) {
-            parentVariableCommandList = this.findVariablesInCurrentScope(parentCommand);
+            parentVariableCommandList = this.findPreviousVariablesInCurrentScope(parentCommand);
+        }
+
+        return currentVariableCommandList.concat(parentVariableCommandList);
+    }
+
+    private findAllVariablesInCurrentScope(currentCommand: GenericCommandDTO): GenericCommandDTO[] {
+        const currentCommandContainer: CommandContainerDTO = this.commandContainerRepositoryService.findById(currentCommand.parentCommandContainerId);
+        
+        const currentVariableCommandList: GenericCommandDTO[] = [];
+        let parentVariableCommandList: GenericCommandDTO[] = [];
+
+
+        for (const commandId of currentCommandContainer.commands) {
+            const commandToCheck = this.commandRepositoryService.findById(commandId);
+            if (this.isVariableCommand(commandToCheck)) {
+                currentVariableCommandList.push(commandToCheck);
+            }
+        }
+
+        const parentCommand = this.getParentCommand(currentCommand.parentCommandContainerId);
+        if (parentCommand) {
+            parentVariableCommandList = this.findAllVariablesInCurrentScope(parentCommand);
         }
 
         return currentVariableCommandList.concat(parentVariableCommandList);

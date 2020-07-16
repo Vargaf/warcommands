@@ -11,8 +11,10 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { GetClassNameFromCommandService } from 'src/warcommands/commands-panel/domain/command/model/set-variable-from-command/get-class-name-from-command.service';
 import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
-import { CommandComponent } from 'src/warcommands/commands-panel/domain/command-component/composition/command-component';
 import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
+import { UniqueVarNameValidator } from 'src/warcommands/commands-panel/infrastructure/angular/commands/unique-var-name.validator';
+import { SetVarCommandComponent } from 'src/warcommands/commands-panel/domain/command-component/composition/set-var-command-component';
+import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-moved-events';
 
 
 @Component({
@@ -20,7 +22,7 @@ import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/
     templateUrl: './set-variable-from-command.component.html',
     styleUrls: ['./set-variable-from-command.component.scss']
 })
-export class SetVariableFromCommandComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SetVariableFromCommandComponent extends SetVarCommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @Input() commandData: GenericCommandDTO;
     setVariableCommand: SetVariableFromCommandCommandEntity;
@@ -28,22 +30,23 @@ export class SetVariableFromCommandComponent extends CommandComponent implements
     varName: string;
     setVarCommandContainerId: string;
 
-    private subscriptionManager: Subscription = new Subscription();
     private commandWatcherSubscription: Subscription;
     
     innerCommand: GenericCommandDTO;
     
     constructor(
         private readonly formBuilder: FormBuilder,
-        private readonly commandUpdatedEvents: CommandUpdatedEvents,
+        protected readonly commandUpdatedEvents: CommandUpdatedEvents,
+        protected readonly commandMovedEvents: CommandMovedEvents,
         private readonly commandContainerNgrxRepositoryService: CommandContainerNgrxRepositoryService,
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,
         private readonly commandRepositoryService: CommandRepositoryService,
         private readonly getClassNameFromCommandService: GetClassNameFromCommandService,
         protected readonly commandPathErrorManagerService: CommandPathErrorManagerService,
         protected readonly commandPathFinderService: CommandPathFinderService,
+        protected readonly uniqueVarNameValidator: UniqueVarNameValidator,
     ) {
-        super(commandPathFinderService, commandPathErrorManagerService);
+        super(commandPathFinderService, commandPathErrorManagerService, commandUpdatedEvents, commandMovedEvents);
     }
 
     ngOnInit(): void {
@@ -113,13 +116,15 @@ export class SetVariableFromCommandComponent extends CommandComponent implements
 
     initializeForm(): void {
         this.commandForm = this.formBuilder.group({
-            varName: [this.varName, [Validators.required, Validators.pattern('^[_a-z]\\w*$')]],
+            varName: [this.varName, [Validators.required, Validators.pattern('^[_a-z]\\w*$'), this.uniqueVarNameValidator.createValidator(this.commandData.id)]],
             innerCommandId: [this.setVariableCommand.data.innerCommandId, [Validators.required]],
         });
 
         const valueChangesSubscription = this.commandForm.valueChanges.subscribe(() => {
-            this.setVariableCommand.data.varName = this.commandForm.get('varName').value;
-            this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
+            if (this.isUpdateNeeded()) {
+                this.setVariableCommand.data.varName = this.commandForm.get('varName').value;
+                this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
+            }
         });
 
         const statusChangesSubscription = this.commandForm.statusChanges.subscribe(() => {
@@ -128,6 +133,10 @@ export class SetVariableFromCommandComponent extends CommandComponent implements
 
         this.subscriptionManager.add(valueChangesSubscription);
         this.subscriptionManager.add(statusChangesSubscription);
+    }
+
+    relaunchFormValidation(): void {
+        this.commandForm.get('varName').updateValueAndValidity();
     }
 
     getCommandErrorMessages(): String[] {
@@ -142,6 +151,9 @@ export class SetVariableFromCommandComponent extends CommandComponent implements
             if (varNameInput.errors.pattern) {
                 errorFormMessage.push('- The variable name must begin with a lowercase letter or with an "_".');
             }
+            if (varNameInput.errors.uniqueVarName) {
+                errorFormMessage.push('- The variable name is already in use.');
+            }
         }
 
         if (innerCommandIdInput.errors) {
@@ -151,6 +163,10 @@ export class SetVariableFromCommandComponent extends CommandComponent implements
         }
 
         return errorFormMessage;
+    }
+
+    private isUpdateNeeded(): boolean {
+        return this.setVariableCommand.data.varName !== this.commandForm.get('varName').value;
     }
 
     private initializeCommand(): void {

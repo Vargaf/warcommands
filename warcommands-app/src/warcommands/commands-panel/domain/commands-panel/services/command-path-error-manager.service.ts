@@ -33,6 +33,8 @@ export class CommandPathErrorManagerService {
                     const command: GenericCommandDTO = this.commandRepositoryService.findById(commandPathItem.itemId);
 
                     command.commandPathErrorsCounter += errorCounterModifier;
+                    command.commandPathErrorsCounter = command.commandPathErrorsCounter < 0 ? 0 : command.commandPathErrorsCounter;
+
                     this.commandUpdatedEvents.commandUpdatedDispatch(command);
 
                 }

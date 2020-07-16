@@ -3,7 +3,7 @@ import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/
 import { CommandPathErrorManagerService } from '../../commands-panel/services/command-path-error-manager.service';
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 
-export abstract class CommandPathManageable {
+export class CommandPathManageable {
 
     commandPath: CommandPathItemDTO[];
     showCommandInvalidBackground: boolean = false;
