@@ -1,3 +1,37 @@
+
+.command-editor-wrapper {
+    border:dashed 1px #6272A4;
+
+    border-radius:10px;
+    background-color: #343746;
+
+    &:hover {
+        background-color: #21222C;
+    }
+
+    .command-drop-number-lines {
+        float: left;
+
+        .line-number {
+            margin: 22px 10px 29px 10px;
+            color: #6272A4;
+        }
+
+        .line-number:first-child {
+            margin: 32px 10px 29px 10px;
+        }
+    
+        .line-number:last-child {
+            margin: 22px 10px 0 10px;
+        }
+    
+        &:last-child {
+            clear: blank;
+        }
+        
+    }
+}
+
 .commands-drop-container {
     min-width: fit-content;
     padding: 10px 20px 10px 20px;
@@ -9,16 +43,6 @@
     &:hover {
         background-color: #21222C;
     }
-
-    .line-number {
-        margin: 22px 10px 29px 0;
-        color: #6272A4;
-    }
-
-    .line-number:last-child {
-        margin: 22px 10px 0 0;
-        color: #6272A4;
-    }
 }
 
 .commands-drop-container-single-command {
@@ -26,7 +50,14 @@
     min-height:60px;
 }
 
-.scroll-gap {
-    border:dashed 1px #6272A4;
-    padding-left: 10px;
+.file-command-container {
+    background: none;
+    padding: 10px 0 10px 30px;
+    left: -30px;
+    position: relative;
+
+    &:hover {
+        background: none;
+    }
 }
+
