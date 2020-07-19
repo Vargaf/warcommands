@@ -29,7 +29,7 @@
     "@types/stats": "^0.16.30",
     "@types/uuid": "^3.4.8",
     "easystarjs": "^0.4.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "ng-event-bus": "^1.0.6",
     "rxjs": "~6.5.4",
     "stats.js": "^0.17.0",
