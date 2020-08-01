@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, ComponentRef } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ComponentRef, AfterViewInit } from '@angular/core';
 import { VariableInScopeFinderService } from 'src/warcommands/commands-panel/domain/command/model/variable/services/variables-in-scope-finder.service';
 import { VariableCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/variable/model/variable-command.entity';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
@@ -7,10 +7,9 @@ import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/comman
 import { CommandRemovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-removed-events';
 import { CommandAddedEventDTO } from 'src/warcommands/commands-panel/domain/command/events/command-added-event.dto';
 import { CommandMovedEventDTO } from 'src/warcommands/commands-panel/domain/command/events/command-modeved-event.dto';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
 import * as _ from 'lodash';
-import { Subscription } from 'rxjs';
 import { CommandRepositoryService } from 'src/warcommands/commands-panel/domain/command/services/command-repository.service';
 import { BaseSetVariableCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/set-variable-command.entity';
 import { ClassNameENUM } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-name.enum';
@@ -19,6 +18,9 @@ import { ClassMemberComponentFactory } from 'src/warcommands/commands-panel/doma
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 import { CommandClassMemberAddedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-class-member-added-events';
 import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service';
+import { CommandComponent } from 'src/warcommands/commands-panel/domain/command-component/composition/command-component';
+import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
+import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
 
 interface VariableOption { value: string, label: string };
 
@@ -27,28 +29,21 @@ interface VariableOption { value: string, label: string };
     templateUrl: './variable.component.html',
     styleUrls: ['./variable.component.scss']
 })
-export class VariableComponent implements OnInit, OnDestroy {
-
+export class VariableComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
+    
     @ViewChild(ClassMemberDirective)
     classMemberDirecitve: ClassMemberDirective;
 
     @Input() commandData: VariableCommandEntity;
     variableCommandData: VariableCommandEntity;
 
-    variableCommandForm: FormGroup;
+    commandForm: FormGroup;
 
     varSelected: string;
     hasMemberOptions = false;
     classMemberComponent: ComponentRef<any>;
     
     variableOptionList: VariableOption[] = [];
-
-    private onVarSelectedChangeSubscription: Subscription;
-    private onCommandCreatedListenerSubscription: Subscription;
-    private onCommandMovedListenerSubscription: Subscription;
-    private onCommandRemoveListenerSubscription: Subscription;
-    private onCommandUpdatedListenerSubscription: Subscription;
-    private commandDataSubscription: Subscription;
 
     constructor(
         private readonly variablesInScopeFinderService: VariableInScopeFinderService,
@@ -60,49 +55,62 @@ export class VariableComponent implements OnInit, OnDestroy {
         private readonly commandRepositoryService: CommandRepositoryService,
         private readonly classMemberComponentFactory: ClassMemberComponentFactory,
         private readonly commandClassMemberAddedEvent: CommandClassMemberAddedEvents,
-        private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService
-    ) { }
+        private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,
+        protected readonly commandPathFinderService: CommandPathFinderService,
+        protected readonly commandPathErrorManagerService: CommandPathErrorManagerService,
+        
+    ) {
+        super(commandPathFinderService, commandPathErrorManagerService);
+     }
 
     ngOnInit() {
 
-        this.initializeCommand();
-        this.initializeForm();
-
+        this.commandComponentInitialize();
         this.generateVariableOptionList();
-
         this.setCommandListeners();
-
-        this.commandDataSubscription = this.commandNgrxRepositoryService.getCommand(this.commandData.id).subscribe((command) => {
-            this.variableCommandData = _.cloneDeep((command as VariableCommandEntity));
-        });
     }
 
     ngOnDestroy() {
-        this.onVarSelectedChangeSubscription.unsubscribe();
-        this.onCommandCreatedListenerSubscription.unsubscribe();
-        this.onCommandMovedListenerSubscription.unsubscribe();
-        this.onCommandRemoveListenerSubscription.unsubscribe();
-        this.onCommandUpdatedListenerSubscription.unsubscribe();
-        this.commandDataSubscription.unsubscribe();
+        this.commandComponentDestroy();
     }
 
-    private initializeForm(): void {
-        this.variableCommandForm = this.formBuilder.group({
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.commandForm.updateValueAndValidity();
+        });
+        
+    }
+
+    protected initializeForm(): void {
+        this.commandForm = this.formBuilder.group({
             variable: [this.varSelected, [Validators.required]]
         });
 
         this.setVarSelectedWatcher();
+
+        const statusChangesSubscription = this.commandForm.statusChanges.subscribe(() => {
+            this.commandFormStatusManager();
+        });
+        this.subscriptionManager.add(statusChangesSubscription);
     }
 
     private setVarSelectedWatcher(): void {
-        this.onVarSelectedChangeSubscription = this.variableCommandForm.valueChanges.subscribe(() => {
-            this.varSelected = this.variableCommandForm.get('variable').value;
+        const subscription = this.commandForm.valueChanges.subscribe(() => {
+            this.varSelected = this.commandForm.get('variable').value;
 
-            if (this.variableCommandForm.valid) {
+            if (this.commandForm.valid) {
                 // To avoid circular updates between the component variable.component and set-variable-from-command.component
-                if (this.variableCommandData.data?.variableCommandId !== this.varSelected) {
+                if (this.isUpdateNeeded()) {
                     this.variableCommandData.data = {
                         variableCommandId: this.varSelected
+                    };
+                    this.variableCommandData.classMember = null;
+                    this.commandUpdatedEvents.commandUpdatedDispatch(this.variableCommandData);
+                }
+            } else {
+                if (this.isUpdateNeeded()) {
+                    this.variableCommandData.data = {
+                        variableCommandId: null
                     };
                     this.variableCommandData.classMember = null;
                     this.commandUpdatedEvents.commandUpdatedDispatch(this.variableCommandData);
@@ -111,10 +119,25 @@ export class VariableComponent implements OnInit, OnDestroy {
             
             this.loadClassMembersIfNeeded();
         });
+
+        this.subscriptionManager.add(subscription);
     }
 
-    private initializeCommand(): void {
-        this.variableCommandData = _.cloneDeep(this.commandData);
+    private isUpdateNeeded(): boolean {
+        return this.variableCommandData.data?.variableCommandId !== this.varSelected;
+    }
+
+    protected initializeCommand(): void {
+        this.variableCommandData = _.cloneDeep((this.commandData as VariableCommandEntity));
+        this.variableCommandData.commandPathErrorsCounter = 0;
+
+        const subscription = this.commandNgrxRepositoryService.getCommand(this.commandData.id).subscribe((command) => {
+            this.variableCommandData = _.cloneDeep((command as VariableCommandEntity));
+
+            this.handleInvalidCommandBackground(command);
+        });
+
+        this.subscriptionManager.add(subscription);
 
         this.varSelected = this.variableCommandData.data?.variableCommandId || '';
         this.loadClassMembersIfNeeded();        
@@ -180,7 +203,7 @@ export class VariableComponent implements OnInit, OnDestroy {
 
         if (!isCurrentSelecteVariableAvailable) {
             this.varSelected = '';
-            this.variableCommandForm.get('variable').setValue('');
+            this.commandForm.get('variable').setValue('');
             this.variableCommandData.classMember = null;
         } else {
             this.loadClassMembersIfNeeded();
@@ -197,27 +220,48 @@ export class VariableComponent implements OnInit, OnDestroy {
     }
 
     private onCommandCreatedListener(): void {
-        this.onCommandCreatedListenerSubscription = this.commandCreatedEvents.commandCreatedListener().subscribe((event: CommandAddedEventDTO) => {
+        const subscription = this.commandCreatedEvents.commandCreatedListener().subscribe((event: CommandAddedEventDTO) => {
             this.generateVariableOptionListIfRequired(event.command.id);
         });
+
+        this.subscriptionManager.add(subscription);
     }
 
     private onCommandMovedListener(): void {
-        this.onCommandMovedListenerSubscription = this.commandMovedEvents.commandMovedListener().subscribe((event: CommandMovedEventDTO) => {
+        const subscription = this.commandMovedEvents.commandMovedListener().subscribe((event: CommandMovedEventDTO) => {
             this.generateVariableOptionListIfRequired(event.command.id);
         });
+
+        this.subscriptionManager.add(subscription);
     }
 
     private onCommandRemoveListener(): void {
-        this.onCommandRemoveListenerSubscription = this.commandRemovedEvents.commandRemovedListener().subscribe((command: GenericCommandDTO) => {
+        const subscription = this.commandRemovedEvents.commandRemovedListener().subscribe((command: GenericCommandDTO) => {
             this.generateVariableOptionListIfRequired(command.id);
         });
+
+        this.subscriptionManager.add(subscription);
     }
 
     private onCommandUpdatedListener(): void {
-        this.onCommandUpdatedListenerSubscription = this.commandUpdatedEvents.commandCreatedListener().subscribe((command: GenericCommandDTO) => {
+        const subscription = this.commandUpdatedEvents.commandCreatedListener().subscribe((command: GenericCommandDTO) => {
             this.generateVariableOptionListIfRequired(command.id);
         });
+
+        this.subscriptionManager.add(subscription);
+    }
+
+    protected getCommandErrorMessages(): String[] {
+        let errorFormMessage: String[] = [];
+        const variableInput: AbstractControl = this.commandForm.get('variable');
+
+        if(variableInput.errors) {
+            if (variableInput.errors.required) {
+                errorFormMessage.push('- Select a variable.');
+            }
+        }
+
+        return errorFormMessage;
     }
 
 }

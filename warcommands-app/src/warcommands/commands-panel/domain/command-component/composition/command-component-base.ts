@@ -28,6 +28,7 @@ export abstract class CommandComponentBase {
 
     commandComponentDestroy(): void {
         this.resetCommandPathError();
+        this.subscriptionManager.unsubscribe();
     }
 
     commandFormStatusManager(): void {

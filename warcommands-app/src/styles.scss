@@ -47,6 +47,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 $purple: #BD93F9;
+$dark-purple: #8b65c6;
 $cyan: #8BE9FD;
 $green: #50FA7B;
 $black: #000000;
@@ -73,6 +74,14 @@ $dark-pink: #c94695;
     .mat-form-field-underline {
         bottom: 0;
         background-color: $fontColor;
+    }
+
+    .mat-form-field.mat-form-field-invalid .mat-form-field-ripple, .mat-form-field-ripple {
+        background-color: $fontColor !important;
+    }
+
+    .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+        color: $fontColor;
     }
 
     .mat-select-value {
@@ -125,4 +134,8 @@ $dark-pink: #c94695;
 
 .if-then--command {
     @include command-panel-command($dark-pink, $black);
+}
+
+.variable--command {
+    @include command-panel-command($dark-purple, $black);
 }

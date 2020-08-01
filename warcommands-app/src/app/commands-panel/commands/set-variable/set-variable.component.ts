@@ -42,8 +42,6 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
     }
 
     ngOnDestroy() {
-        this.subscriptionManager.unsubscribe();
-
         this.commandComponentDestroy();
     }
 
