@@ -56,8 +56,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
 
     ngOnDestroy(): void {
         this.commandWatcherSubscription?.unsubscribe();
-        this.subscriptionManager.unsubscribe();
-
+        
         this.commandComponentDestroy();
     }
 

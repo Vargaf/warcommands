@@ -53,6 +53,7 @@ $green: #50FA7B;
 $black: #000000;
 $white: #ffffff;
 $red: #ff0000;
+$pink: #ff79c6;
 $dark-pink: #c94695;
 
 @mixin warcommands-command-panel-command-mat-form($fontColor) {
@@ -138,4 +139,8 @@ $dark-pink: #c94695;
 
 .variable--command {
     @include command-panel-command($dark-purple, $black);
+}
+
+.logic-operator--command {
+    @include command-panel-command($pink, $black);
 }

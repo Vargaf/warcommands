@@ -30,7 +30,9 @@ export class CommandPathManageable {
 
     handleInvalidCommandBackground(command: GenericCommandDTO): void {
         if (command) {
-            this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
+            setTimeout(() => {
+                this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
+            });
         }
     }
 }

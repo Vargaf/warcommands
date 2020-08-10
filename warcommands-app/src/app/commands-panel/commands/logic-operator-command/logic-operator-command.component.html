@@ -1,13 +1,22 @@
-<div class="logic-operator-command-content warcommands-command-panel-command warcommands-command-panel-command-mat-form-black-font-color"
-    fxLayout="row"
-    fxLayoutAlign="start center">
+<div class="logic-operator-command-content warcommands-command-panel-command"
+    [ngClass]="{ 'logic-operator--command__invalid__background': showCommandInvalidBackground, 'logic-operator--command__valid__background': !showCommandInvalidBackground, 'logic-operator--command__invalid__color': showCommandInvalidBackground, 'logic-operator--command__valid__color': !showCommandInvalidBackground }"
+    fxLayout="row" fxLayoutAlign="center center">
+    
+    <div #errorsTooltip='matTooltip' [matTooltip]="formErrorMessage"
+        [matTooltipClass]="'warcommands-command-panel-tooltip'" *ngIf="!isCommandValid"
+        (click)="errorsTooltip.toggle()">
+
+        <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+    </div>
+
     <div>
         <div class="first-command-container-wrapper">
             <app-command-drop  [commandContainerId]="firstCommandContainerId" [isSingleCommand]="true"></app-command-drop>
         </div>
     </div>
+
     <div class="comparison-operator">
-        <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
+        <form [formGroup]="commandForm">
             <mat-form-field class="comparsion-operator-input-wrapper">
                 <mat-select formControlName="logicOperator">
                     <mat-option>Select an option</mat-option>
