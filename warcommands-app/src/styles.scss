@@ -59,7 +59,7 @@ $dark-pink: #c94695;
 @mixin warcommands-command-panel-command-mat-form($fontColor) {
 
     .mat-form-field-infix {
-        padding: 0px;
+        padding: 0.2em 0 0 0;
         border-top: 0;
     }
 

@@ -41,7 +41,7 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private changeDetectorRef: ChangeDetectorRef,
+        private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }
 

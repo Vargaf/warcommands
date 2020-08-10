@@ -27,7 +27,8 @@
                 </div>
                 <app-base-class-member-option-list
                     (classMemberChange)="onClassMemberSelected($event)"
-                    [classMember]="baseByNameClassMethodMember.methodChained">
+                    [classMember]="baseByNameClassMethodMember.methodChained"
+                    [commandId]="commandId">
                 </app-base-class-member-option-list>
             </div>
         </form>

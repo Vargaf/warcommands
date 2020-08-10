@@ -6,6 +6,13 @@
     </div>
     <ng-template #memberOptionList>
         <div>.</div>
+        <div #errorsTooltip='matTooltip'
+            [matTooltip]="formErrorMessage"
+            [matTooltipClass]="'warcommands-command-panel-tooltip'"
+            *ngIf="!isCommandValid" (click)="errorsTooltip.toggle()"
+        >
+            <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+        </div>
         <div>
             <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
                 <mat-form-field>

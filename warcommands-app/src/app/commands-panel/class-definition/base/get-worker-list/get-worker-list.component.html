@@ -1,4 +1,11 @@
 <div class="get-workers-content" fxLayout="row" fxLayoutAlign="center center">
+    <div #errorsTooltip='matTooltip'
+        [matTooltip]="formErrorMessage"
+        [matTooltipClass]="'warcommands-command-panel-tooltip'"
+        *ngIf="!isCommandValid" (click)="errorsTooltip.toggle()"
+    >
+        <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+    </div>
     <div>(</div>
     <div>
         <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">

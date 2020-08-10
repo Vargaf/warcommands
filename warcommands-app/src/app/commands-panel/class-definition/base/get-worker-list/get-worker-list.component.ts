@@ -4,10 +4,11 @@ import { WorkerGetWorkerListClassMethodMember } from 'src/warcommands/commands-p
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
 import { BaseClassGetWorkerListMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/methods/base-class-get-worker-list-method-option';
 import * as _ from 'lodash';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { workerRoleSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-role-select-options';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
+import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
 
 @Component({
     selector: 'app-get-worker-list',
@@ -28,29 +29,26 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
     workerRoleOptions = workerRoleSelectOptions;
 
     componentFormGroup: FormGroup;
-    onFormValueChangeSubscription: Subscription;
+    formErrorMessage: string;
+    isCommandValid = true;
 
     getWorkerListClassMethodMember: WorkerGetWorkerListClassMethodMember;
     roleSelected: string;
 
+    private subscriptionManager: Subscription = new Subscription();
+
     constructor(
-        private readonly formBuilder: FormBuilder
+        private readonly formBuilder: FormBuilder,
+        private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }
 
     ngOnInit(): void {
         this.initializeClassMember();
-
-        this.componentFormGroup = this.formBuilder.group({
-            role: [this.roleSelected]
-        });
-
-        this.onFormValueChangeSubscription = this.componentFormGroup.valueChanges.subscribe((event) => {
-            this.onRoleChangeListener();
-        });
+        this.initializeForm();
     }
 
     ngOnDestroy() {
-        this.onFormValueChangeSubscription.unsubscribe();
+        this.subscriptionManager.unsubscribe();
     }
 
    private onRoleChangeListener(): void {
@@ -74,11 +72,50 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
         }
     }
 
+    private initializeForm(): void {
+        this.componentFormGroup = this.formBuilder.group({
+            role: [this.roleSelected, [Validators.required]]
+        });
+
+        const valueChangesSubscription = this.componentFormGroup.valueChanges.subscribe((event) => {
+            this.onRoleChangeListener();
+        });
+
+        const statusChangesSubscription = this.componentFormGroup.statusChanges.subscribe(() => {
+            const previousFormStatus = this.isCommandValid;
+
+            if (this.componentFormGroup.valid) {
+                this.isCommandValid = true;
+            } else {
+                this.isCommandValid = false;
+                this.buildCommandErrorMessage();
+            }
+
+            this.commandPathErrorManagerService.buildCommandPathError(this.commandId, previousFormStatus, this.isCommandValid);
+        });
+
+        this.subscriptionManager.add(valueChangesSubscription);
+        this.subscriptionManager.add(statusChangesSubscription);
+    }
+
     private emitSelectedMember(): void {
         // To avoid ExpressionChangedAfterItHasBeenCheckedError
         setTimeout(() => {
             this.classMemberChange.emit(_.clone(this.getWorkerListClassMethodMember));
         }, 0);
+    }
+
+    private buildCommandErrorMessage(): void {
+        let errorFormMessage: Array<string> = [];
+        const roleInput: AbstractControl = this.componentFormGroup.get('role');
+
+        if(roleInput.errors) {
+            if (roleInput.errors.required) {
+                errorFormMessage.push('- Select a worker role to filter.');
+            }
+        }
+
+        this.formErrorMessage = errorFormMessage.join('\n\n');
     }
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {

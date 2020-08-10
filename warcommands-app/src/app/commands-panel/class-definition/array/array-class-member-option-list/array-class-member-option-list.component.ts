@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 import { MatSelect } from '@angular/material/select';
 import * as _ from 'lodash';
@@ -7,6 +7,7 @@ import { ArrayClassOptionsDefinition } from 'src/warcommands/commands-panel/doma
 import { ClassMemberOptionDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member-option.dto';
 import { Subscription } from 'rxjs';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
+import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
 
 @Component({
     selector: 'app-array-class-member-option-list',
@@ -29,45 +30,68 @@ export class ArrayClassMemberOptionListComponent implements OnInit, OnDestroy, C
     memberSelectElement: MatSelect;
 
     componentFormGroup: FormGroup;
+    formErrorMessage: string;
+    isCommandValid = true;
 
     arrayClassOptionsDefinition = ArrayClassOptionsDefinition;
     
     areMemberOptionsVisible = false;
     memberSelected: string;
-    onMememberOptionChangeSubscription: Subscription;
+
+    private subscriptionManager: Subscription = new Subscription();
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private changeDetectorRef: ChangeDetectorRef
+        private readonly changeDetectorRef: ChangeDetectorRef,
+        private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }
 
     ngOnInit(): void {
 
         this.initializeClassMember();
-
-        this.componentFormGroup = this.formBuilder.group({
-            memberSelected: [this.memberSelected, [Validators.required]]
-        });
-
-        this.setMemberOptionOnChangeListener();
+        this.initializeForm();
     }
 
     ngOnDestroy() {
-        this.onMememberOptionChangeSubscription.unsubscribe();
+        this.subscriptionManager.unsubscribe();
     }
 
     showMemberOptions(): void {
         this.areMemberOptionsVisible = true;
         this.componentFormGroup.get('memberSelected').enable();
-        this.setMemberOptionOnChangeListener();
         this.changeDetectorRef.detectChanges();
         this.memberSelectElement.open();
     }
 
-    private setMemberOptionOnChangeListener(): void {
-        this.onMememberOptionChangeSubscription = this.componentFormGroup.get('memberSelected').valueChanges.subscribe((event) => {
-            this.onMemberSelectionChanged(event);
+    private initializeForm(): void {
+        this.componentFormGroup = this.formBuilder.group({
+            memberSelected: [this.memberSelected, [Validators.required]]
         });
+
+        const valueChangesSubscription = this.componentFormGroup.valueChanges.subscribe(() => {
+            const memberSelected = this.componentFormGroup.get('memberSelected').value;
+            this.onMemberSelectionChanged(memberSelected);
+        });
+
+        const statusChangesSubscription = this.componentFormGroup.statusChanges.subscribe(() => {
+            const previousFormStatus = this.isCommandValid;
+
+            if (!this.areMemberOptionsVisible) {
+                this.isCommandValid = true;
+            } else {
+                if (this.componentFormGroup.valid) {
+                    this.isCommandValid = true;
+                } else {
+                    this.isCommandValid = false;
+                    this.buildCommandErrorMessage();
+                }
+            }
+
+            this.commandPathErrorManagerService.buildCommandPathError(this.commandId, previousFormStatus, this.isCommandValid);
+        });
+
+        this.subscriptionManager.add(valueChangesSubscription);
+        this.subscriptionManager.add(statusChangesSubscription);
     }
     
     private onMemberSelectionChanged(value: string): void {
@@ -123,6 +147,19 @@ export class ArrayClassMemberOptionListComponent implements OnInit, OnDestroy, C
         setTimeout(() => {
             this.classMemberChange.emit(_.cloneDeep(this.arrayClassMember));
         }, 0);
+    }
+
+    private buildCommandErrorMessage(): void {
+        let errorFormMessage: Array<string> = [];
+        const memberSelectedInput: AbstractControl = this.componentFormGroup.get('memberSelected');
+
+        if(memberSelectedInput.errors) {
+            if (memberSelectedInput.errors.required) {
+                errorFormMessage.push('- Select a method or property.');
+            }
+        }
+
+        this.formErrorMessage = errorFormMessage.join('\n\n');
     }
 
 }
