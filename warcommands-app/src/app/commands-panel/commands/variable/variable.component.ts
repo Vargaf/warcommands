@@ -45,6 +45,9 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
     
     variableOptionList: VariableOption[] = [];
 
+    private currentClassName: string = null;
+    private previousVariableId: string = null;
+
     constructor(
         private readonly variablesInScopeFinderService: VariableInScopeFinderService,
         private readonly commandCreatedEvents: CommandCreatedEvents,
@@ -144,9 +147,12 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
     }
 
     private loadClassMembersIfNeeded(): void {
-        if (this.varSelected) {
-            const variable: BaseSetVariableCommandEntity = (this.commandRepositoryService.findById(this.varSelected) as BaseSetVariableCommandEntity);
-            
+        const variable: BaseSetVariableCommandEntity = (this.commandRepositoryService.findById(this.varSelected) as BaseSetVariableCommandEntity);
+
+        if (this.isClassMemberRefreshNeeded(variable)) {
+            this.currentClassName = variable.data.className;
+            this.previousVariableId = this.varSelected;
+
             switch (variable.data.className) {
                 case ClassNameENUM.Game:
                 case ClassNameENUM.Array:
@@ -173,10 +179,15 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
         }
     }
 
+    private isClassMemberRefreshNeeded(variable: BaseSetVariableCommandEntity): boolean {
+        return this.varSelected && (this.previousVariableId !== variable.id || this.currentClassName !== variable.data.className);
+    }
+
     private initializeClassMemberComponent(variable: BaseSetVariableCommandEntity): void {
         if (this.classMemberDirecitve) {
             this.classMemberComponent = this.classMemberComponentFactory.getComponent(variable.data.className, this.classMemberDirecitve);
             (this.classMemberComponent.instance as ClassMemberComponent).classMember = this.variableCommandData.classMember;
+            (this.classMemberComponent.instance as ClassMemberComponent).commandId = this.variableCommandData.id;
             (this.classMemberComponent.instance as ClassMemberComponent).classMemberChange.subscribe((componentClassMember) => {
                 if (!_.isEqual(this.variableCommandData.classMember, componentClassMember)) {
                     this.variableCommandData.classMember = componentClassMember;
@@ -201,10 +212,10 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
             return option.value === this.varSelected;
         });
 
-        if (!isCurrentSelecteVariableAvailable) {
+        if (!isCurrentSelecteVariableAvailable && this.variableCommandData.classMember) {
             this.varSelected = '';
-            this.commandForm.get('variable').setValue('');
             this.variableCommandData.classMember = null;
+            this.commandForm.get('variable').setValue('');
         } else {
             this.loadClassMembersIfNeeded();
         }

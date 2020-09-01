@@ -84,20 +84,25 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
     private setCommandWatcher(): void {
         this.commandWatcherSubscription?.unsubscribe();
 
-        this.commandWatcherSubscription = this.commandNgrxRepositoryService.getCommand(this.innerCommand.id).subscribe((command: GenericCommandDTO) => {
-            if (command) {
-                this.setVariableCommand.data.innerCommandId = command.id;
-                this.setVariableCommand.data.className = this.getClassNameFromCommandService.getClassName(command.id);
-                this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
-                this.commandForm.get('innerCommandId').setValue(command.id);
-            } else {
-                if (this.setVariableCommand.data.innerCommandId) {
-                    this.setVariableCommand.data.innerCommandId = null;
-                    this.setVariableCommand.data.className = null;
-                    this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
-                    this.commandForm.get('innerCommandId').reset();
+        setTimeout(() => {
+            this.commandWatcherSubscription = this.commandNgrxRepositoryService.getCommand(this.innerCommand.id).subscribe((command: GenericCommandDTO) => {
+                if (command) {
+                    const className = this.getClassNameFromCommandService.getClassName(command.id);
+                    if (this.setVariableCommand.data.innerCommandId !== command.id || this.setVariableCommand.data.className !== className) {
+                        this.setVariableCommand.data.innerCommandId = command.id;
+                        this.setVariableCommand.data.className = className;
+                        this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
+                        this.commandForm.get('innerCommandId').setValue(command.id);
+                    }
+                } else {
+                    if (this.setVariableCommand.data.innerCommandId) {
+                        this.setVariableCommand.data.innerCommandId = null;
+                        this.setVariableCommand.data.className = null;
+                        this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
+                        this.commandForm.get('innerCommandId').reset();
+                    }
                 }
-            }
+            });
         });
     }
 

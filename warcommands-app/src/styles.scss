@@ -81,7 +81,15 @@ $dark-pink: #c94695;
         background-color: $fontColor !important;
     }
 
+    .mat-form-field-invalid .mat-input-element {
+        caret-color: $fontColor;
+    }
+
     .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+        color: $fontColor;
+    }
+
+    .mat-form-field-hide-placeholder .mat-select-placeholder {
         color: $fontColor;
     }
 

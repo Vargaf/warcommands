@@ -32,11 +32,12 @@ export abstract class CommandComponentBase {
     }
 
     commandFormStatusManager(): void {
-        const previousStatus = this.isCommandValid ?? true;
+        setTimeout(() => {
+            const previousStatus = this.isCommandValid ?? true;
 
-        this.commandFormStatusChange();
-        this.setCommandPathError(this.commandData.id, previousStatus, this.commandForm.valid);
-
+            this.commandFormStatusChange();
+            this.setCommandPathError(this.commandData.id, previousStatus, this.commandForm.valid);
+        });
     }
 
     commandComponentInitializationWatcher(): Subject<boolean> {
