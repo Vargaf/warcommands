@@ -1,17 +1,29 @@
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+table td {
+    vertical-align: top;
+    padding: 0px;
+}
+
 .command-editor-wrapper {
     border:dashed 1px #6272A4;
 
     border-radius:10px;
     background-color: #343746;
 
+    min-width: fit-content;
+
     &:hover {
         background-color: #21222C;
     }
 
     .command-drop-number-lines {
-        float: left;
-
+        
         .line-number {
             margin: 22px 10px 29px 10px;
             color: #6272A4;
@@ -24,11 +36,6 @@
         .line-number:last-child {
             margin: 22px 10px 0 10px;
         }
-    
-        &:last-child {
-            clear: blank;
-        }
-        
     }
 }
 
