@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseClassMemberOptionListComponent } from './base/base-class-member-option-list/base-class-member-option-list.component';
 import { MaterialModule } from 'src/app/share/material/material.module';
@@ -47,6 +47,9 @@ import { WorkerClassMemberOptionListComponent } from './worker/worker-class-memb
         GameClassMemberOptionsListComponent,
         ArrayClassMemberOptionListComponent,
         WorkerClassMemberOptionListComponent,
+    ],
+    providers: [
+        { provide: parent, useExisting: forwardRef(() => WorkerClassMemberOptionListComponent) }
     ]
 })
 export class ClassDefinitionModule { }
