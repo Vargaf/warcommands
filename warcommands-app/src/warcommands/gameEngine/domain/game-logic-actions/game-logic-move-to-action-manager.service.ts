@@ -14,7 +14,7 @@ import { PathFindingManagerService } from '../maps/services/path-finding-manager
 import { UnitActionTypeENUM } from '../units/unit-actions/unit-action-type.enum';
 
 
-export class GameLogicMoveToActionManagerService implements GameLogicActionManagerService {
+export class GameLogicMoveToActionManagerService extends GameLogicActionManagerService {
     
     constructor(
         private readonly unitsRepositoryService: UnitsRepositoryService,
@@ -22,7 +22,9 @@ export class GameLogicMoveToActionManagerService implements GameLogicActionManag
         private readonly gameEventBusService: GameEventBusService,
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
         private readonly pathFindingManager: PathFindingManagerService,
-    ) {}
+    ) {
+        super();
+    }
 
     createAction(xFromCoordinate: number, yFromCoordinate: number, xToCoordinate: number, yToCoordinate: number): Observable<UnitActionGenericDTO> {
         const actionSubject: Subject<UnitActionGenericDTO> = new Subject<UnitActionGenericDTO>();

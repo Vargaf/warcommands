@@ -54,6 +54,7 @@ import * as InMemoryPlayerCommandsScopeRepositoryProvider from 'src/warcommands/
 import * as InMemoryPlayerCommandScopeVarValueRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/in-memory-player-command-scope-var-value-repository.provider';
 import * as ArrayClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/array-class/array-class-factory.provider';
 import * as ArrayClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/array-class/array-class.provider';
+import * as GameLogicRewindActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-rewind-action-manager.provider';
 
 
 
@@ -119,7 +120,8 @@ import * as ArrayClassProvider from 'src/warcommands/gameEngine/infrastructure/a
         InMemoryPlayerCommandsScopeRepositoryProvider.provider,
         InMemoryPlayerCommandScopeVarValueRepositoryProvider.provider,
         ArrayClassFactoryProvider.provider,
-        ArrayClassProvider.provider
+        ArrayClassProvider.provider,
+        GameLogicRewindActionManagerProvider.provider,
     ]
 })
 export class BasicModeOnMemoryModule { }

@@ -13,14 +13,16 @@ import { GameEventBusService } from '../game-event-bus/services/game-event-bus.s
 import { v4 as uuid } from 'uuid';
 import { UnitActionTypeENUM } from '../units/unit-actions/unit-action-type.enum';
 
-export class GameLogicDeliverActionManagerService implements GameLogicActionManagerService {
+export class GameLogicDeliverActionManagerService extends GameLogicActionManagerService {
     
     constructor(
         private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
         private readonly gameEventBusService: GameEventBusService,
-    ) {}
+    ) {
+        super();
+    }
 
     createAction(): UnitActionGenericDTO {
         const action: UnitActionDeliverDTO = {

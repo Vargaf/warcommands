@@ -9,12 +9,14 @@ import { WorkerUnitRoleENUM } from '../units/worker/worker-unit-role.enum';
 import { v4 as uuid } from 'uuid';
 import { UnitActionTypeENUM } from '../units/unit-actions/unit-action-type.enum';
 
-export class GameLogicHarvestActionManagerService implements GameLogicActionManagerService {
+export class GameLogicHarvestActionManagerService extends GameLogicActionManagerService {
     
     constructor(
         private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
-    ) {}
+    ) {
+        super();
+    }
 
     createAction(): UnitActionGenericDTO {
 

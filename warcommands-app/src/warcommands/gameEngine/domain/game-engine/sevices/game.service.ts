@@ -99,21 +99,24 @@ export class GameService {
 
     private runPlayerCommands(): void {
         if (this.isGameRunning) {
-            setTimeout(() => {this.runPlayerCommands()}, 300);
+            //setTimeout(() => {this.runPlayerCommands()}, 300);
             //const pre = (performance || Date ).now();
             this.playerCommandsManagerService.runPlayerCommands();    
             //const post = (performance || Date ).now();
             //console.log('Player commands: ' + (post - pre));
+
+            setTimeout(() => {this.runPlayerCommands()}, 50);
         }
     }
 
     private gameLogic(): void {
         if (this.isGameRunning) {
-            setTimeout(() => this.gameLogic(), 150);
+            //setTimeout(() => this.gameLogic(), 150);
             //const pre = (performance || Date ).now();
             this.gameLogicService.gameLogicLoop();
             //const post = (performance || Date ).now();
             //console.log('Game logic: ' + (post - pre));
+            setTimeout(() => this.gameLogic(), 50);
         }
     }
 

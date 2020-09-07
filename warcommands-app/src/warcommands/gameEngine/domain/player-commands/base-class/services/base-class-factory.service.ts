@@ -17,7 +17,10 @@ export class BaseClassFactoryService implements AbstractClassFactoryDefinition {
                 returnValue = this.baseClassService.createWorker(previousMethodChainReturn);
                 break;
             }
-
+            case BaseClassMemberNameEnum.GetWorker: {
+                returnValue = this.baseClassService.getWorker(previousMethodChainReturn, classMember.args, playerId)
+                break;
+            }
             default: {
                 throw new Error('Wrong game class member: ' + classMember.memberName);
             }

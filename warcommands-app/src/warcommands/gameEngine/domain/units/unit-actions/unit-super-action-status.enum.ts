@@ -3,5 +3,6 @@ export enum UnitSuperActionStatusENUM {
     InProgress = 'inProgress',
     OnHold = 'onHold',
     Initializing = 'initializing',
-    PreparedToStart = 'preparedToStart'
+    PreparedToStart = 'preparedToStart',
+    Finished = 'finished',
 }

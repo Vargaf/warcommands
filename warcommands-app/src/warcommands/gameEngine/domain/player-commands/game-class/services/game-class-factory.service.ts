@@ -18,10 +18,6 @@ export class GameClassFactoryService implements AbstractClassFactoryDefinition {
                 returnValue = this.gameClass.getBaseByName(classMember.args, playerId);
                 break;
             }
-            case GameClassMemberNameEnum.GetWorker: {
-                returnValue = this.gameClass.getWorker(classMember.args, playerId);
-                break;
-            }
             default: {
                 throw new Error('Wrong game class member: ' + classMember.memberName);
             }

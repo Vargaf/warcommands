@@ -1,4 +1,3 @@
-import { UnitsRepositoryService } from '../../../units/services/units-repository.service';
 import { WorkerUnitDTO } from '../../../units/worker/worker-unit.dto';
 import { UnitSuperAcionRepositopriService } from '../../../units/unit-actions/unit-super-action-repository.service';
 import { WorkerUnitRoleENUM } from '../../../units/worker/worker-unit-role.enum';
@@ -19,8 +18,6 @@ import { GameLogicDeliverActionManagerService } from '../../../game-logic-action
 import { GameLogicMoveToActionManagerService } from '../../../game-logic-actions/game-logic-move-to-action-manager.service';
 
 export class GameLogicInitializeWorkerHarvestActionsService {
-
-    private readonly atomicActionsNumber = 5;
 
     constructor(
         private readonly unitSuperActionRepositoryService: UnitSuperAcionRepositopriService,
@@ -47,7 +44,9 @@ export class GameLogicInitializeWorkerHarvestActionsService {
             }
     
             const harvestAction = this.gameLogicHarvestActionManager.createAction()
+            harvestSuperAction.atomicActions[0] = null;
             harvestSuperAction.atomicActions[1] = harvestAction;
+            harvestSuperAction.atomicActions[2] = null;
             
             const deliverAction = this.gameLogicDeliverActionManager.createAction();
             harvestSuperAction.atomicActions[3] = deliverAction;
@@ -102,15 +101,15 @@ export class GameLogicInitializeWorkerHarvestActionsService {
 
     private  isSuperActionPreparedToStart(superAction: UnitSuperActionDTO): boolean {
 
-        let actionsWaitingToStart = 0;
+        let areAllActionsPreparedToStart = true;
 
         superAction.atomicActions.forEach((action) => {
-            if (action !== undefined && action.actionStatus === UnitActionStatusENUM.WaitingToStart) {
-                actionsWaitingToStart++;
+            if (!action || action.actionStatus !== UnitActionStatusENUM.WaitingToStart) {
+                areAllActionsPreparedToStart = false;
             }
         });
 
-        return actionsWaitingToStart === this.atomicActionsNumber;
+        return areAllActionsPreparedToStart;
     }
 
     private getFarmBuilding(worker: WorkerUnitDTO): BuildingDTO {
