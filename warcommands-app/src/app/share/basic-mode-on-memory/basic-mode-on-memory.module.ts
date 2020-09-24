@@ -39,6 +39,7 @@ import * as GameLogicTimeFrameProvider from 'src/warcommands/gameEngine/infrastr
 import * as SpawnUnitsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/spawn-units-manager.provider';
 import * as InitialBuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/initial-buildings-manager.provider';
 import * as WorkerClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class.provider';
+import * as WorkerSetRoleProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-set-role-manager.provider';
 import * as WorkerClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class-factory.provider';
 import * as GameLogicWorkerActionsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/game-logic-worker-actions-manager.provider';
 import * as InMemoryUnitSuperActionRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-unit-super-action-repository.provider';
@@ -106,6 +107,7 @@ import * as GameLogicRewindActionManagerProvider from 'src/warcommands/gameEngin
         SpawnUnitsManagerProvider.provider,
         InitialBuildingsManagerProvider.provider,
         WorkerClassProvider.provider,
+        WorkerSetRoleProvider.provider,
         WorkerClassFactoryProvider.provider,
         GameLogicWorkerActionsManagerProvider.provider,
         InMemoryUnitSuperActionRepositoryProvider.provider,

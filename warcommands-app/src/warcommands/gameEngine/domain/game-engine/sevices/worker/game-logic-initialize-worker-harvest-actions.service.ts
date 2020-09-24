@@ -28,12 +28,12 @@ export class GameLogicInitializeWorkerHarvestActionsService {
     ) {}
 
     createHarvesterSuperAction(worker: WorkerUnitDTO): void {
-        const farmBuilding: FarmBuildingDTO = (this.getFarmBuilding(worker) as FarmBuildingDTO);
+        let farmBuilding: FarmBuildingDTO = (this.getFarmBuilding(worker) as FarmBuildingDTO);
 
         if (farmBuilding) {
-            farmBuilding.unitsFarmingIdList.push(worker.id);
-            this.buildingsRepositoryService.save(farmBuilding)
 
+            farmBuilding = this.addWorkerToUnitsFarmingList(farmBuilding, worker);
+            
             const base: BaseBuildingDTO = (this.buildingsRepositoryService.findById(worker.baseId) as BaseBuildingDTO);
 
             const harvestSuperAction: UnitSuperActionDTO = {
@@ -131,7 +131,7 @@ export class GameLogicInitializeWorkerHarvestActionsService {
         const farmBuildingList: BuildingDTO[] = this.buildingsRepositoryService.findByTypePlayer(buildingTypeToSearch, playerId);
 
         for (const building of farmBuildingList) {
-            if (this.farmHasRoom(building)) {
+            if (this.farmHasRoom((building as FarmBuildingDTO), worker)) {
                 farmBuildingToMove = building;
                 break;
             }
@@ -140,8 +140,28 @@ export class GameLogicInitializeWorkerHarvestActionsService {
         return farmBuildingToMove;
     }
 
-    private farmHasRoom(farm: BuildingDTO): boolean {
-        return (farm as FarmBuildingDTO).maxUnitRoom > (farm as FarmBuildingDTO).unitsFarmingIdList.length;
+    private farmHasRoom(farm: FarmBuildingDTO, worker: WorkerUnitDTO): boolean {
+        let farmHasRoom = false;
+
+        farmHasRoom = farm.unitsFarmingIdList.some((workerId) => workerId === worker.id);
+
+        if (!farmHasRoom) {
+            farmHasRoom = farm.maxUnitRoom > farm.unitsFarmingIdList.length;
+        }
+
+        return farmHasRoom;
+    }
+
+    private addWorkerToUnitsFarmingList(farm: FarmBuildingDTO, worker: WorkerUnitDTO): FarmBuildingDTO {
+
+        const isSpotBooked = farm.unitsFarmingIdList.some((workerId) => workerId === worker.id);
+
+        if (!isSpotBooked) {
+            farm.unitsFarmingIdList.push(worker.id);
+            this.buildingsRepositoryService.save(farm);
+        }
+
+        return farm;
     }
 
 }

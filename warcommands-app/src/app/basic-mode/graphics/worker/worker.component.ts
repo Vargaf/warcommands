@@ -43,7 +43,7 @@ export class WorkerComponent implements OnInit {
         this.workerElement.nativeElement.style.setProperty('top', workerCoordinates.top + 'px');
         this.workerElement.nativeElement.style.setProperty('left', workerCoordinates.left + 'px');
 
-        const workerSize = this.gameConfig.tileSize / 2;
+        const workerSize = (this.gameConfig.tileSize - 2) / 2;
         this.workerElement.nativeElement.style.setProperty('width', workerSize + 'px');
         this.workerElement.nativeElement.style.setProperty('height', workerSize + 'px');
 

@@ -4,19 +4,26 @@ import { WorkerUnitRoleENUM } from '../../../units/worker/worker-unit-role.enum'
 import { BaseBuildingDTO } from '../../../building/base/base-building.dto';
 import { UnitTypeENUM } from '../../../units/model/unit-type.enum';
 import { QueryFilterDTO } from '../../../share/query-filter.dto';
+import { WorkerSetRoleManagerService } from './worker-set-role-manager.service';
 
 export class WorkerClassService {
 
     constructor(
         private readonly unitsRepositoryService: UnitsRepositoryService,
+        private readonly workerSetRoleManagerService: WorkerSetRoleManagerService,
     ) {}
 
     setRole(unit: WorkerUnitDTO, role: WorkerUnitRoleENUM): WorkerUnitDTO {
         if (unit) {
             if (unit.role !== role) {
+                /*
                 unit.action = null;
                 unit.role = role;
                 this.unitsRepositoryService.save(unit);
+                */
+               if (this.workerSetRoleManagerService.isRoleChangeAvailable(unit, role)) {
+                   unit = this.workerSetRoleManagerService.changeRole(unit, role);
+               }
             }
         }
 
