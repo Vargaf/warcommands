@@ -1,4 +1,4 @@
-FROM node:14.5.0-stretch
+FROM node:14.15.5-stretch
 
 RUN npm install -g @angular/cli@11.2.0
 RUN npm install -g http-server
