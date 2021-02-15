@@ -1,0 +1,33 @@
+<div class="if-then-content warcommands-command-panel-command">
+    <div class="if-then-start"
+        [ngClass]="{ 'if-then--command__invalid__background': showCommandInvalidBackground, 'if-then--command__valid__background': !showCommandInvalidBackground }">
+        <div class="if-then-label"
+            [ngClass]="{ 'set-variable--command__invalid__color': showCommandInvalidBackground, 'set-variable--command__valid__color': !showCommandInvalidBackground }"
+            fxLayout="row" fxLayoutAlign="start center">
+            <div #errorsTooltip='matTooltip' [matTooltip]="formErrorMessage"
+                [matTooltipClass]="'warcommands-command-panel-tooltip'" *ngIf="!isCommandValid"
+                (click)="errorsTooltip.toggle()">
+                <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+            </div>
+            <div>
+                if (
+            </div>
+            <div class="condition-command-container-wrapper">
+                <app-command-drop [commandContainerId]="conditionCommandContainerId" [isSingleCommand]="true"></app-command-drop>
+            </div>
+            <div>
+                )
+            </div>
+        </div>
+    </div>
+    <div class="if-then-body"
+        [ngClass]="{ 'if-then--command__invalid__background': showCommandInvalidBackground, 'if-then--command__valid__background': !showCommandInvalidBackground }">
+        <div class="if-then-body-content">
+
+            <app-command-drop  [commandContainerId]="thenCommandContainerId"></app-command-drop>
+
+        </div>
+    </div>
+    <div class="if-then-end"
+        [ngClass]="{ 'if-then--command__invalid__background': showCommandInvalidBackground, 'if-then--command__valid__background': !showCommandInvalidBackground }"></div>
+</div>

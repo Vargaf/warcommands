@@ -1,0 +1,27 @@
+.base {
+    position: absolute;
+    background-color: slategray;
+
+    .spawn {
+        position: absolute;
+        background-color: rgb(4, 55, 61);
+    }
+
+    .spinner {
+        position: absolute;
+        transform-origin: left top;
+    }
+
+    .unit-in-queue {
+        position: absolute;
+        border: 1px solid blue;
+    }
+
+    .colorBlue {
+        background-color: #0078da;
+    }
+    
+    .colorRed {
+        background-color: red;
+    }
+}

@@ -1,0 +1,48 @@
+<div class="file-manager-content">
+    <div fxLayout="row wrap" class="file-manager-buttons">
+        <div fxFlex="">
+            <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                <div #cancelButtonWrapper class="delete-button-wrapper">
+                    <div #cancelButtonDraggableElement>
+                        <mat-icon>cancel_presentation</mat-icon>
+                    </div>
+                </div>
+                <div class="save-button-wrapper">
+                    <div *ngIf="!isSavingFile">
+                        <button mat-icon-button aria-label="Save file" (click)="saveFile()">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                    </div>
+                    <div class="warcommands-command-panel-loader" *ngIf="isSavingFile">
+                        <mat-spinner [diameter]="24"></mat-spinner>
+                    </div>
+                </div>
+                <div #deleteButtonWrapper class="delete-button-wrapper">
+                    <div #deleteButtonDraggableElement>
+                        <mat-icon>delete</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <mat-tab-group #filesTabGroup dynamicHeight>
+            <mat-tab *ngFor="let file of fileList">
+                <ng-template mat-tab-label>
+                    {{ file.name }}
+                </ng-template>
+                <div class="file-content">
+                    <app-file [fileData]="file"></app-file>
+                </div>
+            </mat-tab>
+            <!--
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Add file
+                </ng-template>
+                Formulario creacion pagina o carga
+            </mat-tab>
+            -->
+        </mat-tab-group>
+    </div>
+</div>

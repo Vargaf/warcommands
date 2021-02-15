@@ -1,0 +1,32 @@
+<div class="set-variable-content warcommands-command-panel-command"
+    [ngClass]="{ 'set-variable--command__invalid__background': showCommandInvalidBackground, 'set-variable--command__valid__background': !showCommandInvalidBackground }"
+    fxLayoutAlign="center center">
+
+    <div [ngClass]="{ 'set-variable--command__invalid__color': showCommandInvalidBackground, 'set-variable--command__valid__color': !showCommandInvalidBackground }"
+        fxLayout="row" fxLayoutAlign="center center">
+        <div #errorsTooltip='matTooltip' [matTooltip]="formErrorMessage"
+            [matTooltipClass]="'warcommands-command-panel-tooltip'" *ngIf="!isCommandValid"
+            (click)="errorsTooltip.toggle()">
+            <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+        </div>
+        <div>set</div>
+        <div>
+            <form [formGroup]="commandForm">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <div>
+                        <mat-form-field class="var-name-input">
+                            <input matInput type="text" formControlName="varName">
+                        </mat-form-field>
+                    </div>
+                    <div>=</div>
+                    <div>
+                        <mat-form-field class="var-value-input">
+                            <input matInput type="text" formControlName="varValue">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,34 @@
+<div class="set-role-content" fxLayout="row" fxLayoutAlign="center center">
+    <div #errorsTooltip='matTooltip'
+        [matTooltip]="formErrorMessage"
+        [matTooltipClass]="'warcommands-command-panel-tooltip'"
+        *ngIf="!isCommandValid" (click)="errorsTooltip.toggle()"
+    >
+        <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+    </div>
+    <div>
+        <form [formGroup]="componentFormGroup" class="warcommands-command-panel-command-mat-form">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <div>(</div>
+                <div>
+                    <mat-form-field>
+                        <mat-select formControlName="roleSelected">
+                            <mat-option>Select an option</mat-option>
+                            <mat-option *ngFor="let option of workerRoleOptions" [value]="option.value">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>)</div>
+            </div>
+        </form>
+    </div>
+    <diV>
+        <app-worker-class-member-option-list
+            (classMemberChange)="onClassMemberSelected($event)"
+            [classMember]="setRoleClassMethodMember.methodChained"
+            [commandId]="commandId">
+        </app-worker-class-member-option-list>
+    </diV>
+</div>

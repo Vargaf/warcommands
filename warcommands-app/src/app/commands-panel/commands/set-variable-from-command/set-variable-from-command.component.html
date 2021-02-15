@@ -1,0 +1,34 @@
+<div class="set-variable-from-command-content warcommands-command-panel-command"
+    [ngClass]="{ 'set-variable-from-command--command__invalid__background': showCommandInvalidBackground, 'set-variable-from-command--command__valid__background': !showCommandInvalidBackground }"
+    fxLayout="row" fxLayoutAlign="center center">
+    
+    <div [ngClass]="{ 'set-variable-from-command--command__invalid__color': showCommandInvalidBackground, 'set-variable-from-command--command__valid__color': !showCommandInvalidBackground }"
+        fxLayout="row" fxLayoutAlign="center center">
+        
+        <div #errorsTooltip='matTooltip' [matTooltip]="formErrorMessage"
+            [matTooltipClass]="'warcommands-command-panel-tooltip'" *ngIf="!isCommandValid"
+            (click)="errorsTooltip.toggle()">
+
+            <mat-icon class="warcommands-command-panel-command-error-icon">bug_report</mat-icon>
+        </div>
+
+        <div class="set-label">
+            set
+        </div>
+
+        <div>
+            <form [formGroup]="commandForm">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="varName">
+                </mat-form-field>
+            </form>
+        </div>
+
+        <div class="assignment-operator">
+            =
+        </div>
+    </div>
+    <div class="set-var-command-container-wrapper">
+        <app-command-drop [commandContainerId]="setVarCommandContainerId" [isSingleCommand]="true"></app-command-drop>
+    </div>
+</div>
