@@ -3,7 +3,7 @@ import { DifficultyLevel } from './difficulty-level.enum';
 
 export interface PlayerDTO {
     id: string;
-    gameLoopCommandId: string;
+    gameLoopCommandId?: string;
     type: PlayerType;
-    difficultyLevel: DifficultyLevel;
+    difficultyLevel?: DifficultyLevel;
 }

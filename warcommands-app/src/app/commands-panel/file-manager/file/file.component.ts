@@ -10,12 +10,12 @@ import { UxUiNgrxRepositoryService } from 'src/warcommands/commands-panel/infras
 export class FileComponent implements OnInit, AfterContentInit {
 
     @Input()
-    fileData: FileDTO;
+    fileData!: FileDTO;
 
     @ViewChild('fileContentElement')
-    fileContentElement: ElementRef<HTMLDivElement>;
+    fileContentElement!: ElementRef<HTMLDivElement>;
 
-    commandContainerId: string;
+    commandContainerId!: string;
 
     constructor(
         private readonly renderer: Renderer2,
@@ -33,7 +33,7 @@ export class FileComponent implements OnInit, AfterContentInit {
             if (windowSize) {
                 setTimeout(() => {
                     const upperBarHeight = 115;
-                    const fileContentElementHeight = windowSize.height - upperBarHeight;
+                    const fileContentElementHeight = <number>windowSize.height - upperBarHeight;
                     this.renderer.setStyle(this.fileContentElement.nativeElement, 'height', fileContentElementHeight + 'px');
                 }, 0);
                 

@@ -19,7 +19,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
         BrowserModule,
         AppRoutingModule,
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-        StoreModule.forRoot({}, {}),
+        StoreModule.forRoot({}, {
+            runtimeChecks: {
+                strictStateImmutability: true,
+                strictActionImmutability: true
+            }
+        }),
         BrowserAnimationsModule,
         AngularHomeModule,
         EffectsModule.forRoot([]),

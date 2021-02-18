@@ -21,6 +21,7 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 import { CommandComponent } from 'src/warcommands/commands-panel/domain/command-component/composition/command-component';
 import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
 import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
+import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 
 interface VariableOption { value: string, label: string };
 
@@ -32,21 +33,21 @@ interface VariableOption { value: string, label: string };
 export class VariableComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
     
     @ViewChild(ClassMemberDirective)
-    classMemberDirecitve: ClassMemberDirective;
+    classMemberDirecitve!: ClassMemberDirective;
 
-    @Input() commandData: VariableCommandEntity;
-    variableCommandData: VariableCommandEntity;
+    @Input() commandData!: VariableCommandEntity;
+    variableCommandData!: VariableCommandEntity;
 
-    commandForm: FormGroup;
+    commandForm!: FormGroup;
 
-    varSelected: string;
+    varSelected!: string;
     hasMemberOptions = false;
-    classMemberComponent: ComponentRef<any>;
+    classMemberComponent!: ComponentRef<any>;
     
     variableOptionList: VariableOption[] = [];
 
-    private currentClassName: string = null;
-    private previousVariableId: string = null;
+    private currentClassName!: string | null;
+    private previousVariableId!: string;
 
     constructor(
         private readonly variablesInScopeFinderService: VariableInScopeFinderService,
@@ -99,7 +100,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
 
     private setVarSelectedWatcher(): void {
         const subscription = this.commandForm.valueChanges.subscribe(() => {
-            this.varSelected = this.commandForm.get('variable').value;
+            this.varSelected = this.commandForm.get('variable')?.value;
 
             if (this.commandForm.valid) {
                 // To avoid circular updates between the component variable.component and set-variable-from-command.component
@@ -180,15 +181,20 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
     }
 
     private isClassMemberRefreshNeeded(variable: BaseSetVariableCommandEntity): boolean {
-        return this.varSelected && (this.previousVariableId !== variable.id || this.currentClassName !== variable.data.className);
+        if(this.varSelected) {
+            if(this.previousVariableId !== variable.id || this.currentClassName !== variable.data.className) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private initializeClassMemberComponent(variable: BaseSetVariableCommandEntity): void {
         if (this.classMemberDirecitve) {
-            this.classMemberComponent = this.classMemberComponentFactory.getComponent(variable.data.className, this.classMemberDirecitve);
-            (this.classMemberComponent.instance as ClassMemberComponent).classMember = this.variableCommandData.classMember;
+            this.classMemberComponent = this.classMemberComponentFactory.getComponent(<ClassNameENUM>variable.data.className, this.classMemberDirecitve);
+            (this.classMemberComponent.instance as ClassMemberComponent).classMember = <ClassMemberDTO>this.variableCommandData.classMember;
             (this.classMemberComponent.instance as ClassMemberComponent).commandId = this.variableCommandData.id;
-            (this.classMemberComponent.instance as ClassMemberComponent).classMemberChange.subscribe((componentClassMember) => {
+            (this.classMemberComponent.instance as ClassMemberComponent).classMemberChange.subscribe((componentClassMember: ClassMemberDTO) => {
                 if (!_.isEqual(this.variableCommandData.classMember, componentClassMember)) {
                     this.variableCommandData.classMember = componentClassMember;
                     this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, componentClassMember);   
@@ -215,7 +221,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
         if (!isCurrentSelecteVariableAvailable && this.variableCommandData.classMember) {
             this.varSelected = '';
             this.variableCommandData.classMember = null;
-            this.commandForm.get('variable').setValue('');
+            this.commandForm.get('variable')?.setValue('');
         } else {
             this.loadClassMembersIfNeeded();
         }
@@ -264,7 +270,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
 
     protected getCommandErrorMessages(): String[] {
         let errorFormMessage: String[] = [];
-        const variableInput: AbstractControl = this.commandForm.get('variable');
+        const variableInput: AbstractControl = <AbstractControl>this.commandForm.get('variable');
 
         if(variableInput.errors) {
             if (variableInput.errors.required) {

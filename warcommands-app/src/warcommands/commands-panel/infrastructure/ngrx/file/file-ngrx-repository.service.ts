@@ -19,7 +19,7 @@ export class FileNgrxRepositoryService {
     }
 
     getFile(fileId: string): Observable<FileDTO> {
-        return this.store.pipe(select(FileSelectors.fileSelector, { fileId }));
+        return <Observable<FileDTO>>this.store.pipe(select(FileSelectors.fileSelector, { fileId }));
     }
 
     getFileList(): Observable<FileDTO[]> {

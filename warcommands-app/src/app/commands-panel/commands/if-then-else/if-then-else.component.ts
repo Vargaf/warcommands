@@ -10,12 +10,12 @@ import { Subscription } from 'rxjs';
 })
 export class IfThenElseComponent implements OnInit, OnDestroy {
 
-    @Input() commandData: IfThenElseCommandEntity;
+    @Input() commandData!: IfThenElseCommandEntity;
 
-    thenCommandContainerId: string;
-    elseCommandContainerId: string;
+    thenCommandContainerId!: string;
+    elseCommandContainerId!: string;
 
-    private commandDataSubscription: Subscription;
+    private commandDataSubscription!: Subscription;
 
     constructor(
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService

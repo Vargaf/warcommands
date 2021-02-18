@@ -19,11 +19,11 @@ import { SetVarCommandComponent } from 'src/warcommands/commands-panel/domain/co
 })
 export class SetVariableComponent extends SetVarCommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() commandData: GenericCommandDTO;
-    setVariableCommand: SetVariableCommandEntity;
+    @Input() commandData!: GenericCommandDTO;
+    setVariableCommand!: SetVariableCommandEntity;
 
-    varName: string;
-    varValue: string;
+    varName!: string;
+    varValue!: string;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -62,8 +62,8 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
             if (this.isUpdateNeeded()) {
                 this.setVariableCommand.data = {
                     className: ClassNameENUM.String,
-                    varName: this.commandForm.get('varName').value,
-                    varValue: this.commandForm.get('varValue').value
+                    varName: this.commandForm.get('varName')?.value,
+                    varValue: this.commandForm.get('varValue')?.value
                 }
                 this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
             }
@@ -79,8 +79,8 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
 
     protected getCommandErrorMessages(): String[] {
         let errorFormMessage: String[] = [];
-        const varNameInput: AbstractControl = this.commandForm.get('varName');
-        const varValeuInput: AbstractControl = this.commandForm.get('varValue');
+        const varNameInput: AbstractControl = <AbstractControl>this.commandForm.get('varName');
+        const varValeuInput: AbstractControl = <AbstractControl>this.commandForm.get('varValue');
 
         if(varNameInput.errors) {
             if (varNameInput.errors.required) {
@@ -104,12 +104,12 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
     }
 
     relaunchFormValidation(): void {
-        this.commandForm.get('varName').updateValueAndValidity();
+        this.commandForm.get('varName')?.updateValueAndValidity();
     }
 
     private isUpdateNeeded(): boolean {
-        return this.setVariableCommand.data.varName !== this.commandForm.get('varName').value ||
-            this.setVariableCommand.data.varValue !== this.commandForm.get('varValue').value;
+        return this.setVariableCommand.data.varName !== this.commandForm.get('varName')?.value ||
+            this.setVariableCommand.data.varValue !== this.commandForm.get('varValue')?.value;
     }
 
     protected initializeCommand(): void {

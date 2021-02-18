@@ -1,4 +1,3 @@
-import { MapRepository } from '../repositories/map-repository.service';
 import { MapDTO } from '../model/map.dto';
 import { MapConfiguration } from '../model/map-configuration.interface';
 import { MapGeneratorService } from './map-generator.service';
@@ -10,7 +9,6 @@ import { PathFindingManagerService } from './path-finding-manager.service';
 export class MapEngineService {
 
     constructor(
-        private readonly mapRepository: MapRepository,
         private readonly mapGeneratorService: MapGeneratorService,
         private readonly gameEventBusService: GameEventBusService,
         private readonly pathFindingManagerService: PathFindingManagerService
@@ -32,7 +30,6 @@ export class MapEngineService {
     private getMap(mapConfiguration: MapConfiguration): MapDTO {
         const map: MapDTO = this.mapGeneratorService.generateMap(mapConfiguration);
 
-        this.mapRepository.saveMap(map);
         this.pathFindingManagerService.generateGrid(map);
 
         return map;

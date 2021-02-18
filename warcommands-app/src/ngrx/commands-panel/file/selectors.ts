@@ -3,14 +3,16 @@ import { FileStoreKey, FileState } from './reducers';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.dto';
 
+interface FileStore {
+    [FileStoreKey]: FileState;
+}
+
 export interface FileSelectorState {
-    [CommandsPanelReducerMap.CommandsPanelStoreKey]: {
-        [FileStoreKey]: FileState;
-    };
+    [CommandsPanelReducerMap.CommandsPanelStoreKey]: FileStore;
 }
 
 export const commandPanelFeatureSelector =
-    createFeatureSelector<FileSelectorState, FileState>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<FileSelectorState, FileStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const fileFeatureSelector = createSelector(
     commandPanelFeatureSelector,
@@ -19,7 +21,7 @@ const fileFeatureSelector = createSelector(
 
 export const fileSelector = createSelector(
     fileFeatureSelector,
-    (state: FileState, props) => {
+    (state: FileState, props: { fileId: string }) => {
         return state.fileList.find((file: FileDTO) => {
             return file.id === props.fileId;
         });

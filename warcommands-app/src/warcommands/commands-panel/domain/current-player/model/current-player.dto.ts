@@ -1,4 +1,4 @@
 
 export interface CurrentPlayerDTO {
-    id: string;
+    id: string | null;
 }

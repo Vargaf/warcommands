@@ -11,11 +11,11 @@ import { BuildingsNgrxRepositoryService } from 'src/warcommands/basic-mode/infra
 })
 export class EnergyFarmComponent implements OnInit {
 
-    @Input() data: BuildingDTO;
-    building: EnergyFarmBuildingDTO;
+    @Input() data!: BuildingDTO;
+    building!: EnergyFarmBuildingDTO;
 
     @ViewChild('energyFarmElement', { static: true })
-    energyFarmElement: ElementRef<HTMLDivElement>;
+    energyFarmElement!: ElementRef<HTMLDivElement>;
 
     constructor(
         @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration,

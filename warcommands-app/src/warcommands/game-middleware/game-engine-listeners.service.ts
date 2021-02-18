@@ -34,50 +34,58 @@ export class GameEngineListenersService {
     }
 
     private setMapGeneratingListeners(): void {
-        this.gameEventBusService.on(EventType.MapGenerated).subscribe((event: MapGeneratedEvent) => {
+        this.gameEventBusService.on(EventType.MapGenerated).subscribe((event) => {
+            <MapGeneratedEvent>event;
             this.gameEngine.generateMap(event.data);
         });
     }
 
     private onBuildingCreatedEvent(): void {
-        this.gameEventBusService.on(EventType.BuildingCreated).subscribe((event: BuildingCreaedEvent) => {
+        this.gameEventBusService.on(EventType.BuildingCreated).subscribe((event) => {
+            <BuildingCreaedEvent>event;
             const translateBuilding = BuildingObjectTranslatorFactory.translateBuildingType(event.data);
             this.gameEngine.addBuilding(translateBuilding);
         });
     }
 
     private onBuildingSpawningUnit(): void {
-        this.gameEventBusService.on(EventType.BuildingSpawningUnit).subscribe((event: BuildingSpawningUnitEvent) => {
+        this.gameEventBusService.on(EventType.BuildingSpawningUnit).subscribe((event) => {
+            <BuildingSpawningUnitEvent>event;
             this.gameEngine.spawningUnit(event.data.unit, event.data.spawnFinish, event.data.spawnStart);
         });
     }
 
     private onBuildingUnitSpawned(): void {
-        this.gameEventBusService.on(EventType.BuildingSpawnedUnit).subscribe((event: BuildingSpawnedUnitEvent) => {
+        this.gameEventBusService.on(EventType.BuildingSpawnedUnit).subscribe((event) => {
+            <BuildingSpawnedUnitEvent>event;
             this.gameEngine.unitSpawned(event.data.unit);
         });
     }
 
     private onBuildingQueueingUnitEvent(): void {
-        this.gameEventBusService.on(EventType.BuildingQueueingUnit).subscribe((event: BuildingQueueingUnitEvent) => {
+        this.gameEventBusService.on(EventType.BuildingQueueingUnit).subscribe((event) => {
+            <BuildingQueueingUnitEvent>event;
             this.gameEngine.queueingUnit(event.data.unit);
         });
     }
 
     private onBuildingRemovedUnitFromQueueEvent(): void {
-        this.gameEventBusService.on(EventType.BuildingRemovedUnitFromQueue).subscribe((event: BuildingRemovedUnitFromQueueEvent) => {
+        this.gameEventBusService.on(EventType.BuildingRemovedUnitFromQueue).subscribe((event) => {
+            <BuildingRemovedUnitFromQueueEvent>event;
             this.gameEngine.buildingRemoveUnitFromQueue(event.data);
         });
     }
 
     private onMoveToActionEvent(): void {
-        this.gameEventBusService.on(EventType.ActionUnitStartsToMove).subscribe((event: ActionUnitStartsToMoveEvent) => {
+        this.gameEventBusService.on(EventType.ActionUnitStartsToMove).subscribe((event) => {
+            <ActionUnitStartsToMoveEvent>event;
             this.gameEngine.unitMoving(event.data);
         });
     }
 
     private onResourcesUpdateEvent(): void {
-        this.gameEventBusService.on(EventType.BaseResourcesUpdated).subscribe((event: BaseResourcesUpdateEvent) => {
+        this.gameEventBusService.on(EventType.BaseResourcesUpdated).subscribe((event) => {
+            <BaseResourcesUpdateEvent>event;
             this.gameEngine.updateBaseResources(event.data.baseId, event.data.resources);
         })
     }

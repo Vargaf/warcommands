@@ -8,7 +8,7 @@ import { UnitRepositoryService } from './unit-repository.service';
 })
 export class UnitsManagerService {
 
-    private viewContainerRef: ViewContainerRef;
+    private viewContainerRef!: ViewContainerRef;
 
     constructor(
         private readonly domElementComponentFactoryService: DomElementComponentFactoryService,

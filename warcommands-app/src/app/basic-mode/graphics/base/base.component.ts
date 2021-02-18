@@ -21,28 +21,28 @@ interface UnitSpawningDTO {
 })
 export class BaseComponent implements OnInit, AfterViewInit {
 
-    @Input() data: BuildingDTO;
-    base: BaseEntityInterface;
-    queueList: Observable<UnitGenericDTO[]>;
+    @Input() data!: BuildingDTO;
+    base!: BaseEntityInterface;
+    queueList!: Observable<UnitGenericDTO[]>;
 
     @ViewChild('base', { static: true })
-    public baseElement: ElementRef<HTMLDivElement>;
+    public baseElement!: ElementRef<HTMLDivElement>;
 
     @ViewChild('spawn', { static: true })
-    public spawnElement: ElementRef<HTMLDivElement>;
+    public spawnElement!: ElementRef<HTMLDivElement>;
 
     @ViewChild('spiner', { static: true })
-    public spinerElement: ElementRef<HTMLDivElement>;
+    public spinerElement!: ElementRef<HTMLDivElement>;
 
     @ViewChildren('unitInQueue', { read: ElementRef })
-    public unitInQueueListElement: QueryList<ElementRef>;
+    public unitInQueueListElement!: QueryList<ElementRef>;
 
     progress = 0;
     tileSize = 0;
     spinerStrokeWidth = 0;
     isSpawning = false;
-    spawningSubscription: Subscription;
-    playerBaseId: string;
+    spawningSubscription!: Subscription;
+    playerBaseId!: string;
     private spawningQueue: UnitSpawningDTO[] = [];
     
     unitClassColor: string = 'colorBlue';
@@ -111,7 +111,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
     private isUnitAlreadyInSpaningQueue(): boolean {
         const isUnitAlreadySpawning = this.spawningQueue.some((unitSpawning: UnitSpawningDTO) => {
-            return unitSpawning.unit.id === this.base.unitSpawning.unit.id;
+            return unitSpawning.unit.id === this.base.unitSpawning.unit?.id;
         });
 
         return isUnitAlreadySpawning;
@@ -120,7 +120,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
     private addNewSpawningToQueue(): void {
         if (!this.isUnitAlreadyInSpaningQueue()) {
             const unitSpawning: UnitSpawningDTO = {
-                unit: this.base.unitSpawning.unit,
+                unit: <UnitGenericDTO>this.base.unitSpawning.unit,
                 spawnStart: this.base.unitSpawning.spawnStart,
                 spawnFinish: this.base.unitSpawning.spawnFinish
             };

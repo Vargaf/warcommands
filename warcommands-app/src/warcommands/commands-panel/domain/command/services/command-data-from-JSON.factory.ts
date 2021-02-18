@@ -38,6 +38,7 @@ export class CommandDataFromJSONFactory {
                 (command as SetVariableFromCommandCommandEntity).innerCommandContainerIdList = {
                     command: rawCommand.commandContainerList.command.id
                 }
+                break;
             }
             case (CommandType.Game): {
                 (command as GameCommandEntity).classMember = rawCommand.classMember;

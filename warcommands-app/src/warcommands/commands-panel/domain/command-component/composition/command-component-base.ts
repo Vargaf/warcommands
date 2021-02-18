@@ -9,10 +9,10 @@ export interface CommandComponentBase extends CommandPathManageable, CommandForm
 
 export abstract class CommandComponentBase {
 
-    commandData: GenericCommandDTO;
+    commandData!: GenericCommandDTO;
 
-    protected commandPathFinderService: CommandPathFinderService;
-    protected commandPathErrorManagerService: CommandPathErrorManagerService;
+    protected commandPathFinderService!: CommandPathFinderService;
+    protected commandPathErrorManagerService!: CommandPathErrorManagerService;
 
     protected subscriptionManager: Subscription = new Subscription();
     protected commandComponentInitializationObserver: Subject<boolean> = new Subject();

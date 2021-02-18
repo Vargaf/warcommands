@@ -7,7 +7,7 @@ export class ArrayClassGetClassMemberByClassMemberOptions {
 
     static getClassMember(classMemberOption: ClassMemberOptionDTO): ClassMemberDTO {
 
-        let classMember: ClassMemberDTO = null;
+        let classMember!: ClassMemberDTO;
 
         switch(classMemberOption.value) {
             case ArrayMembersENUM.Count: {

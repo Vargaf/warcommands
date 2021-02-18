@@ -19,7 +19,7 @@ export class InitialBuildingsManagerService {
     initializeFromMap(mapConfiguration: MapConfiguration): void {
         const randomizedInitialBuildingsIndexList: string[] = this.getRandomizedBaseIndexList(mapConfiguration);
         const playerList = this.playerManagerService.getPlayerList();
-        const initialBuildingsList = mapConfiguration.initialBuildings;
+        const initialBuildingsList: { [key: string]: any } = mapConfiguration.initialBuildings;
 
         // tslint:disable-next-line: forin
         for (const index in randomizedInitialBuildingsIndexList) {
@@ -31,11 +31,11 @@ export class InitialBuildingsManagerService {
             const base: BaseBuildingDTO = this.buildBase(buildingList.base, player);
 
             if (buildingList.matterFarm) {
-                this.buildMatterFarm(buildingList.matterFarm, player, base.id)
+                this.buildMatterFarm(buildingList.matterFarm, player, <string>base.id)
             }
 
             if (buildingList.energyFarm) {
-                this.buildEnergyFarm(buildingList.energyFarm, player, base.id);
+                this.buildEnergyFarm(buildingList.energyFarm, player, <string>base.id);
             }
 
         }

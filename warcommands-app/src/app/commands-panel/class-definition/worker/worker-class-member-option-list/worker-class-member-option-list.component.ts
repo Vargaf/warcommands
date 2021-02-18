@@ -17,25 +17,25 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 export class WorkerClassMemberOptionListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
-    workerClassMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
+    workerClassMember!: ClassMemberDTO | null;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
     @ViewChild('memberSelectElement', {static: false})
-    memberSelectElement: MatSelect;
+    memberSelectElement!: MatSelect;
 
-    componentFormGroup: FormGroup;
-    formErrorMessage: string;
+    componentFormGroup!: FormGroup;
+    formErrorMessage!: string;
     isCommandValid = true;
 
     workerClassOptionsDefinition = WorkerClassOptionsDefinition;
     areMemberOptionsVisible = false;
-    memberSelected: string;
+    memberSelected!: string | null;
     
     private subscriptionManager: Subscription = new Subscription();
 
@@ -58,7 +58,7 @@ export class WorkerClassMemberOptionListComponent implements OnInit, OnDestroy, 
 
     showMemberOptions(): void {
         this.areMemberOptionsVisible = true;
-        this.componentFormGroup.get('memberSelected').enable();
+        this.componentFormGroup.get('memberSelected')?.enable();
         this.changeDetectorRef.detectChanges();
         this.memberSelectElement.open();
     }
@@ -91,7 +91,7 @@ export class WorkerClassMemberOptionListComponent implements OnInit, OnDestroy, 
         });
 
         const valueChangesSubscription = this.componentFormGroup.valueChanges.subscribe(() => {
-            const memberSelected = this.componentFormGroup.get('memberSelected').value;
+            const memberSelected = this.componentFormGroup.get('memberSelected')?.value;
             this.onMemberSelectionChanged(memberSelected);
         });
 
@@ -131,29 +131,29 @@ export class WorkerClassMemberOptionListComponent implements OnInit, OnDestroy, 
     private emitSelectedMember(): void {
         // To avoid ExpressionChangedAfterItHasBeenCheckedError
         setTimeout(() => {
-            this.classMemberChange.emit(_.cloneDeep(this.workerClassMember));
+            this.classMemberChange.emit(<ClassMemberDTO>_.cloneDeep(this.workerClassMember));
         }, 0);
     }
 
     private onMemberSelectionChanged(value: string): void {
         if (value === '-1' && this.areMemberOptionsVisible) {
             this.areMemberOptionsVisible = false;
-            this.componentFormGroup.get('memberSelected').setValue('');
-            this.componentFormGroup.get('memberSelected').disable();
+            this.componentFormGroup.get('memberSelected')?.setValue('');
+            this.componentFormGroup.get('memberSelected')?.disable();
             this.memberSelected = null;
             this.workerClassMember = null;
             this.emitSelectedMember();
         } else {
-            this.memberSelected = this.componentFormGroup.get('memberSelected').value;
+            this.memberSelected = this.componentFormGroup.get('memberSelected')?.value;
         }
 
     }
 
     private buildCommandErrorMessage(): void {
         let errorFormMessage: Array<string> = [];
-        const memberSelectedInput: AbstractControl = this.componentFormGroup.get('memberSelected');
+        const memberSelectedInput: AbstractControl | null = this.componentFormGroup.get('memberSelected');
 
-        if(memberSelectedInput.errors) {
+        if(memberSelectedInput?.errors) {
             if (memberSelectedInput.errors.required) {
                 errorFormMessage.push('- Select a method or property.');
             }

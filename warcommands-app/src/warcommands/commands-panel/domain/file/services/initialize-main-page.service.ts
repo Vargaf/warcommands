@@ -52,7 +52,7 @@ export class InitializeMainPageService {
         const mainFile: FileDTO = {
             id: uuid(),
             name: 'Main',
-            playerId: currentPlayer.id,
+            playerId: <string>currentPlayer.id,
             commandContainerId: uuid()
         };
 

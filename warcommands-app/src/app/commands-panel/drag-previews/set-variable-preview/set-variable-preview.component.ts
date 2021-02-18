@@ -9,10 +9,10 @@ import { NgTemplateOutlet } from '@angular/common';
 export class SetVariablePreviewComponent implements OnInit {
 
     @ViewChild('dragCommandPreview', { static: true })
-    public previewTemplateRef: TemplateRef<NgTemplateOutlet>;
+    public previewTemplateRef!: TemplateRef<NgTemplateOutlet>;
 
     @ViewChild('dragCommandPreview', { static: true, read: ViewContainerRef })
-    public previewViewContainerRed: ViewContainerRef;
+    public previewViewContainerRed!: ViewContainerRef;
 
     constructor() { }
 

@@ -4,6 +4,6 @@ import { UnitSuperActionStatusENUM } from './unit-super-action-status.enum';
 export interface UnitSuperActionDTO {
     unitId: string;
     currentAtomicActionIndex: number;
-    atomicActions: UnitActionGenericDTO[];
+    atomicActions: UnitActionGenericDTO[] | null[];
     status: UnitSuperActionStatusENUM;
 }

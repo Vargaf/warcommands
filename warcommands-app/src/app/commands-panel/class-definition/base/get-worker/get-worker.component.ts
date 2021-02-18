@@ -17,21 +17,22 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 export class GetWorkerComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
-    componentFormGroup: FormGroup;
-    formErrorMessage: string;
+    componentFormGroup!: FormGroup;
+    formErrorMessage!: string;
     isCommandValid = true;
 
-    getWorkerClassMember: GetWorkerClassMethodMember;
+    getWorkerClassMember!: GetWorkerClassMethodMember;
+    getWorkerClassMemberMethodChained!: ClassMemberDTO;
 
-    workerIndex: number;
+    workerIndex!: number;
 
     private subscriptionManager: Subscription = new Subscription();
 
@@ -55,7 +56,7 @@ export class GetWorkerComponent implements OnInit, OnDestroy, ClassMemberCompone
             worker: [this.workerIndex, [Validators.min(0), Validators.required]],
         });
         
-        const valueChangesSubscription = this.componentFormGroup.get('worker').valueChanges.subscribe((value) => {
+        const valueChangesSubscription = this.componentFormGroup.get('worker')?.valueChanges.subscribe((value) => {
             this.workerIndex = value;
             this.getWorkerClassMember.args = [value];
         });
@@ -89,12 +90,14 @@ export class GetWorkerComponent implements OnInit, OnDestroy, ClassMemberCompone
             this.getWorkerClassMember.args = [this.workerIndex];
             this.emitSelectedMember();
         }
+        this.getWorkerClassMemberMethodChained = <ClassMemberDTO>this.getWorkerClassMember.methodChained;
     }
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {
         const clonedClassMember = _.cloneDeep(this.getWorkerClassMember);
         clonedClassMember.methodChained = classMember; 
         this.getWorkerClassMember =  clonedClassMember;
+        this.getWorkerClassMemberMethodChained = clonedClassMember.methodChained;
         this.emitSelectedMember();
     }
 
@@ -104,9 +107,9 @@ export class GetWorkerComponent implements OnInit, OnDestroy, ClassMemberCompone
 
     private buildCommandErrorMessage(): void {
         let errorFormMessage: Array<string> = [];
-        const workerInput: AbstractControl = this.componentFormGroup.get('worker');
+        const workerInput: AbstractControl | null = this.componentFormGroup.get('worker');
 
-        if(workerInput.errors) {
+        if(workerInput?.errors) {
             if (workerInput.errors.required) {
                 errorFormMessage.push('- Set the worker index.');
             }

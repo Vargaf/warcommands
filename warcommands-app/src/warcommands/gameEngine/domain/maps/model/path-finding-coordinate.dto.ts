@@ -2,5 +2,5 @@
 export interface PathFindingCoordinate {
     xCoordinate: number,
     yCoordinate: number,
-    time: number
+    time: number | null
 }

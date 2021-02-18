@@ -5,8 +5,8 @@ export interface SpawnerDTO {
     queueList: UnitGenericDTO[];
     spawnRelativeCoordinates: CoordinatesEntity;
     unitSpawning: {
-        unit: UnitGenericDTO,
-        spawnFinish: number,
-        spawnStart: number,
+        unit: UnitGenericDTO | null,
+        spawnFinish: number | null,
+        spawnStart: number | null,
     }
 }

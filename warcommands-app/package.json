@@ -32,6 +32,7 @@
     "stats.js": "^0.17.0",
     "store": "^2.0.12",
     "tslib": "^2.0.0",
+    "uuid": "^8.3.2",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
@@ -41,6 +42,8 @@
     "@types/jasmine": "~3.6.0",
     "@types/lodash": "^4.14.168",
     "@types/node": "^12.11.1",
+    "@types/stats.js": "^0.17.0",
+    "@types/uuid": "^8.3.0",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",

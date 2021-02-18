@@ -33,7 +33,7 @@ export class CommandCreatedEvents {
         return this.commandAddedToCommandContainerSubjectList[commandContainerId];
     }
 
-    private initializeCommandAddedToCommandContainer(commandContainerId): void {
+    private initializeCommandAddedToCommandContainer(commandContainerId: string): void {
         if (this.commandAddedToCommandContainerSubjectList[commandContainerId] === undefined) {
             this.commandAddedToCommandContainerSubjectList[commandContainerId] = new Subject<CommandAddedEventDTO>();
         }

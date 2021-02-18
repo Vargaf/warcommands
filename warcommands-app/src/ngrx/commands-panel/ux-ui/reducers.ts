@@ -1,13 +1,13 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import * as UxUiActions from './actions';
 
-export const UxUiStoreKey = 'ux_ui';
+export const UxUiStoreKey = 'uxUiStore';
 
 export interface UxUiState {
     isUserDraggingACommand: boolean;
     windowSize: {
-        width: number;
-        height: number;
+        width: number | null;
+        height: number | null;
     };
 }
 

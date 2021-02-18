@@ -18,23 +18,24 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
-    componentFormGroup: FormGroup;
-    formErrorMessage: string;
+    componentFormGroup!: FormGroup;
+    formErrorMessage!: string;
     isCommandValid = true;
 
     workerRoleOptions = workerRoleSelectOptions;
 
-    roleSelected: string;
+    roleSelected!: string | null;
 
-    setRoleClassMethodMember: SetRoleClassMethodMember;
+    setRoleClassMethodMember!: SetRoleClassMethodMember;
+    setRoleClassMethodMemberMethodChained!: ClassMemberDTO;
 
     private subscriptionManager: Subscription = new Subscription();
 
@@ -55,6 +56,7 @@ export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, Class
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {
         this.setRoleClassMethodMember.methodChained = classMember;
+        this.setRoleClassMethodMemberMethodChained = classMember;
         this.emitMember();
     }
 
@@ -75,6 +77,7 @@ export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, Class
             this.setRoleClassMethodMember.args = [];
             this.emitMember();
         }
+        this.setRoleClassMethodMemberMethodChained = <ClassMemberDTO>this.setRoleClassMethodMember.methodChained;
     }
 
     private initializeForm(): void {
@@ -82,7 +85,7 @@ export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, Class
             roleSelected: [this.roleSelected, [Validators.required]]
         });
 
-        const valueChangesSubscription = this.componentFormGroup.get('roleSelected').valueChanges.subscribe((value) => {
+        const valueChangesSubscription = this.componentFormGroup.get('roleSelected')?.valueChanges.subscribe((value) => {
             this.roleSelected = value;
             this.setRoleClassMethodMember.args = [value];
         });
@@ -111,9 +114,9 @@ export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, Class
 
     private buildCommandErrorMessage(): void {
         let errorFormMessage: Array<string> = [];
-        const roleSelectedInput: AbstractControl = this.componentFormGroup.get('roleSelected');
+        const roleSelectedInput: AbstractControl | null = this.componentFormGroup.get('roleSelected');
 
-        if(roleSelectedInput.errors) {
+        if(roleSelectedInput?.errors) {
             if (roleSelectedInput.errors.required) {
                 errorFormMessage.push('- Select a role.');
             }

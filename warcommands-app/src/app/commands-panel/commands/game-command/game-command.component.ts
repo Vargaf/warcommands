@@ -13,8 +13,9 @@ import { Subscription } from 'rxjs';
 })
 export class GameCommandComponent implements OnInit, OnDestroy {
 
-    @Input() commandData: GameCommandEntity;
-    gameCommand: GameCommandEntity;
+    @Input() commandData!: GameCommandEntity;
+    gameCommand!: GameCommandEntity;
+    gameCommandClassMember!: ClassMemberDTO;
 
     showCommandInvalidBackground = false;
 
@@ -40,13 +41,16 @@ export class GameCommandComponent implements OnInit, OnDestroy {
     }
 
     private initializeClassMember(): void {
-        this.gameCommand = _.cloneDeep(this.commandData);
+        this.gameCommand = <GameCommandEntity>_.cloneDeep(this.commandData);
+        this.gameCommandClassMember = <ClassMemberDTO>this.gameCommand.classMember;
 
         const subscription = this.commandNgrxRepositoryService.getCommand(this.gameCommand.id).subscribe((command) => {
-            this.gameCommand = (_.cloneDeep(command) as GameCommandEntity);
+            this.gameCommand = <GameCommandEntity>(_.cloneDeep(command) as GameCommandEntity);
+            this.gameCommandClassMember = <ClassMemberDTO>this.gameCommand.classMember;
 
             if (command) {
                 this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
+                this.gameCommandClassMember = <ClassMemberDTO>this.gameCommand.classMember;
             }
             
         });

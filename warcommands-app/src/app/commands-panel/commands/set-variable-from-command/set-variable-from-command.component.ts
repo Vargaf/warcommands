@@ -24,15 +24,15 @@ import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/comman
 })
 export class SetVariableFromCommandComponent extends SetVarCommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() commandData: GenericCommandDTO;
-    setVariableCommand: SetVariableFromCommandCommandEntity;
+    @Input() commandData!: GenericCommandDTO;
+    setVariableCommand!: SetVariableFromCommandCommandEntity;
 
-    varName: string;
-    setVarCommandContainerId: string;
+    varName!: string;
+    setVarCommandContainerId!: string;
 
-    private commandWatcherSubscription: Subscription;
+    private commandWatcherSubscription!: Subscription;
     
-    innerCommand: GenericCommandDTO;
+    innerCommand!: GenericCommandDTO;
     
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -92,14 +92,14 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
                         this.setVariableCommand.data.innerCommandId = command.id;
                         this.setVariableCommand.data.className = className;
                         this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
-                        this.commandForm.get('innerCommandId').setValue(command.id);
+                        this.commandForm.get('innerCommandId')?.setValue(command.id);
                     }
                 } else {
                     if (this.setVariableCommand.data.innerCommandId) {
                         this.setVariableCommand.data.innerCommandId = null;
                         this.setVariableCommand.data.className = null;
                         this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
-                        this.commandForm.get('innerCommandId').reset();
+                        this.commandForm.get('innerCommandId')?.reset();
                     }
                 }
             });
@@ -122,7 +122,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
 
         const valueChangesSubscription = this.commandForm.valueChanges.subscribe(() => {
             if (this.isUpdateNeeded()) {
-                this.setVariableCommand.data.varName = this.commandForm.get('varName').value;
+                this.setVariableCommand.data.varName = this.commandForm.get('varName')?.value;
                 this.commandUpdatedEvents.commandUpdatedDispatch(this.setVariableCommand);
             }
         });
@@ -136,15 +136,15 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
     }
 
     relaunchFormValidation(): void {
-        this.commandForm.get('varName').updateValueAndValidity();
+        this.commandForm.get('varName')?.updateValueAndValidity();
     }
 
     protected getCommandErrorMessages(): String[] {
         let errorFormMessage: String[] = [];
-        const varNameInput: AbstractControl = this.commandForm.get('varName');
-        const innerCommandIdInput: AbstractControl = this.commandForm.get('innerCommandId');
+        const varNameInput: AbstractControl | null = this.commandForm.get('varName');
+        const innerCommandIdInput: AbstractControl | null = this.commandForm.get('innerCommandId');
 
-        if (varNameInput.errors) {
+        if (varNameInput?.errors) {
             if (varNameInput.errors.required) {
                 errorFormMessage.push('- A name is required for the variable.');
             }
@@ -156,7 +156,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
             }
         }
 
-        if (innerCommandIdInput.errors) {
+        if (innerCommandIdInput?.errors) {
             if (innerCommandIdInput.errors.required) {
                 errorFormMessage.push('- The variable needs a command value.');
             }
@@ -166,7 +166,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
     }
 
     private isUpdateNeeded(): boolean {
-        return this.setVariableCommand.data.varName !== this.commandForm.get('varName').value;
+        return this.setVariableCommand.data.varName !== this.commandForm.get('varName')?.value;
     }
 
     protected initializeCommand(): void {

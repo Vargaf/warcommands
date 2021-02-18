@@ -14,7 +14,7 @@ export class LocalStorageGetOpennedFilesService {
         const rawOpennedFileList: FileJsonDTO[] = [];
 
         for (const userFile of opennedFileList) {
-            const rawFile = JSON.parse(localStorage.getItem(userFile.id));
+            const rawFile = JSON.parse(<string>localStorage.getItem(userFile.id));
             rawOpennedFileList.push(rawFile);
         }
 
@@ -26,7 +26,7 @@ export class LocalStorageGetOpennedFilesService {
         const rawOpennedFileList: FileJsonDTO[] = [];
 
         for (const userFile of savedFileList) {
-            const rawFile = JSON.parse(localStorage.getItem(userFile.id));
+            const rawFile = JSON.parse(<string>localStorage.getItem(userFile.id));
             rawOpennedFileList.push(rawFile);
         }
 
@@ -41,7 +41,7 @@ export class LocalStorageGetOpennedFilesService {
 
     private getUserFileList(): LocalStorageHelper.UserFileDTO[] {
         const fileInJson = localStorage.getItem(LocalStorageHelper.userFileListIndex);
-        return JSON.parse(fileInJson) || [];
+        return JSON.parse(<string>fileInJson) || [];
     }
 
 }

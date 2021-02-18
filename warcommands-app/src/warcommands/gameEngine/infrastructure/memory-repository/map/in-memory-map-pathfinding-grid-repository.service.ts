@@ -4,7 +4,7 @@ import { TilePathfindingType } from 'src/warcommands/gameEngine/domain/maps/mode
 
 export class InMemoryMapPathfindingGridRepositoryService implements MapPathfindingGridRepository {
 
-    private grid: MapPathfindingGrid;
+    private grid!: MapPathfindingGrid;
 
     private originalTileList: Map<string, number> = new Map<string, number>();
 
@@ -30,7 +30,9 @@ export class InMemoryMapPathfindingGridRepositoryService implements MapPathfindi
     freeTile(xCoordinate: number, yCoordinate: number): void {
         const index = xCoordinate + ':' + yCoordinate;
         const originalTile = this.originalTileList.get(index);
-        this.grid.tilesMap[yCoordinate][xCoordinate] = originalTile;
+        if(originalTile) {
+            this.grid.tilesMap[yCoordinate][xCoordinate] = originalTile;
+        }
         this.originalTileList.delete(index);
     }
 

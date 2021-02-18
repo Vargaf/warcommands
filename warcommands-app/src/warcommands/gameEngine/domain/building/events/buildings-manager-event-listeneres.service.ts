@@ -13,7 +13,8 @@ export class BuildingsManagerEventListenersService {
     }
 
     private onBuildingSpawningUnitEvent(): void {
-        this.gameEventBusService.on(EventType.BuildingSpawningUnit).subscribe((event: BuildingSpawningUnitEvent) => {
+        this.gameEventBusService.on(EventType.BuildingSpawningUnit).subscribe((event) => {
+            <BuildingSpawningUnitEvent>event;
             this.buildingsManagerService.addSpawningBuildingId(event.data.unit.baseId);
         });
     }

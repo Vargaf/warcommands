@@ -10,14 +10,14 @@ import { TileType } from 'src/warcommands/gameEngine/domain/maps/model/tile-type
 })
 export class TileGrassComponent implements OnInit {
 
-  @Input() data: TileDTO;
+  @Input() data!: TileDTO;
 
   @ViewChild('tile', { static: true })
-  public tileElement: ElementRef<HTMLDivElement>;
+  public tileElement!: ElementRef<HTMLDivElement>;
 
   tileType = TileType;
 
-  type: TileType;
+  type!: TileType;
 
   constructor(
     @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration

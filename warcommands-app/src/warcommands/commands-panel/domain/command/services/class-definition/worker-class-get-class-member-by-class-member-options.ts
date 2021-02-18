@@ -8,7 +8,7 @@ export class WorkerClassGetClassMemberByClassMemberOptions {
 
     static getClassMember(classMemberOption: ClassMemberOptionDTO): ClassMemberDTO {
 
-        let classMember: ClassMemberDTO = null;
+        let classMember!: ClassMemberDTO;
 
         switch(classMemberOption.value) {
             case WorkerMembersENUM.SetRole: {

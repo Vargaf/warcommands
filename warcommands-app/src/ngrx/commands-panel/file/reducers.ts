@@ -2,7 +2,7 @@ import { FileDTO } from 'src/warcommands/commands-panel/domain/file/model/file.d
 import { createReducer, on, Action } from '@ngrx/store';
 import * as FileActions from './actions';
 
-export const FileStoreKey = 'files';
+export const FileStoreKey = 'fileStore';
 
 export interface FileState {
     fileList: FileDTO[];

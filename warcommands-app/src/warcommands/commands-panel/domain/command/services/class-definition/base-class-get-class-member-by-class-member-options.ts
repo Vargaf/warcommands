@@ -8,7 +8,7 @@ export class BaseClassGetClassMemberByClassMemberOption {
 
     static getClassMember(classMemberOption: ClassMemberOptionDTO): ClassMemberDTO {
 
-        let classMember: ClassMemberDTO = null;
+        let classMember!: ClassMemberDTO;
 
         switch(classMemberOption.value) {
             case BaseMembersENUM.CreateWorker: {

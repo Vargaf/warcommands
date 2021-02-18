@@ -5,13 +5,13 @@ import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 
 export class CommandPathManageable {
 
-    commandPath: CommandPathItemDTO[];
+    commandPath!: CommandPathItemDTO[];
     showCommandInvalidBackground: boolean = false;
     
-    private commandIsValid: boolean;
+    private commandIsValid!: boolean;
     
-    protected commandPathFinderService: CommandPathFinderService;
-    protected commandPathErrorManagerService: CommandPathErrorManagerService;
+    protected commandPathFinderService!: CommandPathFinderService;
+    protected commandPathErrorManagerService!: CommandPathErrorManagerService;
 
     loadCommandPath(commandId: string): void {
         this.commandPath = this.commandPathFinderService.getCommandPath(commandId);

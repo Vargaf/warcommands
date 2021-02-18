@@ -8,6 +8,7 @@ import { CommandMovedEventDTO } from '../../command/events/command-modeved-event
 import { CommandRemovedEvents } from '../../command/events/command-removed-events';
 import { CommandContainerRemovedEvents } from '../../command-container/events/command-container-removed-events';
 import { CommandAddedEventDTO } from '../../command/events/command-added-event.dto';
+import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +25,7 @@ export class CommandDragDropManagerEvents {
 
     commandCreatedDispatch(commandWrapperDTO: CommandWrapperDTO): void {
         const commandEvent: CommandAddedEventDTO = {
-            command: commandWrapperDTO.command,
+            command: <GenericCommandDTO>commandWrapperDTO.command,
             position: commandWrapperDTO.currentIndex
         };
         this.commandCreatedEvents.commandCreatedDispatch(commandEvent);
@@ -37,11 +38,11 @@ export class CommandDragDropManagerEvents {
 
     commandMovedDispatch(commandWrapperDTO: CommandWrapperDTO): void {
         const commandMovedDTO: CommandMovedEventDTO = {
-            fromContainerId: commandWrapperDTO.previousContainerId,
+            fromContainerId: <string>commandWrapperDTO.previousContainerId,
             toContainerId: commandWrapperDTO.containerId,
             fromPosition: commandWrapperDTO.previousIndex,
             toPosition: commandWrapperDTO.currentIndex,
-            command: commandWrapperDTO.command
+            command: <GenericCommandDTO>commandWrapperDTO.command
         };
         this.commandMovedEvents.commandMovedDispatch(commandMovedDTO);
         this.commandMovedEvents.commandMovedFromCommandContainerDispatch(commandMovedDTO);
@@ -49,8 +50,8 @@ export class CommandDragDropManagerEvents {
     }
 
     commandRemovedDispatch(commandWrapperDTO: CommandWrapperDTO): void {
-        this.commandRemovedEvents.commandRemovedDispatch(commandWrapperDTO.command);
-        this.commandRemovedEvents.commandRemovedFromCommandContainerDispatch(commandWrapperDTO.command);
+        this.commandRemovedEvents.commandRemovedDispatch(<GenericCommandDTO>commandWrapperDTO.command);
+        this.commandRemovedEvents.commandRemovedFromCommandContainerDispatch(<GenericCommandDTO>commandWrapperDTO.command);
     }
 
     commandContainerRemovedDispatch(commandContainerDTO: CommandContainerDTO): void {

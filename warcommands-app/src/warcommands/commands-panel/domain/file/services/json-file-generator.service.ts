@@ -5,6 +5,7 @@ import { CommandContainerRepositoryService } from '../../command-container/servi
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 import { ClassMemberDTO } from '../../command/model/class-definition/class-member.dto';
+import { ClassNameENUM } from "src/warcommands/gameEngine/domain/command/model/class-name.enum";
 
 
 @Injectable({
@@ -49,7 +50,7 @@ export class JSONFileGeneratorService {
     private buildCommandJSON(commandId: string): CommandJsonDTO {
 
         const command: GenericCommandDTO = this.commandRepositoryService.findById(commandId);
-        const classMemberChained = this.buildClassMember(command.classMember);
+        const classMemberChained = this.buildClassMember(<ClassMemberDTO>command.classMember);
         const commandContainerJsonList: { [index: string]: CommandContainerJsonDTO } = {};
 
         // tslint:disable-next-line: forin
@@ -65,22 +66,22 @@ export class JSONFileGeneratorService {
             type: command.type,
             data: command.data,
             commandContainerList: commandContainerJsonList,
-            classMember: classMemberChained
+            classMember: <ClassMemberJsonDTO>classMemberChained
         };
 
     }
 
-    private buildClassMember(classMember: ClassMemberDTO): ClassMemberJsonDTO {
+    private buildClassMember(classMember: ClassMemberDTO): ClassMemberJsonDTO | null {
 
         if(!classMember) {
             return null;
         } else {
             return {
                 className: classMember.className,
-                returnClassName: classMember.returnClassName,
+                returnClassName: <ClassNameENUM>classMember.returnClassName,
                 memberName: classMember.memberName,
                 args: classMember.args || [],
-                methodChained: this.buildClassMember(classMember.methodChained)
+                methodChained: <ClassMemberJsonDTO>this.buildClassMember(<ClassMemberDTO>classMember.methodChained)
             }
         }
 

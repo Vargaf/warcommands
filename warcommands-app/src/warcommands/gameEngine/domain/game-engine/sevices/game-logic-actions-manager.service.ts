@@ -49,7 +49,7 @@ export class GameLogicActionsManagerService {
     private handleSuperAction(superAction: UnitSuperActionDTO): UnitSuperActionDTO {
         
         const activeActionIndex = superAction.currentAtomicActionIndex;
-        let activeAction = superAction.atomicActions[activeActionIndex];
+        let activeAction = <UnitActionGenericDTO>superAction.atomicActions[activeActionIndex];
         
         activeAction = this.handleAtomicAction(activeAction, superAction.unitId);
         superAction.atomicActions[activeActionIndex] = activeAction;

@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 export abstract class CommandFormValidable {
 
     isCommandValid = true;
-    formErrorMessage: string;
-    commandForm: FormGroup;
+    formErrorMessage!: string;
+    commandForm!: FormGroup;
 
     protected abstract initializeForm(): void;
     protected abstract getCommandErrorMessages(): String[];

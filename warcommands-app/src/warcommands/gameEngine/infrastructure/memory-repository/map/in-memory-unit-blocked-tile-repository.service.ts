@@ -12,8 +12,10 @@ export class InMemoryUnitBlockedTileRepositoryService implements UnitBlockedTile
             this.unitTileList.set(index,[]);
         }
         const currentUnitsOnTile = this.unitTileList.get(index);
-        currentUnitsOnTile.push(unit.id)
-        this.unitTileList.set(index, currentUnitsOnTile);
+        if(currentUnitsOnTile) {
+            currentUnitsOnTile.push(unit.id)
+            this.unitTileList.set(index, currentUnitsOnTile);
+        }
     }
 
     addTileBlocked(xCoordinate: number, yCoordinate: number): void {
@@ -21,7 +23,12 @@ export class InMemoryUnitBlockedTileRepositoryService implements UnitBlockedTile
     }
 
     getUnitIdListBlokingTile(xCoordinate: number, yCoordinate: number): string[] {
-        return this.unitTileList.get(xCoordinate + ':' + yCoordinate);
+        const currentUnitsOnTile = this.unitTileList.get(xCoordinate + ':' + yCoordinate);
+        if(currentUnitsOnTile) {
+            return currentUnitsOnTile;
+        }
+
+        return [];
     }
 
     isBlocked(xCoordinate: number, yCoordinate: number): boolean {
@@ -32,7 +39,7 @@ export class InMemoryUnitBlockedTileRepositoryService implements UnitBlockedTile
 
     removeUnit(unit: UnitGenericDTO): void {
         const index = unit.xCoordinate + ':' + unit.yCoordinate;
-        const unitList: string[] = this.unitTileList.get(index);
+        const unitList: string[] = this.unitTileList.get(index) || [];
 
         if (!unitList) {
             console.log('ups');

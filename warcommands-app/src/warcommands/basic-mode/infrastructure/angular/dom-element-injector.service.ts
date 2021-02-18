@@ -8,7 +8,7 @@ import { BuildingDTO } from '../../domain/building/model/building.dto';
 })
 export class DomElementInjectorService {
 
-    private viewContainerRef: ViewContainerRef;
+    private viewContainerRef!: ViewContainerRef;
 
     constructor(
         private domElementComponentFactoryService: DomElementComponentFactoryService

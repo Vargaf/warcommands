@@ -5,20 +5,20 @@ import * as _ from 'lodash';
 
 export class FileMirrorDuplicationService {
 
-    private readonly commandMappingList = [];
-    private readonly commandContainerMappingList = [];
+    private readonly commandMappingList: Map<string, String> = new Map<string, String>();
+
+    private readonly commandContainerMappingList: Map<string, String> = new Map<string, String>();
 
     duplicateFile(file: FileJsonDTO, newPlayerId: string): FileJsonDTO {
+
+        const newCommandContainer = this.duplicateCommandContainer(file.commandContainer!, newPlayerId);
 
         const newFile: FileJsonDTO = {
             id: file.id,
             name: file.name,
             playerId: newPlayerId,
-            commandContainer: null
+            commandContainer: newCommandContainer
         };
-
-        const newCommandContainer = this.duplicateCommandContainer(file.commandContainer, newPlayerId);
-        newFile.commandContainer = newCommandContainer;
 
         return newFile;
 
@@ -68,19 +68,19 @@ export class FileMirrorDuplicationService {
     }
 
     private getNewCommandContainerId(currentCommandContainerId: string): string {
-        if (this.commandContainerMappingList[currentCommandContainerId] === undefined) {
-            this.commandContainerMappingList[currentCommandContainerId] = uuid();
+        if (!this.commandContainerMappingList.has(currentCommandContainerId)) {
+            this.commandContainerMappingList.set(currentCommandContainerId, uuid());
         }
 
-        return this.commandContainerMappingList[currentCommandContainerId];
+        return <string>this.commandContainerMappingList.get(currentCommandContainerId);
     }
 
     private getNewCommandId(currentCommandId: string): string {
-        if (this.commandMappingList[currentCommandId] === undefined) {
-            this.commandMappingList[currentCommandId] = uuid();
+        if (!this.commandMappingList.has(currentCommandId)) {
+            this.commandMappingList.set(currentCommandId, uuid());
         }
 
-        return this.commandMappingList[currentCommandId];
+        return <string>this.commandMappingList.get(currentCommandId);
     }
 
 }

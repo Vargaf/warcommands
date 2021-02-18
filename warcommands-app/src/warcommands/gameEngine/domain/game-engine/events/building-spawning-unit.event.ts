@@ -4,7 +4,7 @@ import { EventType } from '../../game-event-bus/model/event-type.enum';
 import * as _ from 'lodash';
 
 interface BuildingSpawningUnitEventDTO {
-    unit: UnitGenericDTO,
+    unit: UnitGenericDTO | null,
     spawnFinish: number,
     spawnStart: number,
 }

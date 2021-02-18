@@ -19,17 +19,17 @@ import * as _ from 'lodash';
 })
 export class WorkerComponent implements OnInit {
 
-    @Input() data: UnitGenericDTO;
-    worker: WorkerUnitDTO;
+    @Input() data!: UnitGenericDTO;
+    worker!: WorkerUnitDTO;
 
     @ViewChild('worker', { static: true })
-    public workerElement: ElementRef<HTMLDivElement>;
+    public workerElement!: ElementRef<HTMLDivElement>;
 
     classColor: string = 'colorBlue';
 
-    private currentActionId: string;
-    private currentActionSubscription: Subscription;
-    private path: PathCoordinate[];
+    private currentActionId!: string;
+    private currentActionSubscription!: Subscription;
+    private path!: PathCoordinate[];
 
     constructor(
         @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration,

@@ -13,7 +13,7 @@ export class LocalStorageCommandComponentRepositoryService implements CommandCom
     }
 
     findByCommandId(commandId: string): ComponentRef<any> {
-       return this.commandComponentList.get(commandId);
+       return <ComponentRef<any>>this.commandComponentList.get(commandId);
     }
 
     remove(commandId: string): void {

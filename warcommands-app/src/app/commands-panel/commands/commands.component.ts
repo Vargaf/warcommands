@@ -10,10 +10,10 @@ import { CommandType } from 'src/warcommands/commands-panel/domain/command/model
 export class CommandsComponent implements OnInit, AfterViewInit {
 
     @ViewChildren('command')
-    commandList: QueryList<ElementRef<HTMLDivElement>>;
+    commandList!: QueryList<ElementRef<HTMLDivElement>>;
 
     @ViewChild('commandListDropContainer', { static: true })
-    commandListDropListRef: ElementRef<HTMLDivElement>;
+    commandListDropListRef!: ElementRef<HTMLDivElement>;
 
     commandType = CommandType;
 
@@ -29,7 +29,7 @@ export class CommandsComponent implements OnInit, AfterViewInit {
         this.commandDragDropManager.createCommandListDrop(this.commandListDropListRef);
 
         this.commandList.forEach((commandHtmlElement, index) => {
-            const commandType: CommandType = +commandHtmlElement.nativeElement.getAttribute('commandType');
+            const commandType: CommandType = +(<string>commandHtmlElement.nativeElement.getAttribute('commandType'));
             this.commandDragDropManager.addDraggableElementToCommandList(commandHtmlElement, commandType, index);
         });
     }

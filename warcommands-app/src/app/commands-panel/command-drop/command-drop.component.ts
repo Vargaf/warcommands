@@ -19,24 +19,24 @@ import { ContentObserver } from '@angular/cdk/observers';
 export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Input()
-    commandContainerId: string;
+    commandContainerId!: string;
 
     @Input()
-    fileContentElement: HTMLElement = null;
+    fileContentElement!: HTMLElement;
 
     @Input()
     isSingleCommand = false;
 
     @ViewChild('commandsDropContainer', { static: true })
-    commandsDropContainer: ElementRef<HTMLDivElement>;
+    commandsDropContainer!: ElementRef<HTMLDivElement>;
 
     @ViewChild('commandsEditorElement', { static: true })
-    commandsEditorElement: ElementRef<HTMLDivElement>;
+    commandsEditorElement!: ElementRef<HTMLDivElement>;
 
     @ViewChildren(CommandDirective, {read: ViewContainerRef})
-    public commandContainerView: QueryList<ViewContainerRef>;
+    public commandContainerView!: QueryList<ViewContainerRef>;
 
-    commandContainer: CommandContainerDTO;
+    commandContainer!: CommandContainerDTO;
     numberOfLines: Array<number> =[];
 
     commandList: GenericCommandDTO[] = [];
@@ -68,7 +68,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
 
-        let scrollableElement: HTMLElement = null;
+        let scrollableElement!: HTMLElement;
         if (this.fileContentElement) {
             scrollableElement = this.fileContentElement;
         }

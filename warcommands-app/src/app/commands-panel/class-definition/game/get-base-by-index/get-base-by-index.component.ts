@@ -24,23 +24,24 @@ import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/
 export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
-    componentFormGroup: FormGroup;
+    componentFormGroup!: FormGroup;
     isCommandValid = true;
-    formErrorMessage: string;
-    playerBaseList: String[];
+    formErrorMessage!: string;
+    playerBaseList!: String[];
     private subscriptionManager: Subscription = new Subscription();
 
-    baseName: string;
+    baseName!: string;
 
-    baseByNameClassMethodMember: GetBaseByNameClassMethodMember;
+    baseByNameClassMethodMember!: GetBaseByNameClassMethodMember;
+    baseByNameClassMethodMemberMethodChained!: ClassMemberDTO;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -63,6 +64,7 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {
         this.baseByNameClassMethodMember.methodChained = classMember;
+        this.baseByNameClassMethodMemberMethodChained = classMember;
         this.emitSelectedMember();
     }
 
@@ -77,7 +79,7 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
             playerId: this.currentPlayerManager.getCurrentPlayer().id,
             type: BuildingTypeEnum.Base
         }
-        const baseList = this.buildingsRepositoryService.findBy(filter);
+        const baseList = (this.buildingsRepositoryService.findBy(filter) as unknown as BaseEntityInterface[]);
 
         this.playerBaseList = [];
         baseList.forEach((base: BaseEntityInterface) => {
@@ -116,9 +118,9 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
 
     private buildCommandErrorMessage(): void {
         let errorFormMessage: Array<string> = [];
-        const baseNameInput: AbstractControl = this.componentFormGroup.get('baseName');
+        const baseNameInput: AbstractControl | null = this.componentFormGroup.get('baseName');
 
-        if (baseNameInput.errors) {
+        if (baseNameInput?.errors) {
             if (baseNameInput.errors.required) {
                 errorFormMessage.push('- A base name is required.');
             }
@@ -128,7 +130,7 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
     }
 
     private onValidFormChangeListener(): void {
-        this.baseByNameClassMethodMember.args = [this.componentFormGroup.get('baseName').value];
+        this.baseByNameClassMethodMember.args = [this.componentFormGroup.get('baseName')?.value];
     }
 
     private initializeClassMember(): void {
@@ -144,6 +146,8 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
             this.baseByNameClassMethodMember.args[0] = this.baseName;
             this.emitSelectedMember();
         }
+
+        this.baseByNameClassMethodMemberMethodChained = <ClassMemberDTO>this.baseByNameClassMethodMember.methodChained;
     }
 
     private emitSelectedMember(): void {

@@ -9,12 +9,12 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
 
     save(building: BuildingDTO): void {
         const clonedBuilding = _.cloneDeep(building);
-        this.buildingsList.set(building.id, clonedBuilding);
+        this.buildingsList.set(<string>building.id, clonedBuilding);
     }
 
     findById(buildingId: string): BuildingDTO {
         const building = this.buildingsList.get(buildingId);
-        const clonedBuilding = _.cloneDeep(building);
+        const clonedBuilding = <BuildingDTO> _.cloneDeep(building);
         return clonedBuilding;
     }
 
@@ -31,7 +31,7 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
     }
 
     remove(building: BuildingDTO): void {
-        this.buildingsList.delete(building.id);
+        this.buildingsList.delete(<string>building.id);
     }
 
 }

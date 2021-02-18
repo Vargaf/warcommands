@@ -18,22 +18,23 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
     workerRoleOptions = workerRoleSelectOptions;
 
-    componentFormGroup: FormGroup;
-    formErrorMessage: string;
+    componentFormGroup!: FormGroup;
+    formErrorMessage!: string;
     isCommandValid = true;
 
-    getWorkerListClassMethodMember: WorkerGetWorkerListClassMethodMember;
-    roleSelected: string;
+    getWorkerListClassMethodMember!: WorkerGetWorkerListClassMethodMember;
+    getWorkerListClassMethodMemberMethodChained!: ClassMemberDTO;
+    roleSelected!: string;
 
     private subscriptionManager: Subscription = new Subscription();
 
@@ -52,8 +53,8 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
     }
 
    private onRoleChangeListener(): void {
-       this.getWorkerListClassMethodMember.args[0] = this.componentFormGroup.get('role').value;
-       this.roleSelected = this.componentFormGroup.get('role').value;
+       this.getWorkerListClassMethodMember.args[0] = this.componentFormGroup.get('role')?.value;
+       this.roleSelected = this.componentFormGroup.get('role')?.value;
        this.emitSelectedMember();
    }
 
@@ -70,6 +71,8 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
             this.getWorkerListClassMethodMember.args[0] = this.roleSelected;
             this.emitSelectedMember();
         }
+
+        this.getWorkerListClassMethodMemberMethodChained = <ClassMemberDTO>this.getWorkerListClassMethodMember.methodChained;
     }
 
     private initializeForm(): void {
@@ -107,9 +110,9 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
 
     private buildCommandErrorMessage(): void {
         let errorFormMessage: Array<string> = [];
-        const roleInput: AbstractControl = this.componentFormGroup.get('role');
+        const roleInput: AbstractControl | null = this.componentFormGroup.get('role');
 
-        if(roleInput.errors) {
+        if(roleInput?.errors) {
             if (roleInput.errors.required) {
                 errorFormMessage.push('- Select a worker role to filter.');
             }
@@ -120,6 +123,7 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
 
     onClassMemberSelected(classMember: ClassMemberDTO): void {
         this.getWorkerListClassMethodMember.methodChained = classMember;
+        this.getWorkerListClassMethodMemberMethodChained = classMember;
         this.emitSelectedMember();
     }
 

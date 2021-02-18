@@ -73,7 +73,7 @@ export class WorkerSetRoleManagerService {
     private getFarmBuildingWithFreeSpot(worker: WorkerUnitDTO, role: WorkerUnitRoleENUM): FarmBuildingDTO {
         
         const farmBuildingList: FarmBuildingDTO[] = this.getPlayerFarmBuildings(worker.playerId, role);
-        let farmBuildingWithFreeSpot: FarmBuildingDTO;
+        let farmBuildingWithFreeSpot!: FarmBuildingDTO;
 
         for (const building of farmBuildingList) {
             if (this.farmHasRoom((building as FarmBuildingDTO))) {
@@ -87,8 +87,8 @@ export class WorkerSetRoleManagerService {
 
     private getCurrentWorkerFarmBuilding(worker: WorkerUnitDTO): FarmBuildingDTO {
         
-        const farmBuildingList: FarmBuildingDTO[] = this.getPlayerFarmBuildings(worker.playerId, worker.role);
-        let currentWorkerFarmBuilding: FarmBuildingDTO;
+        const farmBuildingList: FarmBuildingDTO[] = this.getPlayerFarmBuildings(worker.playerId, <WorkerUnitRoleENUM>worker.role);
+        let currentWorkerFarmBuilding!: FarmBuildingDTO;
 
         for (const building of farmBuildingList) {
             if (this.isWorkerOnFarm((building as FarmBuildingDTO), worker)) {
@@ -101,7 +101,7 @@ export class WorkerSetRoleManagerService {
     }
 
     private getPlayerFarmBuildings(playerId: string, workerRole: WorkerUnitRoleENUM): FarmBuildingDTO[] {
-        let buildingTypeToSearch: BuildingTypeEnum;
+        let buildingTypeToSearch!: BuildingTypeEnum;
 
         switch (workerRole) {
             case WorkerUnitRoleENUM.EnergyHarvester: {

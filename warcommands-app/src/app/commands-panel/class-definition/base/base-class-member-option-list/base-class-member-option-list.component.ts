@@ -17,23 +17,23 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
-    baseClassMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
+    baseClassMember!: ClassMemberDTO | null;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
     @ViewChild('memberSelectElement', {static: false})
-    memberSelectElement: MatSelect;
+    memberSelectElement!: MatSelect;
 
     baseClassOptionsDefinition = BaseClassOptionsDefinition;
 
-    memberSelected: string;
-    componentFormGroup: FormGroup;
-    formErrorMessage: string;
+    memberSelected!: string | null;
+    componentFormGroup!: FormGroup;
+    formErrorMessage!: string;
     isCommandValid = true;
     areMemberOptionsVisible = false;
 
@@ -57,7 +57,7 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
 
     showMemberOptions(): void {
         this.areMemberOptionsVisible = true;
-        this.componentFormGroup.get('memberSelected').enable();
+        this.componentFormGroup.get('memberSelected')?.enable();
         this.changeDetectorRef.detectChanges();
         this.memberSelectElement.open();
     }
@@ -70,13 +70,13 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
     private onMemberSelectionChanged(value: string): void {
         if (value === '-1' && this.areMemberOptionsVisible) {
             this.areMemberOptionsVisible = false;
-            this.componentFormGroup.get('memberSelected').setValue('');
-            this.componentFormGroup.get('memberSelected').disable();
+            this.componentFormGroup.get('memberSelected')?.setValue('');
+            this.componentFormGroup.get('memberSelected')?.disable();
             this.memberSelected = null;
             this.baseClassMember = null;
             this.emitSelectedMember();
         } else {
-            this.memberSelected = this.componentFormGroup.get('memberSelected').value;
+            this.memberSelected = this.componentFormGroup.get('memberSelected')?.value;
         }
 
     }
@@ -105,7 +105,7 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
         });
 
         const valueChangesSubscription = this.componentFormGroup.valueChanges.subscribe(() => {
-            const memberSelected = this.componentFormGroup.get('memberSelected').value;
+            const memberSelected = this.componentFormGroup.get('memberSelected')?.value;
             this.onMemberSelectionChanged(memberSelected);
         });
 
@@ -151,15 +151,15 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
     private emitSelectedMember(): void {
         // To avoid ExpressionChangedAfterItHasBeenCheckedError
         setTimeout(() => {
-            this.classMemberChange.emit(_.cloneDeep(this.baseClassMember));
+            this.classMemberChange.emit(_.cloneDeep(this.baseClassMember) as ClassMemberDTO);
         }, 0);
     }
 
     private buildCommandErrorMessage(): void {
         let errorFormMessage: Array<string> = [];
-        const memberSelectedInput: AbstractControl = this.componentFormGroup.get('memberSelected');
+        const memberSelectedInput: AbstractControl | null = this.componentFormGroup.get('memberSelected');
 
-        if(memberSelectedInput.errors) {
+        if(memberSelectedInput?.errors) {
             if (memberSelectedInput.errors.required) {
                 errorFormMessage.push('- Select a method or property.');
             }

@@ -12,10 +12,10 @@ import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/comm
 export class ArrayCountComponent implements OnInit, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();

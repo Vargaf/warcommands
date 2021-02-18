@@ -13,6 +13,6 @@ export class InMemoryCurrentPlayerRepositoryService implements CurrentPlayerRepo
         localStorage.setItem(this.currentPlayerKey, JSON.stringify(player));
     }
     getPlayer(): CurrentPlayerDTO {
-        return JSON.parse(localStorage.getItem(this.currentPlayerKey)) || null;
+        return JSON.parse(<string>localStorage.getItem(this.currentPlayerKey)) || null;
     }
 }

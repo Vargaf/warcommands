@@ -6,8 +6,8 @@ import * as _ from 'lodash';
 
 
 interface BuildingQueueingUnitEventDTO {
-    unit: UnitGenericDTO,
-    buildingId: string
+    unit: UnitGenericDTO | null,
+    buildingId: string | null
 }
 
 export class BuildingQueueingUnitEvent implements EventInterface {

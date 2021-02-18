@@ -13,9 +13,7 @@ export class PlayerManagerService {
     addPlayer(playerId: string): void {
         const player: PlayerDTO = {
             id: playerId,
-            gameLoopCommandId: null,
             type: PlayerType.Player,
-            difficultyLevel: null
         }
 
         this.playerRepositoryService.save(player);
@@ -25,7 +23,6 @@ export class PlayerManagerService {
 
         const player: PlayerDTO = {
             id: uuid(),
-            gameLoopCommandId: null,
             type: PlayerType.IA,
             difficultyLevel
         }

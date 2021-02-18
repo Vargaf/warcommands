@@ -10,7 +10,7 @@ export class BuildingSpawnerServiceFactory {
 
     getBuildingSpawnerService(unitType: UnitTypeENUM): BuildingSpawnerService {
 
-        let service: BuildingSpawnerService = null;
+        let service!: BuildingSpawnerService;
 
         switch (unitType) {
             case UnitTypeENUM.Worker: {

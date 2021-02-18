@@ -2,14 +2,16 @@ import * as BasicModeReducerMap from '../reducer-map';
 import { UnitListState, UnitListStoreKey } from './reducers';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+interface UnitStore {
+    [UnitListStoreKey]: UnitListState;
+}
+
 export interface UnitListFeatureState {
-    [BasicModeReducerMap.GameEngineBasicModeStoreKey]: {
-        [UnitListStoreKey]: UnitListState
-    }
+    [BasicModeReducerMap.GameEngineBasicModeStoreKey]: UnitStore;
 }
 
 export const basicModeFeatureSelector = 
-    createFeatureSelector<UnitListFeatureState>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
+    createFeatureSelector<UnitListFeatureState, UnitStore>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
 
 const unitListFeatureSelector = createSelector(
     basicModeFeatureSelector,
@@ -18,5 +20,5 @@ const unitListFeatureSelector = createSelector(
 
 export const unitSelector = createSelector(
     unitListFeatureSelector,
-    (state: UnitListState, props) => state.list[props.unitId]
+    (state: UnitListState, props: { unitId: string }) => state.list[props.unitId]
 );

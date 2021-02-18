@@ -21,7 +21,7 @@ export class CommandContainerManagerService {
     private loadCommandContainerFromRawFile(
         fileId: string,
         rawCommandContainer: CommandContainerJsonDTO,
-        parentCommandId: string
+        parentCommandId: string | null
     ): void {
 
         const commandContainer: CommandContainerDTO = {

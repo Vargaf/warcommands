@@ -12,7 +12,7 @@ export class GameClassService {
     getBaseByName(args: any[], playerId: string): BaseBuildingDTO {
         const baseList: BuildingDTO[] = this.buildingsRepositoryService.findByTypePlayer(BuildingTypeEnum.Base, playerId);
 
-        let foundBase: BaseBuildingDTO = null;
+        let foundBase!: BaseBuildingDTO;
         for (const base of baseList) {
             if((base as BaseBuildingDTO).name === args[0]) {
                 foundBase = { ...(base as BaseBuildingDTO) };

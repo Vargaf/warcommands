@@ -14,6 +14,7 @@ import { IfThenCommandDTO } from '../../command/model/if-then-command.dto';
 import { LogicalOperatorCommandDTO } from '../../command/model/logical-operator-command/logical-operator-command.dto';
 import { VariableCommandDTO } from '../../command/model/variable-command.dto';
 import { LogicOperatorENUM } from '../../command/model/logical-operator-command/logic-operator.enum';
+import { ClassMemberDTO } from '../../command/model/class-member.dto';
 
 
 export class GameLoopManagerService {
@@ -84,7 +85,7 @@ export class GameLoopManagerService {
 
         switch (command.type) {
             case CommandType.Game: {
-                returnValue = this.classFactoryService.runClass(command.classMember, command.playerId);
+                returnValue = this.classFactoryService.runClass(<ClassMemberDTO>command.classMember, command.playerId);
                 break;
             }
             case CommandType.SetVariable: {

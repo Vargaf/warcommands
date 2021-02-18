@@ -2,16 +2,23 @@ import * as CommandsPanelReducerMap from '../reducer-map';
 import { PlayerListStoreKey, PlayerListState } from './reducers';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+interface PlayerStore {
+    [PlayerListStoreKey]: PlayerListState;
+}
+
 export interface PlayerListSelector {
-    [CommandsPanelReducerMap.CommandsPanelStoreKey]: {
-        [PlayerListStoreKey]: PlayerListState;
-    };
+    [CommandsPanelReducerMap.CommandsPanelStoreKey]: PlayerStore;
 }
 
 export const playerListFeatureSelector =
-    createFeatureSelector<PlayerListSelector, PlayerListState>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<PlayerListSelector, PlayerStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+
+const playerFeatureSelector = createSelector(
+    playerListFeatureSelector,
+    (state:PlayerStore) => state[PlayerListStoreKey]
+);
 
 export const currentPlayerSelector = createSelector(
-    playerListFeatureSelector,
+    playerFeatureSelector,
     (state) => state.currentPlayer
 );

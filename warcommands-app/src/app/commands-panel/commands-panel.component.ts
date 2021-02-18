@@ -13,16 +13,16 @@ import { skip } from 'rxjs/operators';
 export class CommandsPanelComponent implements OnInit, AfterViewInit {
 
     @ViewChild('commandListElement')
-    commandListElement: ElementRef<HTMLDivElement>;
+    commandListElement!: ElementRef<HTMLDivElement>;
 
     @ViewChild('editorPanelElement')
-    commandEditorElement: ElementRef<HTMLDivElement>;
+    commandEditorElement!: ElementRef<HTMLDivElement>;
 
     @ViewChild('commandsEditorPanelElement')
-    commandsEditorPanelElement: ElementRef<HTMLDivElement>;
+    commandsEditorPanelElement!: ElementRef<HTMLDivElement>;
 
     @ViewChild('commandsPanelContentElement', { static: true })
-    commandsPanelContentElement: ElementRef<HTMLDivElement>;
+    commandsPanelContentElement!: ElementRef<HTMLDivElement>;
 
     isCommandListVisibleAtStart = true;
     isCommandListVisible = false;

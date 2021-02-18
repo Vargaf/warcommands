@@ -20,6 +20,7 @@ export class GameServiceListenersService {
 
     private setFileLoadedListeners(): void {
         this.fileEventsListener.fileLoadedListener().subscribe((file) => {
+            
             this.gameEngine.addFile((file as FileJsonDTO));
         });
     }

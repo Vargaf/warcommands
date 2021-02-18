@@ -53,7 +53,7 @@ export class DomElementComponentFactoryService {
 
     getTileComponent(tile: TileDTO): ComponentFactory<TileGrassComponent | TileSandComponent | TileWaterComponent> {
 
-        let component: ComponentFactory<any>;
+        let component!: ComponentFactory<any>;
 
         switch (tile.type) {
             case TileType.Grass: {

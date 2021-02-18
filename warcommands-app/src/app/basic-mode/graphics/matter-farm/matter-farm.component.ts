@@ -11,11 +11,11 @@ import { BuildingsNgrxRepositoryService } from 'src/warcommands/basic-mode/infra
 })
 export class MatterFarmComponent implements OnInit {
 
-    @Input() data: BuildingDTO;
-    building: MatterFarmBuildingDTO;
+    @Input() data!: BuildingDTO;
+    building!: MatterFarmBuildingDTO;
 
     @ViewChild('matterFarmElement', { static: true })
-    matterFarmElement: ElementRef<HTMLDivElement>;
+    matterFarmElement!: ElementRef<HTMLDivElement>;
 
     constructor(
         @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration,

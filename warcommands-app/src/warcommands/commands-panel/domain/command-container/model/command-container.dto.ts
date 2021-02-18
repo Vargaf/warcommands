@@ -1,7 +1,7 @@
 export interface CommandContainerDTO {
     id: string;
     fileId: string;
-    parentCommandId: string;
+    parentCommandId: string | null;
     commands: Array<string>;
 }
 

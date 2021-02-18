@@ -15,7 +15,7 @@ export class GameLogicActionManagerFactoryService {
     ) {}
 
     getActionManager(actionType: UnitActionTypeENUM): GameLogicActionManagerService {
-        let service: GameLogicActionManagerService = null;
+        let service!: GameLogicActionManagerService;
 
         switch (actionType) {
             case UnitActionTypeENUM.MoveTo: {

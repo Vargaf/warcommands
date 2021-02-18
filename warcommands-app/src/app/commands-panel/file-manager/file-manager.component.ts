@@ -13,19 +13,19 @@ import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/do
 export class FileManagerComponent implements OnInit {
 
     @ViewChild('deleteButtonWrapper', { static: true })
-    deleteButtonWrapper: ElementRef<HTMLDivElement>;
+    deleteButtonWrapper!: ElementRef<HTMLDivElement>;
 
     @ViewChild('deleteButtonDraggableElement', { static: true })
-    deleteButtonDraggableElement: ElementRef<HTMLDivElement>;
+    deleteButtonDraggableElement!: ElementRef<HTMLDivElement>;
 
     @ViewChild('cancelButtonWrapper', { static: true })
-    cancelButtonWrapper: ElementRef<HTMLDivElement>;
+    cancelButtonWrapper!: ElementRef<HTMLDivElement>;
 
     @ViewChild('cancelButtonDraggableElement', { static: true })
-    cancelButtonDraggableElement: ElementRef<HTMLDivElement>;
+    cancelButtonDraggableElement!: ElementRef<HTMLDivElement>;
 
     @ViewChild('filesTabGroup', { static: true })
-    filesTabGroup: MatTabGroup;
+    filesTabGroup!: MatTabGroup;
 
     fileList: FileDTO[] = [];
 
@@ -56,7 +56,7 @@ export class FileManagerComponent implements OnInit {
     saveFile(): void {
         this.isSavingFile = true;
 
-        const selectedFile = this.filesTabGroup.selectedIndex;
+        const selectedFile = <number>this.filesTabGroup.selectedIndex;
         const file: FileDTO = this.fileList[selectedFile];
         this.commandsPanelManagerService.saveFile(file);
 

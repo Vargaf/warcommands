@@ -47,7 +47,7 @@ export class LocalStorageFileRepositoryService implements FileRepositoryService 
         };
 
         const rawUerFileList = localStorage.getItem(LocalStorageHelper.userFileListIndex);
-        const userFileList: LocalStorageHelper.UserFileDTO[] = JSON.parse(rawUerFileList) || [];
+        const userFileList: LocalStorageHelper.UserFileDTO[] = JSON.parse(<string>rawUerFileList) || [];
 
         userFileList.push(newUserFile);
 

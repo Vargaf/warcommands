@@ -4,8 +4,8 @@ import { EventType } from '../../game-event-bus/model/event-type.enum';
 import { BuildingDTO } from '../../building/model/building.dto';
 
 interface BuildingSpawnedUnitEventDTO {
-    unit: UnitGenericDTO,
-    buildingId: string
+    unit: UnitGenericDTO | null,
+    buildingId: string | null
 }
 
 export class BuildingSpawnedUnitEvent implements EventInterface {

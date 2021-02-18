@@ -22,7 +22,7 @@ export class InMemoryUnitRepositoryService implements UnitRepositoryService {
     }
 
     findById(unitId: string): UnitGenericDTO {
-        return this.unitList.get(unitId);
+        return <UnitGenericDTO>this.unitList.get(unitId);
     }
 
     remove(unit: UnitGenericDTO): void {

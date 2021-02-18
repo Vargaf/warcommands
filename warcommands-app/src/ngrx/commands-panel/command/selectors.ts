@@ -2,14 +2,16 @@ import * as CommandsPanelReducerMap from '../reducer-map';
 import { CommandState, CommandStoreKey } from './reducers';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+interface CommandStore {
+    [CommandStoreKey]: CommandState;
+}
+
 export interface CommandFeatureState {
-    [CommandsPanelReducerMap.CommandsPanelStoreKey]: {
-        [CommandStoreKey]: CommandState;
-    };
+    [CommandsPanelReducerMap.CommandsPanelStoreKey]: CommandStore;
 }
 
 export const commandPanelFeatureSelector =
-    createFeatureSelector<CommandFeatureState>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<CommandFeatureState, CommandStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const commandFeatureSelector = createSelector(
     commandPanelFeatureSelector,
@@ -18,5 +20,7 @@ const commandFeatureSelector = createSelector(
 
 export const commandSelector = createSelector(
     commandFeatureSelector,
-    (state: CommandState, props) => state.commandList[props.commandId]
+    (state: CommandState, props: { commandId: string }) => {
+        return state.commandList[props.commandId];
+    }
 );

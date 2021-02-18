@@ -19,14 +19,14 @@ import * as _ from 'lodash';
 export class IfThenComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
     
     
-    @Input() commandData: GenericCommandDTO;
-    ifThenCommand: IfThenCommandEntity;
+    @Input() commandData!: GenericCommandDTO;
+    ifThenCommand!: IfThenCommandEntity;
 
-    thenCommandContainerId: string;
-    conditionCommandContainerId: string;
-    conditionCommandId: string;
+    thenCommandContainerId!: string;
+    conditionCommandContainerId!: string;
+    conditionCommandId!: string | null;
 
-    conditionCommand: GenericCommandDTO;
+    conditionCommand!: GenericCommandDTO;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -82,9 +82,9 @@ export class IfThenComponent extends CommandComponent implements OnInit, OnDestr
 
     protected getCommandErrorMessages(): String[] {
         let errorFormMessage: String[] = [];
-        const conditionCommandIdInput: AbstractControl = this.commandForm.get('conditionCommandId');
+        const conditionCommandIdInput: AbstractControl | null = this.commandForm.get('conditionCommandId');
 
-        if (conditionCommandIdInput.errors) {
+        if (conditionCommandIdInput?.errors) {
             if (conditionCommandIdInput.errors.required) {
                 errorFormMessage.push('- A condition to evaluate is required.');
             }
@@ -100,10 +100,10 @@ export class IfThenComponent extends CommandComponent implements OnInit, OnDestr
             if (this.isANewCommand(commandContainer)) {
                 this.conditionCommand = this.commandRepositoryService.findById(commandContainer.commands[0]);
                 this.conditionCommandId = this.conditionCommand.id;
-                this.commandForm.get('conditionCommandId').setValue(this.conditionCommandId);
+                this.commandForm.get('conditionCommandId')?.setValue(this.conditionCommandId);
             } else {
                 this.conditionCommandId = null;
-                this.commandForm.get('conditionCommandId').setValue(this.conditionCommandId);
+                this.commandForm.get('conditionCommandId')?.setValue(this.conditionCommandId);
             }
 
             this.commandForm.updateValueAndValidity();

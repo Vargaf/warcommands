@@ -9,7 +9,7 @@ import { StatsService } from 'src/warcommands/basic-mode/infrastructure/stats.se
 export class StatsComponent implements OnInit {
 
   @ViewChild('statsWrapper', { static: true })
-  public statsElement: ElementRef<HTMLDivElement>;
+  public statsElement!: ElementRef<HTMLDivElement>;
 
   constructor(private statsService: StatsService) { }
 

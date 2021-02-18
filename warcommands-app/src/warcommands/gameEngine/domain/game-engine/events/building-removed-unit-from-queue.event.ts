@@ -6,7 +6,7 @@ import { EventType } from '../../game-event-bus/model/event-type.enum';
 export class BuildingRemovedUnitFromQueueEvent implements EventInterface {
     readonly type = EventType.BuildingRemovedUnitFromQueue;
 
-    private _data: UnitGenericDTO = null;
+    private _data!: UnitGenericDTO;
 
     constructor(unit: UnitGenericDTO) {
         this._data = unit;

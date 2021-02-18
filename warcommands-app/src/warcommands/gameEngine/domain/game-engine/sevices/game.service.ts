@@ -16,9 +16,9 @@ import { WarcommandsNgZone } from '../../share/warcommands-ng-zone.service';
 
 export class GameService {
 
-    private isInitialized: boolean;
+    private isInitialized!: boolean;
 
-    private mapType: MapType;
+    private mapType!: MapType;
 
     private isGameRunning: boolean = true;
 

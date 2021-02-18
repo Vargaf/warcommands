@@ -8,7 +8,7 @@ export class GameEventBusService {
 
     private eventBus: Subject<EventInterface>;
 
-    private separator: ';';
+    private separator: string = ';';
 
     constructor() {
         const gameStartedEvnt = new GameStartedEvent();

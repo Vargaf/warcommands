@@ -5,9 +5,9 @@ import { ClassNameENUM } from './class-definition/class-name.enum';
 export interface BaseSetVariableCommandEntity extends GenericCommandDTO {
     data: {
         varName: string;
-        className: ClassNameENUM;
+        className: ClassNameENUM | null;
         varValue?: string | number;
-        innerCommandId?: string;
+        innerCommandId?: string | null;
     }
 }
 
@@ -16,6 +16,6 @@ export interface SetVariableCommandEntity extends BaseSetVariableCommandEntity {
     data: {
         varName: string;
         varValue: string;
-        className: ClassNameENUM;
+        className: ClassNameENUM | null;
     }
 }

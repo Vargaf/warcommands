@@ -1,6 +1,6 @@
 import { BuildingsRepositoryService } from 'src/warcommands/basic-mode/domain/building/services/buildings-repository.service';
 import { BuildingDTO, SpawnerBuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import { BuildingsNgrxRepositoryService } from '../../ngrx/buildings/buildings-ngrx-repository.service';
 import { Injectable } from '@angular/core';
 import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
@@ -26,7 +26,7 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
     }
 
     findById(buildingId: string): BuildingDTO {
-        return _.cloneDeep(this.buildingList.get(buildingId));
+        return <BuildingDTO>_.cloneDeep(this.buildingList.get(buildingId));
     }
 
     findBy(filterList: QueryFilterDTO): BuildingDTO[] {
@@ -38,7 +38,8 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositorySe
             let filtersMatch = true;
 
             for (const filterKey of filterKeyList) {
-                if (building[filterKey] !== filterList[filterKey]) {
+                const objectKey = filterKey as keyof BuildingDTO;
+                if (building[objectKey] !== filterList[objectKey]) {
                     filtersMatch = false;
                     break;
                 }

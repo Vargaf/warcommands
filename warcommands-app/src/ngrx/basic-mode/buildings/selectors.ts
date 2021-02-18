@@ -2,14 +2,16 @@ import * as BasicModeReducerMap from '../reducer-map';
 import { BuildingListState, BuildingListStoreKey } from './reducers';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+interface BuildingStore {
+    [BuildingListStoreKey]: BuildingListState;
+}
+
 export interface BuildingListFeatureState {
-    [BasicModeReducerMap.GameEngineBasicModeStoreKey]: {
-        [BuildingListStoreKey]: BuildingListState
-    }
+    [BasicModeReducerMap.GameEngineBasicModeStoreKey]: BuildingStore;
 }
 
 export const basicModeFeatureSelector =
-    createFeatureSelector<BuildingListFeatureState>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
+    createFeatureSelector<BuildingListFeatureState, BuildingStore>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
 
 const buildingListFeatureSelector = createSelector(
     basicModeFeatureSelector,
@@ -18,7 +20,7 @@ const buildingListFeatureSelector = createSelector(
 
 export const buildingSelector = createSelector(
     buildingListFeatureSelector,
-    (state: BuildingListState, props) => state.list[props.buildingId]
+    (state: BuildingListState, props: { buildingId: string }) => state.list[props.buildingId]
 );
 
 export const buildingListSelector = createSelector(

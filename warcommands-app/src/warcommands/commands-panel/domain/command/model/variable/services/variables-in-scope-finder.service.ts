@@ -109,7 +109,7 @@ export class VariableInScopeFinderService {
     }
 
     private getParentCommand(currentCommandContainerId: string): GenericCommandDTO {
-        let parentCommand: GenericCommandDTO;
+        let parentCommand!: GenericCommandDTO;
         const parentCommandContainer: CommandContainerDTO = this.commandContainerRepositoryService.findById(currentCommandContainerId);
 
         if (parentCommandContainer.parentCommandId) {

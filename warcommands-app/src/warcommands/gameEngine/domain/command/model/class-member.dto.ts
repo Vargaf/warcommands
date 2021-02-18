@@ -3,7 +3,7 @@ import { ClassNameENUM } from './class-name.enum';
 export interface ClassMemberDTO {
     className: ClassNameENUM;
     memberName: string;
-    args?: any[];
+    args: any[];
     methodChained?: ClassMemberDTO;
     return?: any;
 }

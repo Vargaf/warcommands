@@ -4,7 +4,7 @@ import { GenericCommandDTO } from '../../command/model/generic-command.dto';
 export interface CommandWrapperDTO {
     containerId: string;
     previousContainerId?: string;
-    command: GenericCommandDTO;
+    command: GenericCommandDTO | null;
     previousIndex: number;
     currentIndex: number;
     dropType?: DropType;

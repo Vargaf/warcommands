@@ -17,25 +17,25 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
-    gameClassMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
+    gameClassMember!: ClassMemberDTO | null;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
     
     @ViewChild('memberSelectElement', {static: false})
-    memberSelectElement: MatSelect;
+    memberSelectElement!: MatSelect;
 
     gameCommandClassDefinition = GameClassOptionsDefinition;
 
     private subscriptionManager: Subscription = new Subscription();
     
-    memberSelected: string;
-    componentFormGroup: FormGroup;
-    formErrorMessage: string;
+    memberSelected!: string | null;
+    componentFormGroup!: FormGroup;
+    formErrorMessage!: string;
     isCommandValid = true;
     areMemberOptionsVisible = false;
 
@@ -57,7 +57,7 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
 
     showMemberOptions(): void {
         this.areMemberOptionsVisible = true;
-        this.componentFormGroup.get('memberSelected').enable();
+        this.componentFormGroup.get('memberSelected')?.enable();
         this.changeDetectorRef.detectChanges();
         this.memberSelectElement.open();
     }
@@ -73,7 +73,7 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
         });
 
         const valueChangesSubscription = this.componentFormGroup.valueChanges.subscribe(() => {
-            const memberSelected = this.componentFormGroup.get('memberSelected').value;
+            const memberSelected = this.componentFormGroup.get('memberSelected')?.value;
             this.onMemberSelectionChanged(memberSelected);
         });
 
@@ -100,9 +100,9 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
 
     private buildCommandErrorMessage(): void {
         let errorFormMessage: Array<string> = [];
-        const memberSelectedInput: AbstractControl = this.componentFormGroup.get('memberSelected');
+        const memberSelectedInput: AbstractControl | null = this.componentFormGroup.get('memberSelected');
 
-        if(memberSelectedInput.errors) {
+        if(memberSelectedInput?.errors) {
             if (memberSelectedInput.errors.required) {
                 errorFormMessage.push('- Select a method or property.');
             }
@@ -149,13 +149,13 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
     private onMemberSelectionChanged(value: string): void {
         if (value === '-1' && this.areMemberOptionsVisible) {
             this.areMemberOptionsVisible = false;
-            this.componentFormGroup.get('memberSelected').setValue('');
-            this.componentFormGroup.get('memberSelected').disable();
+            this.componentFormGroup.get('memberSelected')?.setValue('');
+            this.componentFormGroup.get('memberSelected')?.disable();
             this.memberSelected = null;
             this.gameClassMember = null;
             this.emitSelectedMember();
         } else {
-            this.memberSelected = this.componentFormGroup.get('memberSelected').value;
+            this.memberSelected = this.componentFormGroup.get('memberSelected')?.value;
         }
 
     }
@@ -163,7 +163,7 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
     private emitSelectedMember(): void {
         // To avoid ExpressionChangedAfterItHasBeenCheckedError
         setTimeout(() => {
-            this.classMemberChange.emit(_.clone(this.gameClassMember));
+            this.classMemberChange.emit(<ClassMemberDTO>_.clone(this.gameClassMember));
         }, 0);
     }
 

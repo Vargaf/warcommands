@@ -2,14 +2,16 @@ import * as CommandsPanelReducerMap from '../reducer-map';
 import { UxUiState, UxUiStoreKey } from './reducers'
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+interface UxUiStore {
+    [UxUiStoreKey]: UxUiState;
+}
+
 export interface UxUiFeatureState {
-    [CommandsPanelReducerMap.CommandsPanelStoreKey]: {
-        [UxUiStoreKey]: UxUiState;
-    }
+    [CommandsPanelReducerMap.CommandsPanelStoreKey]: UxUiStore;
 }
 
 export const commandPanelFeatureSelector =
-    createFeatureSelector<UxUiFeatureState, UxUiState>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<UxUiFeatureState, UxUiStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const uxUiFeatureSelector = createSelector(
     commandPanelFeatureSelector,

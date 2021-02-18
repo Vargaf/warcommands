@@ -5,8 +5,8 @@ import * as UxUiActions from 'src/ngrx/commands-panel/ux-ui/actions';
 import { Observable } from 'rxjs';
 
 interface WindowsSize {
-    width: number,
-    height: number
+    width: number | null,
+    height: number | null
 }
 
 @Injectable({

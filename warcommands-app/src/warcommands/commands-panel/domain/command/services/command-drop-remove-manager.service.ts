@@ -44,7 +44,7 @@ export class CommandDropRemoveManagerService {
 
     private disableDropEventToCommandList(dropListRef: DropListRef): DropListRef {
         dropListRef.enterPredicate = (dragItem: DragRef, dropList: DropListRef) => {
-            return !(dragItem as any)._initialContainer.element.hasAttribute('iscommandlistdropcontainer');
+            return !(dragItem as any)._dropContainer.element.hasAttribute('iscommandlistdropcontainer');
         };
 
         return dropListRef;

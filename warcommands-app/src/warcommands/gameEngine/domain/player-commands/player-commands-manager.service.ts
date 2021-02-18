@@ -23,7 +23,7 @@ export class PlayerCommandsManagerService {
         const playerList: PlayerDTO[] = this.playerManagerService.getPlayerList();
 
         for(const player of playerList) {
-            this.gameLoopManager.runGameLoop(player.gameLoopCommandId);
+            this.gameLoopManager.runGameLoop(<string>player.gameLoopCommandId);
         }
     }
 

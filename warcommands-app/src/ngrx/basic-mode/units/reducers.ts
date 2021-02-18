@@ -3,7 +3,7 @@ import * as UnitListActions from './actions';
 import * as _ from 'lodash';
 import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
 
-export const UnitListStoreKey = 'units';
+export const UnitListStoreKey = 'unitStore';
 
 export interface UnitListState {
     list: { [index: string]: UnitGenericDTO };

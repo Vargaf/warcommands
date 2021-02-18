@@ -13,7 +13,7 @@ export class BaseClassService {
     ) {}
 
     createWorker(base: BaseBuildingDTO): UnitGenericDTO {
-        return this.enqueueUnitsManagerService.enqueueUnit(UnitTypeENUM.Worker, base.id);
+        return this.enqueueUnitsManagerService.enqueueUnit(UnitTypeENUM.Worker, <string>base.id);
     }
 
     getWorker(base: BaseBuildingDTO, args: any[], playerId: string): UnitGenericDTO {

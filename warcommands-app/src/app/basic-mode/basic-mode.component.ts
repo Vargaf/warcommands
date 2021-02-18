@@ -16,10 +16,10 @@ import { Subscription } from 'rxjs';
 export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
 
     @ViewChild(BasicModeComponentDirective, { static: true })
-    public basicModeGraphicsWrapper: BasicModeComponentDirective;
+    public basicModeGraphicsWrapper!: BasicModeComponentDirective;
 
-    isCommandsPanelOppened: boolean;
-    commandPanelVisibleListenerSubscription: Subscription;
+    isCommandsPanelOppened!: boolean;
+    commandPanelVisibleListenerSubscription!: Subscription;
 
     constructor(
         private readonly gameMiddlewareService: GameMiddlewareService,
@@ -31,7 +31,7 @@ export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
         const currentPlayer: CurrentPlayerDTO = this.currentPlayerManager.initializePlayer();
         const viewContainerRef = this.basicModeGraphicsWrapper.viewContainerRef;
         this.gameMiddlewareService.setMap(MapType.TutorialFirstMap);
-        this.gameMiddlewareService.addPlayer(currentPlayer.id);
+        this.gameMiddlewareService.addPlayer(<string>currentPlayer.id);
         this.gameMiddlewareService.addIAPlayer(DifficultyLevel.Mirror);
         this.gameMiddlewareService.initialize(viewContainerRef);
 

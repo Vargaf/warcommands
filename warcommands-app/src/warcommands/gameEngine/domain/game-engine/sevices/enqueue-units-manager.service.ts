@@ -32,9 +32,9 @@ export class EnqueueUnitsManagerService {
         const buildingSpawnerService: BuildingSpawnerService = 
             this.buildingSpawnerServiceFactory.getBuildingSpawnerService(unitType);
 
-        let unit: UnitGenericDTO = null;
+        let unit!: UnitGenericDTO;
         let spawnerBuilding: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(buildingId) as SpawnerBuildingDTO);
-        const playerBase: BaseBuildingDTO = (this.buildingsRepositoryService.findById(spawnerBuilding.baseId) as BaseBuildingDTO);
+        const playerBase: BaseBuildingDTO = (this.buildingsRepositoryService.findById(<string>spawnerBuilding.baseId) as BaseBuildingDTO);
         const unitCost: ResourcesDTO = buildingSpawnerService.getUnitCost(unitType);
 
         const isSpawningAvailable: boolean =
@@ -50,8 +50,8 @@ export class EnqueueUnitsManagerService {
                 spawnerBuilding = buildingSpawnerService.startUnitSpawning(spawnerBuilding, unit, this.gameLogicTimeFrameService.getCurrentTime());
                 const event = new BuildingSpawningUnitEvent(
                     unit,
-                    spawnerBuilding.unitSpawning.spawnFinish,
-                    spawnerBuilding.unitSpawning.spawnStart);
+                    <number>spawnerBuilding.unitSpawning.spawnFinish,
+                    <number>spawnerBuilding.unitSpawning.spawnStart);
                 this.gameEventBusService.cast(event);
             } else {
                 spawnerBuilding = buildingSpawnerService.addUnitToSpawningQueue(spawnerBuilding, unit);
@@ -62,16 +62,16 @@ export class EnqueueUnitsManagerService {
             if (spawnerBuilding.type === BuildingTypeEnum.Base) {
                 (spawnerBuilding as BaseBuildingDTO).resources.matter -= unitCost.matter;
                 (spawnerBuilding as BaseBuildingDTO).resources.energy -= unitCost.energy;
-                this.launchResourcesUpdateEvent(spawnerBuilding.id, (spawnerBuilding as BaseBuildingDTO).resources);
+                this.launchResourcesUpdateEvent(<string>spawnerBuilding.id, (spawnerBuilding as BaseBuildingDTO).resources);
             } else {
                 playerBase.resources.matter -= unitCost.matter;
                 playerBase.resources.energy -= unitCost.energy;
                 this.buildingsRepositoryService.save(playerBase);
-                this.launchResourcesUpdateEvent(playerBase.id, playerBase.resources);
+                this.launchResourcesUpdateEvent(<string>playerBase.id, playerBase.resources);
             }
             
             this.buildingsRepositoryService.save(spawnerBuilding);
-            this.spawningBuildngsRepositoryService.save(spawnerBuilding.id);
+            this.spawningBuildngsRepositoryService.save(<string>spawnerBuilding.id);
             this.unitsRepositoryService.save(unit);
         }
 

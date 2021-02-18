@@ -2,7 +2,7 @@ import { CurrentPlayerDTO } from 'src/warcommands/commands-panel/domain/current-
 import { createReducer, on, Action } from '@ngrx/store';
 import * as PlayerListActions from './actions';
 
-export const PlayerListStoreKey = 'players';
+export const PlayerListStoreKey = 'playerStore';
 
 export interface PlayerListState {
     currentPlayer: CurrentPlayerDTO;

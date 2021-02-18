@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { BuildingDTO, SpawnerBuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
 
-export const BuildingListStoreKey = 'buildings';
+export const BuildingListStoreKey = 'buildingStore';
 
 export interface BuildingListState {
     list: { [index: string]: BuildingDTO };

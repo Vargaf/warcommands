@@ -7,7 +7,7 @@ export interface GenericCommandDTO {
     fileId: string;
     parentCommandContainerId: string;
     innerCommandContainerIdList?: { [index: string]: string };
-    classMember?: ClassMemberDTO;
+    classMember?: ClassMemberDTO | null;
     data?: any;
     commandPathErrorsCounter: number;
 }

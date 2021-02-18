@@ -4,7 +4,7 @@ import { CommandContainerRepositoryService } from './command-container-repositor
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
 import { CommandContainerDTO } from '../model/command-container.dto';
 import { GenericCommandDTO } from '../../command/model/generic-command.dto';
-import { commandDraggedAvailability } from '../model/command-dragged-availability';
+import { CommandDraggedAvailabilityList } from '../model/command-dragged-availability';
 import { IfThenCommandEntity } from '../../command/model/if-then-command.entity';
 
 
@@ -26,7 +26,7 @@ export class CommandEnterPredicateAvalabilityService {
         if (this.isCommandDraggedOnFileCommandContainer(commandContainer)) {
             isCommandAvailable = true;
         } else {
-            const command: GenericCommandDTO = this.commandRepositoryService.findById(commandContainer.parentCommandId);
+            const command: GenericCommandDTO = this.commandRepositoryService.findById(<string>commandContainer.parentCommandId);
 
             switch (command.type) {
                 case CommandType.GameLoop: {
@@ -56,7 +56,7 @@ export class CommandEnterPredicateAvalabilityService {
         let isCommandAvailable = false;
 
         if (commandContainer.commands.length === 0) {
-            const dragAvailable = commandDraggedAvailability[commandContainerType].some((element) => element === draggedCommandType);
+            const dragAvailable = CommandDraggedAvailabilityList[commandContainerType].some((element: CommandType) => element === draggedCommandType);
         if (dragAvailable) {
             isCommandAvailable = true;
         }

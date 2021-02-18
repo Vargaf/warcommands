@@ -103,19 +103,28 @@ export class GameLogicInitializeWorkerHarvestActionsService {
 
         let areAllActionsPreparedToStart = true;
 
+        /*
         superAction.atomicActions.forEach((action) => {
             if (!action || action.actionStatus !== UnitActionStatusENUM.WaitingToStart) {
                 areAllActionsPreparedToStart = false;
             }
         });
+        */
+       for (let actionIndex = 0; actionIndex < superAction.atomicActions.length; actionIndex++) {
+           const action = superAction.atomicActions[actionIndex];
+
+            if (!action || action.actionStatus !== UnitActionStatusENUM.WaitingToStart) {
+                areAllActionsPreparedToStart = false;
+            }
+       }
 
         return areAllActionsPreparedToStart;
     }
 
     private getFarmBuilding(worker: WorkerUnitDTO): BuildingDTO {
-        let buildingTypeToSearch: BuildingTypeEnum;
+        let buildingTypeToSearch!: BuildingTypeEnum;
         const playerId = worker.playerId;
-        let farmBuildingToMove: BuildingDTO = null;
+        let farmBuildingToMove!: BuildingDTO;
 
         switch (worker.role) {
             case WorkerUnitRoleENUM.EnergyHarvester: {

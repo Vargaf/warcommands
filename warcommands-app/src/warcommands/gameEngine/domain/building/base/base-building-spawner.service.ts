@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 export class BaseBuildingSpawnerService implements BuildingSpawnerService {
 
     getUnitCost(unitType: UnitTypeENUM): ResourcesDTO {
-        let resources: ResourcesDTO = null;
+        let resources!: ResourcesDTO;
 
         switch(unitType) {
             case UnitTypeENUM.Worker: {
@@ -33,9 +33,9 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
     createUnit(spawnerBuilding: SpawnerBuildingDTO): UnitGenericDTO {
         const worker: WorkerUnitDTO = {
             id: uuid(),
-            playerId: spawnerBuilding.playerId,
-            baseId: spawnerBuilding.baseId,
-            spawnerBuildingId: spawnerBuilding.id,
+            playerId: <string>spawnerBuilding.playerId,
+            baseId: <string>spawnerBuilding.baseId,
+            spawnerBuildingId: <string>spawnerBuilding.id,
             spawningStatus: UnitSpawningStatusENUM.Enqueued,
             type: UnitTypeENUM.Worker,
             action: null,
@@ -96,7 +96,7 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
 
     spawnNexUnitInQueue(building: SpawnerBuildingDTO, currentTimeFrame: number): UnitGenericDTO {
         
-        const unit = building.queueList.shift();
+        const unit: UnitGenericDTO = <UnitGenericDTO>building.queueList.shift();
         building.unitSpawning.unit = unit;
         building.unitSpawning.spawnStart = currentTimeFrame;
         building.unitSpawning.spawnFinish = currentTimeFrame + WorkerConfiguration.spawnTime;

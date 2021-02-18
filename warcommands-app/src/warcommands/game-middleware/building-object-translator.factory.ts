@@ -7,12 +7,13 @@ import { MatterFarmBuildingDTO as ResponseMatterFarmBuildingDTO } from '../gameE
 import { MatterFarmBuildingDTO } from '../basic-mode/domain/building/matter-farm/matter-farm-building.dto';
 import { EnergyFarmBuildingDTO as ResponseEnergyFarmBuildingDTO } from '../gameEngine/domain/building/energy-farm/energy-farm-building.dto';
 import { EnergyFarmBuildingDTO } from '../basic-mode/domain/building/energy-farm/energy-farm-building.dto';
+import { UnitGenericDTO } from '../basic-mode/domain/units/model/unit-generic.dto';
 
 export class BuildingObjectTranslatorFactory {
 
     static translateBuildingType(responseBuilding: ResponseBuildingDTO): BuildingDTO {
 
-        let building: BuildingDTO = null;
+        let building!: BuildingDTO;
 
         switch (responseBuilding.type) {
             case BuildingTypeEnum.Base: {
@@ -40,14 +41,14 @@ export class BuildingObjectTranslatorFactory {
         const base: BaseEntityInterface = {
             type: BuildingTypeEnum.Base,
             name: responseBuilding.name,
-            queueList: responseBuilding.queueList,
+            queueList: <UnitGenericDTO[]>responseBuilding.queueList,
             spawnRelativeCoordinates: responseBuilding.spawnRelativeCoordinates,
-            id: responseBuilding.id,
+            id: <string>responseBuilding.id,
             sizeHeight: responseBuilding.sizeHeight,
             sizeWidth: responseBuilding.sizeWidth,
             xCoordinate: responseBuilding.xCoordinate,
             yCoordinate: responseBuilding.yCoordinate,
-            playerId: responseBuilding.playerId,
+            playerId: <string>responseBuilding.playerId,
             resources: {
                 matter: responseBuilding.resources.matter,
                 energy: responseBuilding.resources.energy
@@ -65,12 +66,12 @@ export class BuildingObjectTranslatorFactory {
     private static translateMatterFarmBuilding(responseBuilding: ResponseMatterFarmBuildingDTO): MatterFarmBuildingDTO {
         const building: MatterFarmBuildingDTO = {
             type: BuildingTypeEnum.MatterFarm,
-            id: responseBuilding.id,
+            id: <string>responseBuilding.id,
             sizeHeight: responseBuilding.sizeHeight,
             sizeWidth: responseBuilding.sizeWidth,
             xCoordinate: responseBuilding.xCoordinate,
             yCoordinate: responseBuilding.yCoordinate,
-            playerId: responseBuilding.playerId,
+            playerId: <string>responseBuilding.playerId,
         };
 
         return building;
@@ -79,12 +80,12 @@ export class BuildingObjectTranslatorFactory {
     private static translateEnergyFarmBuilding(responseBuilding: ResponseEnergyFarmBuildingDTO): EnergyFarmBuildingDTO {
         const building: EnergyFarmBuildingDTO = {
             type: BuildingTypeEnum.EnergyFarm,
-            id: responseBuilding.id,
+            id: <string>responseBuilding.id,
             sizeHeight: responseBuilding.sizeHeight,
             sizeWidth: responseBuilding.sizeWidth,
             xCoordinate: responseBuilding.xCoordinate,
             yCoordinate: responseBuilding.yCoordinate,
-            playerId: responseBuilding.playerId,
+            playerId: <string>responseBuilding.playerId,
         };
 
         return building;

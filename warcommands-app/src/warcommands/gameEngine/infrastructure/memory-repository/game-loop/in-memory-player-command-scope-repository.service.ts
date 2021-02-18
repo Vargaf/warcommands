@@ -13,12 +13,12 @@ export class InMemoryPlayerCommandsScopeRepositoryService implements PlayerComma
         if (!this.scopeList.has(clone.playerId)) {
             this.scopeList.set(clone.playerId, (new Map).set(clone.scopeId, clone));
         } else {
-            this.scopeList.get(clone.playerId).set(clone.scopeId, clone);
+            this.scopeList.get(clone.playerId)?.set(clone.scopeId, clone);
         }
     }
 
     findScopeByPlayerId(scopeId: string, playerId: string): PlayerCommandScopeDTO {
-        return _.cloneDeep(this.scopeList.get(playerId).get(scopeId));
+        return <PlayerCommandScopeDTO>_.cloneDeep(this.scopeList.get(playerId)?.get(scopeId));
     }
 
     addPlayerCommandScopeVarValue(varValue: PlayerCommandScopeVarValueDTO): void {
@@ -28,7 +28,7 @@ export class InMemoryPlayerCommandsScopeRepositoryService implements PlayerComma
     }
 
     removeScope(scope: PlayerCommandScopeDTO): void {
-        this.scopeList.get(scope.playerId).delete(scope.scopeId);
+        this.scopeList.get(scope.playerId)?.delete(scope.scopeId);
     }
 
     clearPlayerScope(playerId: string): void {

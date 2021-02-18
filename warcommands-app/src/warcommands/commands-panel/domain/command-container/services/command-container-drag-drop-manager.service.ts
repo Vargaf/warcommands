@@ -117,11 +117,15 @@ export class CommandContainerDragDropManagerService {
 
     private setDropAvailavilityFlagListener(dropList: DropListRef): void {
         dropList.enterPredicate = (drag, drop) => {
-
+            
             let isCommandContainerAvailable = false;
 
-            const isTheSameCommandContainerPointedByUser = (drop.element as any).getAttribute('id') === this.mouseHelperService.activeContainerId;
+            if(this.mouseHelperService.activeContainerId === null) {
+                return true;
+            }
 
+            const isTheSameCommandContainerPointedByUser = (drop.element as any).getAttribute('id') === this.mouseHelperService.activeContainerId;
+            
             if (isTheSameCommandContainerPointedByUser) {
                 isCommandContainerAvailable = true;
 
@@ -171,7 +175,7 @@ export class CommandContainerDragDropManagerService {
             if (this.isANewCommand(event)) {
                 const commandWrapper = this.buildNewCommandWrapper(event);
                 this.commandDragDropManagerEvents.commandCreatedDispatch(commandWrapper);
-                this.buildInnerCommandContainers(commandWrapper.command);
+                this.buildInnerCommandContainers(<GenericCommandDTO>commandWrapper.command);
             } else {
                 const commandContainerId: string = (event.container.element as any).getAttribute('id');
                 const commandWrapper = this.buildCommandWrapper(event);

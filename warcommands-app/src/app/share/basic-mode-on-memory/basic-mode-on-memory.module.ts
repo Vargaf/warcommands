@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import * as GameServiceProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-service.provider';
-import * as MapMemoryRepository from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map-memory-repository.provider';
 import * as InMemoryMapPathfindingRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-map-pathfinding-grid-repository.provider';
 import * as MapEngineProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-engine.provider';
 import * as BuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/buildings-manager.provider';
@@ -68,7 +67,6 @@ import * as GameLogicRewindActionManagerProvider from 'src/warcommands/gameEngin
 @NgModule({
     providers: [
         GameServiceProvider.provider,
-        MapMemoryRepository.provider,
         InMemoryMapPathfindingRepositoryProvider.provider,
         MapEngineProvider.provider,
         BuildingsManagerProvider.provider,

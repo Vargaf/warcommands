@@ -6,7 +6,7 @@ import { CommandDropRepository } from './command-drop-repository.service';
 })
 export class MouseDragDropHelperService {
 
-    activeContainerId: string;
+    activeContainerId: string | null = null;
 
     constructor(
         private readonly commandsDropRepository: CommandDropRepository
@@ -27,25 +27,23 @@ export class MouseDragDropHelperService {
     private setActiveCommandContainer(path: any[]): void {
         
         if (path.length > 0) {
-            const index = 0;
-        
-        //for (const index in path) {
-            const item = path[index];
-            if (item.hasAttribute && item.hasAttribute('MouseHelperDetectorCommandContainerId')) {
-                const commandContainerId = item.getAttribute('MouseHelperDetectorCommandContainerId');
-                if (commandContainerId !== this.activeContainerId) {
-                    this.desactivateThePreviousCommandContainer(this.activeContainerId);
-                    this.activateTheCurrentCommandContainer(commandContainerId);
-                    this.activeContainerId = commandContainerId;
-                }
+            for (const index in path) {
+                const item = path[index];
+                if (item.hasAttribute && item.hasAttribute('MouseHelperDetectorCommandContainerId')) {
+                    const commandContainerId = item.getAttribute('MouseHelperDetectorCommandContainerId');
+                    if (commandContainerId !== this.activeContainerId) {
+                        this.desactivateThePreviousCommandContainer(this.activeContainerId);
+                        this.activateTheCurrentCommandContainer(commandContainerId);
+                        this.activeContainerId = commandContainerId;
+                    }
 
-        //        break;
+                    break;
+                }
             }
-        //}
         }
     }
 
-    private desactivateThePreviousCommandContainer(commandContainerId: string): void {
+    private desactivateThePreviousCommandContainer(commandContainerId: string | null): void {
         if (commandContainerId) {
             const dropItem = this.commandsDropRepository.getDropItem(commandContainerId);
             dropItem.disabled = true;

@@ -10,13 +10,13 @@ import { Subscription } from 'rxjs';
 })
 export class GameLoopComponent implements OnInit, OnDestroy {
 
-    @Input() commandData: GameLoopCommandEntity;
+    @Input() commandData!: GameLoopCommandEntity;
 
-    commandContainerId: string;
+    commandContainerId!: string;
 
     showCommandInvalidBackground = false;
 
-    private commandDataSubscription: Subscription;
+    private commandDataSubscription!: Subscription;
 
     constructor(
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService

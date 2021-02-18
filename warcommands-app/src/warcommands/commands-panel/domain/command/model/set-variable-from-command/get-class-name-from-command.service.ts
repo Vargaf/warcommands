@@ -20,7 +20,7 @@ export class GetClassNameFromCommandService {
 
     getClassName(commandId: string): ClassNameENUM {
         const command: GenericCommandDTO = this.commandRepositoryService.findById(commandId);
-        let className: ClassNameENUM = null;
+        let className!: ClassNameENUM;
 
         switch (command.type) {
             case CommandType.Game: {
@@ -28,11 +28,11 @@ export class GetClassNameFromCommandService {
                 break;
             }
             case CommandType.SetVariable: {
-                className = (command as SetVariableCommandEntity).data.className;
+                className = <ClassNameENUM>(command as SetVariableCommandEntity).data.className;
                 break;
             }
             case CommandType.SetVariableFromCommand: {
-                className = (command as SetVariableFromCommandCommandEntity).data.className;
+                className = <ClassNameENUM>(command as SetVariableFromCommandCommandEntity).data.className;
                 break;
             }
             case CommandType.Variable: {
@@ -54,7 +54,7 @@ export class GetClassNameFromCommandService {
         return className;
     }
     private getClassNameByGameCommand(gameCommand: GameCommandEntity): ClassNameENUM {
-        let className: ClassNameENUM = null;
+        let className!: ClassNameENUM;
 
         if (!gameCommand.classMember) {
             className = ClassNameENUM.Game;
@@ -66,12 +66,12 @@ export class GetClassNameFromCommandService {
     }
 
     private getClasNameByClassMember(classMember: ClassMemberDTO): ClassNameENUM {
-        let className: ClassNameENUM = null;
+        let className!: ClassNameENUM;
 
         if (classMember.methodChained) {
             className = this.getClasNameByClassMember(classMember.methodChained);
         } else {
-            className = classMember.returnClassName;
+            className = <ClassNameENUM>classMember.returnClassName;
         }
 
         return className;

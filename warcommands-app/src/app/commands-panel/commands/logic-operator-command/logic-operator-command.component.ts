@@ -18,15 +18,15 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 })
 export class LogicOperatorCommandComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() commandData: GenericCommandDTO;
-    logicOperatorCommandData: LogicOperatorCommandEntity;
+    @Input() commandData!: GenericCommandDTO;
+    logicOperatorCommandData!: LogicOperatorCommandEntity;
 
-    firstCommandContainerId: string;
-    secondCommandContainerId: string;
+    firstCommandContainerId!: string;
+    secondCommandContainerId!: string;
 
-    logicOperatorSelected: number;
-    firstCommandId: number;
-    secondCommandId: number;
+    logicOperatorSelected!: number | null;
+    firstCommandId!: number;
+    secondCommandId!: number;
 
     logicOperatorOptions = logicOperatorSelectOptions;
 
@@ -67,7 +67,7 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
         const valueChangesSubscription = this.commandForm.valueChanges.subscribe(() => {
             if (this.commandForm.valid) {
                 this.logicOperatorCommandData.data = {
-                    operator: this.commandForm.get('logicOperator').value
+                    operator: this.commandForm.get('logicOperator')?.value
                 }
                 this.commandUpdatedEvents.commandUpdatedDispatch(this.logicOperatorCommandData);
             }
@@ -84,23 +84,23 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
 
     protected getCommandErrorMessages(): String[] {
         let errorFormMessage: String[] = [];
-        const logicOperatorInput: AbstractControl = this.commandForm.get('logicOperator');
-        const firstCommandIdInput: AbstractControl = this.commandForm.get('firstCommandId');
-        const secondCommandIdInput: AbstractControl = this.commandForm.get('secondCommandId');
+        const logicOperatorInput: AbstractControl | null = this.commandForm.get('logicOperator');
+        const firstCommandIdInput: AbstractControl | null = this.commandForm.get('firstCommandId');
+        const secondCommandIdInput: AbstractControl | null = this.commandForm.get('secondCommandId');
 
-        if (logicOperatorInput.errors) {
+        if (logicOperatorInput?.errors) {
             if (logicOperatorInput.errors.required) {
                 errorFormMessage.push('- A comparison operator is required.');
             }
         }
 
-        if (firstCommandIdInput.errors) {
+        if (firstCommandIdInput?.errors) {
             if (firstCommandIdInput.errors.required) {
                 errorFormMessage.push('- A first value to compare is required.');
             }
         }
 
-        if (secondCommandIdInput.errors) {
+        if (secondCommandIdInput?.errors) {
             if (secondCommandIdInput.errors.required) {
                 errorFormMessage.push('- A second value to compare is required.');
             }
@@ -131,9 +131,9 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
                 const commandId = commandContainer.commands[0] || null;
 
                 if (commandId) {
-                    this.commandForm.get('firstCommandId').setValue(commandId);
+                    this.commandForm.get('firstCommandId')?.setValue(commandId);
                 } else {
-                    this.commandForm.get('firstCommandId').reset();
+                    this.commandForm.get('firstCommandId')?.reset();
                 }
         });
 
@@ -146,9 +146,9 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
                 const commandId = commandContainer.commands[0] || null;
 
                 if (commandId) {
-                    this.commandForm.get('secondCommandId').setValue(commandId);
+                    this.commandForm.get('secondCommandId')?.setValue(commandId);
                 } else {
-                    this.commandForm.get('secondCommandId').reset();
+                    this.commandForm.get('secondCommandId')?.reset();
                 }
         });
 

@@ -2,7 +2,7 @@ import { GenericCommandListDTO } from 'src/warcommands/commands-panel/domain/com
 import { createReducer, on, Action } from '@ngrx/store';
 import * as CommandActions from './actions';
 
-export const CommandStoreKey = 'command';
+export const CommandStoreKey = 'commandStore';
 
 export interface CommandState {
     commandList: GenericCommandListDTO;

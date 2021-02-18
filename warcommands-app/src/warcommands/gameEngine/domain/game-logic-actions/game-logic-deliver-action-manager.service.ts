@@ -74,7 +74,7 @@ export class GameLogicDeliverActionManagerService extends GameLogicActionManager
 
             action.actionStatus = UnitActionStatusENUM.Finished;
 
-            const event: BaseResourcesUpdateEvent = new BaseResourcesUpdateEvent(base.id, base.resources);
+            const event: BaseResourcesUpdateEvent = new BaseResourcesUpdateEvent(<string>base.id, base.resources);
             this.gameEventBusService.cast(event);
         }
 

@@ -26,7 +26,7 @@ export class ClassFactoryService {
 
     private getClassFactory(classMember: ClassMemberDTO): AbstractClassFactoryDefinition {
 
-        let requestedClass: AbstractClassFactoryDefinition = null;
+        let requestedClass!: AbstractClassFactoryDefinition;
 
         switch (classMember.className) {
             case ClassNameENUM.Game: {

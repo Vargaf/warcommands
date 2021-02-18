@@ -6,8 +6,8 @@ export interface SetVariableFromCommandCommandEntity extends BaseSetVariableComm
     type: CommandType.SetVariableFromCommand;
     data: {
         varName: string;
-        innerCommandId: string;
-        className: ClassNameENUM;
+        innerCommandId: string | null;
+        className: ClassNameENUM | null;
     }
     innerCommandContainerIdList: {
         command: string

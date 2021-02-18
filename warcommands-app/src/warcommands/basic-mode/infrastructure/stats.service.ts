@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Stats from 'node_modules/stats.js/src/Stats.js';
+import * as Stats from 'stats.js';
 
 @Injectable({
     providedIn: 'root'

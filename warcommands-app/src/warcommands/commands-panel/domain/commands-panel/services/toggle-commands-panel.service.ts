@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ToggleCommandsPanelService {
 
-    private isCommandPanelVisible: BehaviorSubject<boolean> = new BehaviorSubject(true);
+    private isCommandPanelVisible: BehaviorSubject<boolean> = <BehaviorSubject<boolean>>new BehaviorSubject(true);
 
     showPanel(): void {
         this.isCommandPanelVisible.next(true);

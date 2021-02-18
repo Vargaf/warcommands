@@ -14,11 +14,12 @@ import * as _ from 'lodash';
 export class CreateWorkerComponent implements OnInit, ClassMemberComponent {
 
     @Input()
-    classMember: ClassMemberDTO;
-    createWorkerClassMember: ClassMemberDTO;
+    classMember!: ClassMemberDTO;
+    createWorkerClassMember!: ClassMemberDTO;
+    createWorkerClassMemberMethodChained!: ClassMemberDTO;
 
     @Input()
-    commandId: string;
+    commandId!: string;
 
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
@@ -42,6 +43,7 @@ export class CreateWorkerComponent implements OnInit, ClassMemberComponent {
         const clonedClassMember = _.cloneDeep(this.createWorkerClassMember);
         clonedClassMember.methodChained = classMember; 
         this.createWorkerClassMember =  clonedClassMember;
+        this.createWorkerClassMemberMethodChained = clonedClassMember.methodChained;
         this.emitSelectedMember();
     }
 
@@ -54,6 +56,8 @@ export class CreateWorkerComponent implements OnInit, ClassMemberComponent {
             GetClassMemberByclassMemberOption.getClassMember(BaseClassCreateWorkerMethodOption);
             this.emitSelectedMember();
         }
+
+        this.createWorkerClassMemberMethodChained = <ClassMemberDTO>this.createWorkerClassMember.methodChained;
     }
 
 }

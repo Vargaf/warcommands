@@ -1,10 +1,10 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import * as RequestAnimationFrameActions from './actions';
 
-export const RequestAnimationFrameKey = 'request_animation_frame';
+export const RequestAnimationFrameKey = 'requestAnimationFrameStore';
 
 export interface State {
-    frameId: number;
+    frameId: number | null;
 }
 
 export const initialState: State = {

@@ -16,7 +16,7 @@ export class FileParserService {
     ) {}
 
     parseFile(file: FileJsonDTO): void {
-        this.parseCommandContainer(file.commandContainer, null, file.playerId);
+        this.parseCommandContainer(file.commandContainer, '', file.playerId);
     }
 
     private parseCommandContainer(rawCommandContainer: CommandContainerJsonDTO, parentCommandContainerId: string, playerid: string): void {
@@ -41,7 +41,7 @@ export class FileParserService {
             playerId,
             parentCommandContainerId,
             innerCommandContainerIdList: {},
-            classMember: null,
+            classMember: undefined,
             return: null,
             data: rawCommand.data
         };
@@ -71,7 +71,6 @@ export class FileParserService {
             memberName: rawClassMember.memberName,
             args: rawClassMember.args || [],
             return: null,
-            methodChained: null
         }
 
         if (rawClassMember.methodChained !== null) {

@@ -12,16 +12,16 @@ export class InMemoryPlayerCommandScopeVarValueRepositoryService implements Play
         if (!this.varValueList.has(clone.playerId)) {
             this.varValueList.set(clone.playerId, (new Map).set(clone.commandId, clone));
         } else {
-            this.varValueList.get(clone.playerId).set(clone.commandId, clone);
+            this.varValueList.get(clone.playerId)?.set(clone.commandId, clone);
         }
     }
 
     findVarValueByPlayerId(commandId: string, playerId: string): PlayerCommandScopeVarValueDTO {
-        return _.cloneDeep(this.varValueList.get(playerId).get(commandId));
+        return <PlayerCommandScopeVarValueDTO>_.cloneDeep(this.varValueList.get(playerId)?.get(commandId));
     }
 
     removeVarValue(varValue: PlayerCommandScopeVarValueDTO): void {
-        this.varValueList.get(varValue.playerId).delete(varValue.commandId);
+        this.varValueList.get(varValue.playerId)?.delete(varValue.commandId);
     }
 
     clearPlayerVarValues(playerId: string): void {
