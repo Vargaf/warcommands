@@ -9,4 +9,6 @@ export abstract class CommandDraggableElementRepositoryService {
 
     abstract removeDragItem(command: GenericCommandDTO, commandContainerId: string): void;
 
+    abstract getDragItem(command: GenericCommandDTO, commandContainerId: string): DragRef | null;
+
 }

@@ -14,6 +14,7 @@ import { DragCustomPreviewService } from '../../command-drag-drop/services/drag-
 import { CommandType } from '../../command/model/command-type.enum';
 import { CommandRepositoryService } from '../../command/services/command-repository.service';
 import { CommandEnterPredicateAvalabilityService } from './command-enter-predicate-availability.service';
+import { CommandContainerRepositoryService } from './command-container-repository.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class CommandContainerDragDropManagerService {
         private readonly mouseHelperService: MouseDragDropHelperService,
         private readonly dragCustomPreviewService: DragCustomPreviewService,
         private readonly commandRepositoryService: CommandRepositoryService,
+        private readonly commandCotainerRepositoryService: CommandContainerRepositoryService,
         private readonly mouseDragDropHelperService: MouseDragDropHelperService,
         private readonly commandEnterPredicateAvalabilityService: CommandEnterPredicateAvalabilityService,
     ) {}
@@ -52,13 +54,19 @@ export class CommandContainerDragDropManagerService {
         dragRefElement.data = command;
         dragRefElement.dragStartDelay = 100;
 
+        // Set the dragRef parent to prevent the drag event on the parent commands
+        const parentCommandContainer = this.commandCotainerRepositoryService.findById(command.parentCommandContainerId);
+        if(parentCommandContainer.parentCommandId) {
+            const parentCommand = this.commandRepositoryService.findById(parentCommandContainer.parentCommandId);
+            const parentDragRef = this.commandDraggableElementRepositoryService.getDragItem(parentCommand, parentCommand.parentCommandContainerId);
+            dragRefElement.withParent(parentDragRef);
+        }
+        
         if (command.type !== CommandType.GameLoop) {
             const previewTemplate = this.dragCustomPreviewService.getDragHelperTemplate(command.type);
             dragRefElement.withPreviewTemplate(previewTemplate);
             dragRefElement.withPlaceholderTemplate(previewTemplate);
             this.setDragManagmentEvents(dragRefElement);
-        } else {
-            dragRefElement.disabled = true;
         }
 
         this.commandDraggableElementRepositoryService.addDraggableItemToDragList(
@@ -82,53 +90,17 @@ export class CommandContainerDragDropManagerService {
                 this.mouseDragDropHelperService.saveActiveCommandContainerByTouchDevice(event.event);
             }
         });
-
-        /**
-         * For touchable devices, we disable all command container to activate only one at a time
-         * with the MouseDragDromHelperService
-         */
-        dragRefElement.started.subscribe((event) => {
-            const dropList: DropListRef[] = this.commandDropRepositoryService.getDropItemList();
-            
-            for (const drop of dropList) {
-                
-                const commandContainerId = (drop.element as any).getAttribute('id');
-                if (this.mouseHelperService.activeContainerId !== commandContainerId) {
-                    drop.disabled = true;
-                    this.commandDropRepositoryService.save(drop, commandContainerId);
-                }
-            }
-        });
-
-        /**
-         * For touchable devices, we enable all command container to be albe to start dragging
-         * any element
-         */
-        dragRefElement.ended.subscribe((event) => {
-            const dropList: DropListRef[] = this.commandDropRepositoryService.getDropItemList();
-            
-            for (const drop of dropList) {
-                const commandContainerId = (drop.element as any).getAttribute('id');
-                drop.disabled = false;
-                this.commandDropRepositoryService.save(drop, commandContainerId);
-            }
-        });
     }
 
     private setDropAvailavilityFlagListener(dropList: DropListRef): void {
         dropList.enterPredicate = (drag, drop) => {
-            
-            let isCommandContainerAvailable = false;
 
-            if(this.mouseHelperService.activeContainerId === null) {
-                return true;
-            }
+            let isCommandContainerAvailable = false;
 
             const isTheSameCommandContainerPointedByUser = (drop.element as any).getAttribute('id') === this.mouseHelperService.activeContainerId;
             
             if (isTheSameCommandContainerPointedByUser) {
-                isCommandContainerAvailable = true;
-
+                
                 let commandDraggedType = null;
                 if (this.isNewCommand(drag)) {
                     commandDraggedType = drag.data;
@@ -137,7 +109,7 @@ export class CommandContainerDragDropManagerService {
                 }
                 const commandContainerId = (drop.element as any).getAttribute('id');
 
-                isCommandContainerAvailable = isCommandContainerAvailable &&
+                isCommandContainerAvailable = 
                     this.commandEnterPredicateAvalabilityService.isDraggedCommandAvailableToDrop(commandDraggedType, commandContainerId);
             }
 

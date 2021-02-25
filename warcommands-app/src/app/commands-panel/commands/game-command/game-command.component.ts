@@ -45,10 +45,10 @@ export class GameCommandComponent implements OnInit, OnDestroy {
         this.gameCommandClassMember = <ClassMemberDTO>this.gameCommand.classMember;
 
         const subscription = this.commandNgrxRepositoryService.getCommand(this.gameCommand.id).subscribe((command) => {
-            this.gameCommand = <GameCommandEntity>(_.cloneDeep(command) as GameCommandEntity);
-            this.gameCommandClassMember = <ClassMemberDTO>this.gameCommand.classMember;
-
             if (command) {
+                this.gameCommand = <GameCommandEntity>(_.cloneDeep(command) as GameCommandEntity);
+                this.gameCommandClassMember = <ClassMemberDTO>this.gameCommand.classMember;
+
                 this.showCommandInvalidBackground = command.commandPathErrorsCounter > 0;
                 this.gameCommandClassMember = <ClassMemberDTO>this.gameCommand.classMember;
             }

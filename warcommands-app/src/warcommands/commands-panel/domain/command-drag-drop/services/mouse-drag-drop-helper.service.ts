@@ -1,3 +1,4 @@
+import { DropListRef } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
 import { CommandDropRepository } from './command-drop-repository.service';
 
@@ -10,7 +11,7 @@ export class MouseDragDropHelperService {
 
     constructor(
         private readonly commandsDropRepository: CommandDropRepository
-    ) {}
+    ) { }
 
     saveActiveCommandContainerByMouse(event: MouseEvent) {
         this.setActiveCommandContainer((event as any).path);
@@ -25,33 +26,28 @@ export class MouseDragDropHelperService {
     }
 
     private setActiveCommandContainer(path: any[]): void {
-        
+
         if (path.length > 0) {
-            for (const index in path) {
-                const item = path[index];
-                if (item.hasAttribute && item.hasAttribute('MouseHelperDetectorCommandContainerId')) {
-                    const commandContainerId = item.getAttribute('MouseHelperDetectorCommandContainerId');
-                    if (commandContainerId !== this.activeContainerId) {
-                        this.desactivateThePreviousCommandContainer(this.activeContainerId);
-                        this.activateTheCurrentCommandContainer(commandContainerId);
-                        this.activeContainerId = commandContainerId;
+            const index = 0;
+
+            //for (const index in path) {
+            const item = path[index];
+            if (item.hasAttribute && item.hasAttribute('MouseHelperDetectorCommandContainerId')) {
+                const commandContainerId = item.getAttribute('MouseHelperDetectorCommandContainerId');
+                if (commandContainerId !== this.activeContainerId) {
+                    this.activeContainerId = commandContainerId;
+
+                    const dropList: DropListRef[] = this.commandsDropRepository.getDropItemList();
+
+                    for (let dropItem of dropList) {
+                        const dropListItem = dropItem as any;
+                        dropListItem._cacheParentPositions();
                     }
-
-                    break;
                 }
+
+                //        break;
             }
+            //}
         }
-    }
-
-    private desactivateThePreviousCommandContainer(commandContainerId: string | null): void {
-        if (commandContainerId) {
-            const dropItem = this.commandsDropRepository.getDropItem(commandContainerId);
-            dropItem.disabled = true;
-        }
-    }
-
-    private activateTheCurrentCommandContainer(commandContainerId: string): void {
-        const dropItem = this.commandsDropRepository.getDropItem(commandContainerId);
-        dropItem.disabled = false;
     }
 }

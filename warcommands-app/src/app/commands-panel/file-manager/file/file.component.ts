@@ -12,7 +12,7 @@ export class FileComponent implements OnInit, AfterContentInit {
     @Input()
     fileData!: FileDTO;
 
-    @ViewChild('fileContentElement')
+    @ViewChild('fileContentElement',{ static: true })
     fileContentElement!: ElementRef<HTMLDivElement>;
 
     commandContainerId!: string;
@@ -24,21 +24,15 @@ export class FileComponent implements OnInit, AfterContentInit {
 
     ngOnInit() {
         this.commandContainerId = this.fileData.commandContainerId;
-
-        
     }
 
     ngAfterContentInit() {
         this.uxUiNgrxRepository.watchWindowsSize().subscribe((windowSize) => {
             if (windowSize) {
-                setTimeout(() => {
-                    const upperBarHeight = 115;
-                    const fileContentElementHeight = <number>windowSize.height - upperBarHeight;
-                    this.renderer.setStyle(this.fileContentElement.nativeElement, 'height', fileContentElementHeight + 'px');
-                }, 0);
-                
+                const upperBarHeight = 116;
+                const fileContentElementHeight = <number>windowSize.height - upperBarHeight;
+                this.renderer.setStyle(this.fileContentElement.nativeElement, 'height', fileContentElementHeight + 'px');
             }
         });
     }
-
 }

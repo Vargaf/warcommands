@@ -11,7 +11,7 @@ interface DragListOnDropContainerItem {
     providedIn: 'root'
 })
 export class AngularCommandDraggableElementRepositoryService implements CommandDraggableElementRepositoryService {
-
+    
     private dragListOnDropContainerList: DragListOnDropContainerItem = {};
 
     addDraggableItemToDragList(dragableElement: DragRef, commandContainerId: string, position: number): void {
@@ -32,6 +32,15 @@ export class AngularCommandDraggableElementRepositoryService implements CommandD
         });
 
         this.dragListOnDropContainerList[commandContainerId] = newDragList;
+    }
+
+    getDragItem(command: GenericCommandDTO, commandContainerId: string): DragRef | null{
+        const currentDragList: DragRef[] = this.getDragList(commandContainerId);
+        const dragItem: DragRef[] = currentDragList.filter((dragItem) => {
+            return dragItem.data.id === command.id;
+        }); 
+
+        return dragItem[0] || null;
     }
 
 }
