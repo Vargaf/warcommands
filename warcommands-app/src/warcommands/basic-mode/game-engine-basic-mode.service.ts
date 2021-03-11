@@ -8,12 +8,15 @@ import { UnitsManagerService } from './domain/units/services/units-manager.servi
 import { BuildingsManagerService } from './domain/building/services/buildings-manager.service';
 import { BuildingDTO } from './domain/building/model/building.dto';
 import { ResourcesDTO } from './domain/share/model/resources.dto';
+import { GameEngineInterface } from '../game-middleware/game-engine.interface';
+import { BuildingDTO as BuildingDTOMiddleware } from 'src/warcommands/game-middleware/model/building/building.dto';
+import { UnitGenericDTO as UnitGenericDTOMiddleware } from 'src/warcommands/game-middleware/model/unit/unit-generic.dto';
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class BasicModeGameEngineService  {
+export class BasicModeGameEngineService extends GameEngineInterface  {
 
     private isGameRunning: boolean = true;
 
@@ -24,15 +27,14 @@ export class BasicModeGameEngineService  {
         private readonly domElementIjenctorService: DomElementInjectorService,
         private readonly unitsManagerService: UnitsManagerService,
         private readonly buildingsManagerService: BuildingsManagerService
-    ) {}
-
-    setViewContainerRef(viewContainerRef: ViewContainerRef): void {
-        this.domElementIjenctorService.setViewContainerRef(viewContainerRef);
-        this.unitsManagerService.setViewContainerRef(viewContainerRef);
+    ) {
+        super();
     }
 
-    initialize(): void {
-        
+    setViewContainerRef(viewContainerRef: ViewContainerRef): void {
+        this.initialized = true;
+        this.domElementIjenctorService.setViewContainerRef(viewContainerRef);
+        this.unitsManagerService.setViewContainerRef(viewContainerRef);
     }
 
     start() {
@@ -58,29 +60,29 @@ export class BasicModeGameEngineService  {
         }
     }
 
-    addBuilding(building: BuildingDTO): void {
-        this.buildingsManagerService.addBuilding(building);
+    addBuilding(building: BuildingDTOMiddleware): void {
+        this.buildingsManagerService.addBuilding(<BuildingDTO>building);
     }
 
-    spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
-        this.buildingsManagerService.spawningUnit(unit, spawnFinish, spawnStart);
+    spawningUnit(unit: UnitGenericDTOMiddleware, spawnFinish: number, spawnStart: number): void {
+        this.buildingsManagerService.spawningUnit(<UnitGenericDTO>unit, spawnFinish, spawnStart);
     }
 
-    queueingUnit(unit: UnitGenericDTO): void {
-        this.buildingsManagerService.queueingUnit(unit);
+    queueingUnit(unit: UnitGenericDTOMiddleware): void {
+        this.buildingsManagerService.queueingUnit(<UnitGenericDTO>unit);
     }
 
-    buildingRemoveUnitFromQueue(unit: UnitGenericDTO): void {
-        this.buildingsManagerService.removingUnitFromQueue(unit);
+    buildingRemoveUnitFromQueue(unit: UnitGenericDTOMiddleware): void {
+        this.buildingsManagerService.removingUnitFromQueue(<UnitGenericDTO>unit);
     }
 
-    unitSpawned(unit: UnitGenericDTO): void {
-        this.buildingsManagerService.unitSpawned(unit);
-        this.unitsManagerService.unitSpawned(unit);
+    unitSpawned(unit: UnitGenericDTOMiddleware): void {
+        this.buildingsManagerService.unitSpawned(<UnitGenericDTO>unit);
+        this.unitsManagerService.unitSpawned(<UnitGenericDTO>unit);
     }
 
-    unitMoving(unit: UnitGenericDTO): void {
-        this.unitsManagerService.unitMoving(unit);
+    unitMoving(unit: UnitGenericDTOMiddleware): void {
+        this.unitsManagerService.unitMoving(<UnitGenericDTO>unit);
     }
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {

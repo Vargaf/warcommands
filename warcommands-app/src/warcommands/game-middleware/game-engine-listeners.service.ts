@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BasicModeGameEngineService } from '../basic-mode/game-engine-basic-mode.service';
 import { GameEventBusService } from '../gameEngine/domain/game-event-bus/services/game-event-bus.service';
 import { EventType } from '../gameEngine/domain/game-event-bus/model/event-type.enum';
 import { MapGeneratedEvent } from '../gameEngine/domain/game-event-bus/model/map/map-generated.event';
@@ -11,6 +10,7 @@ import { BuildingCreaedEvent } from '../gameEngine/domain/building/events/buildi
 import { BuildingObjectTranslatorFactory } from './building-object-translator.factory';
 import { ActionUnitStartsToMoveEvent } from '../gameEngine/domain/game-engine/events/action-unit-starts-to-move.event';
 import { BaseResourcesUpdateEvent } from '../gameEngine/domain/game-engine/events/base-resources-updated.event';
+import { GameEngineInterface } from './game-engine.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +18,7 @@ import { BaseResourcesUpdateEvent } from '../gameEngine/domain/game-engine/event
 export class GameEngineListenersService {
 
     constructor(
-        private readonly gameEngine: BasicModeGameEngineService,
+        private readonly gameEngine: GameEngineInterface,
         private readonly gameEventBusService: GameEventBusService,
     ) {}
 

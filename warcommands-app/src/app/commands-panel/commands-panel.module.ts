@@ -9,6 +9,7 @@ import * as CommandsPanelStore from 'src/ngrx/commands-panel/reducer-map';
 import { StoreListenersModule } from './store-listeners/store-listeners.module';
 import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 import { MaterialModule } from '../share/material/material.module';
+import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/domain/current-player/current-player-manager-service';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { MaterialModule } from '../share/material/material.module';
     providers: [
         ToggleCommandsPanelService,
         { provide: CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN, useFactory: CommandsPanelStore.reducers },
+        CurrentPlayerManagerService
     ],
     exports: [
         CommandsPanelComponent

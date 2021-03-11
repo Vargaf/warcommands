@@ -12,7 +12,8 @@ services:
             - type: bind
               source: ../../../warcommands-app
               target: /project
-        command: ng serve --host 0.0.0.0
+        command: ng serve --host 0.0.0.0 --disable-host-check
+
     warcommands_pwa:
         build:
           context: ../../../

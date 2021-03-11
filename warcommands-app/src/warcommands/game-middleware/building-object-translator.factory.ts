@@ -1,13 +1,13 @@
 import { BuildingDTO as ResponseBuildingDTO } from '../gameEngine/domain/building/model/building.dto';
-import { BuildingDTO } from '../basic-mode/domain/building/model/building.dto';
-import { BuildingTypeEnum } from '../basic-mode/domain/building/model/building-type.enum';
 import { BaseBuildingDTO } from '../gameEngine/domain/building/base/base-building.dto';
-import { BaseEntityInterface } from '../basic-mode/domain/building/base/base-entity-interface';
 import { MatterFarmBuildingDTO as ResponseMatterFarmBuildingDTO } from '../gameEngine/domain/building/matter-farm/matter-farm-building.dto';
-import { MatterFarmBuildingDTO } from '../basic-mode/domain/building/matter-farm/matter-farm-building.dto';
 import { EnergyFarmBuildingDTO as ResponseEnergyFarmBuildingDTO } from '../gameEngine/domain/building/energy-farm/energy-farm-building.dto';
-import { EnergyFarmBuildingDTO } from '../basic-mode/domain/building/energy-farm/energy-farm-building.dto';
-import { UnitGenericDTO } from '../basic-mode/domain/units/model/unit-generic.dto';
+import { BuildingDTO } from './model/building/building.dto';
+import { BuildingTypeEnum } from './model/building/building-type.enum';
+import { BaseEntityInterface } from './model/building/base-entity-interface';
+import { UnitGenericDTO } from './model/unit/unit-generic.dto';
+import { MatterFarmBuildingDTO } from './model/building/matter-farm-building.dto';
+import { EnergyFarmBuildingDTO } from './model/building/energy-farm-building.dto';
 
 export class BuildingObjectTranslatorFactory {
 

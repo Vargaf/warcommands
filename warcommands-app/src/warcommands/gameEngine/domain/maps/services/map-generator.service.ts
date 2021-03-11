@@ -2,9 +2,7 @@ import { MapDTO } from '../model/map.dto';
 import { TileDTO } from '../model/tile.dto';
 import { TileType } from '../model/tile-type.enum';
 import { MapConfiguration } from '../model/map-configuration.interface';
-import { Injectable } from '@angular/core';
 
-@Injectable()
 export class MapGeneratorService {
 
     generateMap(mapConfiguration: MapConfiguration): MapDTO {

@@ -353,12 +353,23 @@
     <p>Here are the diferent grafic modes of the game:</p>
 
     <div class="card-container">
-        <a class="card" target="_blank" rel="noopener" routerLink="/basic-mode">
+        <a class="card" rel="noopener" routerLink="/basic-mode">
             <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
             </svg>
 
             <span>Basic mode</span>
+
+            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+            </svg> 
+        </a>
+        <a class="card" rel="noopener" routerLink="/vr-mode">
+            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+            </svg>
+
+            <span>VR mode</span>
 
             <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
@@ -407,72 +418,6 @@
             </svg>
         </a>
 
-    </div>
-
-    <!-- Next Steps -->
-    <h2>Next Steps</h2>
-    <p>What do you want to do next with your app?</p>
-
-    <input type="hidden" #selection>
-
-    <div class="card-container">
-        <div class="card card-small" (click)="selection.value = 'component'" tabindex="0">
-            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-
-            <span>New Component</span>
-        </div>
-
-        <div class="card card-small" (click)="selection.value = 'material'" tabindex="0">
-            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-
-            <span>Angular Material</span>
-        </div>
-
-        <div class="card card-small" (click)="selection.value = 'pwa'" tabindex="0">
-            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-
-            <span>Add PWA Support</span>
-        </div>
-
-        <div class="card card-small" (click)="selection.value = 'dependency'" tabindex="0">
-            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-
-            <span>Add Dependency</span>
-        </div>
-
-        <div class="card card-small" (click)="selection.value = 'test'" tabindex="0">
-            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-
-            <span>Run and Watch Tests</span>
-        </div>
-
-        <div class="card card-small" (click)="selection.value = 'build'" tabindex="0">
-            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-
-            <span>Build for Production</span>
-        </div>
-    </div>
-
-    <!-- Terminal -->
-    <div class="terminal" [ngSwitch]="selection.value">
-        <pre *ngSwitchDefault>ng generate component xyz</pre>
-        <pre *ngSwitchCase="'material'">ng add @angular/material</pre>
-        <pre *ngSwitchCase="'pwa'">ng add @angular/pwa</pre>
-        <pre *ngSwitchCase="'dependency'">ng add _____</pre>
-        <pre *ngSwitchCase="'test'">ng test</pre>
-        <pre *ngSwitchCase="'build'">ng build --prod</pre>
     </div>
 
     <!-- Links -->

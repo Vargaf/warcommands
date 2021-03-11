@@ -7,6 +7,7 @@ import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/doma
 import { CurrentPlayerDTO } from 'src/warcommands/commands-panel/domain/current-player/model/current-player.dto';
 import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 import { Subscription } from 'rxjs';
+import { BasicModeGameEngineService } from 'src/warcommands/basic-mode/game-engine-basic-mode.service';
 
 @Component({
     selector: 'app-basic-mode',
@@ -24,7 +25,8 @@ export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
     constructor(
         private readonly gameMiddlewareService: GameMiddlewareService,
         private readonly currentPlayerManager: CurrentPlayerManagerService,
-        private readonly toggleCommandsPanelService: ToggleCommandsPanelService
+        private readonly toggleCommandsPanelService: ToggleCommandsPanelService,
+        private readonly gameEngine: BasicModeGameEngineService
     ) { }
 
     ngOnInit() {
@@ -33,7 +35,9 @@ export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
         this.gameMiddlewareService.setMap(MapType.TutorialFirstMap);
         this.gameMiddlewareService.addPlayer(<string>currentPlayer.id);
         this.gameMiddlewareService.addIAPlayer(DifficultyLevel.Mirror);
-        this.gameMiddlewareService.initialize(viewContainerRef);
+
+        this.gameEngine.setViewContainerRef(viewContainerRef);
+        this.gameMiddlewareService.initialize(this.gameEngine);
 
         this.commandPanelVisibleListenerSubscription = 
             this.toggleCommandsPanelService.commandPanelVisibleListener().subscribe((isCommandsPanelOppened) => {

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import * as GameServiceProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-service.provider';
 import * as InMemoryMapPathfindingRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-map-pathfinding-grid-repository.provider';
 import * as MapEngineProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-engine.provider';
+import * as MapGeneratorProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/map-generato.provider';
 import * as BuildingsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/buildings/buildings-manager.provider';
 import * as InMemoryBuildingBlockedTileRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/map/in-memory-building-blocked-tile-repository.provider';
 import * as GameEventBusProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-event-bus.provider';
@@ -69,6 +70,7 @@ import * as GameLogicRewindActionManagerProvider from 'src/warcommands/gameEngin
         GameServiceProvider.provider,
         InMemoryMapPathfindingRepositoryProvider.provider,
         MapEngineProvider.provider,
+        MapGeneratorProvider.provider,
         BuildingsManagerProvider.provider,
         InMemoryBuildingBlockedTileRepositoryProvider.provider,
         GameEventBusProvider.provider,
