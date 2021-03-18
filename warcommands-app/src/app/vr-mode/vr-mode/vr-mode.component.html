@@ -1,0 +1,21 @@
+<a-scene stats #sceneElement>
+    <a-assets>
+        <a-asset-item id="TopTile" src="assets/TopTile/v4.gltf"></a-asset-item>
+        <a-asset-item id="Tree_01" src="assets/Tree/tree_01_v3.gltf"></a-asset-item>
+        <a-asset-item id="Tree_02" src="assets/Tree/tree_02_v1.gltf"></a-asset-item>
+        <a-asset-item id="Tree_03" src="assets/Tree/tree_03_v1.gltf"></a-asset-item>
+        <a-asset-item id="Tree_04" src="assets/Tree/tree_04_v1.gltf"></a-asset-item>
+        <a-asset-item id="Tree_05" src="assets/Tree/tree_05_v1.gltf"></a-asset-item>
+        <a-asset-item id="Tree_06" src="assets/Tree/tree_06_v1.gltf"></a-asset-item>
+    </a-assets>
+
+    <a-light type="ambient" color="#ECECEC"></a-light>
+    <a-light type="point" color="#ECECEC" intensity="0.5" position="20 20 20"></a-light>
+
+    <a-entity id="rig" movement-controls="constrainToNavMesh: true">
+        <a-entity camera
+                  position="10 4 10"
+                  look-controls="pointerLockEnabled: true">
+        </a-entity>
+      </a-entity>
+</a-scene>

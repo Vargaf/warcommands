@@ -3,6 +3,7 @@ import { MapType } from '../model/map-type.enum';
 import { BasicMapConfiguration } from '../configurations/basic-map-configuration';
 import { onlyGrassMap } from '../configurations/only-grass-configuration';
 import { TutorialFirstMapConfiguration } from '../configurations/tutorial-first-map-configuration';
+import { TutorialSecondMapConfiguration } from '../configurations/tutorial-second-map-configuration';
 
 export class MapConfigurationFactory {
 
@@ -20,6 +21,10 @@ export class MapConfigurationFactory {
             }
             case MapType.TutorialFirstMap: {
                 mapConfiguration = TutorialFirstMapConfiguration;
+                break;
+            }
+            case MapType.TutorialSecondMap: {
+                mapConfiguration = TutorialSecondMapConfiguration;
                 break;
             }
             default: {

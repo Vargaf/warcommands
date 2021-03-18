@@ -9,6 +9,10 @@ const routes: Routes = [
     {
         path: 'basic-mode',
         loadChildren: () => import('./basic-mode/basic-mode.module').then(mod => mod.BasicModeModule),
+    },
+    {
+        path: 'vr-mode',
+        loadChildren: () => import('./vr-mode/vr-mode.module').then(mod => mod.VrModeModule),
     }
 ];
 

@@ -32,7 +32,7 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
     }
 
     setViewContainerRef(viewContainerRef: ViewContainerRef): void {
-        this.initialized = true;
+        this.isInitialized = true;
         this.domElementIjenctorService.setViewContainerRef(viewContainerRef);
         this.unitsManagerService.setViewContainerRef(viewContainerRef);
     }
@@ -109,8 +109,5 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
             this.statsService.update();
             this.requestAnimationFrameService.updateFrameTime();
         }
-        
     }
-
-
 }

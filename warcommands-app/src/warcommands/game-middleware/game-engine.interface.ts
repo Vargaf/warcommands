@@ -5,10 +5,10 @@ import { UnitGenericDTO } from "./model/unit/unit-generic.dto";
 
 export abstract class GameEngineInterface {
 
-    protected initialized = false;
+    protected isInitialized = false;
 
     initialize() {
-        if(!this.initialized) {
+        if(!this.isInitialized) {
             throw new Error('The game engine is not initialized.');
         }
     }
