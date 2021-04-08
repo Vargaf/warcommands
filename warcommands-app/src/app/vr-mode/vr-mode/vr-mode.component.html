@@ -1,4 +1,5 @@
-<a-scene stats #sceneElement>
+<a-scene stats #sceneElement
+    pool__base_building="mixin: base_building; size: 2; dynamic: true">
     <a-assets>
         <a-asset-item id="TopTile" src="assets/TopTile/v4.gltf"></a-asset-item>
         <a-asset-item id="Tree_01" src="assets/Tree/tree_01_v3.gltf"></a-asset-item>
@@ -7,14 +8,27 @@
         <a-asset-item id="Tree_04" src="assets/Tree/tree_04_v1.gltf"></a-asset-item>
         <a-asset-item id="Tree_05" src="assets/Tree/tree_05_v1.gltf"></a-asset-item>
         <a-asset-item id="Tree_06" src="assets/Tree/tree_06_v1.gltf"></a-asset-item>
+        <a-asset-item id="MatterFarm" src="assets/Buildings/MatterFarm_v1.gltf"></a-asset-item>
+        <a-asset-item id="EnergyFarm" src="assets/Buildings/EnergyFarm_v1.gltf"></a-asset-item>
+        <a-asset-item id="Base" src="assets/Buildings/Base_v1.gltf"></a-asset-item>
+
+        <a-mixin id="base_building" base-building-component></a-mixin>
     </a-assets>
+
+    
+
+    <!--
+    <a-gltf-model src="#MatterFarm" position="7 0 3"></a-gltf-model>
+    <a-gltf-model src="#EnergyFarm" position="1 0 3"></a-gltf-model>
+    <a-gltf-model src="#Base" position="4 0 2"></a-gltf-model>
+    -->
 
     <a-light type="ambient" color="#ECECEC"></a-light>
     <a-light type="point" color="#ECECEC" intensity="0.5" position="20 20 20"></a-light>
 
     <a-entity id="rig" movement-controls="constrainToNavMesh: true">
-        <a-entity camera
-                  position="10 4 10"
+        <a-entity camera="far: 100"
+                  position="10 5 10"
                   look-controls="pointerLockEnabled: true">
         </a-entity>
       </a-entity>

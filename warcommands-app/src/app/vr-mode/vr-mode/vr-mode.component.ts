@@ -1,6 +1,6 @@
 import { ElementRef, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import * as AFrame from 'aframe';
+import { Scene } from 'aframe';
 import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/domain/current-player/current-player-manager-service';
 import { CurrentPlayerDTO } from 'src/warcommands/commands-panel/domain/current-player/model/current-player.dto';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
@@ -32,7 +32,7 @@ export class VrModeComponent implements OnInit {
         this.gameMiddlewareService.addPlayer(<string>currentPlayer.id);
         this.gameMiddlewareService.addIAPlayer(DifficultyLevel.Mirror);
 
-        this.gameEngine.waitTillSceneInitializes(this.sceneElement.nativeElement as unknown as AFrame.Scene).then(() => {
+        this.gameEngine.waitTillSceneInitializes(this.sceneElement.nativeElement as unknown as Scene).then(() => {
             this.gameMiddlewareService.initialize(this.gameEngine);
         });
     }

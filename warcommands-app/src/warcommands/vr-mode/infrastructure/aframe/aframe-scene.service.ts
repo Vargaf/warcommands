@@ -1,15 +1,15 @@
-import * as AFrame from 'aframe';
+import { Scene } from 'aframe';
 import { Subject } from 'rxjs';
 
 export class AframeSceneService {
 
-    private sceneElement!: AFrame.Scene;
+    private sceneElement!: Scene;
     private _isLoaded = false;
     private isLoadedSubject: Subject<boolean> = new Subject();
 
     constructor() { }
 
-    setSceneElement(sceneElement: AFrame.Scene): void {
+    setSceneElement(sceneElement: Scene): void {
         this.sceneElement = sceneElement;
 
         this.sceneElement.addEventListener('loaded', () => {
@@ -18,7 +18,7 @@ export class AframeSceneService {
         });
     }
 
-    getSceneElement(): AFrame.Scene {
+    getSceneElement(): Scene {
         return this.sceneElement;
     }
 

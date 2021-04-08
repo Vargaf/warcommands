@@ -38,7 +38,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "lodash",
-              "easystarjs"
+              "easystarjs",
+              "aframe-extras"
            ]
           },
           "configurations": {

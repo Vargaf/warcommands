@@ -1,12 +1,19 @@
 import { NgZone } from '@angular/core';
-import * as AFrame from 'aframe';
+import { THREE } from 'aframe';
 import { MapDTO } from 'src/warcommands/game-middleware/model/map/map.dto';
 import { TileType } from 'src/warcommands/game-middleware/model/map/tile-type.enum';
 import { TileDTO } from 'src/warcommands/game-middleware/model/map/tile.dto';
-import * as THREE from 'three';
 import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { ModelLoaderInterfaceService } from '../../domain/game-engine/model-loader-abstract.service';
 import { AframeSceneService } from './aframe-scene.service';
+
+/*
+*	Inspired on this posts:
+*		https://threejsfundamentals.org/threejs/lessons/threejs-voxel-geometry.html
+*		https://github.com/mrdoob/three.js/blob/master/examples/webgl_instancing_performance.html
+*		https://github.com/mrdoob/three.js/blob/master/examples/webgl_buffergeometry_indexed.html
+*		https://github.com/mrdoob/three.js/blob/master/examples/webgl_buffergeometry.html
+*/
 
 export class AframeMapService {
 
@@ -64,7 +71,7 @@ export class AframeMapService {
 		const serviceScope = this;
 
 		this.ngZone.run(() => {
-			AFrame.registerComponent(this.componentName, {
+			AFRAME.registerComponent(this.componentName, {
 				init: function () {
 					const mapGenerated = serviceScope.generateMap();
 					this.el.setObject3D('mesh', mapGenerated);
@@ -224,7 +231,7 @@ export class AframeMapService {
 		const mesh = new THREE.Mesh(mergedGeometry, meshMaterial);
 		mesh.name = 'GeneratedMap';
 
-		const group = new AFrame.THREE.Group();
+		const group = new THREE.Group();
 		group.add(mesh);
 
 		return group;

@@ -14,6 +14,8 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
 
     private modelLoadedSubject: Subject<any> = new Subject();
 
+    private modelLoaderelementId = 'model_loader';
+
     constructor(
         private readonly sceneService: AframeSceneService,
         private readonly rendererFactory: RendererFactory2
@@ -26,13 +28,23 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
         });
     }
 
-    loadPreloadedModel(modelId: string): Promise<any> {
+    loadPreloadedModel(modelName: string): Promise<any> {
+
+        if(!document.getElementById(modelName)) {
+            throw new Error('Asset item "' + modelName + '" does not found.' );
+        }
+
+        var modelToLoadElement = this.renderer.createElement('a-gltf-model');
+		modelToLoadElement.setAttribute('id', 'model_to_load_' + modelName);
+		modelToLoadElement.setAttribute('src', '#' + modelName);
+		this.modelLoaderElement.appendChild(modelToLoadElement);
 
         const modelLoadedPromise: Promise<any> = new Promise((resolve, reject) => {
-            if(this.modelList.has(modelId)) {
-                resolve(this.modelList.get(modelId));
+            if(this.modelList.has(modelName)) {
+                resolve(this.modelList.get(modelName));
             } else {
                 const subscription = this.modelLoadedSubject.subscribe((data) => {
+                    const modelLoadedSubscription = subscription;
                     // Grab the mesh / scene.
                     const obj = data.target.getObject3D('mesh');
 
@@ -43,32 +55,39 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
                     // Get the requested model node
                     let modelNode;
                     obj.traverse((node : any) => {
-                        if (node.name.indexOf(modelId) !== -1) {
+                        if (node.name.indexOf(modelName) !== -1) {
                             modelNode = (node as any).clone();
                         }
                     });
 
                     if (modelNode) {
-                        this.modelList.set(modelId, modelNode);
+                        this.modelList.set(modelName, modelNode);
                         this.renderer.removeChild(this.modelLoaderElement, data.srcElement);
                         resolve(modelNode);
+                        setTimeout(() => {
+                            modelLoadedSubscription.unsubscribe();    
+                        }, 0);
                     }
                 });
             }
         });
 
-        var modelToLoadElement = this.renderer.createElement('a-gltf-model');
-		modelToLoadElement.setAttribute('id', 'model_to_load_' + modelId);
-		modelToLoadElement.setAttribute('src', '#' + modelId);
-		this.modelLoaderElement.appendChild(modelToLoadElement);
+        
 
         return modelLoadedPromise;
     }
 
+    loadComponent(modelId: string, modelName: string, position: THREE.Vector3, ): void {
+        var modelToLoadElement = this.renderer.createElement('a-gltf-model');
+		modelToLoadElement.setAttribute('id', modelId);
+		modelToLoadElement.setAttribute('src', '#' + modelName);
+        this.modelLoaderElement.appendChild(modelToLoadElement);
+    }
+
     private createModelLoaderStorageElement(): void {
         var modelLoaderElement = this.renderer.createElement('a-entity');
-		modelLoaderElement.setAttribute('id', 'model_loader');
-		modelLoaderElement.setAttribute('position', { x:0, y: -100, z:0 });
+		modelLoaderElement.setAttribute('id', this.modelLoaderelementId);
+		modelLoaderElement.setAttribute('visible', false);
 		this.scene().appendChild(modelLoaderElement);
 
         this.modelLoaderElement = modelLoaderElement;
@@ -80,8 +99,23 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
 
     private setLoaderListener(): void {
         this.scene().addEventListener('model-loaded', (data) => {
-            this.modelLoadedSubject.next(data);
+            if(this.isModelLoadedByThisService(data)) {
+                this.modelLoadedSubject.next(data);
+            }
         });
+    }
+
+    private isModelLoadedByThisService(modelData: any): boolean {
+        let isMoldelLoadedByThisService = false;
+
+        const parentElement = (modelData as any).path[1];
+        const elementId = (parentElement as any).getAttribute('id');
+        
+        if(elementId === this.modelLoaderelementId) {
+            isMoldelLoadedByThisService = true;
+        }
+
+        return isMoldelLoadedByThisService;
     }
     
 }

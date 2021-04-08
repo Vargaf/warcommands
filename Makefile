@@ -17,3 +17,7 @@ build: ### Builds the docker images
 run: ### Runs the dockers to bring up the system
 	docker-compose -f devops/docker/dev/docker-compose.yml up
 
+.PHONY: prod
+prod: ### Runs the dockers to bring up the system
+	docker-compose -f devops/docker/dev/docker-compose.yml run warcommands_app ng build --prod
+

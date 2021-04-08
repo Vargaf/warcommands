@@ -22,8 +22,8 @@ import 'aframe-extras';
     VrModeRoutingModule,
     InMmeoryModule,
     CommandsPanelModule,
-    VrModeProviderModule,
     VrModeAliasProviderModule,
+    VrModeProviderModule,
     BasicModeOnMemoryModule
   ],
   schemas: [

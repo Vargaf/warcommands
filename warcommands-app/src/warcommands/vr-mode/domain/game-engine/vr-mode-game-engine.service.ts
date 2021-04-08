@@ -1,4 +1,4 @@
-import * as AFrame from 'aframe';
+import { Scene } from "aframe";
 import { GameEngineInterface } from "src/warcommands/game-middleware/game-engine.interface";
 import { BuildingDTO } from "src/warcommands/game-middleware/model/building/building.dto";
 import { MapDTO } from "src/warcommands/game-middleware/model/map/map.dto";
@@ -6,17 +6,22 @@ import { ResourcesDTO } from "src/warcommands/game-middleware/model/resources/re
 import { UnitGenericDTO } from "src/warcommands/game-middleware/model/unit/unit-generic.dto";
 import { AframeMapService } from '../../infrastructure/aframe/aframe-map.service';
 import { AframeSceneService } from "../../infrastructure/aframe/aframe-scene.service";
+import { AFrameComponentsHub } from "../../infrastructure/aframe/components/aframe-components-hub";
+import { BuildingsManagerService } from '../buildings/service/buildings-manager-service';
 
 export class VrModeGameEngineService extends GameEngineInterface {
 
     constructor(
+        private readonly aframeComponentsHub: AFrameComponentsHub,
         private readonly aframeSceneService: AframeSceneService,
         private readonly aframeMapService: AframeMapService,
+        private readonly buildingManagerService: BuildingsManagerService,
         ) {
         super();
+        this.aframeComponentsHub.initialize();
     }
 
-    waitTillSceneInitializes(sceneElement: AFrame.Scene): Promise<boolean> {
+    waitTillSceneInitializes(sceneElement: Scene): Promise<boolean> {
 
         this.aframeSceneService.setSceneElement(sceneElement);
 
@@ -48,12 +53,11 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
 
     generateMap(map: MapDTO): void {
-        //throw new Error("Method not implemented.");
         this.aframeMapService.createMap(map);
     }
 
     addBuilding(building: BuildingDTO): void {
-        //throw new Error("Method not implemented.");
+        this.buildingManagerService.addBuilding(building);
     }
 
     spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
