@@ -5,6 +5,7 @@ import { SceneObjectLoaderInterface } from "../../game-engine/scene-object-loade
 import { THREE } from 'aframe';
 import { BaseBuildingManagerService } from "./base-building-manager.service";
 import { BuildingsRepositoryInterface } from "./buildings-repository.interface";
+import { MatterFarmBuildingManagerService } from "./matter-farm-building-manager.service";
 
 
 export class BuildingsManagerService {
@@ -14,29 +15,21 @@ export class BuildingsManagerService {
         private readonly sceneObjectLoader: SceneObjectLoaderInterface,
         private readonly baseBuildingManager: BaseBuildingManagerService,
         private readonly buildingsRepositoy: BuildingsRepositoryInterface,
+        private readonly matterFarmBuildingManager: MatterFarmBuildingManagerService,
     ) {}
 
     addBuilding(building: BuildingDTO): void {
 
         this.buildingsRepositoy.save(building);
-        
+
         if(building.type === BuildingTypeEnum.Base) {
-            /*
-            const position = new THREE.Vector3(building.xCoordinate, 0, building.yCoordinate);
-            this.sceneObjectLoader.addObject(<string>building.id, 'Base', position);
-            */
             this.baseBuildingManager.addBase(building);
-            /*
-            this.modelLoader.loadPreloadedModel('Base').then((model) => {
-                
-            });
-            */
-            
         }
 
         if(building.type === BuildingTypeEnum.MatterFarm) {
-            const position = new THREE.Vector3(building.xCoordinate, 0, building.yCoordinate);
-            this.sceneObjectLoader.addObject(<string>building.id, 'MatterFarm', position);
+            this.matterFarmBuildingManager.addFarm(building);
+            //const position = new THREE.Vector3(building.xCoordinate, 0, building.yCoordinate);
+            //this.sceneObjectLoader.addObject(<string>building.id, 'MatterFarm', position);
         }
 
         if(building.type === BuildingTypeEnum.EnergyFarm) {
