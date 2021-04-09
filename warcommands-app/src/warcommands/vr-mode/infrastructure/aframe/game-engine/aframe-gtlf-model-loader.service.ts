@@ -41,7 +41,7 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
 
         const modelLoadedPromise: Promise<any> = new Promise((resolve, reject) => {
             if(this.modelList.has(modelName)) {
-                resolve(this.modelList.get(modelName));
+                resolve(this.modelList.get(modelName).clone());
             } else {
                 const subscription = this.modelLoadedSubject.subscribe((data) => {
                     const modelLoadedSubscription = subscription;

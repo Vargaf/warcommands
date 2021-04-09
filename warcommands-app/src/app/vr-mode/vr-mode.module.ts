@@ -14,6 +14,7 @@ import { VrModeAliasProviderModule } from './vr-mode-alias-provider.module';
 //import 'aframe-layout-component';
 //import 'aframe-template-component';
 import 'aframe-extras';
+import { VrModeInMemoryProviderModule } from './vr-mode-in-memory-provider.module';
 
 @NgModule({
   declarations: [VrModeComponent],
@@ -22,6 +23,7 @@ import 'aframe-extras';
     VrModeRoutingModule,
     InMmeoryModule,
     CommandsPanelModule,
+    VrModeInMemoryProviderModule,
     VrModeAliasProviderModule,
     VrModeProviderModule,
     BasicModeOnMemoryModule

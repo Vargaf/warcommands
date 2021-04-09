@@ -1,5 +1,6 @@
 import { BaseBuildingManagerService } from "src/warcommands/vr-mode/domain/buildings/service/base-building-manager.service";
 import { BuildingsManagerService } from "src/warcommands/vr-mode/domain/buildings/service/buildings-manager-service";
+import { BuildingsRepositoryInterface } from "src/warcommands/vr-mode/domain/buildings/service/buildings-repository.interface";
 import { AframeSceneObjectLoaderService } from "../../../aframe/aframe-scene-object-loader.service";
 import { AframeGtlfModelLoader } from "../../../aframe/game-engine/aframe-gtlf-model-loader.service";
 
@@ -7,12 +8,14 @@ import { AframeGtlfModelLoader } from "../../../aframe/game-engine/aframe-gtlf-m
 const factory = (
     modelLoader: AframeGtlfModelLoader,
     sceneObjectLoader: AframeSceneObjectLoaderService,
-    baseBuildingManager: BaseBuildingManagerService
+    baseBuildingManager: BaseBuildingManagerService,
+    buildingsRepository: BuildingsRepositoryInterface,
 ) => {
     return new BuildingsManagerService(
         modelLoader,
         sceneObjectLoader,
         baseBuildingManager,
+        buildingsRepository,
     );
 };
 
@@ -22,6 +25,7 @@ export const provider = {
     deps: [
         AframeGtlfModelLoader,
         AframeSceneObjectLoaderService,
-        BaseBuildingManagerService
+        BaseBuildingManagerService,
+        BuildingsRepositoryInterface,
     ]
 };

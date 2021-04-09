@@ -4,6 +4,7 @@ import { ModelLoaderInterfaceService } from "../../game-engine/model-loader-abst
 import { SceneObjectLoaderInterface } from "../../game-engine/scene-object-loader.interface";
 import { THREE } from 'aframe';
 import { BaseBuildingManagerService } from "./base-building-manager.service";
+import { BuildingsRepositoryInterface } from "./buildings-repository.interface";
 
 
 export class BuildingsManagerService {
@@ -12,10 +13,13 @@ export class BuildingsManagerService {
 		private readonly modelLoader: ModelLoaderInterfaceService,
         private readonly sceneObjectLoader: SceneObjectLoaderInterface,
         private readonly baseBuildingManager: BaseBuildingManagerService,
+        private readonly buildingsRepositoy: BuildingsRepositoryInterface,
     ) {}
 
     addBuilding(building: BuildingDTO): void {
 
+        this.buildingsRepositoy.save(building);
+        
         if(building.type === BuildingTypeEnum.Base) {
             /*
             const position = new THREE.Vector3(building.xCoordinate, 0, building.yCoordinate);

@@ -8,6 +8,8 @@ import { AframeMapService } from '../../infrastructure/aframe/aframe-map.service
 import { AframeSceneService } from "../../infrastructure/aframe/aframe-scene.service";
 import { AFrameComponentsHub } from "../../infrastructure/aframe/components/aframe-components-hub";
 import { BuildingsManagerService } from '../buildings/service/buildings-manager-service';
+import { PlayerDTO } from "../players/model/player.dto";
+import { PlayerRepositoryService } from "../players/services/player-repository.service";
 
 export class VrModeGameEngineService extends GameEngineInterface {
 
@@ -16,6 +18,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
         private readonly aframeSceneService: AframeSceneService,
         private readonly aframeMapService: AframeMapService,
         private readonly buildingManagerService: BuildingsManagerService,
+        private readonly playerRepository: PlayerRepositoryService,
         ) {
         super();
         this.aframeComponentsHub.initialize();
@@ -82,6 +85,10 @@ export class VrModeGameEngineService extends GameEngineInterface {
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {
         throw new Error("Method not implemented.");
+    }
+
+    setCurrentPlayer(player: PlayerDTO): void {
+        this.playerRepository.save(player);
     }
     
 }
