@@ -9,6 +9,8 @@ import { InMemoryBuildingsRepositoryService } from 'src/warcommands/vr-mode/infr
 import { InMemoryPlayerRepositoryService } from 'src/warcommands/vr-mode/infrastructure/in-memory/player/in-memory-player-repository.service';
 import { MatterFarmBuildingManagerService } from 'src/warcommands/vr-mode/domain/buildings/service/matter-farm-building-manager.service';
 import { AframeMatterFarmBuildingManagerService } from 'src/warcommands/vr-mode/infrastructure/aframe/buildings/aframe-matter-farm-building-manager.service';
+import { EnergyFarmBuildingManagerService } from 'src/warcommands/vr-mode/domain/buildings/service/energy-farm-building-manager.service';
+import { AframeEnergyFarmBuildingManagerService } from 'src/warcommands/vr-mode/infrastructure/aframe/buildings/aframe-energy-farm-building-manager.service';
 
 
 @NgModule({
@@ -16,6 +18,7 @@ import { AframeMatterFarmBuildingManagerService } from 'src/warcommands/vr-mode/
         { provide: GameEngineInterface, useExisting: forwardRef(() => VrModeGameEngineService) },
         { provide: BaseBuildingManagerService, useExisting: forwardRef(() => AframeBaseBuildingManagerService) },
         { provide: MatterFarmBuildingManagerService, useExisting: forwardRef(() => AframeMatterFarmBuildingManagerService) },
+        { provide: EnergyFarmBuildingManagerService, useExisting: forwardRef(() => AframeEnergyFarmBuildingManagerService) },
         { provide: PlayerRepositoryService, useExisting: forwardRef(() => InMemoryPlayerRepositoryService) },
         { provide: BuildingsRepositoryInterface, useExisting: forwardRef(() => InMemoryBuildingsRepositoryService) },
     ]

@@ -4,9 +4,9 @@ import { ModelLoaderInterfaceService } from "src/warcommands/vr-mode/domain/game
 import { PlayerRepositoryService } from "src/warcommands/vr-mode/domain/players/services/player-repository.service";
 import { AframeComponentPainterByPlayer } from "./aframe-component-painter-by-player";
 
-export class AFrameComponentMatterFarmBuilding {
+export class AFrameComponentEnergyFarmBuilding {
     
-    private componentName = 'matter-farm-building-component';
+    private componentName = 'energy-farm-building-component';
 
     constructor(
         private readonly modelLoader: ModelLoaderInterfaceService,
@@ -15,9 +15,9 @@ export class AFrameComponentMatterFarmBuilding {
 
         const scope = this;
 
-        const defaultMatterFarm: BuildingDTO = {
+        const defaultEnergyFarm: BuildingDTO = {
             id: '',
-            type: BuildingTypeEnum.MatterFarm,
+            type: BuildingTypeEnum.EnergyFarm,
             sizeWidth: 0,
             sizeHeight: 0,
             playerId: '',
@@ -30,11 +30,11 @@ export class AFrameComponentMatterFarmBuilding {
             buildingId: null,
 
             schema: {
-                building: { defaultBase: defaultMatterFarm }
+                building: { defaultBase: defaultEnergyFarm }
             },
 
             init: function() {
-                scope.modelLoader.loadPreloadedModel('MatterFarm').then((data) => {
+                scope.modelLoader.loadPreloadedModel('EnergyFarm').then((data) => {
                     this.el.setObject3D('mesh', data);
                     this.paintBuildingObject3D();
                 })
@@ -42,8 +42,6 @@ export class AFrameComponentMatterFarmBuilding {
 
             update: function(oldData) {
                 this.paintBuildingObject3D();
-                
-                
             },
 
             paintBuildingObject3D: function() {

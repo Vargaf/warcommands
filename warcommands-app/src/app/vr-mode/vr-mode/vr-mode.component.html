@@ -1,6 +1,7 @@
 <a-scene stats #sceneElement
     pool__base_building="mixin: base_building; size: 2; dynamic: true"
-    pool__matter_farm_building="mixin: matter_farm_building; size: 2; dynamic: true">
+    pool__matter_farm_building="mixin: matter_farm_building; size: 2; dynamic: true"
+    pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true">
     <a-assets>
         <a-asset-item id="TopTile" src="assets/TopTile/v4.gltf"></a-asset-item>
         <a-asset-item id="Tree_01" src="assets/Tree/tree_01_v3.gltf"></a-asset-item>
@@ -15,6 +16,7 @@
 
         <a-mixin id="base_building" base-building-component></a-mixin>
         <a-mixin id="matter_farm_building" matter-farm-building-component></a-mixin>
+        <a-mixin id="energy_farm_building" energy-farm-building-component></a-mixin>
     </a-assets>
 
     
