@@ -25,7 +25,6 @@ import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/doma
         StoreModule.forFeature(CommandsPanelStore.CommandsPanelStoreKey, CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN),
     ],
     providers: [
-        ToggleCommandsPanelService,
         { provide: CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN, useFactory: CommandsPanelStore.reducers },
         CurrentPlayerManagerService
     ],

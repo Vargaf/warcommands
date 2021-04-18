@@ -2,21 +2,8 @@
 .commands-panel-content {
     width: 100%;
     background-color: #282a36;
+
     
-    .activity-bar {
-        background-color: #343746;
-        color: #6272A4;
-        height: 100vh;
-
-        .activity-bar-button {
-            padding: 10px 10px 0 10px;
-        }
-
-        .activity-bar-button:hover {
-            color: #F8F8F2;
-        }
-    }
-
     .side-bar {
         background-color: #21222C;
         color: #F8F8F2;
@@ -43,7 +30,7 @@
         z-index: 2;
     }
 
-    .extend-bar {
+    .extend-command-list-panel {
         width: 383px;
         overflow: auto;
     }
@@ -51,13 +38,4 @@
     .move-editor-panel {
         margin-left: 383px;
     }
-}
-
-.commands-panel {
-    padding: 0 0 25px 0;
-    overflow: auto;
-}
-
-.commands-list {
-    padding: 20px 25px;
 }

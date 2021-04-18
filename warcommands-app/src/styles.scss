@@ -152,3 +152,14 @@ $dark-pink: #c94695;
 .logic-operator--command {
     @include command-panel-command($pink, $black);
 }
+
+
+/**
+*
+*   A-Frame styles
+*
+**/
+
+.rs-base {
+    left: 50px !important;
+}

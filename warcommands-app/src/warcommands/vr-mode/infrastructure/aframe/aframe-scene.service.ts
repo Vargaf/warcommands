@@ -1,5 +1,6 @@
 import { Scene } from 'aframe';
 import { Subject } from 'rxjs';
+import { AFrameStatsService } from './a-frame-stats.service';
 
 export class AframeSceneService {
 
@@ -7,7 +8,19 @@ export class AframeSceneService {
     private _isLoaded = false;
     private isLoadedSubject: Subject<boolean> = new Subject();
 
-    constructor() { }
+    constructor(
+        private readonly aframeStatsService: AFrameStatsService,
+    ) {
+        this.aframeStatsService.panelVisibilityListener().subscribe((showPanel: Boolean) => {
+            if(this.sceneElement) {
+                if(showPanel) {
+                    this.sceneElement.setAttribute('stats', true);
+                } else {
+                    this.sceneElement.removeAttribute('stats');
+                }
+            }
+        });
+    }
 
     setSceneElement(sceneElement: Scene): void {
         this.sceneElement = sceneElement;
@@ -25,7 +38,7 @@ export class AframeSceneService {
     isLoaded(): Promise<boolean> {
 
         const isLoadedPromise: Promise<boolean> = new Promise((resolve, reject) => {
-            if(this._isLoaded) {
+            if (this._isLoaded) {
                 resolve(true);
             } else {
                 this.isLoadedSubject.subscribe(() => {

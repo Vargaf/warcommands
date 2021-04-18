@@ -11,6 +11,7 @@ import { MatterFarmBuildingManagerService } from 'src/warcommands/vr-mode/domain
 import { AframeMatterFarmBuildingManagerService } from 'src/warcommands/vr-mode/infrastructure/aframe/buildings/aframe-matter-farm-building-manager.service';
 import { EnergyFarmBuildingManagerService } from 'src/warcommands/vr-mode/domain/buildings/service/energy-farm-building-manager.service';
 import { AframeEnergyFarmBuildingManagerService } from 'src/warcommands/vr-mode/infrastructure/aframe/buildings/aframe-energy-farm-building-manager.service';
+import { BuildingsRepositoryService } from 'src/warcommands/basic-mode/domain/building/services/buildings-repository.service';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AframeEnergyFarmBuildingManagerService } from 'src/warcommands/vr-mode/
         { provide: EnergyFarmBuildingManagerService, useExisting: forwardRef(() => AframeEnergyFarmBuildingManagerService) },
         { provide: PlayerRepositoryService, useExisting: forwardRef(() => InMemoryPlayerRepositoryService) },
         { provide: BuildingsRepositoryInterface, useExisting: forwardRef(() => InMemoryBuildingsRepositoryService) },
+        { provide: BuildingsRepositoryService, useExisting: forwardRef(() => InMemoryBuildingsRepositoryService) },
     ]
 })
 export class VrModeAliasProviderModule { }
