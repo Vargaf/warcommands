@@ -1,10 +1,7 @@
 <div class="a-frame-holder-content">
     <div class="vr-mode-map">
         <a-scene #sceneElement 
-            vr-mode-ui="enterVRButton: #enterVRButton; enterARButton: #enterARButton;"
-            pool__base_building="mixin: base_building; size: 2; dynamic: true"
-            pool__matter_farm_building="mixin: matter_farm_building; size: 2; dynamic: true"
-            pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true">
+            vr-mode-ui="enterVRButton: #enterVRButton; enterARButton: #enterARButton;">
             <a-assets>
                 <a-asset-item id="TopTile" src="assets/TopTile/v4.gltf"></a-asset-item>
                 <a-asset-item id="Tree_01" src="assets/Tree/tree_01_v3.gltf"></a-asset-item>
@@ -22,7 +19,11 @@
                 <a-mixin id="energy_farm_building" energy-farm-building-component></a-mixin>
             </a-assets>
     
-    
+            <a-entity pausable-content-component
+                pool__matter_farm_building="mixin: matter_farm_building; size: 4; dynamic: true"
+                pool__base_building="mixin: base_building; size: 2; dynamic: true"
+                pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true">
+            </a-entity>
     
             <!--
     <a-gltf-model src="#MatterFarm" position="7 0 3"></a-gltf-model>

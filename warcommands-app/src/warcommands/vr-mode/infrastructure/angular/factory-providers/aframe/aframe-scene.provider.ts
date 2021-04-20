@@ -1,11 +1,14 @@
 import { AFrameStatsService } from "../../../aframe/a-frame-stats.service";
 import { AframeSceneService } from "../../../aframe/aframe-scene.service";
+import { AFramePausableContentService } from "../../../aframe/game-engine/aframe-pausable-content.service";
 
 const factory = (
-    aframeStatsService: AFrameStatsService
+    aframeStatsService: AFrameStatsService,
+    pausableContentService: AFramePausableContentService
 ) => {
     return new AframeSceneService(
-        aframeStatsService
+        aframeStatsService,
+        pausableContentService
     );
 };
 
@@ -13,6 +16,7 @@ export const provider = {
     provide: AframeSceneService,
     useFactory: factory,
     deps: [
-        AFrameStatsService
+        AFrameStatsService,
+        AFramePausableContentService,
     ]
 };

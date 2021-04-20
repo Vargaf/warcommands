@@ -39,6 +39,7 @@ export class AFrameHolderComponent implements OnInit {
                 isCurrentPlayer: true
             }
             this.gameEngine.setCurrentPlayer(currentPlayer);
+            this.gameEngine.pauseGame();
         });
     }
 }

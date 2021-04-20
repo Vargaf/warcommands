@@ -10,6 +10,8 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
 
     private modelLoaderElement: any;
 
+    private modelLoaderElementPromise: Promise<any>;
+
     private modelList: Map<string, any> = new Map();
 
     private modelLoadedSubject: Subject<any> = new Subject();
@@ -21,9 +23,9 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
         private readonly rendererFactory: RendererFactory2
     ) {
         this.renderer = this.rendererFactory.createRenderer(null, null);
+        this.modelLoaderElementPromise = this.createModelLoaderStorageElement();
 
         this.sceneService.isLoaded().then(() => {
-            this.createModelLoaderStorageElement();
             this.setLoaderListener();
         });
     }
@@ -34,10 +36,15 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
             throw new Error('Asset item "' + modelName + '" does not found.' );
         }
 
-        var modelToLoadElement = this.renderer.createElement('a-gltf-model');
-		modelToLoadElement.setAttribute('id', 'model_to_load_' + modelName);
-		modelToLoadElement.setAttribute('src', '#' + modelName);
-		this.modelLoaderElement.appendChild(modelToLoadElement);
+        // We can get to this point before the scene has been already loaded, so we have wait till then
+        // thanks to the promise on the else
+        if(this.modelLoaderElement) {
+            this.apendLoadedElement(modelName);
+        } else {
+            this.modelLoaderElementPromise.then(() => {
+                this.apendLoadedElement(modelName);
+            });
+        }
 
         const modelLoadedPromise: Promise<any> = new Promise((resolve, reject) => {
             if(this.modelList.has(modelName)) {
@@ -72,8 +79,6 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
             }
         });
 
-        
-
         return modelLoadedPromise;
     }
 
@@ -84,13 +89,28 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
         this.modelLoaderElement.appendChild(modelToLoadElement);
     }
 
-    private createModelLoaderStorageElement(): void {
-        var modelLoaderElement = this.renderer.createElement('a-entity');
-		modelLoaderElement.setAttribute('id', this.modelLoaderelementId);
-		modelLoaderElement.setAttribute('visible', false);
-		this.scene().appendChild(modelLoaderElement);
+    private apendLoadedElement(modelName: string): void {
+        var modelToLoadElement = this.renderer.createElement('a-gltf-model');
+        modelToLoadElement.setAttribute('id', 'model_to_load_' + modelName);
+        modelToLoadElement.setAttribute('src', '#' + modelName);
+        this.modelLoaderElement.appendChild(modelToLoadElement);
+    }
 
-        this.modelLoaderElement = modelLoaderElement;
+    private createModelLoaderStorageElement(): Promise<any> {
+        
+        var modelLoaderElementPromise = new Promise<any>((resolve, reject) => {
+            this.sceneService.isLoaded().then(() => {
+                var modelLoaderElement = this.renderer.createElement('a-entity');
+                modelLoaderElement.setAttribute('id', this.modelLoaderelementId);
+                modelLoaderElement.setAttribute('visible', false);
+                this.scene().appendChild(modelLoaderElement);
+
+                this.modelLoaderElement = modelLoaderElement;
+                resolve(modelLoaderElement);
+            })
+        });
+        
+        return modelLoaderElementPromise;
     }
 
     private scene() {

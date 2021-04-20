@@ -42,11 +42,10 @@ export class AFrameComponentMatterFarmBuilding {
 
             update: function(oldData) {
                 this.paintBuildingObject3D();
-                
-                
             },
 
             paintBuildingObject3D: function() {
+                
                 const currentObject3D:THREE.Object3D = this.el.getObject3D('mesh');
 
                 if(currentObject3D && this.data.building.id && this.buildingId !== this.data.building.id) {

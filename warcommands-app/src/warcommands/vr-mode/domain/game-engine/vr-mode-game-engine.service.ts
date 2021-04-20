@@ -48,11 +48,11 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
     
     pauseGame(): void {
-        throw new Error("Method not implemented.");
+        this.aframeSceneService.pause();
     }
     
     resumeGame(): void {
-        throw new Error("Method not implemented.");
+        this.aframeSceneService.resume();
     }
 
     generateMap(map: MapDTO): void {
@@ -64,27 +64,27 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
 
     spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
-        throw new Error("Method not implemented.");
+        console.log("spawningUnit not implemented.");
     }
 
     queueingUnit(unit: UnitGenericDTO): void {
-        throw new Error("Method not implemented.");
+        console.log("queueingUnit not implemented.");
     }
 
     buildingRemoveUnitFromQueue(unit: UnitGenericDTO): void {
-        throw new Error("Method not implemented.");
+        console.log("buildingRemoveUnitFromQueue not implemented.");
     }
 
     unitSpawned(unit: UnitGenericDTO): void {
-        throw new Error("Method not implemented.");
+        console.log("unitSpawned not implemented.");
     }
 
     unitMoving(unit: UnitGenericDTO): void {
-        throw new Error("Method not implemented.");
+        console.log("unitMoving not implemented.");
     }
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {
-        throw new Error("Method not implemented.");
+        console.log("updateBaseResources not implemented.");
     }
 
     setCurrentPlayer(player: PlayerDTO): void {

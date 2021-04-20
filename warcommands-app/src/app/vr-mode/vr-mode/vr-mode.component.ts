@@ -55,11 +55,11 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
     onPauseGame(): void {
         this.isGamePaused = true;
-        //this.gameMiddlewareService.pauseGame();
+        this.gameMiddlewareService.pauseGame();
     }
 
     onResumeGame(): void {
         this.isGamePaused = false;
-        //this.gameMiddlewareService.resumeGame();
+        this.gameMiddlewareService.resumeGame();
     }
 }

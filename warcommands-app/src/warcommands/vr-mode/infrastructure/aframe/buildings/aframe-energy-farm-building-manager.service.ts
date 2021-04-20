@@ -1,25 +1,24 @@
 import { BuildingDTO } from "src/warcommands/game-middleware/model/building/building.dto";
 import { EnergyFarmBuildingManagerService } from "src/warcommands/vr-mode/domain/buildings/service/energy-farm-building-manager.service";
-import { AframeSceneService } from "../aframe-scene.service";
+import { AFramePausableContentService } from "../game-engine/aframe-pausable-content.service";
 
 
 export class AframeEnergyFarmBuildingManagerService implements EnergyFarmBuildingManagerService{
 
     constructor(
-        private readonly aframeSceneService: AframeSceneService,
+        private readonly pausableContentService: AFramePausableContentService
     ) {
         
     }
 
 	addFarm(building: BuildingDTO): void {
-        const aframeScene = this.aframeSceneService.getSceneElement();
-        const poolBase = (aframeScene.components['pool__energy_farm_building'] as any).requestEntity();
+        const energyFarm = this.pausableContentService.getEnergyFarmFromPool();
         
-        poolBase.addEventListener('loaded', (event: any) => {    
-            poolBase.setAttribute('energy-farm-building-component', { 'building': building });
+        energyFarm.addEventListener('object3dset', (event: any) => {    
+            energyFarm.setAttribute('energy-farm-building-component', { 'building': building });
         });
 
-        poolBase.setAttribute('position', { x: building.xCoordinate, y: 0, z: building.yCoordinate }); 
+        energyFarm.setAttribute('position', { x: building.xCoordinate, y: 0, z: building.yCoordinate }); 
         
     }
 
