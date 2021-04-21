@@ -9,6 +9,8 @@ import * as AframeComponentEnergyFarmBuildingProvider from 'src/warcommands/vr-m
 import * as AframeStatsProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/aframe-stats.provider';
 import * as AframeComponentPausableContentProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-pausable-content.provider';
 import * as AframePausableContentProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/game-engine/aframe-pausable-content.provider';
+import * as AframeComponentWorkerUnitProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-worker-unit.provider';
+import * as AframeWorkerUnitManagerProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/units/aframe-worker-unit-manager.provider';
 
 
 
@@ -24,6 +26,8 @@ import * as AframePausableContentProvider from 'src/warcommands/vr-mode/infrastr
         AframeStatsProvider.provider,
         AframeComponentPausableContentProvider.provider,
         AframePausableContentProvider.provider,
+        AframeComponentWorkerUnitProvider.provider,
+        AframeWorkerUnitManagerProvider.provider,
     ]
 })
 export class AframeProviderModule { }

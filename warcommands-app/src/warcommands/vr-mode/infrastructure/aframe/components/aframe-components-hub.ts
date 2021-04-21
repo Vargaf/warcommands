@@ -2,6 +2,7 @@ import { AFrameComponentBaseBuilding } from "./aframe-component-base-building";
 import { AFrameComponentEnergyFarmBuilding } from "./aframe-component-energy-farm-building";
 import { AFrameComponentMatterFarmBuilding } from "./aframe-component-matter-farm-building";
 import { AFrameComponentPausableContent } from "./aframe-component-pausable-content";
+import { AFrameComponentWorkerUnit } from "./aframe-component-worker-unit";
 
 export class AFrameComponentsHub {
 
@@ -10,6 +11,7 @@ export class AFrameComponentsHub {
         private readonly matterFarmBuildingComponent: AFrameComponentMatterFarmBuilding,
         private readonly energyFarmBuildingComponent: AFrameComponentEnergyFarmBuilding,
         private readonly pausableContentComponent: AFrameComponentPausableContent,
+        private readonly workerUnitComponent: AFrameComponentWorkerUnit,
     ) {}
 
     initialize(): void {

@@ -1,6 +1,7 @@
 import { BuildingsManagerService } from "src/warcommands/vr-mode/domain/buildings/service/buildings-manager-service";
 import { VrModeGameEngineService } from "src/warcommands/vr-mode/domain/game-engine/vr-mode-game-engine.service";
 import { PlayerRepositoryService } from "src/warcommands/vr-mode/domain/players/services/player-repository.service";
+import { UnitsManagerService } from "src/warcommands/vr-mode/domain/units/services/units-manager.service";
 import { AframeSceneService } from "src/warcommands/vr-mode/infrastructure/aframe/aframe-scene.service";
 import { AframeMapService } from "../../../aframe/aframe-map.service";
 import { AFrameComponentsHub } from "../../../aframe/components/aframe-components-hub";
@@ -11,14 +12,16 @@ const factory = (
     aframeSceneService: AframeSceneService,
     aframeMapService: AframeMapService,
     buildingsManagerService: BuildingsManagerService,
-    playerRepositoryService: PlayerRepositoryService
+    playerRepositoryService: PlayerRepositoryService,
+    unitsManagerService: UnitsManagerService
 ) => {
     return new VrModeGameEngineService(
         aframeComponentsHub,
         aframeSceneService,
         aframeMapService,
         buildingsManagerService,
-        playerRepositoryService
+        playerRepositoryService,
+        unitsManagerService
     );
 };
 
@@ -30,6 +33,7 @@ export const provider = {
         AframeSceneService,
         AframeMapService,
         BuildingsManagerService,
-        PlayerRepositoryService
+        PlayerRepositoryService,
+        UnitsManagerService
     ]
 };

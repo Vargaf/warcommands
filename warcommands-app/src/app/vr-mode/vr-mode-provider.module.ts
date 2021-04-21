@@ -5,6 +5,7 @@ import * as AframeMapProvider from 'src/warcommands/vr-mode/infrastructure/angul
 import * as AframeGLTFModelLoaderProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/game-engine/aframe-gltf-model-loader.provider';
 import * as BuildingsManagerServiceProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/buildings/buildings-manager-service.provider';
 import { AframeProviderModule } from './aframe-provider.module';
+import * as UnitsManagerServiceProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/units/units-manager.provider';
 
 
 
@@ -18,6 +19,7 @@ import { AframeProviderModule } from './aframe-provider.module';
         AframeMapProvider.provider,
         AframeGLTFModelLoaderProvider.provider,
         BuildingsManagerServiceProvider.provider,
+        UnitsManagerServiceProvider.provider,
     ],
 })
 export class VrModeProviderModule {}

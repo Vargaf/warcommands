@@ -32,6 +32,10 @@ export class AFramePausableContentService {
         return this.getPoolEntity('pool__base_building');
     }
 
+    getWorkerFromPool():any {
+        return this.getPoolEntity('pool__worker_unit');
+    }
+
     private getPoolEntity(poolName: string): Component {
         return (this.pausableContentElement.components[poolName] as any).requestEntity();
     }

@@ -10,6 +10,7 @@ import { AFrameComponentsHub } from "../../infrastructure/aframe/components/afra
 import { BuildingsManagerService } from '../buildings/service/buildings-manager-service';
 import { PlayerDTO } from "../players/model/player.dto";
 import { PlayerRepositoryService } from "../players/services/player-repository.service";
+import { UnitsManagerService } from "../units/services/units-manager.service";
 
 export class VrModeGameEngineService extends GameEngineInterface {
 
@@ -19,6 +20,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
         private readonly aframeMapService: AframeMapService,
         private readonly buildingManagerService: BuildingsManagerService,
         private readonly playerRepository: PlayerRepositoryService,
+        private readonly unitsManagerService: UnitsManagerService,
         ) {
         super();
         this.aframeComponentsHub.initialize();
@@ -76,7 +78,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
 
     unitSpawned(unit: UnitGenericDTO): void {
-        console.log("unitSpawned not implemented.");
+        this.unitsManagerService.unitSpawned(unit);
     }
 
     unitMoving(unit: UnitGenericDTO): void {
