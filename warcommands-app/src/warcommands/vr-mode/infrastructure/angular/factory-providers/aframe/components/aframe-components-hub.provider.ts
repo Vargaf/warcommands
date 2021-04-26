@@ -1,4 +1,5 @@
 import { AFrameComponentBaseBuilding } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-base-building";
+import { AFrameComponentClock } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-clock";
 import { AFrameComponentEnergyFarmBuilding } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-energy-farm-building";
 import { AFrameComponentMatterFarmBuilding } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-matter-farm-building";
 import { AFrameComponentPausableContent } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-pausable-content";
@@ -11,6 +12,7 @@ const factory = (
     energyFarmBuildingComponent: AFrameComponentEnergyFarmBuilding,
     pausableContentComponent: AFrameComponentPausableContent,
     workerUnitComponent: AFrameComponentWorkerUnit,
+    gameClockService: AFrameComponentClock
 ) => {
     return new AFrameComponentsHub(
         baseBuildingComponent,
@@ -18,6 +20,7 @@ const factory = (
         energyFarmBuildingComponent,
         pausableContentComponent,
         workerUnitComponent,
+        gameClockService,
     );
 };
 
@@ -30,5 +33,6 @@ export const provider = {
         AFrameComponentEnergyFarmBuilding,
         AFrameComponentPausableContent,
         AFrameComponentWorkerUnit,
+        AFrameComponentClock,
     ]
 };

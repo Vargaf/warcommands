@@ -30,7 +30,7 @@ export class SpawnUnitsManagerService {
                 const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(buildingId) as SpawnerBuildingDTO);
 
                 if (this.isSpawningSquareFree(building)) {
-                    if (<number>building.unitSpawning.spawnFinish < this.gameLogicTimeFrameService.getCurrentTime()) {
+                    if (<number>building.unitSpawning.spawnFinish < this.gameLogicTimeFrameService.getElapsedTime()) {
                         this.spawnUnit(building);
 
                         if (this.thereAreMoreUnitsInQueue(building)) {
@@ -86,7 +86,7 @@ export class SpawnUnitsManagerService {
     private spawnNextUnitInQueue(building: SpawnerBuildingDTO): void {
         const spawnerBuildingService = this.getBuildingSpawnerService(building);
         const unit: UnitGenericDTO = 
-            spawnerBuildingService.spawnNexUnitInQueue(building, this.gameLogicTimeFrameService.getCurrentTime());
+            spawnerBuildingService.spawnNexUnitInQueue(building, this.gameLogicTimeFrameService.getElapsedTime());
 
         const buildingRemovedUnitFromQueueEvent: BuildingRemovedUnitFromQueueEvent = new BuildingRemovedUnitFromQueueEvent(unit);
         this.gameEventBusService.cast(buildingRemovedUnitFromQueueEvent);

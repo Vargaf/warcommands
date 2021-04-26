@@ -11,6 +11,7 @@ import { BuildingsManagerService } from '../buildings/service/buildings-manager-
 import { PlayerDTO } from "../players/model/player.dto";
 import { PlayerRepositoryService } from "../players/services/player-repository.service";
 import { UnitsManagerService } from "../units/services/units-manager.service";
+import { GameLogicClockService } from "./game-logic-clock.service";
 
 export class VrModeGameEngineService extends GameEngineInterface {
 
@@ -21,6 +22,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
         private readonly buildingManagerService: BuildingsManagerService,
         private readonly playerRepository: PlayerRepositoryService,
         private readonly unitsManagerService: UnitsManagerService,
+        private readonly timeFrameService: GameLogicClockService,
         ) {
         super();
         this.aframeComponentsHub.initialize();
@@ -50,10 +52,12 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
     
     pauseGame(): void {
+        this.timeFrameService.stop();
         this.aframeSceneService.pause();
     }
     
     resumeGame(): void {
+        this.timeFrameService.start();
         this.aframeSceneService.resume();
     }
 
@@ -82,7 +86,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
 
     unitMoving(unit: UnitGenericDTO): void {
-        console.log("unitMoving not implemented.");
+        this.unitsManagerService.unitMoving(unit);
     }
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {

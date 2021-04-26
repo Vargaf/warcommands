@@ -47,7 +47,7 @@ export class EnqueueUnitsManagerService {
 
             if (!buildingSpawnerService.isSpawnerBuildingAlreadySpawning(spawnerBuilding)) {
                 unit.spawningStatus = UnitSpawningStatusENUM.Spawning;
-                spawnerBuilding = buildingSpawnerService.startUnitSpawning(spawnerBuilding, unit, this.gameLogicTimeFrameService.getCurrentTime());
+                spawnerBuilding = buildingSpawnerService.startUnitSpawning(spawnerBuilding, unit, this.gameLogicTimeFrameService.getElapsedTime());
                 const event = new BuildingSpawningUnitEvent(
                     unit,
                     <number>spawnerBuilding.unitSpawning.spawnFinish,

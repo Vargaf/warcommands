@@ -86,7 +86,7 @@ export class GameLogicMoveToActionManagerService extends GameLogicActionManagerS
             const currentTileIndex = action.data.currentPathStep;
             const nextTileIndex = action.data.currentPathStep + 1;
             const nextTile = action.data.path[nextTileIndex];
-            if (nextTile.time <= this.gameLogicTimeFrameService.getCurrentTime()) {
+            if (nextTile.time <= this.gameLogicTimeFrameService.getElapsedTime()) {
                 this.mapBlockedTilesManagerService.freeTileByUnit(unit);
                 action.data.currentPathStep++;
                 unit.xCoordinate = action.data.path[currentTileIndex].xCoordinate;
@@ -114,7 +114,7 @@ export class GameLogicMoveToActionManagerService extends GameLogicActionManagerS
 
     private setTimesToPath(action: UnitActionMoveToDTO, unit: UnitGenericDTO): UnitActionMoveToDTO {
         action.data.path.forEach((item, index) => {
-            const timeToArrive = this.gameLogicTimeFrameService.getCurrentTime() + unit.attributes.speed * index;
+            const timeToArrive = this.gameLogicTimeFrameService.getElapsedTime() + unit.attributes.speed * index;
             item.time = timeToArrive;
         });
 

@@ -1,5 +1,5 @@
 
-export class GameLogicTimeFrameService {
+export class GameLogicClockService {
 
     private previousTime: number = 0;
     private currentTime: number = 0;

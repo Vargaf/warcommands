@@ -6,6 +6,7 @@ import * as AframeMatterFarmBuildingManagerProvider from 'src/warcommands/vr-mod
 import * as AframeEnergyFarmBuildingManagerProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/buildings/aframe-energy-farm-building-manager.provider';
 import * as AframeComponentMatterFarmBuildingProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-matter-farm-building.provider';
 import * as AframeComponentEnergyFarmBuildingProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-energy-farm-building.provider';
+import * as AframeComponentClockProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-clock.provider';
 import * as AframeStatsProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/aframe-stats.provider';
 import * as AframeComponentPausableContentProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-pausable-content.provider';
 import * as AframePausableContentProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/game-engine/aframe-pausable-content.provider';
@@ -28,6 +29,7 @@ import * as AframeWorkerUnitManagerProvider from 'src/warcommands/vr-mode/infras
         AframePausableContentProvider.provider,
         AframeComponentWorkerUnitProvider.provider,
         AframeWorkerUnitManagerProvider.provider,
+        AframeComponentClockProvider.provider,
     ]
 })
 export class AframeProviderModule { }

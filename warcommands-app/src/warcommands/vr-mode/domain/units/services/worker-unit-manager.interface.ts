@@ -4,4 +4,6 @@ export abstract class WorkerUnitManagerInterface {
 
     abstract addWorker(worker: UnitGenericDTO): void;
 
+    abstract updateWorker(worker: UnitGenericDTO): void;
+
 }

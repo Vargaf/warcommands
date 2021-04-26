@@ -13,6 +13,7 @@ import { GameLogicService } from './game-logic.service';
 import { GameEngineEventListenerHubService } from './game-engine-event-listener-hub.service';
 import { InitialBuildingsManagerService } from '../../building/services/initial-buildings-manager.service';
 import { WarcommandsNgZone } from '../../share/warcommands-ng-zone.service';
+import { GameLogicTimeFrameService } from './game-logic-time-frame.service';
 
 export class GameService {
 
@@ -31,7 +32,8 @@ export class GameService {
         private readonly playerManagerService: PlayerManagerService,
         private readonly gameLogicService: GameLogicService,
         private readonly initialBuildingsManagerService: InitialBuildingsManagerService,
-        private readonly warcommandsNgZoneService: WarcommandsNgZone
+        private readonly warcommandsNgZoneService: WarcommandsNgZone,
+        private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
     ) {}
 
     setMap(mapType: MapType): void {
@@ -78,6 +80,7 @@ export class GameService {
     }
 
     pauseGame(): void {
+        this.gameLogicTimeFrameService.stop();
         this.isGameRunning = false;
     }
 
@@ -92,6 +95,7 @@ export class GameService {
 
     private runGame(): void {
         this.warcommandsNgZoneService.runOutsideAngular(() => {
+            this.gameLogicTimeFrameService.start();
             this.gameLogic();
             this.runPlayerCommands();
         });

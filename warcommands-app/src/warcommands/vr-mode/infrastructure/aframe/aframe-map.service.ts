@@ -70,7 +70,7 @@ export class AframeMapService {
 
 		const serviceScope = this;
 
-		this.ngZone.run(() => {
+		this.ngZone.runOutsideAngular(() => {
 			AFRAME.registerComponent(this.componentName, {
 				init: function () {
 					const mapGenerated = serviceScope.generateMap();

@@ -8,6 +8,7 @@ import { GameLogicService } from 'src/warcommands/gameEngine/domain/game-engine/
 import { GameEngineEventListenerHubService } from 'src/warcommands/gameEngine/domain/game-engine/sevices/game-engine-event-listener-hub.service';
 import { InitialBuildingsManagerService } from 'src/warcommands/gameEngine/domain/building/services/initial-buildings-manager.service';
 import { WarcommandsNgZone } from 'src/warcommands/gameEngine/domain/share/warcommands-ng-zone.service';
+import { GameLogicTimeFrameService } from 'src/warcommands/gameEngine/domain/game-engine/sevices/game-logic-time-frame.service';
 
 const factory = (
     gameEngineEventListenerHubService: GameEngineEventListenerHubService,
@@ -18,7 +19,8 @@ const factory = (
     playerManagerService: PlayerManagerService,
     gameLogicService: GameLogicService,
     initialBuildingsManagerService: InitialBuildingsManagerService,
-    warcommandsNgZoneService: WarcommandsNgZone
+    warcommandsNgZoneService: WarcommandsNgZone,
+    timeFrameService: GameLogicTimeFrameService,
     ) => {
     return new GameService(
         gameEngineEventListenerHubService,
@@ -29,7 +31,8 @@ const factory = (
         playerManagerService,
         gameLogicService,
         initialBuildingsManagerService,
-        warcommandsNgZoneService
+        warcommandsNgZoneService,
+        timeFrameService,
         );
 };
 
@@ -45,6 +48,7 @@ export const provider = {
         PlayerManagerService,
         GameLogicService,
         InitialBuildingsManagerService,
-        WarcommandsNgZone
+        WarcommandsNgZone,
+        GameLogicTimeFrameService,
     ]
 };

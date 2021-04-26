@@ -43,11 +43,11 @@ export class GameLogicDeliverActionManagerService extends GameLogicActionManager
 
         let actionFinishIn = 0;
         if (unit.role === WorkerUnitRoleENUM.EnergyHarvester) {
-            actionFinishIn = this.gameLogicTimeFrameService.getCurrentTime() + (unit.currentCargo.energy / unit.deliveringSpeeds.energy);
+            actionFinishIn = this.gameLogicTimeFrameService.getElapsedTime() + (unit.currentCargo.energy / unit.deliveringSpeeds.energy);
         } else {
-            actionFinishIn = this.gameLogicTimeFrameService.getCurrentTime() + (unit.currentCargo.matter / unit.deliveringSpeeds.matter);
+            actionFinishIn = this.gameLogicTimeFrameService.getElapsedTime() + (unit.currentCargo.matter / unit.deliveringSpeeds.matter);
         }
-        (action as UnitActionDeliverDTO).data.started = this.gameLogicTimeFrameService.getCurrentTime();
+        (action as UnitActionDeliverDTO).data.started = this.gameLogicTimeFrameService.getElapsedTime();
         (action as UnitActionDeliverDTO).data.finished = actionFinishIn;
         action.actionStatus = UnitActionStatusENUM.InProgress;
 
@@ -61,7 +61,7 @@ export class GameLogicDeliverActionManagerService extends GameLogicActionManager
         const unit: WorkerUnitDTO = (this.unitsRepositoryService.findById(unitId) as WorkerUnitDTO);
         const action: UnitActionDeliverDTO = (genericAction as UnitActionDeliverDTO);
 
-        if (action.data.finished < this.gameLogicTimeFrameService.getCurrentTime()) {
+        if (action.data.finished < this.gameLogicTimeFrameService.getElapsedTime()) {
             const base: BaseBuildingDTO = (this.buildingsRepositoryService.findById(unit.baseId) as BaseBuildingDTO);
             base.resources.energy += unit.currentCargo.energy;
             base.resources.matter += unit.currentCargo.matter;

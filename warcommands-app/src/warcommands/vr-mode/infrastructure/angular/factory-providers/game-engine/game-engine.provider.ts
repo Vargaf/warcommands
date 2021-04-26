@@ -1,4 +1,5 @@
 import { BuildingsManagerService } from "src/warcommands/vr-mode/domain/buildings/service/buildings-manager-service";
+import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
 import { VrModeGameEngineService } from "src/warcommands/vr-mode/domain/game-engine/vr-mode-game-engine.service";
 import { PlayerRepositoryService } from "src/warcommands/vr-mode/domain/players/services/player-repository.service";
 import { UnitsManagerService } from "src/warcommands/vr-mode/domain/units/services/units-manager.service";
@@ -13,7 +14,8 @@ const factory = (
     aframeMapService: AframeMapService,
     buildingsManagerService: BuildingsManagerService,
     playerRepositoryService: PlayerRepositoryService,
-    unitsManagerService: UnitsManagerService
+    unitsManagerService: UnitsManagerService,
+    timeFrameService: GameLogicClockService
 ) => {
     return new VrModeGameEngineService(
         aframeComponentsHub,
@@ -21,7 +23,8 @@ const factory = (
         aframeMapService,
         buildingsManagerService,
         playerRepositoryService,
-        unitsManagerService
+        unitsManagerService,
+        timeFrameService,
     );
 };
 
@@ -34,6 +37,7 @@ export const provider = {
         AframeMapService,
         BuildingsManagerService,
         PlayerRepositoryService,
-        UnitsManagerService
+        UnitsManagerService,
+        GameLogicClockService,
     ]
 };

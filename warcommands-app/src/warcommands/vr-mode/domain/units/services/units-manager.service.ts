@@ -14,4 +14,10 @@ export class UnitsManagerService {
         this.unitsRepository.save(unit);
     }
 
+    unitMoving(unit: UnitGenericDTO): void {
+        this.workerManager.updateWorker(unit);
+        this.unitsRepository.save(unit);
+
+    }
+
 }

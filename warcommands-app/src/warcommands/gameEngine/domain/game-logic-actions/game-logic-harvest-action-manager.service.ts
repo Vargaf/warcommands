@@ -41,12 +41,12 @@ export class GameLogicHarvestActionManagerService extends GameLogicActionManager
         let actionFinishIn = 0;
         if (unit.role === WorkerUnitRoleENUM.EnergyHarvester) {
             const cargoSpace = unit.maxCargo.energy - unit.currentCargo.energy;
-            actionFinishIn = this.gameLogicTimeFrameService.getCurrentTime() + (cargoSpace / unit.harvestingSpeeds.energy);
+            actionFinishIn = this.gameLogicTimeFrameService.getElapsedTime() + (cargoSpace / unit.harvestingSpeeds.energy);
         } else {
             const cargoSpace = unit.maxCargo.matter - unit.currentCargo.matter;
-            actionFinishIn = this.gameLogicTimeFrameService.getCurrentTime() + (cargoSpace / unit.harvestingSpeeds.matter);
+            actionFinishIn = this.gameLogicTimeFrameService.getElapsedTime() + (cargoSpace / unit.harvestingSpeeds.matter);
         }
-        (action as UnitActionHarvestDTO).data.started = this.gameLogicTimeFrameService.getCurrentTime();
+        (action as UnitActionHarvestDTO).data.started = this.gameLogicTimeFrameService.getElapsedTime();
         (action as UnitActionHarvestDTO).data.finished = actionFinishIn;
         action.actionStatus = UnitActionStatusENUM.InProgress;
 
@@ -59,8 +59,8 @@ export class GameLogicHarvestActionManagerService extends GameLogicActionManager
     actionInProgress(genericAction: UnitActionGenericDTO, unitId: string): UnitActionGenericDTO {
         const unit: WorkerUnitDTO = (this.unitsRepositoryService.findById(unitId) as WorkerUnitDTO);
         const action: UnitActionHarvestDTO = (genericAction as UnitActionHarvestDTO);
-        if (action.data.finished > this.gameLogicTimeFrameService.getCurrentTime()) {
-            const timeElapsed = this.gameLogicTimeFrameService.getCurrentTime() - action.data.started;
+        if (action.data.finished > this.gameLogicTimeFrameService.getElapsedTime()) {
+            const timeElapsed = this.gameLogicTimeFrameService.getElapsedTime() - action.data.started;
             let cargoLoaded = 0;
             
             if (unit.role === WorkerUnitRoleENUM.EnergyHarvester) {
