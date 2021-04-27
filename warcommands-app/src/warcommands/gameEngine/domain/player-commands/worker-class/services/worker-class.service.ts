@@ -21,9 +21,9 @@ export class WorkerClassService {
                 unit.role = role;
                 this.unitsRepositoryService.save(unit);
                 */
-               if (this.workerSetRoleManagerService.isRoleChangeAvailable(unit, role)) {
+               //if (this.workerSetRoleManagerService.isRoleChangeAvailable(unit, role)) {
                    unit = this.workerSetRoleManagerService.changeRole(unit, role);
-               }
+               //}
             }
         }
 

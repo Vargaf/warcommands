@@ -16,6 +16,7 @@ import { v4 as uuid } from 'uuid';
 import { GameLogicHarvestActionManagerService } from '../../../game-logic-actions/game-logic-harvest-action-manager.service';
 import { GameLogicDeliverActionManagerService } from '../../../game-logic-actions/game-logic-deliver-action-manager.service';
 import { GameLogicMoveToActionManagerService } from '../../../game-logic-actions/game-logic-move-to-action-manager.service';
+import { CoordinatesEntity } from '../../../maps/model/coordinates.entity';
 
 export class GameLogicInitializeWorkerHarvestActionsService {
 
@@ -63,8 +64,10 @@ export class GameLogicInitializeWorkerHarvestActionsService {
     
             const xCoordinateBase = base.xCoordinate + base.spawnRelativeCoordinates.xCoordinate;
             const yCoordinateBase = base.yCoordinate + base.spawnRelativeCoordinates.yCoordinate;
-            const xCoordinateFarm = farmBuilding.xCoordinate + farmBuilding.relativeEntranceCoordinates.xCoordinate;
-            const yCoordinateFarm = farmBuilding.yCoordinate + farmBuilding.relativeEntranceCoordinates.yCoordinate;
+
+            const farmingCoordinates = farmBuilding.unitsFarming.get(worker.id);
+            const xCoordinateFarm = <number>farmingCoordinates?.xCoordinate;
+            const yCoordinateFarm = <number>farmingCoordinates?.yCoordinate;
 
             this.gameLogicMoveToActionManager.createAction(xCoordinateBase, yCoordinateBase, xCoordinateFarm, yCoordinateFarm).subscribe((action) => {
                 this.setMoveToFarmAtomicAction(worker.id, action);
@@ -152,10 +155,10 @@ export class GameLogicInitializeWorkerHarvestActionsService {
     private farmHasRoom(farm: FarmBuildingDTO, worker: WorkerUnitDTO): boolean {
         let farmHasRoom = false;
 
-        farmHasRoom = farm.unitsFarmingIdList.some((workerId) => workerId === worker.id);
+        farmHasRoom = farm.unitsFarming.has(worker.id); 
 
         if (!farmHasRoom) {
-            farmHasRoom = farm.maxUnitRoom > farm.unitsFarmingIdList.length;
+            farmHasRoom = farm.maxUnitRoom > farm.unitsFarming.size;
         }
 
         return farmHasRoom;
@@ -163,14 +166,54 @@ export class GameLogicInitializeWorkerHarvestActionsService {
 
     private addWorkerToUnitsFarmingList(farm: FarmBuildingDTO, worker: WorkerUnitDTO): FarmBuildingDTO {
 
-        const isSpotBooked = farm.unitsFarmingIdList.some((workerId) => workerId === worker.id);
+        const isSpotBooked = farm.unitsFarming.has(worker.id);
 
         if (!isSpotBooked) {
-            farm.unitsFarmingIdList.push(worker.id);
+            const farmingCoordinates = this.getFarmFreeSpot(farm);
+            farm.unitsFarming.set(worker.id, farmingCoordinates);
             this.buildingsRepositoryService.save(farm);
         }
 
         return farm;
+    }
+
+    private getFarmFreeSpot(farm: FarmBuildingDTO): CoordinatesEntity {
+
+        // The tiles around the farm
+        const farmingSpotList = [
+            [ 0, 1 ],
+            [ -1, 1 ],
+            [ -1, 0 ],
+            [ -1, -1 ],
+            [ 0, -1],
+            [ 1, -1 ],
+            [ 1, 0 ],
+            [ 1, 1 ],
+        ];
+
+        let farmingCoordinates!: CoordinatesEntity;
+        
+        for(let farmingSpotIndex in farmingSpotList) {
+            let isFreeSpotIndex = true;
+            const xCoordinateToCheck = farm.xCoordinate + farmingSpotList[farmingSpotIndex][0];
+            const yCoordinateToCheck = farm.yCoordinate + farmingSpotList[farmingSpotIndex][1];
+            
+            for(let unitCoordinates of farm.unitsFarming.values()) {
+                if(unitCoordinates.xCoordinate === xCoordinateToCheck && unitCoordinates.yCoordinate === yCoordinateToCheck) {
+                    isFreeSpotIndex = false;
+                }
+            }
+
+            if(isFreeSpotIndex) {
+                farmingCoordinates = {
+                    xCoordinate: xCoordinateToCheck,
+                    yCoordinate: yCoordinateToCheck
+                };
+                break;
+            }
+        }
+
+        return farmingCoordinates;
     }
 
 }

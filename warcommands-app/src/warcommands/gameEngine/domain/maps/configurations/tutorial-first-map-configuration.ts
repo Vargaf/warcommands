@@ -87,11 +87,7 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 xCoordinate: 3,
                 yCoordinate: 5,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             },
             energyFarm: {
                 id: null,
@@ -103,11 +99,7 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 xCoordinate: 3,
                 yCoordinate: 7,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             }
         },
         {
@@ -146,11 +138,7 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 xCoordinate: 37,
                 yCoordinate: 33,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             },
             energyFarm: {
                 id: null,
@@ -162,11 +150,7 @@ export const TutorialFirstMapConfiguration: MapConfiguration = {
                 xCoordinate: 37,
                 yCoordinate: 35,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             }
         }
     ]

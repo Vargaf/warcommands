@@ -4,5 +4,5 @@ export const MatterFarmBuildingConfiguration = {
         matter: 1000,
         energy: 500
     },
-    maxUnitRoom: 5
+    maxUnitRoom: 8
 }

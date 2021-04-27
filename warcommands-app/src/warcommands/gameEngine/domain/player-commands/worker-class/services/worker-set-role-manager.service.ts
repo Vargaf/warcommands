@@ -17,6 +17,7 @@ export class WorkerSetRoleManagerService {
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
     ) {}
 
+    /*
     isRoleChangeAvailable(worker: WorkerUnitDTO, role: WorkerUnitRoleENUM): boolean {
 
         let isRoleChangeAvailable = true;
@@ -37,9 +38,10 @@ export class WorkerSetRoleManagerService {
 
         return isRoleChangeAvailable;
     }
+    */
 
     changeRole(unit: WorkerUnitDTO, role: WorkerUnitRoleENUM): WorkerUnitDTO {
-
+        /*
         const newFarm = this.getFarmBuildingWithFreeSpot(unit, role);
         let currentFarm = this.getCurrentWorkerFarmBuilding(unit);
 
@@ -61,15 +63,34 @@ export class WorkerSetRoleManagerService {
         if (action) {
             this.unitSuperActionRepositoryService.remove(action);
         }
+        */
+        let currentFarm = this.getCurrentWorkerFarmBuilding(unit);
+
+        if (currentFarm) {
+            currentFarm = this.removeWorkerFromUnitsFarmingList(currentFarm, unit);
+            this.buildingsRepositoryService.save(currentFarm);
+        }
+
+        unit.action = null;
+        unit.role = role;
+        this.unitsRepositoryService.save(unit);
+
+        const action: UnitSuperActionDTO = this.unitSuperActionRepositoryService.findByUnitId(unit.id);
+        if (action) {
+            this.unitSuperActionRepositoryService.remove(action);
+        }
         
         return unit;
     }
 
+    /*
     private isAHarvesterRole(role: WorkerUnitRoleENUM): boolean {
         return role === WorkerUnitRoleENUM.MatterHarvester ||
             role === WorkerUnitRoleENUM.EnergyHarvester;
     }
+    */
 
+    /*
     private getFarmBuildingWithFreeSpot(worker: WorkerUnitDTO, role: WorkerUnitRoleENUM): FarmBuildingDTO {
         
         const farmBuildingList: FarmBuildingDTO[] = this.getPlayerFarmBuildings(worker.playerId, role);
@@ -84,6 +105,7 @@ export class WorkerSetRoleManagerService {
 
         return farmBuildingWithFreeSpot;
     }
+    */
 
     private getCurrentWorkerFarmBuilding(worker: WorkerUnitDTO): FarmBuildingDTO {
         
@@ -120,9 +142,10 @@ export class WorkerSetRoleManagerService {
     }
 
     private isWorkerOnFarm(farm: FarmBuildingDTO, worker: WorkerUnitDTO): boolean {
-        return farm.unitsFarmingIdList.some((workerId) => workerId === worker.id);
+        return farm.unitsFarming.has(worker.id);
     }
 
+    /*
     private farmBuildingHasRoom(worker: WorkerUnitDTO, role: WorkerUnitRoleENUM): boolean {
         let farmBuildingHasRoom = false;
 
@@ -137,16 +160,16 @@ export class WorkerSetRoleManagerService {
 
         return farmBuildingHasRoom;
     }
+    */
 
+    /*
     private farmHasRoom(farm: FarmBuildingDTO): boolean {
         return farm.maxUnitRoom > farm.unitsFarmingIdList.length;
     }
+    */
 
     private removeWorkerFromUnitsFarmingList(farm: FarmBuildingDTO, worker: WorkerUnitDTO): FarmBuildingDTO {
-        const workerIndex = farm.unitsFarmingIdList.findIndex((element) => element === worker.id);
-
-        farm.unitsFarmingIdList.splice(workerIndex, 1);
-
+        farm.unitsFarming.delete(worker.id);
         return farm;
     }
 

@@ -125,14 +125,10 @@ export const TutorialSecondMapConfiguration: MapConfiguration = {
                 sizeHeight: 1,
                 playerId: null,
                 baseId: null,
-                xCoordinate: 3,
-                yCoordinate: 5,
+                xCoordinate: 9,
+                yCoordinate: 7,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             },
             energyFarm: {
                 id: null,
@@ -144,11 +140,7 @@ export const TutorialSecondMapConfiguration: MapConfiguration = {
                 xCoordinate: 3,
                 yCoordinate: 7,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             }
         },
         {
@@ -184,14 +176,10 @@ export const TutorialSecondMapConfiguration: MapConfiguration = {
                 sizeHeight: 1,
                 playerId: null,
                 baseId: null,
-                xCoordinate: 78,
-                yCoordinate: 74,
+                xCoordinate: 72,
+                yCoordinate: 76,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             },
             energyFarm: {
                 id: null,
@@ -203,11 +191,7 @@ export const TutorialSecondMapConfiguration: MapConfiguration = {
                 xCoordinate: 78,
                 yCoordinate: 76,
                 maxUnitRoom: 0,
-                unitsFarmingIdList: [],
-                relativeEntranceCoordinates: {
-                    xCoordinate: 0,
-                    yCoordinate: 1,
-                }
+                unitsFarming: new Map(),
             }
         }
     ]
