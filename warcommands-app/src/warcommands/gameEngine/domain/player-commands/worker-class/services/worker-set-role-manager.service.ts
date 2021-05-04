@@ -1,20 +1,12 @@
 import { WorkerUnitDTO } from '../../../units/worker/worker-unit.dto';
 import { WorkerUnitRoleENUM } from '../../../units/worker/worker-unit-role.enum';
 import { UnitsRepositoryService } from '../../../units/services/units-repository.service';
-import { UnitSuperAcionRepositopriService } from '../../../units/unit-actions/unit-super-action-repository.service';
-import { UnitSuperActionDTO } from '../../../units/unit-actions/unit-super-action.dto';
-import { UnitSuperActionStatusENUM } from '../../../units/unit-actions/unit-super-action-status.enum';
-import { BuildingDTO } from '../../../building/model/building.dto';
-import { BuildingTypeEnum } from '../../../building/model/building-type.enum';
-import { FarmBuildingDTO } from '../../../building/model/farm-building.dto';
 import { BuildingsRepositoryService } from '../../../building/services/buildings-repository.service';
 
 export class WorkerSetRoleManagerService {
 
     constructor(
         private readonly unitsRepositoryService: UnitsRepositoryService,
-        private readonly unitSuperActionRepositoryService: UnitSuperAcionRepositopriService,
-        private readonly buildingsRepositoryService: BuildingsRepositoryService,
     ) {}
 
     /*
@@ -78,10 +70,12 @@ export class WorkerSetRoleManagerService {
         unit.role = role;
         this.unitsRepositoryService.save(unit);
 
+        /*
         const action: UnitSuperActionDTO = this.unitSuperActionRepositoryService.findByUnitId(unit.id);
         if (action) {
             this.unitSuperActionRepositoryService.remove(action);
         }
+        */
 
         console.log('Toca quitarlo de la granja donde este ahora, si es que esta en una, y eliminar la accion de cosecha');
         

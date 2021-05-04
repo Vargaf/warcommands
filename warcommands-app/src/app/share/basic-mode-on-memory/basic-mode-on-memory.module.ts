@@ -41,21 +41,13 @@ import * as InitialBuildingsManagerProvider from 'src/warcommands/gameEngine/inf
 import * as WorkerClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class.provider';
 import * as WorkerSetRoleProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-set-role-manager.provider';
 import * as WorkerClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/worker-class/worker-class-factory.provider';
-import * as GameLogicWorkerActionsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/game-logic-worker-actions-manager.provider';
-import * as InMemoryUnitSuperActionRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/units/in-memory-unit-super-action-repository.provider';
-import * as GameLogicInitializeWorkerHarvestActionsServiceProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/worker/game-logic-initialize-worker-harvest-actions-service.provider';
 import * as GameLogicActionsManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/game-logic-actions-manager.provider';
-import * as GameLogicMoveToActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-move-to-action-manager.provider';
-import * as GameLogicActionManagerFactoryProvider_OLD from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-action-manager-factory.provider_old';
-import * as GameLogicHarvestActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-harvest-action-manager.provider';
-import * as GameLogicDeliverActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-deliver-action-manager.provider';
 import * as WarcommandsNgZoneProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/warcommands-ng-zone.provider';
 import * as PlayerCommandsScopeManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/player-commands-scope-manager.provider';
 import * as InMemoryPlayerCommandsScopeRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/in-memory-player-commands-scope-repository.provider';
 import * as InMemoryPlayerCommandScopeVarValueRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-loop/in-memory-player-command-scope-var-value-repository.provider';
 import * as ArrayClassFactoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/array-class/array-class-factory.provider';
 import * as ArrayClassProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/player-commands/array-class/array-class.provider';
-import * as GameLogicRewindActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/game-logic-rewind-action-manager.provider';
 import * as IdleUnitsMAnagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-engine/idle-units-manager.provider';
 import * as UnitMoveActionManagerProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/unit-move-action-manager.provider';
 import * as InMemoryGameLogicActionsRepositoryProvider from 'src/warcommands/gameEngine/infrastructure/angular/factory-providers/game-logic-actions/in-memory-game-logic-actions-repository.provider';
@@ -112,21 +104,13 @@ import * as UnitDeliverActionManagerProvider from 'src/warcommands/gameEngine/in
         WorkerClassProvider.provider,
         WorkerSetRoleProvider.provider,
         WorkerClassFactoryProvider.provider,
-        GameLogicWorkerActionsManagerProvider.provider,
-        InMemoryUnitSuperActionRepositoryProvider.provider,
-        GameLogicInitializeWorkerHarvestActionsServiceProvider.provider,
         GameLogicActionsManagerProvider.provider,
-        GameLogicMoveToActionManagerProvider.provider,
-        GameLogicActionManagerFactoryProvider_OLD.provider,
-        GameLogicHarvestActionManagerProvider.provider,
-        GameLogicDeliverActionManagerProvider.provider,
         WarcommandsNgZoneProvider.provider,
         PlayerCommandsScopeManagerProvider.provider,
         InMemoryPlayerCommandsScopeRepositoryProvider.provider,
         InMemoryPlayerCommandScopeVarValueRepositoryProvider.provider,
         ArrayClassFactoryProvider.provider,
         ArrayClassProvider.provider,
-        GameLogicRewindActionManagerProvider.provider,
         IdleUnitsMAnagerProvider.provider,
         UnitMoveActionManagerProvider.provider,
         InMemoryGameLogicActionsRepositoryProvider.provider,

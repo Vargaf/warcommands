@@ -1,11 +1,3 @@
-import { UnitSuperAcionRepositopriService } from '../../units/unit-actions/unit-super-action-repository.service';
-import { UnitSuperActionDTO } from '../../units/unit-actions/unit-super-action.dto';
-import { UnitSuperActionStatusENUM } from '../../units/unit-actions/unit-super-action-status.enum';
-import { UnitActionStatusENUM } from '../../units/unit-actions/unit-action-status.enum';
-import { GameLogicActionManagerFactoryService } from '../../game-logic-actions/game-logic-action-manager-factory.service';
-import { GameLogicActionManagerService } from '../../game-logic-actions/game-logic-action-manager.service';
-import { UnitActionTypeENUM } from '../../units/unit-actions/unit-action-type.enum';
-import { UnitActionGenericDTO } from '../../units/unit-actions/unit-action-generic.dto';
 import { GameLogicActionsRepositoryInterface } from '../../game-logic-actions/services/game-logic-actions-repository.interface';
 import { GameLogicActionDTO } from '../../game-logic-actions/model/game-logic-action.dto';
 import { GameLogicActionStatusENUM } from '../../game-logic-actions/model/game-logic-action-status.enum';
@@ -17,8 +9,6 @@ import { GameLogicActionTypeENUM } from '../../game-logic-actions/model/game-log
 export class GameLogicActionsManagerService {
 
     constructor(
-        private readonly unitSuperActionRepositoryService: UnitSuperAcionRepositopriService,
-        private readonly gameLogicActionManagerFactoryService: GameLogicActionManagerFactoryService,
         private readonly gameLogicActionsRepositoryService: GameLogicActionsRepositoryInterface,
         private readonly gameLogicActionManagerFactory: GameLogicActionManagerFactory,
         private readonly unitsRepository: UnitsRepositoryService,
@@ -116,7 +106,7 @@ export class GameLogicActionsManagerService {
     }
 
     
-
+/*
     private handleSuperAction(superAction: UnitSuperActionDTO): UnitSuperActionDTO {
         
         const activeActionIndex = superAction.currentAtomicActionIndex;
@@ -140,7 +130,9 @@ export class GameLogicActionsManagerService {
 
         return superAction;
     }
+    */
 
+    /*
     private handleAtomicAction(action: UnitActionGenericDTO, unitId: string): UnitActionGenericDTO {
 
         const actionManager: GameLogicActionManagerService = this.gameLogicActionManagerFactoryService.getActionManager(action.type);
@@ -162,5 +154,6 @@ export class GameLogicActionsManagerService {
 
         return action;
     }
+    */
 
 }
