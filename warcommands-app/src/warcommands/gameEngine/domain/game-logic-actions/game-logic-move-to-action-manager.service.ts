@@ -47,10 +47,9 @@ export class GameLogicMoveToActionManagerService extends GameLogicActionManagerS
                 }
             }
 
-            this.pathFindingManager.findPath(action).subscribe((path) => {
+            this.pathFindingManager.findPath(action.data.from, action.data.to).then((path) => {
                 action.data.path = path;
                 actionSubject.next(action);
-                
             });
         
         return actionSubject;
@@ -68,7 +67,7 @@ export class GameLogicMoveToActionManagerService extends GameLogicActionManagerS
         const nextTileIndex = action.data.currentPathStep + 1;
         unit.xCoordinate = action.data.path[nextTileIndex].xCoordinate;
         unit.yCoordinate = action.data.path[nextTileIndex].yCoordinate;
-        this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
+        this.mapBlockedTilesManagerService.blockTileFromUnit(unit);
 
         this.unitsRepositoryService.save(unit);
 
@@ -91,7 +90,7 @@ export class GameLogicMoveToActionManagerService extends GameLogicActionManagerS
                 action.data.currentPathStep++;
                 unit.xCoordinate = action.data.path[currentTileIndex].xCoordinate;
                 unit.yCoordinate = action.data.path[currentTileIndex].yCoordinate;
-                this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
+                this.mapBlockedTilesManagerService.blockTileFromUnit(unit);
                 isUnitDirty = true;
 
                 if(action.data.path.length - 1 === nextTileIndex) {
@@ -99,7 +98,7 @@ export class GameLogicMoveToActionManagerService extends GameLogicActionManagerS
                     action.data.currentPathStep++;
                     unit.xCoordinate = action.data.path[nextTileIndex].xCoordinate;
                     unit.yCoordinate = action.data.path[nextTileIndex].yCoordinate;
-                    this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
+                    this.mapBlockedTilesManagerService.blockTileFromUnit(unit);
                     isUnitDirty = true;
                 }
             }

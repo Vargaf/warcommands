@@ -1,4 +1,5 @@
 import { BuildingDTO } from "./model/building/building.dto";
+import { GameLogicActionDTO } from "./model/game-logic-actions/game-logic-action.dto";
 import { MapDTO } from "./model/map/map.dto";
 import { ResourcesDTO } from "./model/resources/reources.dto";
 import { UnitGenericDTO } from "./model/unit/unit-generic.dto";
@@ -32,4 +33,6 @@ export abstract class GameEngineInterface {
     abstract unitMoving(unit: UnitGenericDTO): void;
 
     abstract updateBaseResources(baseId: string, resources: ResourcesDTO): void;
+
+    abstract gameLogicActionUpdate(action: GameLogicActionDTO): void;
 }

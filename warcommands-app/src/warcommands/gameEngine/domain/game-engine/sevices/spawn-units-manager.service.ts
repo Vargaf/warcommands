@@ -10,7 +10,19 @@ import { BuildingSpawningUnitEvent } from '../events/building-spawning-unit.even
 import { BuildingRemovedUnitFromQueueEvent } from '../events/building-removed-unit-from-queue.event';
 import { UnitSpawningStatusENUM } from '../../units/model/unit-spawning-status.enum';
 
+
 export class SpawnUnitsManagerService {
+
+    private nextTileToCheckList = [
+        [ 0, 1 ],
+        [ -1, 1 ],
+        [ 1, 1 ],
+        [ -1, 0 ],
+        [ 1, 0],
+        [ -1, -1 ],
+        [ 1, -1 ],
+        [ 0, -1 ],
+    ];
 
     constructor(
         private readonly spawningBuildngsRepositoryService: SpawingBuildingsRepositoryservice,
@@ -29,28 +41,19 @@ export class SpawnUnitsManagerService {
             for (const buildingId of spawningBuildingList) {
                 const building: SpawnerBuildingDTO = (this.buildingsRepositoryService.findById(buildingId) as SpawnerBuildingDTO);
 
-                if (this.isSpawningSquareFree(building)) {
-                    if (<number>building.unitSpawning.spawnFinish < this.gameLogicTimeFrameService.getElapsedTime()) {
-                        this.spawnUnit(building);
+                if (<number>building.unitSpawning.spawnFinish < this.gameLogicTimeFrameService.getElapsedTime()) {
+                    this.spawnUnit(building);
 
-                        if (this.thereAreMoreUnitsInQueue(building)) {
-                            this.spawnNextUnitInQueue(building);
-                        } else {
-                            this.spawningBuildngsRepositoryService.remove(buildingId);
-                        }
-
-                        this.buildingsRepositoryService.save(building);
+                    if (this.thereAreMoreUnitsInQueue(building)) {
+                        this.spawnNextUnitInQueue(building);
+                    } else {
+                        this.spawningBuildngsRepositoryService.remove(buildingId);
                     }
+
+                    this.buildingsRepositoryService.save(building);
                 }
             }
         }
-    }
-
-    private isSpawningSquareFree(building: SpawnerBuildingDTO): boolean {
-        const xCoordinate = building.xCoordinate + building.spawnRelativeCoordinates.xCoordinate;
-        const yCoordinate = building.yCoordinate + building.spawnRelativeCoordinates.yCoordinate;
-
-        return !this.mapBlockedTilesManagerService.isTileOccupiedByUnit(xCoordinate, yCoordinate);
     }
 
     private spawnUnit(building: SpawnerBuildingDTO): void {
@@ -63,7 +66,7 @@ export class SpawnUnitsManagerService {
         building.unitSpawning.spawnFinish = 0;
         building.unitSpawning.spawnStart = 0;
 
-        this.mapBlockedTilesManagerService.blockTilesFromUnit(unit);
+        this.mapBlockedTilesManagerService.blockTileFromUnit(unit);
 
         const event: BuildingSpawnedUnitEvent = new BuildingSpawnedUnitEvent(building, unit);
         this.gameEventBusService.cast(event);

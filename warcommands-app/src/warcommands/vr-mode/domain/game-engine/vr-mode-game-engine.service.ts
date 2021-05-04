@@ -1,6 +1,7 @@
 import { Scene } from "aframe";
 import { GameEngineInterface } from "src/warcommands/game-middleware/game-engine.interface";
 import { BuildingDTO } from "src/warcommands/game-middleware/model/building/building.dto";
+import { GameLogicActionDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action.dto";
 import { MapDTO } from "src/warcommands/game-middleware/model/map/map.dto";
 import { ResourcesDTO } from "src/warcommands/game-middleware/model/resources/reources.dto";
 import { UnitGenericDTO } from "src/warcommands/game-middleware/model/unit/unit-generic.dto";
@@ -8,6 +9,7 @@ import { AframeMapService } from '../../infrastructure/aframe/aframe-map.service
 import { AframeSceneService } from "../../infrastructure/aframe/aframe-scene.service";
 import { AFrameComponentsHub } from "../../infrastructure/aframe/components/aframe-components-hub";
 import { BuildingsManagerService } from '../buildings/service/buildings-manager-service';
+import { GameLogicActionsManager } from "../game-logic-actions/services/game-logic-actions-manager.service";
 import { PlayerDTO } from "../players/model/player.dto";
 import { PlayerRepositoryService } from "../players/services/player-repository.service";
 import { UnitsManagerService } from "../units/services/units-manager.service";
@@ -23,7 +25,8 @@ export class VrModeGameEngineService extends GameEngineInterface {
         private readonly playerRepository: PlayerRepositoryService,
         private readonly unitsManagerService: UnitsManagerService,
         private readonly timeFrameService: GameLogicClockService,
-        ) {
+        private readonly gameLogicActionsManager: GameLogicActionsManager,
+    ) {
         super();
         this.aframeComponentsHub.initialize();
     }
@@ -32,19 +35,16 @@ export class VrModeGameEngineService extends GameEngineInterface {
 
         this.aframeSceneService.setSceneElement(sceneElement);
 
-        const sceneInitializedPromise: Promise<boolean> = new Promise((resolve, reject) => {
-
-            if(this.isInitialized) {
+        if(this.isInitialized) {
+            return Promise.resolve(true);
+        }
+        
+        return new Promise((resolve, reject) => {
+            sceneElement.addEventListener('loaded', () => {
+                this.isInitialized = true;
                 resolve(true);
-            } else {
-                sceneElement.addEventListener('loaded', () => {
-                    this.isInitialized = true;
-                    resolve(true);
-                });
-            }
+            });
         });
-
-        return sceneInitializedPromise;
     }
 
     loadAssets() {
@@ -95,6 +95,10 @@ export class VrModeGameEngineService extends GameEngineInterface {
 
     setCurrentPlayer(player: PlayerDTO): void {
         this.playerRepository.save(player);
+    }
+
+    gameLogicActionUpdate(action: GameLogicActionDTO): void {
+        this.gameLogicActionsManager.processAction(action);
     }
     
 }

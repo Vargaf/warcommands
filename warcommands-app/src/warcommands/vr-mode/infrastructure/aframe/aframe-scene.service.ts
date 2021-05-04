@@ -41,18 +41,16 @@ export class AframeSceneService {
 
     isLoaded(): Promise<boolean> {
 
-        const isLoadedPromise: Promise<boolean> = new Promise((resolve, reject) => {
-            if (this._isLoaded) {
-                resolve(true);
-            } else {
-                this.isLoadedSubject.subscribe(() => {
-                    resolve(true);
-                    this.isLoadedSubject.unsubscribe();
-                });
-            }
-        });
+        if (this._isLoaded) {
+            return Promise.resolve(true);
+        }
 
-        return isLoadedPromise;
+        return new Promise((resolve, reject) => {
+            this.isLoadedSubject.subscribe(() => {
+                resolve(true);
+                this.isLoadedSubject.unsubscribe();
+            });
+        });
     }
 
     pause(): void {

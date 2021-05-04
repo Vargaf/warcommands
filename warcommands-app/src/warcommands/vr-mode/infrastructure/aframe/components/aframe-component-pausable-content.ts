@@ -24,16 +24,17 @@ export class AFrameComponentPausableContent {
     }
 
     getPausableContentElement(): Promise<Entity> {
+
+        if(this.pausableContentElement) {
+            return Promise.resolve(this.pausableContentElement);
+        }
+
         return new Promise<Entity>((resolve, reject) => {
-            if(this.pausableContentElement) {
+            this.getPausableContentElementSubject.subscribe((pausableContentElement: any) => {
+                this.pausableContentElement = pausableContentElement.el;
                 resolve(this.pausableContentElement);
-            } else {
-                this.getPausableContentElementSubject.subscribe((pausableContentElement: any) => {
-                    this.pausableContentElement = pausableContentElement.el;
-                    resolve(this.pausableContentElement);
-                    this.getPausableContentElementSubject.unsubscribe();
-                });
-            }
+                this.getPausableContentElementSubject.unsubscribe();
+            });
         });
     }
 }

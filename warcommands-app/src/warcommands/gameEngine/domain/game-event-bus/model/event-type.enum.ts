@@ -14,6 +14,8 @@ export enum EventType {
     ActionUnitStartsToMove = 'action:unitStartsToMove',
     BaseResourcesUpdated = 'base:resourcesUpdated',
 
+    GameLogicActionUpdated = 'action:updated',
+
 
 
     // Inner events

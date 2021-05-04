@@ -1,3 +1,4 @@
+import { GameLogicActionMoveToDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-move-to.dto";
 import { UnitGenericDTO } from "src/warcommands/game-middleware/model/unit/unit-generic.dto";
 import { UnitsRepositoryInterface } from "./units-repository-interface";
 import { WorkerUnitManagerInterface } from "./worker-unit-manager.interface";
@@ -20,4 +21,10 @@ export class UnitsManagerService {
 
     }
 
+    unitMoving22222222222222(action: GameLogicActionMoveToDTO): void {
+        const unit = this.unitsRepository.findById(action.ownerId);
+        unit.action = action;
+        this.workerManager.updateWorker(unit);
+        this.unitsRepository.save(unit);
+    }
 }

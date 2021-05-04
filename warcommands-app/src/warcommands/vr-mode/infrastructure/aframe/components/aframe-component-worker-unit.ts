@@ -9,6 +9,7 @@ import { PathCoordinate } from "src/warcommands/game-middleware/model/unit-actio
 import { CoordinatesEntity } from "src/warcommands/game-middleware/model/map/coordinates.entity";
 import { THREE } from "aframe";
 import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
+import { GameLogicActionTypeENUM } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-type.enum";
 
 
 export class AFrameComponentWorkerUnit {
@@ -48,7 +49,7 @@ export class AFrameComponentWorkerUnit {
 
                 if(this.data.worker?.action) {
                     const worker: UnitGenericDTO = this.data.worker;
-                    if (worker.action?.type === UnitActionTypeENUM.MoveTo) {
+                    if (worker.action?.type === GameLogicActionTypeENUM.MoveTo) {
                         const object3d = this.el.getObject3D('mesh');
                         const movement = scope.moveUnit(worker, object3d.position);
                         object3d.position.set(movement.x, movement.y, movement.z);

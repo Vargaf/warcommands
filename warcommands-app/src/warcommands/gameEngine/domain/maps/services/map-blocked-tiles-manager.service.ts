@@ -7,9 +7,12 @@ import { IsTileBlockedToUnitsHelper } from '../../building/services/is-tile-bloc
 import { BuildingDTO } from '../../building/model/building.dto';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { PathFindingManagerService } from './path-finding-manager.service';
+import { CoordinatesEntity } from '../model/coordinates.entity';
 
 export class MapBlockedTilesManagerService {
 
+    private selectedMap!: MapConfiguration;
+    
     constructor(
         private readonly buildingBlockedTileRepository: BuildingBlockedTileRepository,
         private readonly unitBlockedTileRepository: UnitBlockedTileRepositoryService,
@@ -17,6 +20,8 @@ export class MapBlockedTilesManagerService {
     ) {}
 
     initializeFromMap(map: MapConfiguration): void {
+        this.selectedMap = map;
+
         for (let row = 0; row < map.size.height; row++) {
             for (let col = 0; col < map.size.width; col++) {
                 const tileType: TilePathfindingType = map.tiles[row][col];
@@ -37,7 +42,7 @@ export class MapBlockedTilesManagerService {
         this.addPathfindingBlockedTilesFromBuilding(building);
     }
 
-    blockTilesFromUnit(unit: UnitGenericDTO): void {
+    blockTileFromUnit(unit: UnitGenericDTO): void {
         this.unitBlockedTileRepository.addUnit(unit);
     }
 
@@ -48,6 +53,27 @@ export class MapBlockedTilesManagerService {
     isTileOccupiedByUnit(xCoordinate: number, yCoordinate: number): boolean {
         return this.unitBlockedTileRepository.isBlocked(xCoordinate, yCoordinate);
     }
+
+    getNearestFreeTile(origin: CoordinatesEntity): CoordinatesEntity {
+        let freeTileCoordinates: CoordinatesEntity | null = null;
+        let tileOffset = 1;
+        
+        do {
+            freeTileCoordinates = this.getFreeBottomTileCoordinates(tileOffset, origin);
+            if(!freeTileCoordinates) {
+                freeTileCoordinates = this.getFreeSideTileCoordinates(tileOffset, origin);
+            }
+            if(!freeTileCoordinates) {
+                freeTileCoordinates = this.getFreeTopTileCoordinates(tileOffset, origin);
+            }
+
+            tileOffset++;
+        } while(!freeTileCoordinates)
+
+        return freeTileCoordinates;
+    }
+
+    
 
     private addBuildingBlockedTilesFromBuilding(building: BuildingDTO): void {
         const xCoordinateStart = building.xCoordinate - 1;
@@ -85,6 +111,110 @@ export class MapBlockedTilesManagerService {
             for (let x = xCoordinateStart; x < xCoordinateEnd; x++) {
                 this.pathFindingManager.blockTile(x, y);
             }
+        }
+    }
+
+    private getFreeBottomTileCoordinates(offset: number, origin: CoordinatesEntity): CoordinatesEntity | null {
+        let xCoordinate = 0;
+        let yCoordinate = 0;
+        let freeTileFound = false;
+
+        if(!this.isTileOccupiedByUnit(origin.xCoordinate, offset + origin.yCoordinate)) {
+            xCoordinate = origin.xCoordinate;
+            yCoordinate = offset + origin.yCoordinate;
+            freeTileFound = true;
+        } else {
+            for(let xPosition = 1; xPosition <= offset; xPosition++) {
+                if(!this.isTileOccupiedByUnit(origin.xCoordinate - xPosition, offset + origin.yCoordinate)) {
+                    xCoordinate = origin.xCoordinate - xPosition;
+                    yCoordinate = offset + origin.yCoordinate;
+                    freeTileFound = true;
+                    break;
+                } else if(!this.isTileOccupiedByUnit(origin.xCoordinate + xPosition, offset + origin.yCoordinate)) {
+                    xCoordinate = origin.xCoordinate + xPosition;
+                    yCoordinate = origin.yCoordinate + offset;
+                    freeTileFound = true;
+                    break;
+                }
+            }
+        }
+
+        if(freeTileFound) {
+            return {
+                xCoordinate: xCoordinate,
+                yCoordinate: yCoordinate
+            };
+        } else {
+            return null;
+        }
+    }
+
+    private getFreeSideTileCoordinates(offset: number, origin: CoordinatesEntity): CoordinatesEntity | null {
+        let xCoordinate = 0;
+        let yCoordinate = 0;
+        let freeTileFound = false;
+
+        const yMaxPosition = offset -1;
+        const yMinPosition = -yMaxPosition;
+
+        for(let yPosition = yMaxPosition; yPosition >= yMinPosition; yPosition--) {
+            if(!this.isTileOccupiedByUnit(origin.xCoordinate - offset, origin.yCoordinate + yPosition)) {
+                xCoordinate = origin.xCoordinate - offset;
+                yCoordinate = origin.yCoordinate + yPosition;
+                freeTileFound = true;
+                break;
+            } else if(!this.isTileOccupiedByUnit(origin.xCoordinate + offset, origin.yCoordinate + yPosition)) {
+                xCoordinate = origin.xCoordinate + offset;
+                yCoordinate = origin.yCoordinate + yPosition;
+                freeTileFound = true;
+                break;
+            }
+        }
+
+        if(freeTileFound) {
+            return {
+                xCoordinate: xCoordinate,
+                yCoordinate: yCoordinate
+            };
+        } else {
+            return null;
+        }
+    }
+
+    private getFreeTopTileCoordinates(offset: number, origin: CoordinatesEntity): CoordinatesEntity | null {
+        let xCoordinate = 0;
+        let yCoordinate = 0;
+        let freeTileFound = false;
+
+        for(let xPosition = offset; xPosition > 0; xPosition--) {
+            if(!this.isTileOccupiedByUnit(origin.xCoordinate - xPosition, origin.yCoordinate - offset)) {
+                xCoordinate = origin.xCoordinate - xPosition;
+                yCoordinate = origin.yCoordinate - offset;
+                freeTileFound = true;
+                break;
+            } else if(!this.isTileOccupiedByUnit(origin.xCoordinate + xPosition, origin.yCoordinate - offset)) {
+                xCoordinate = origin.xCoordinate + xPosition;
+                yCoordinate = origin.yCoordinate - offset;
+                freeTileFound = true;
+                break;
+            }
+        }
+
+        if(!freeTileFound) {
+            if(!this.isTileOccupiedByUnit(origin.xCoordinate, origin.yCoordinate - offset)) {
+                xCoordinate = origin.xCoordinate;
+                yCoordinate = origin.yCoordinate - offset;
+                freeTileFound = true;
+            }
+        }
+
+        if(freeTileFound) {
+            return {
+                xCoordinate: xCoordinate,
+                yCoordinate: yCoordinate
+            };
+        } else {
+            return null;
         }
     }
 

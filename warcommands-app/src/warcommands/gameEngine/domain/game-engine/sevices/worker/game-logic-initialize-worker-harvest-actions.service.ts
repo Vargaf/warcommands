@@ -17,6 +17,7 @@ import { GameLogicHarvestActionManagerService } from '../../../game-logic-action
 import { GameLogicDeliverActionManagerService } from '../../../game-logic-actions/game-logic-deliver-action-manager.service';
 import { GameLogicMoveToActionManagerService } from '../../../game-logic-actions/game-logic-move-to-action-manager.service';
 import { CoordinatesEntity } from '../../../maps/model/coordinates.entity';
+import { tileAroundOrder } from '../../../share/tile-around-order';
 
 export class GameLogicInitializeWorkerHarvestActionsService {
 
@@ -106,20 +107,13 @@ export class GameLogicInitializeWorkerHarvestActionsService {
 
         let areAllActionsPreparedToStart = true;
 
-        /*
-        superAction.atomicActions.forEach((action) => {
-            if (!action || action.actionStatus !== UnitActionStatusENUM.WaitingToStart) {
-                areAllActionsPreparedToStart = false;
-            }
-        });
-        */
-       for (let actionIndex = 0; actionIndex < superAction.atomicActions.length; actionIndex++) {
-           const action = superAction.atomicActions[actionIndex];
+        for (let actionIndex = 0; actionIndex < superAction.atomicActions.length; actionIndex++) {
+            const action = superAction.atomicActions[actionIndex];
 
             if (!action || action.actionStatus !== UnitActionStatusENUM.WaitingToStart) {
                 areAllActionsPreparedToStart = false;
             }
-       }
+        }
 
         return areAllActionsPreparedToStart;
     }
@@ -180,16 +174,7 @@ export class GameLogicInitializeWorkerHarvestActionsService {
     private getFarmFreeSpot(farm: FarmBuildingDTO): CoordinatesEntity {
 
         // The tiles around the farm
-        const farmingSpotList = [
-            [ 0, 1 ],
-            [ -1, 1 ],
-            [ -1, 0 ],
-            [ -1, -1 ],
-            [ 0, -1],
-            [ 1, -1 ],
-            [ 1, 0 ],
-            [ 1, 1 ],
-        ];
+        const farmingSpotList = tileAroundOrder;
 
         let farmingCoordinates!: CoordinatesEntity;
         

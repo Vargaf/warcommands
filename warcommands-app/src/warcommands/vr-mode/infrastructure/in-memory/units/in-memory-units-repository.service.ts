@@ -5,17 +5,17 @@ import { UnitFilterDTO } from "src/warcommands/vr-mode/domain/units/model/unit-f
 
 export class InMemoryUnitsRepositoryService implements UnitsRepositoryInterface {
     
-    private itemsList: Map<string, UnitGenericDTO> = new Map();
+    private itemList: Map<string, UnitGenericDTO> = new Map();
 
     save(unit: UnitGenericDTO): void {
-        this.itemsList.set(unit.id, _.clone(unit));
+        this.itemList.set(unit.id, _.clone(unit));
     }
 
     findBy(filter: UnitFilterDTO): UnitGenericDTO[] {
         const filteredList: UnitGenericDTO[] = [];
         const filterKeyList = Object.keys(filter);
 
-        this.itemsList.forEach((item) => {
+        this.itemList.forEach((item) => {
             
             let filtersMatch = true;
 
@@ -33,5 +33,15 @@ export class InMemoryUnitsRepositoryService implements UnitsRepositoryInterface 
         });
 
         return filteredList;
+    }
+
+    findById(unitId: string): UnitGenericDTO {
+        const filter: UnitFilterDTO = {
+            id: unitId
+        };
+
+        const unitList = this.findBy(filter);
+
+        return unitList[0];
     }
 }

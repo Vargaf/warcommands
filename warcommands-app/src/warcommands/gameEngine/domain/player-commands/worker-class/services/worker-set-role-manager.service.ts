@@ -64,12 +64,15 @@ export class WorkerSetRoleManagerService {
             this.unitSuperActionRepositoryService.remove(action);
         }
         */
+
+        /*
         let currentFarm = this.getCurrentWorkerFarmBuilding(unit);
 
         if (currentFarm) {
             currentFarm = this.removeWorkerFromUnitsFarmingList(currentFarm, unit);
             this.buildingsRepositoryService.save(currentFarm);
         }
+        */
 
         unit.action = null;
         unit.role = role;
@@ -79,6 +82,8 @@ export class WorkerSetRoleManagerService {
         if (action) {
             this.unitSuperActionRepositoryService.remove(action);
         }
+
+        console.log('Toca quitarlo de la granja donde este ahora, si es que esta en una, y eliminar la accion de cosecha');
         
         return unit;
     }
@@ -107,6 +112,8 @@ export class WorkerSetRoleManagerService {
     }
     */
 
+
+    /*
     private getCurrentWorkerFarmBuilding(worker: WorkerUnitDTO): FarmBuildingDTO {
         
         const farmBuildingList: FarmBuildingDTO[] = this.getPlayerFarmBuildings(worker.playerId, <WorkerUnitRoleENUM>worker.role);
@@ -121,7 +128,9 @@ export class WorkerSetRoleManagerService {
 
         return currentWorkerFarmBuilding;
     }
+    */
 
+    /*
     private getPlayerFarmBuildings(playerId: string, workerRole: WorkerUnitRoleENUM): FarmBuildingDTO[] {
         let buildingTypeToSearch!: BuildingTypeEnum;
 
@@ -140,10 +149,13 @@ export class WorkerSetRoleManagerService {
 
         return (farmBuildingList as FarmBuildingDTO[]);
     }
+    */
 
+    /*
     private isWorkerOnFarm(farm: FarmBuildingDTO, worker: WorkerUnitDTO): boolean {
         return farm.unitsFarming.has(worker.id);
     }
+    */
 
     /*
     private farmBuildingHasRoom(worker: WorkerUnitDTO, role: WorkerUnitRoleENUM): boolean {
@@ -168,9 +180,11 @@ export class WorkerSetRoleManagerService {
     }
     */
 
+    /*
     private removeWorkerFromUnitsFarmingList(farm: FarmBuildingDTO, worker: WorkerUnitDTO): FarmBuildingDTO {
         farm.unitsFarming.delete(worker.id);
         return farm;
     }
+    */
 
 }

@@ -11,6 +11,7 @@ import { BuildingObjectTranslatorFactory } from './building-object-translator.fa
 import { ActionUnitStartsToMoveEvent } from '../gameEngine/domain/game-engine/events/action-unit-starts-to-move.event';
 import { BaseResourcesUpdateEvent } from '../gameEngine/domain/game-engine/events/base-resources-updated.event';
 import { GameEngineInterface } from './game-engine.interface';
+import { GameLogicActionUpdatedEvent } from '../gameEngine/domain/game-engine/events/game-logic-action-updated.event';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +32,7 @@ export class GameEngineListenersService {
         this.onBuildingCreatedEvent();
         this.onMoveToActionEvent();
         this.onResourcesUpdateEvent();
+        this.onGameLogicActionUpdate();
     }
 
     private setMapGeneratingListeners(): void {
@@ -88,5 +90,12 @@ export class GameEngineListenersService {
             <BaseResourcesUpdateEvent>event;
             this.gameEngine.updateBaseResources(event.data.baseId, event.data.resources);
         })
+    }
+
+    private onGameLogicActionUpdate(): void {
+        this.gameEventBusService.on(EventType.GameLogicActionUpdated).subscribe((event) => {
+            <GameLogicActionUpdatedEvent>event;
+            this.gameEngine.gameLogicActionUpdate(event.data);
+        });
     }
 }

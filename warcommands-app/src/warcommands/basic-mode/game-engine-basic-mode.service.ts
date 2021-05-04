@@ -11,13 +11,14 @@ import { ResourcesDTO } from './domain/share/model/resources.dto';
 import { GameEngineInterface } from '../game-middleware/game-engine.interface';
 import { BuildingDTO as BuildingDTOMiddleware } from 'src/warcommands/game-middleware/model/building/building.dto';
 import { UnitGenericDTO as UnitGenericDTOMiddleware } from 'src/warcommands/game-middleware/model/unit/unit-generic.dto';
+import { GameLogicActionDTO } from '../game-middleware/model/game-logic-actions/game-logic-action.dto';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class BasicModeGameEngineService extends GameEngineInterface  {
-
+    
     private isGameRunning: boolean = true;
 
     constructor(
@@ -109,5 +110,9 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
             this.statsService.update();
             this.requestAnimationFrameService.updateFrameTime();
         }
+    }
+
+    gameLogicActionUpdate(action: GameLogicActionDTO): void {
+        throw new Error('Method not implemented.');
     }
 }

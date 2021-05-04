@@ -12,40 +12,40 @@ export class GameLogicWorkerActionsManagerService {
         private readonly gameLogicInitializeWorkerHarvestActionsService: GameLogicInitializeWorkerHarvestActionsService,
         private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly unitSuperActionRepositoryService: UnitSuperAcionRepositopriService,
-    ) {}
+    ) { }
 
     initializeWorkerActions(): void {
         const workerList = this.unitsRepositoryService.findByType(UnitTypeENUM.Worker);
- 
+
         for (const unit of workerList) {
             const worker: WorkerUnitDTO = (unit as WorkerUnitDTO);
-             if (this.hasRole(worker) && this.isSpawned(worker)) {
-                 if (!this.hasSuperaction(worker)) {
-                     this.createSuperAction(worker);
-                 }
-             }
-         }
-     }
- 
-     private hasRole(worker: WorkerUnitDTO): boolean {
-         return worker.role !== undefined;
-     }
+            if (this.hasRole(worker) && this.isSpawned(worker)) {
+                if (!this.hasSuperaction(worker)) {
+                    this.createSuperAction(worker);
+                }
+            }
+        }
+    }
 
-     private isSpawned(worker: WorkerUnitDTO): Boolean {
-         return worker.spawningStatus === UnitSpawningStatusENUM.Spawned
-     }
- 
-     private hasSuperaction(worker: WorkerUnitDTO): boolean {
-         return this.unitSuperActionRepositoryService.unitHasSuperaction(worker.id);
-     }
- 
-     private createSuperAction(worker: WorkerUnitDTO): void {
-         if (this.hasHarvesterRole(worker)) {
-             this.gameLogicInitializeWorkerHarvestActionsService.createHarvesterSuperAction(worker);
-         }
-     }
+    private hasRole(worker: WorkerUnitDTO): boolean {
+        return worker.role !== undefined;
+    }
 
-     private hasHarvesterRole(worker: WorkerUnitDTO): boolean {
+    private isSpawned(worker: WorkerUnitDTO): Boolean {
+        return worker.spawningStatus === UnitSpawningStatusENUM.Spawned
+    }
+
+    private hasSuperaction(worker: WorkerUnitDTO): boolean {
+        return this.unitSuperActionRepositoryService.unitHasSuperaction(worker.id);
+    }
+
+    private createSuperAction(worker: WorkerUnitDTO): void {
+        if (this.hasHarvesterRole(worker)) {
+            this.gameLogicInitializeWorkerHarvestActionsService.createHarvesterSuperAction(worker);
+        }
+    }
+
+    private hasHarvesterRole(worker: WorkerUnitDTO): boolean {
         return worker.role === WorkerUnitRoleENUM.MatterHarvester || worker.role === WorkerUnitRoleENUM.EnergyHarvester;
     }
 }

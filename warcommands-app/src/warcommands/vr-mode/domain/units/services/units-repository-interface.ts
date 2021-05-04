@@ -7,4 +7,6 @@ export abstract class UnitsRepositoryInterface {
 
     abstract findBy(filter: UnitFilterDTO): UnitGenericDTO[];
 
+    abstract findById(unitId: string): UnitGenericDTO;
+
 }

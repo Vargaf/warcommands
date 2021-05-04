@@ -4,20 +4,23 @@ import { GameLogicTimeFrameService } from 'src/warcommands/gameEngine/domain/gam
 import { GameLogicWorkerActionsManagerService } from 'src/warcommands/gameEngine/domain/game-engine/sevices/worker/game-logic-worker-actions-manager.service';
 import { PathFindingManagerService } from 'src/warcommands/gameEngine/domain/maps/services/path-finding-manager.service';
 import { GameLogicActionsManagerService } from 'src/warcommands/gameEngine/domain/game-engine/sevices/game-logic-actions-manager.service';
+import { IdleUnitsManager } from 'src/warcommands/gameEngine/domain/game-engine/sevices/idle-units-manager.service';
 
 const factory = (
     gameLogicSpawningUnitsManager: GameLogicSpawningUnitsManager,
     gameLogicTimeFrameService: GameLogicTimeFrameService,
     gameLogicWorkerActionsManager: GameLogicWorkerActionsManagerService,
     pathFindingManager: PathFindingManagerService,
-    gameLogicActionsManager: GameLogicActionsManagerService
+    gameLogicActionsManager: GameLogicActionsManagerService,
+    idleUnitsManager: IdleUnitsManager,
 ) => {
     return new GameLogicService(
         gameLogicSpawningUnitsManager,
         gameLogicTimeFrameService,
         gameLogicWorkerActionsManager,
         pathFindingManager,
-        gameLogicActionsManager
+        gameLogicActionsManager,
+        idleUnitsManager,
     );
 };
 
@@ -29,6 +32,7 @@ export const provider = {
         GameLogicTimeFrameService,
         GameLogicWorkerActionsManagerService,
         PathFindingManagerService,
-        GameLogicActionsManagerService
+        GameLogicActionsManagerService,
+        IdleUnitsManager,
     ]
 };

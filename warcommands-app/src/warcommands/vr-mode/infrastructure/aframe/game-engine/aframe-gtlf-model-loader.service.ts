@@ -46,40 +46,38 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
             });
         }
 
-        const modelLoadedPromise: Promise<any> = new Promise((resolve, reject) => {
-            if(this.modelList.has(modelName)) {
-                resolve(this.modelList.get(modelName).clone());
-            } else {
-                const subscription = this.modelLoadedSubject.subscribe((data) => {
-                    const modelLoadedSubscription = subscription;
-                    // Grab the mesh / scene.
-                    const obj = data.target.getObject3D('mesh');
+        if(this.modelList.has(modelName)) {
+            return Promise.resolve(this.modelList.get(modelName).clone());
+        }
 
-                    if (!obj) {
-                        return;
-                    }
+        return new Promise((resolve, reject) => {
+            const subscription = this.modelLoadedSubject.subscribe((data) => {
+                const modelLoadedSubscription = subscription;
+                // Grab the mesh / scene.
+                const obj = data.target.getObject3D('mesh');
 
-                    // Get the requested model node
-                    let modelNode;
-                    obj.traverse((node : any) => {
-                        if (node.name.indexOf(modelName) !== -1) {
-                            modelNode = (node as any).clone();
-                        }
-                    });
+                if (!obj) {
+                    return;
+                }
 
-                    if (modelNode) {
-                        this.modelList.set(modelName, modelNode);
-                        this.renderer.removeChild(this.modelLoaderElement, data.srcElement);
-                        resolve(modelNode);
-                        setTimeout(() => {
-                            modelLoadedSubscription.unsubscribe();    
-                        }, 0);
+                // Get the requested model node
+                let modelNode;
+                obj.traverse((node : any) => {
+                    if (node.name.indexOf(modelName) !== -1) {
+                        modelNode = (node as any).clone();
                     }
                 });
-            }
-        });
 
-        return modelLoadedPromise;
+                if (modelNode) {
+                    this.modelList.set(modelName, modelNode);
+                    this.renderer.removeChild(this.modelLoaderElement, data.srcElement);
+                    resolve(modelNode);
+                    setTimeout(() => {
+                        modelLoadedSubscription.unsubscribe();    
+                    }, 0);
+                }
+            });
+        });
     }
 
     loadComponent(modelId: string, modelName: string, position: THREE.Vector3, ): void {
