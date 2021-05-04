@@ -8,6 +8,7 @@ import { BuildingDTO } from '../../building/model/building.dto';
 import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
 import { PathFindingManagerService } from './path-finding-manager.service';
 import { CoordinatesEntity } from '../model/coordinates.entity';
+import { BuildingTypeEnum } from '../../building/model/building-type.enum';
 
 export class MapBlockedTilesManagerService {
 
@@ -73,8 +74,6 @@ export class MapBlockedTilesManagerService {
         return freeTileCoordinates;
     }
 
-    
-
     private addBuildingBlockedTilesFromBuilding(building: BuildingDTO): void {
         const xCoordinateStart = building.xCoordinate - 1;
         const xCoordinateEnd = building.xCoordinate + building.sizeWidth;
@@ -89,16 +88,29 @@ export class MapBlockedTilesManagerService {
     }
 
     private addUnitBlockedTilesFromBuilding(building: BuildingDTO): void {
-        const xCoordinateStart = building.xCoordinate;
-        const xCoordinateEnd = building.xCoordinate + building.sizeWidth;
-        const yCoordinateStart = building.yCoordinate;
-        const yCoordinateEnd = building.yCoordinate + building.sizeHeight;
+        let xCoordinateStart = building.xCoordinate;
+        let xCoordinateEnd = building.xCoordinate + building.sizeWidth;
+        let yCoordinateStart = building.yCoordinate;
+        let yCoordinateEnd = building.yCoordinate + building.sizeHeight;
+
+        if(this.isAFarm(building)) {
+            // To aviod having units stoped around the farms
+            xCoordinateStart--;
+            xCoordinateEnd++;
+            yCoordinateStart--;
+            yCoordinateEnd++;
+        }
 
         for (let y = yCoordinateStart; y < yCoordinateEnd; y++ ) {
             for (let x = xCoordinateStart; x < xCoordinateEnd; x++) {
                 this.unitBlockedTileRepository.addTileBlocked(x, y);
             }
         }
+    }
+
+    private isAFarm(building: BuildingDTO): boolean {
+        return building.type === BuildingTypeEnum.EnergyFarm ||
+            building.type === BuildingTypeEnum.MatterFarm;
     }
 
     private addPathfindingBlockedTilesFromBuilding(building: BuildingDTO): void {

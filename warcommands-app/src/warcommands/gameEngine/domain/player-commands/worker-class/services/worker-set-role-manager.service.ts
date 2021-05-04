@@ -1,7 +1,7 @@
 import { WorkerUnitDTO } from '../../../units/worker/worker-unit.dto';
 import { WorkerUnitRoleENUM } from '../../../units/worker/worker-unit-role.enum';
 import { UnitsRepositoryService } from '../../../units/services/units-repository.service';
-import { BuildingsRepositoryService } from '../../../building/services/buildings-repository.service';
+
 
 export class WorkerSetRoleManagerService {
 
