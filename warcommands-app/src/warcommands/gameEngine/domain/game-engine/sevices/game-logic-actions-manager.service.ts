@@ -43,9 +43,6 @@ export class GameLogicActionsManagerService {
                 action = actionManager.processAction(action);
                 action = this.processSubActions(action);
                 break;
-            case GameLogicActionStatusENUM.Finished:
-                action = actionManager.tearDownAction(action);
-                break;
         }
 
         this.gameLogicActionsRepositoryService.save(action);
@@ -83,25 +80,40 @@ export class GameLogicActionsManagerService {
     }
 
     private processSubActions(action: GameLogicActionDTO): GameLogicActionDTO {
-        if(action.subActionsIdList && action.subActionsIdList.length > 0) {
-            const activeActionIndex = action.activeAction;
-            const activeActionId = action.subActionsIdList[activeActionIndex];
-            let activeAction = this.gameLogicActionsRepositoryService.findById(activeActionId);
-            
-            if (activeAction.type === GameLogicActionTypeENUM.Rewind) {
-                action.activeAction = 0;
-
-                const actionManager = this.gameLogicActionManagerFactory.getActionManager(action);
-                action = actionManager.rewindAction(action);
+        if(!this.isActionFinished(action) && this.hasSubActions(action)) {
+            if(this.isActionInWrongState(action)) {
+                console.error('The action should have finished');
             } else {
-                activeAction = this.processAction(activeAction);
-            }
+                const activeActionIndex = action.activeAction;
+                const activeActionId = action.subActionsIdList[activeActionIndex];
+                let activeAction = this.gameLogicActionsRepositoryService.findById(activeActionId);
+                
+                if (activeAction.type === GameLogicActionTypeENUM.Rewind) {
+                    action.activeAction = 0;
 
-            if (activeAction.status === GameLogicActionStatusENUM.Finished) {
-                action.activeAction++;
+                    const actionManager = this.gameLogicActionManagerFactory.getActionManager(action);
+                    action = actionManager.rewindAction(action);
+                } else {
+                    activeAction = this.processAction(activeAction);
+                }
+
+                if (activeAction.status === GameLogicActionStatusENUM.Finished) {
+                    const actionManager = this.gameLogicActionManagerFactory.getActionManager(action);
+                    action = actionManager.subActionFinished(action, activeAction.id);
+                    action.activeAction++;
+                }
             }
         }
 
         return action;
+    }
+
+    private hasSubActions(action: GameLogicActionDTO): boolean {
+        return action.subActionsIdList != null && action.subActionsIdList.length > 0;
+    }
+
+    private isActionInWrongState(action: GameLogicActionDTO): boolean {
+        return action.subActionsIdList.length > 0 &&
+            action.subActionsIdList.length <= action.activeAction
     }
 }

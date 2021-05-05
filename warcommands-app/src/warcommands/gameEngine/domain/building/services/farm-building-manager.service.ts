@@ -59,6 +59,18 @@ export class FarmBuildingManager {
         return farm;
     }
 
+    freeFarmingSpot(worker: WorkerUnitDTO, farm: FarmBuildingDTO): FarmBuildingDTO {
+        const isWorkerFarming = farm.unitsFarming.has(worker.id); 
+
+        if (isWorkerFarming) {
+            farm.unitsFarming.delete(worker.id);
+        }
+
+        this.buildingsRepositoryService.save(farm);
+
+        return farm;
+    }
+
     private getFarmFreeSpot(farm: FarmBuildingDTO): CoordinatesEntity {
 
         // The tiles around the farm

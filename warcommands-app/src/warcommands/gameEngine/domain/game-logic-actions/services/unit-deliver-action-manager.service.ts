@@ -36,7 +36,8 @@ export class UnitDeliverActionManager implements GameLogicActionManagerInterface
                 finished: 0
             },
             activeAction: 0,
-            parentActionId: null
+            parentActionId: null,
+            subActionsIdList: []
         }
 
         return action;
@@ -89,8 +90,12 @@ export class UnitDeliverActionManager implements GameLogicActionManagerInterface
         throw new Error('Method not implemented.');
     }
 
+    subActionFinished(action: GameLogicActionDTO, subActionId: string): GameLogicActionDTO {
+        throw new Error("Method not implemented.");
+    }
+
     tearDownAction(action: GameLogicActionDTO): GameLogicActionDTO {
-        throw new Error('Method not implemented.');
+        return action;
     }
 
 }

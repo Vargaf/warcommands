@@ -10,17 +10,20 @@ import { WorkerUnitDTO } from "../../units/worker/worker-unit.dto";
 import { BuildingsRepositoryService } from "../../building/services/buildings-repository.service";
 import { BaseBuildingDTO } from "../../building/base/base-building.dto";
 import { UnitsRepositoryService } from "../../units/services/units-repository.service";
-import { UnitHarvestActionManager } from "./unit-harvest-action-manager.service";
+import { UnitHarvestActionManager, UnitHarvestActionManagerCreateActionsParams } from "./unit-harvest-action-manager.service";
 import { UnitMoveActionManager, UnitMoveActionManagerCreateActionsParams } from "./unit-move-action-manager.service";
 import { FarmBuildingManager } from "../../building/services/farm-building-manager.service";
 import { UnitDeliverActionManager } from "./unit-deliver-action-manager.service";
 import { GameLogicActionRewindInitializer } from "../model/game-logic-action-rewind.dto";
 import { GameLogicActionsRepositoryInterface } from "./game-logic-actions-repository.interface";
 import { GameLogicActionMoveToDTO } from "../model/game-logic-action-move-to.dto";
+import { GameLogicActionUnitHarvestDTO } from "../model/game-logic-action-unit-harvest.dto";
 
 
 export class UnitGoHarvestAndComeBackActionManager implements GameLogicActionManagerInterface {
     
+    private harvestSubActionIndex = 1;
+
     constructor(
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
         private readonly unitsRepositoryService: UnitsRepositoryService,
@@ -88,30 +91,33 @@ export class UnitGoHarvestAndComeBackActionManager implements GameLogicActionMan
                     checkIfEndPathIsOccupied: false,
                 }
 
+                const unitHarvestActionManagerCreateActionsParams: UnitHarvestActionManagerCreateActionsParams = {
+                    unitId: worker.id,
+                    buildingId: <string>farmBuilding.id,
+                };
+
                 const moveToFarmAction = this.unitMoveActionManager.createAction(moveToFarmParams);
-                const harvestAction = this.unitHarvestActionManager.createAction(worker);
+                const harvestAction = this.unitHarvestActionManager.createAction(unitHarvestActionManagerCreateActionsParams);
                 const moveToBaseAction = this.unitMoveActionManager.createAction(moveToBaseParams);
                 const deliverAction = this.unitDeliverActionManager.createAction(worker);
-                const rewindAction = GameLogicActionRewindInitializer.create(worker.id, GameLogicActionOwnerTypeENUM.Unit);
+                //const rewindAction = GameLogicActionRewindInitializer.create(worker.id, GameLogicActionOwnerTypeENUM.Unit);
 
                 moveToFarmAction.parentActionId = action.id;
                 harvestAction.parentActionId = action.id;
                 moveToBaseAction.parentActionId = action.id;
                 deliverAction.parentActionId = action.id;
-                rewindAction.parentActionId = action.id;
+                //rewindAction.parentActionId = action.id;
 
                 this.gamelogicActionRepository.save(moveToFarmAction);
                 this.gamelogicActionRepository.save(harvestAction);
                 this.gamelogicActionRepository.save(moveToBaseAction);
                 this.gamelogicActionRepository.save(deliverAction);
-                this.gamelogicActionRepository.save(rewindAction);
-
+                
                 action.subActionsIdList = [
                     moveToFarmAction.id,
                     harvestAction.id,
                     moveToBaseAction.id,
                     deliverAction.id,
-                    rewindAction.id
                 ];
 
 
@@ -127,6 +133,21 @@ export class UnitGoHarvestAndComeBackActionManager implements GameLogicActionMan
     }
     
     processAction(action: GameLogicActionDTO): GameLogicActionDTO {
+
+        // Once all the sub actions have finished this action is also finished
+        let shouldActionFinish = true;
+        for(let subactionId of action.subActionsIdList) {
+            const subAction = this.gamelogicActionRepository.findById(subactionId);
+            if(subAction.status !== GameLogicActionStatusENUM.Finished) {
+                shouldActionFinish = false;
+                break;
+            }
+        }
+
+        if(shouldActionFinish) {
+            action.status = GameLogicActionStatusENUM.Finished;
+        }
+
         return action;
     }
 
@@ -153,8 +174,39 @@ export class UnitGoHarvestAndComeBackActionManager implements GameLogicActionMan
         return action;
     }
 
+    subActionFinished(action: GameLogicActionDTO, subActionId: string): GameLogicActionDTO {
+        
+        const harvestingActionId = action.subActionsIdList[this.harvestSubActionIndex];
+        if(harvestingActionId === subActionId) {
+            // The unit has finished to harvest, so we should free the harvesting spot on the farm to another unit
+            const harvestingAction = <GameLogicActionUnitHarvestDTO>this.gamelogicActionRepository.findById(subActionId);
+            this.unitHarvestActionManager.tearDownAction(harvestingAction);
+        }
+
+        return action;
+    }
+
     tearDownAction(action: GameLogicActionDTO): GameLogicActionDTO {
-        throw new Error("Method not implemented.");
+
+        // We have to take into account that the action is finished because there was no free spot to farm
+        if(action.subActionsIdList.length > 0) {
+            const moveToFarmAction = this.gamelogicActionRepository.findById(action.subActionsIdList[0]);
+            const harvestAction = this.gamelogicActionRepository.findById(action.subActionsIdList[1]);
+            const moveToBaseAction = this.gamelogicActionRepository.findById(action.subActionsIdList[2]);
+            const deliverAction = this.gamelogicActionRepository.findById(action.subActionsIdList[3]);
+
+            this.unitMoveActionManager.tearDownAction(moveToFarmAction);
+            this.unitHarvestActionManager.tearDownAction(harvestAction);
+            this.unitMoveActionManager.tearDownAction(moveToBaseAction);
+            this.unitDeliverActionManager.tearDownAction(deliverAction);
+
+            this.gamelogicActionRepository.remove(moveToFarmAction);
+            this.gamelogicActionRepository.remove(harvestAction);
+            this.gamelogicActionRepository.remove(moveToBaseAction);
+            this.gamelogicActionRepository.remove(deliverAction);
+        }
+        
+        return action;
     }
     
 }

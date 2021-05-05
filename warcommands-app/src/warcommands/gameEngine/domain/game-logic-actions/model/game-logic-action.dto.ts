@@ -11,5 +11,5 @@ export interface GameLogicActionDTO {
 	status: GameLogicActionStatusENUM;
 	data: any;
 	activeAction: number;
-	subActionsIdList?: string[];
+	subActionsIdList: string[];
 }

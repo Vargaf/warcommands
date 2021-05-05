@@ -15,6 +15,7 @@ import { GameEventBusService } from "../../game-event-bus/services/game-event-bu
 import { GameLogicActionsRepositoryInterface } from "./game-logic-actions-repository.interface";
 import { GameLogicActionManagerInterface } from "./game-logic-action-manager.interface";
 import * as _ from 'lodash';
+import { PathFindingCoordinate } from "../../maps/model/path-finding-coordinate.dto";
 
 export interface UnitMoveActionManagerCreateActionsParams {
     ownerId: string;
@@ -56,7 +57,8 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
                 path: [],
                 currentPathStep: 0,
                 checkIfEndPathIsOccupied: params.checkIfEndPathIsOccupied,
-            }
+            },
+            subActionsIdList: []
         };
 
         return action;
@@ -69,9 +71,16 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
         const action: GameLogicActionMoveToDTO = <GameLogicActionMoveToDTO>_.clone(currentAction);
 
         this.pathFindingManager.findPath(action.data.from, action.data.to).then((path) => {
-            action.data.path = path;
-            this.initialize(<GameLogicActionMoveToDTO>action);
-            this.gamelogicActionRepository.save(action);
+
+            if(this.isARaceToFindTheNextFreeTile(action, path)) {
+                const unit = this.unitsRepositoryService.findById(action.ownerId);
+                this.updateTheActionToTheNearestFreeTile(unit, action);
+            } else {
+                action.data.path = path;
+                this.initialize(<GameLogicActionMoveToDTO>action);
+                this.gamelogicActionRepository.save(action);
+            }
+            
         });
         
         return currentAction;
@@ -120,6 +129,11 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
     tearDownAction(action: GameLogicActionDTO): GameLogicActionDTO {
         return action;
     }
+
+    subActionFinished(action: GameLogicActionDTO, subActionId: string): GameLogicActionDTO {
+        throw new Error("Method not implemented.");
+    }
+
 
     private updateTheActionToTheNearestFreeTile(unit: UnitGenericDTO, action: GameLogicActionMoveToDTO): GameLogicActionMoveToDTO {
         const nearestFreeTile = this.findNearestFreeTile(unit);
@@ -173,5 +187,20 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
         });
 
         return action;
+    }
+
+    private isARaceToFindTheNextFreeTile(action: GameLogicActionMoveToDTO, path: PathFindingCoordinate[]): boolean {
+        
+        if(action.data.checkIfEndPathIsOccupied) {
+            const unit = this.unitsRepositoryService.findById(action.ownerId);
+            const lastCoordinateIndex = path.length - 1;
+            unit.xCoordinate = path[lastCoordinateIndex].xCoordinate;
+            unit.yCoordinate = path[lastCoordinateIndex].yCoordinate;
+            
+            return this.isTheTileOccupiedByOtherUnit(unit);
+        } else {
+            return false;
+        }
+        
     }
 }

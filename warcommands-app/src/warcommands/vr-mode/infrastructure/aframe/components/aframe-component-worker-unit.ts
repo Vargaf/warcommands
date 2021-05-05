@@ -110,10 +110,17 @@ export class AFrameComponentWorkerUnit {
 
                 const positionDelta = timeDelta / worker.attributes.speed;
 
-                xCoordinateNew = xFrom + positionDelta * xDirection  + this.positionOffset.xCoordinate;
+                xCoordinateNew = xFrom + positionDelta * xDirection + this.positionOffset.xCoordinate;
                 yCoordinateNew = yFrom + positionDelta * yDirection + this.positionOffset.yCoordinate;
             }
             
+        } else {
+            const lastTileIndex = path.length - 1;
+            const lastTile = path[lastTileIndex];
+            if(lastTile.time < time) {
+                xCoordinateNew = lastTile.xCoordinate + this.positionOffset.xCoordinate;
+                yCoordinateNew = lastTile.yCoordinate + this.positionOffset.yCoordinate;
+            }
         }
 
         return new THREE.Vector3(xCoordinateNew, actualPosition.y, yCoordinateNew);

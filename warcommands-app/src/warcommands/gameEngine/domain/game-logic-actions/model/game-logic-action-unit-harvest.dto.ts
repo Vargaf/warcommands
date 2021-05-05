@@ -5,6 +5,7 @@ export interface GameLogicActionUnitHarvestDTO extends GameLogicActionDTO {
     type: GameLogicActionTypeENUM.Harvest;
     data: {
         started: number,
-        finished: number
+        finished: number,
+        buildingId: string
     }
 }

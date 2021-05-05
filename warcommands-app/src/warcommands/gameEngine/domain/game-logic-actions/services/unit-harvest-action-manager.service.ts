@@ -9,30 +9,40 @@ import { GameLogicActionOwnerTypeENUM } from "../model/game-logic-action-owner-t
 import { GameLogicActionTypeENUM } from "../model/game-logic-action-type.enum";
 import { GameLogicActionStatusENUM } from "../model/game-logic-action-status.enum";
 import { WorkerUnitRoleENUM } from "../../units/worker/worker-unit-role.enum";
+import { BuildingsRepositoryService } from "../../building/services/buildings-repository.service";
+import { FarmBuildingManager } from "../../building/services/farm-building-manager.service";
+import { FarmBuildingDTO } from "../../building/model/farm-building.dto";
 
-
+export interface UnitHarvestActionManagerCreateActionsParams {
+    unitId: string;
+    buildingId: string;
+}
 
 export class UnitHarvestActionManager implements GameLogicActionManagerInterface {
     
     constructor(
         private readonly unitsRepositoryService: UnitsRepositoryService,
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
+        private readonly buildingsRepositoryService: BuildingsRepositoryService,
+        private readonly farmBuildingManager: FarmBuildingManager,
     ) {}
 
-    createAction(worker: WorkerUnitDTO): GameLogicActionDTO {
+    createAction(params: UnitHarvestActionManagerCreateActionsParams): GameLogicActionDTO {
 
         const action: GameLogicActionUnitHarvestDTO = {
             id: uuid(),
-            ownerId: worker.id,
+            ownerId: params.unitId,
             ownerType: GameLogicActionOwnerTypeENUM.Unit,
             parentActionId: null,
             type: GameLogicActionTypeENUM.Harvest,
             status: GameLogicActionStatusENUM.Created,
             data: {
                 started: 0,
-                finished: 0
+                finished: 0,
+                buildingId: params.buildingId,
             },
-            activeAction: 0
+            activeAction: 0,
+            subActionsIdList: []
         }
 
         return action;
@@ -93,8 +103,16 @@ export class UnitHarvestActionManager implements GameLogicActionManagerInterface
     rewindAction(action: GameLogicActionDTO): GameLogicActionDTO {
         throw new Error("Method not implemented.");
     }
-    tearDownAction(action: GameLogicActionDTO): GameLogicActionDTO {
+
+    subActionFinished(action: GameLogicActionDTO, subActionId: string): GameLogicActionDTO {
         throw new Error("Method not implemented.");
+    }
+
+    tearDownAction(action: GameLogicActionDTO): GameLogicActionDTO {
+        const worker = <WorkerUnitDTO>this.unitsRepositoryService.findById(action.ownerId);
+        const farm = <FarmBuildingDTO>this.buildingsRepositoryService.findById(action.data.buildingId);
+        this.farmBuildingManager.freeFarmingSpot(worker, farm);
+        return action;
     }
 
 }

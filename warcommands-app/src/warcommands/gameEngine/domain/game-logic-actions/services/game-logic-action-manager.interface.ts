@@ -10,6 +10,8 @@ export abstract class GameLogicActionManagerInterface {
 
     abstract rewindAction(action: GameLogicActionDTO): GameLogicActionDTO;
 
+    abstract subActionFinished(action: GameLogicActionDTO, subActionId: string): GameLogicActionDTO;
+
     abstract tearDownAction(action: GameLogicActionDTO): GameLogicActionDTO;
 
 }
