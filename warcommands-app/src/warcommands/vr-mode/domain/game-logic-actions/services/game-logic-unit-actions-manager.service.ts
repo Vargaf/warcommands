@@ -13,7 +13,7 @@ export class GameLogicUnitActionsManager {
 
         switch(action.type) {
             case GameLogicActionTypeENUM.MoveTo:
-                this.unitsManagerService.unitMoving22222222222222(action as GameLogicActionMoveToDTO);
+                this.unitsManagerService.unitMoving(action as GameLogicActionMoveToDTO);
                 break;
             default:
                 throw new Error('Game logic action type not recognized');

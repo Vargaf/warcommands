@@ -15,13 +15,7 @@ export class UnitsManagerService {
         this.unitsRepository.save(unit);
     }
 
-    unitMoving(unit: UnitGenericDTO): void {
-        this.workerManager.updateWorker(unit);
-        this.unitsRepository.save(unit);
-
-    }
-
-    unitMoving22222222222222(action: GameLogicActionMoveToDTO): void {
+    unitMoving(action: GameLogicActionMoveToDTO): void {
         const unit = this.unitsRepository.findById(action.ownerId);
         unit.action = action;
         this.workerManager.updateWorker(unit);

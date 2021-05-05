@@ -11,7 +11,6 @@ export enum EventType {
     BuildingQueueingUnit = 'building:queueingUnit',
     BuildingRemovedUnitFromQueue = 'building:removedUnitFromQueue',
 
-    ActionUnitStartsToMove = 'action:unitStartsToMove',
     BaseResourcesUpdated = 'base:resourcesUpdated',
 
     GameLogicActionUpdated = 'action:updated',

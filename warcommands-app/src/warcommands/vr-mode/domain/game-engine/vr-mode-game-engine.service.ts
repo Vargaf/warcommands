@@ -85,10 +85,6 @@ export class VrModeGameEngineService extends GameEngineInterface {
         this.unitsManagerService.unitSpawned(unit);
     }
 
-    unitMoving(unit: UnitGenericDTO): void {
-        this.unitsManagerService.unitMoving(unit);
-    }
-
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {
         console.log("updateBaseResources not implemented.");
     }

@@ -8,7 +8,6 @@ import { BuildingQueueingUnitEvent } from '../gameEngine/domain/game-engine/even
 import { BuildingRemovedUnitFromQueueEvent } from '../gameEngine/domain/game-engine/events/building-removed-unit-from-queue.event';
 import { BuildingCreaedEvent } from '../gameEngine/domain/building/events/building-created.event';
 import { BuildingObjectTranslatorFactory } from './building-object-translator.factory';
-import { ActionUnitStartsToMoveEvent } from '../gameEngine/domain/game-engine/events/action-unit-starts-to-move.event';
 import { BaseResourcesUpdateEvent } from '../gameEngine/domain/game-engine/events/base-resources-updated.event';
 import { GameEngineInterface } from './game-engine.interface';
 import { GameLogicActionUpdatedEvent } from '../gameEngine/domain/game-engine/events/game-logic-action-updated.event';
@@ -30,7 +29,6 @@ export class GameEngineListenersService {
         this.onBuildingQueueingUnitEvent();
         this.onBuildingRemovedUnitFromQueueEvent();
         this.onBuildingCreatedEvent();
-        this.onMoveToActionEvent();
         this.onResourcesUpdateEvent();
         this.onGameLogicActionUpdate();
     }
@@ -75,13 +73,6 @@ export class GameEngineListenersService {
         this.gameEventBusService.on(EventType.BuildingRemovedUnitFromQueue).subscribe((event) => {
             <BuildingRemovedUnitFromQueueEvent>event;
             this.gameEngine.buildingRemoveUnitFromQueue(event.data);
-        });
-    }
-
-    private onMoveToActionEvent(): void {
-        this.gameEventBusService.on(EventType.ActionUnitStartsToMove).subscribe((event) => {
-            <ActionUnitStartsToMoveEvent>event;
-            this.gameEngine.unitMoving(event.data);
         });
     }
 

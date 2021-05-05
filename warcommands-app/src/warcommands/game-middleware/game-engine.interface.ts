@@ -30,8 +30,6 @@ export abstract class GameEngineInterface {
 
     abstract unitSpawned(unit: UnitGenericDTO): void;
 
-    abstract unitMoving(unit: UnitGenericDTO): void;
-
     abstract updateBaseResources(baseId: string, resources: ResourcesDTO): void;
 
     abstract gameLogicActionUpdate(action: GameLogicActionDTO): void;
