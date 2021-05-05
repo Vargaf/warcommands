@@ -10,5 +10,6 @@ export interface GameLogicActionMoveToDTO extends GameLogicActionDTO {
         to: CoordinatesEntity,
         path: PathFindingCoordinate[],
         currentPathStep: number,
+        checkIfEndPathIsOccupied: boolean,
     };
 }

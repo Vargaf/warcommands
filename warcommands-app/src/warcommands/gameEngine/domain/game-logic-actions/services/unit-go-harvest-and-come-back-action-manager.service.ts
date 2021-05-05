@@ -71,7 +71,8 @@ export class UnitGoHarvestAndComeBackActionManager implements GameLogicActionMan
                     to: {
                         xCoordinate: <number>farmingCoordinates?.xCoordinate,
                         yCoordinate: <number>farmingCoordinates?.yCoordinate
-                    }
+                    },
+                    checkIfEndPathIsOccupied: false,
                 }
 
                 const moveToBaseParams: UnitMoveActionManagerCreateActionsParams = {
@@ -83,7 +84,8 @@ export class UnitGoHarvestAndComeBackActionManager implements GameLogicActionMan
                     to: {
                         xCoordinate: base.xCoordinate + base.spawnRelativeCoordinates.xCoordinate,
                         yCoordinate: base.yCoordinate + base.spawnRelativeCoordinates.yCoordinate
-                    }
+                    },
+                    checkIfEndPathIsOccupied: false,
                 }
 
                 const moveToFarmAction = this.unitMoveActionManager.createAction(moveToFarmParams);

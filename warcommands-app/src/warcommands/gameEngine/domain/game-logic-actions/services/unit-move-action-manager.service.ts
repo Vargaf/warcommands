@@ -20,6 +20,7 @@ export interface UnitMoveActionManagerCreateActionsParams {
     ownerId: string;
     from: CoordinatesEntity;
     to: CoordinatesEntity;
+    checkIfEndPathIsOccupied: boolean;
 }
 
 export class UnitMoveActionManager implements GameLogicActionManagerInterface {
@@ -30,7 +31,8 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
         private readonly mapBlockedTilesManagerService: MapBlockedTilesManagerService,
         private readonly gameEventBusService: GameEventBusService,
-        private readonly gamelogicActionRepository: GameLogicActionsRepositoryInterface
+        private readonly gamelogicActionRepository: GameLogicActionsRepositoryInterface,
+
     ) {}
     
     createAction(params: UnitMoveActionManagerCreateActionsParams): GameLogicActionDTO {
@@ -53,39 +55,57 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
                 },
                 path: [],
                 currentPathStep: 0,
+                checkIfEndPathIsOccupied: params.checkIfEndPathIsOccupied,
             }
         };
 
         return action;
     }
 
-    processAction(action: GameLogicActionDTO): GameLogicActionDTO {
-        const unit: UnitGenericDTO = this.unitsRepositoryService.findById(action.ownerId);
+    initializeAction(currentAction: GameLogicActionDTO): GameLogicActionDTO {
 
-        let isUnitDirty = false;
-        if (action.data.path.length) {
-            const currentTileIndex = action.data.currentPathStep;
+        currentAction.status = GameLogicActionStatusENUM.Initializing;
+
+        const action: GameLogicActionMoveToDTO = <GameLogicActionMoveToDTO>_.clone(currentAction);
+
+        this.pathFindingManager.findPath(action.data.from, action.data.to).then((path) => {
+            action.data.path = path;
+            this.initialize(<GameLogicActionMoveToDTO>action);
+            this.gamelogicActionRepository.save(action);
+        });
+        
+        return currentAction;
+    }
+
+    processAction(genericAction: GameLogicActionDTO): GameLogicActionDTO {
+        let action: GameLogicActionMoveToDTO = <GameLogicActionMoveToDTO>genericAction;
+
+        if(!this.hasUnitArrivedToTheEnd(action)) {
+
+            const unit: UnitGenericDTO = this.unitsRepositoryService.findById(action.ownerId);
+
             const nextTileIndex = action.data.currentPathStep + 1;
             const nextTile = action.data.path[nextTileIndex];
+            let unitHasMoved = false;
+
             if (nextTile.time <= this.gameLogicTimeFrameService.getElapsedTime()) {
                 this.mapBlockedTilesManagerService.freeTileByUnit(unit);
                 action.data.currentPathStep++;
-                unit.xCoordinate = action.data.path[currentTileIndex].xCoordinate;
-                unit.yCoordinate = action.data.path[currentTileIndex].yCoordinate;
+                unit.xCoordinate = action.data.path[nextTileIndex].xCoordinate;
+                unit.yCoordinate = action.data.path[nextTileIndex].yCoordinate;
                 this.mapBlockedTilesManagerService.blockTileFromUnit(unit);
-                isUnitDirty = true;
+                unitHasMoved = true;
 
-                if(action.data.path.length - 1 === nextTileIndex) {
-                    action.status = GameLogicActionStatusENUM.Finished;
-                    action.data.currentPathStep++;
-                    unit.xCoordinate = action.data.path[nextTileIndex].xCoordinate;
-                    unit.yCoordinate = action.data.path[nextTileIndex].yCoordinate;
-                    this.mapBlockedTilesManagerService.blockTileFromUnit(unit);
-                    isUnitDirty = true;
+                if(this.hasUnitArrivedToTheEnd(action)) {
+                    if(action.data.checkIfEndPathIsOccupied && this.isTheTileOccupiedByOtherUnit(unit)) {
+                        action = this.updateTheActionToTheNearestFreeTile(unit, action);
+                    } else {
+                        action.status = GameLogicActionStatusENUM.Finished;
+                    }
                 }
             }
 
-            if (isUnitDirty) {
+            if (unitHasMoved) {
                 this.unitsRepositoryService.save(unit);
             }
         }
@@ -101,20 +121,28 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
         return action;
     }
 
-    initializeAction(currentAction: GameLogicActionDTO): GameLogicActionDTO {
+    private updateTheActionToTheNearestFreeTile(unit: UnitGenericDTO, action: GameLogicActionMoveToDTO): GameLogicActionMoveToDTO {
+        const nearestFreeTile = this.findNearestFreeTile(unit);
+        action.data.from.xCoordinate = unit.xCoordinate;
+        action.data.from.yCoordinate = unit.yCoordinate;
+        action.data.to.xCoordinate = nearestFreeTile.xCoordinate;
+        action.data.to.yCoordinate = nearestFreeTile.yCoordinate;
+        action.data.path = [];
+        action.data.currentPathStep = 0;
 
-        currentAction.status = GameLogicActionStatusENUM.Initializing;
+        return <GameLogicActionMoveToDTO>this.initializeAction(action);
+    }
 
-        const action: GameLogicActionMoveToDTO = <GameLogicActionMoveToDTO>_.clone(currentAction);
+    private isTheTileOccupiedByOtherUnit(unit: UnitGenericDTO): boolean {
+        return this.mapBlockedTilesManagerService.isTileOccupiedByAnotherUnit(unit);
+    }
 
-        this.pathFindingManager.findPath(action.data.from, action.data.to).then((path) => {
-            action.data.path = path;
-            action.data.currentPathStep = 0;
-            this.initialize(<GameLogicActionMoveToDTO>action);
-            this.gamelogicActionRepository.save(action);
-        });
-        
-        return currentAction;
+    private hasUnitArrivedToTheEnd(action: GameLogicActionMoveToDTO): boolean {
+        return action.data.path.length <= action.data.currentPathStep + 1;
+    }
+
+    private findNearestFreeTile(unit: UnitGenericDTO): CoordinatesEntity {
+        return this.mapBlockedTilesManagerService.getNearestFreeTile({ xCoordinate: unit.xCoordinate, yCoordinate: unit.yCoordinate});
     }
 
     private initialize(action: GameLogicActionMoveToDTO): void {

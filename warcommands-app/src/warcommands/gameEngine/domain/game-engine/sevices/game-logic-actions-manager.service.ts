@@ -30,7 +30,7 @@ export class GameLogicActionsManagerService {
 
     private processAction(action: GameLogicActionDTO): GameLogicActionDTO {
 
-        // Bear in mind that here we cant remove an action, this should be done
+        // Bear in mind that here we can't remove an action, this should be done
         // at the processActions function to avod deleting sub actions by accident 
 
         const actionManager = this.gameLogicActionManagerFactory.getActionManager(action);

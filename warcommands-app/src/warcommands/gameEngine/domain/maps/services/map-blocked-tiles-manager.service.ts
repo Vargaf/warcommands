@@ -51,8 +51,18 @@ export class MapBlockedTilesManagerService {
         this.unitBlockedTileRepository.removeUnit(unit);
     }
 
-    isTileOccupiedByUnit(xCoordinate: number, yCoordinate: number): boolean {
-        return this.unitBlockedTileRepository.isBlocked(xCoordinate, yCoordinate);
+    isTileOccupiedByAnotherUnit(unit: UnitGenericDTO): boolean {
+        let isTileOccupied = false;
+        const onTileUnitList = this.unitBlockedTileRepository.getUnitIdListBlokingTile(unit.xCoordinate, unit.yCoordinate);
+
+        for(let otherUnitId of onTileUnitList) {
+            if(otherUnitId !== unit.id) {
+                isTileOccupied = true;
+                break;
+            }
+        }
+
+        return isTileOccupied;
     }
 
     getNearestFreeTile(origin: CoordinatesEntity): CoordinatesEntity {
@@ -72,6 +82,15 @@ export class MapBlockedTilesManagerService {
         } while(!freeTileCoordinates)
 
         return freeTileCoordinates;
+    }
+
+    private isTileInsideMapBoundaries(tile: CoordinatesEntity): boolean {
+        return 0 <= tile.xCoordinate && tile.xCoordinate < this.selectedMap.size.width &&
+            0 <= tile.yCoordinate && tile.yCoordinate < this.selectedMap.size.height;
+    }
+
+    private isTileOccupiedByUnit(xCoordinate: number, yCoordinate: number): boolean {
+        return this.unitBlockedTileRepository.isBlocked(xCoordinate, yCoordinate);
     }
 
     private addBuildingBlockedTilesFromBuilding(building: BuildingDTO): void {
@@ -151,11 +170,13 @@ export class MapBlockedTilesManagerService {
             }
         }
 
-        if(freeTileFound) {
-            return {
-                xCoordinate: xCoordinate,
-                yCoordinate: yCoordinate
-            };
+        const freeTile: CoordinatesEntity = {
+            xCoordinate,
+            yCoordinate
+        };
+
+        if(freeTileFound && this.isTileInsideMapBoundaries(freeTile)) {
+            return freeTile;
         } else {
             return null;
         }
@@ -183,11 +204,13 @@ export class MapBlockedTilesManagerService {
             }
         }
 
-        if(freeTileFound) {
-            return {
-                xCoordinate: xCoordinate,
-                yCoordinate: yCoordinate
-            };
+        const freeTile: CoordinatesEntity = {
+            xCoordinate,
+            yCoordinate
+        };
+
+        if(freeTileFound && this.isTileInsideMapBoundaries(freeTile)) {
+            return freeTile;
         } else {
             return null;
         }
@@ -220,11 +243,13 @@ export class MapBlockedTilesManagerService {
             }
         }
 
-        if(freeTileFound) {
-            return {
-                xCoordinate: xCoordinate,
-                yCoordinate: yCoordinate
-            };
+        const freeTile: CoordinatesEntity = {
+            xCoordinate,
+            yCoordinate
+        };
+
+        if(freeTileFound && this.isTileInsideMapBoundaries(freeTile)) {
+            return freeTile;
         } else {
             return null;
         }

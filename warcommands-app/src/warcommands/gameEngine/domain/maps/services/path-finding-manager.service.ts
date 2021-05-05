@@ -47,7 +47,7 @@ export class PathFindingManagerService {
                         const pathCoordinate: PathFindingCoordinate = {
                             xCoordinate: rawCoordinate.x,
                             yCoordinate: rawCoordinate.y,
-                            time : null
+                            time : 0
                         }
                         path.push(pathCoordinate);
                     }

@@ -67,7 +67,8 @@ export class IdleUnitsManager {
         const actionParams: UnitMoveActionManagerCreateActionsParams = {
             ownerId: unit.id,
             from: fromCoordinates,
-            to: toCoordinates
+            to: toCoordinates,
+            checkIfEndPathIsOccupied: true,
         }
         
         unit.action = this.unitMoveActionManager.createAction(actionParams);
