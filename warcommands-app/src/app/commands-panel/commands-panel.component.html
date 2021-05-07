@@ -1,16 +1,10 @@
-<div class="commands-panel-content" (window:resize)="onResize($event)" #commandsPanelContentElement>     
-    <div class="commands-editor" #commandsEditorPanelElement>
-        <div>
-            <div class="side-bar collapsible-bar" [ngClass]="{'extend-command-list-panel': isCommandListVisible}" #commandListElement>
-                <div class="side-bar-content">
-                    <app-commands></app-commands>
-                </div>
-            </div>
+<div class="commands-panel-content" fxLayout="row" #commandsPanelContentElement>
+    <div class="commands-list-panel" #commandListElement [ngClass]="{'hide-panel':!isCommandListVisible}">
+        <div class="commands-list-wrapper">
+            <app-commands></app-commands>
         </div>
-        <div>
-            <div class="editor-panel" [ngClass]="{'move-editor-panel': isCommandListVisible}" #editorPanelElement>
-                <app-file-manager></app-file-manager>
-            </div>
-        </div>
+    </div>
+    <div class="program-editor-panel" #editorPanelElement >
+        <app-file-manager></app-file-manager>
     </div>
 </div>

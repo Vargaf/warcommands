@@ -114,7 +114,7 @@ export class AFrameComponentWorkerUnit {
                 yCoordinateNew = yFrom + positionDelta * yDirection + this.positionOffset.yCoordinate;
             }
             
-        } else {
+        } else if(path.length){
             const lastTileIndex = path.length - 1;
             const lastTile = path[lastTileIndex];
             if(lastTile.time < time) {
