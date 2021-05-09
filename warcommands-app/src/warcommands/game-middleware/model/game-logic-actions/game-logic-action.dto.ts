@@ -6,9 +6,10 @@ export interface GameLogicActionDTO {
     id: string;
     ownerType: GameLogicActionOwnerTypeENUM;
     ownerId: string;
+    parentActionId: string;
     type: GameLogicActionTypeENUM;
 	status: GameLogicActionStatusENUM;
 	data: any;
 	activeAction: number;
-	subActions?: GameLogicActionDTO[];
+	subActionsIdList: string[];
 }

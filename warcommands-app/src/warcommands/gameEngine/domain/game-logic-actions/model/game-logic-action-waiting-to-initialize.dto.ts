@@ -21,6 +21,7 @@ export class GameLogicActionWaitingToInitializeInitializer {
             data: null,
             activeAction: 0,
             parentActionId: null,
+            subActionsIdList: []
         }
     }
 

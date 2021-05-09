@@ -1,15 +1,14 @@
-import { UnitActionTypeENUM } from "src/warcommands/game-middleware/model/unit-action/unit-action-type.enum";
 import { UnitGenericDTO } from "src/warcommands/game-middleware/model/unit/unit-generic.dto";
 import { ModelLoaderInterfaceService } from "src/warcommands/vr-mode/domain/game-engine/model-loader-abstract.service";
 import { PlayerRepositoryService } from "src/warcommands/vr-mode/domain/players/services/player-repository.service";
 import { AframeComponentPainterByPlayer } from "./aframe-component-painter-by-player";
 import * as _ from 'lodash';
-import { UnitActionMoveToDTO } from "src/warcommands/game-middleware/model/unit-action/unit-action-move-to.dto";
-import { PathCoordinate } from "src/warcommands/game-middleware/model/unit-action/path-coordinate.dto";
 import { CoordinatesEntity } from "src/warcommands/game-middleware/model/map/coordinates.entity";
 import { THREE } from "aframe";
 import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
 import { GameLogicActionTypeENUM } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-type.enum";
+import { GameLogicActionMoveToDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-move-to.dto";
+import { PathFindingCoordinate } from "src/warcommands/game-middleware/model/map/path-finding-coordinate.dto";
 
 
 export class AFrameComponentWorkerUnit {
@@ -81,7 +80,7 @@ export class AFrameComponentWorkerUnit {
     }
 
     moveUnit(worker: UnitGenericDTO, actualPosition: THREE.Vector3): THREE.Vector3 {
-        const path: PathCoordinate[] = (worker.action as UnitActionMoveToDTO).data.path;
+        const path: PathFindingCoordinate[] = (worker.action as GameLogicActionMoveToDTO).data.path;
         const time = this.gameClockService.getElapsedTime();
 
         let currentTileIndex = null;

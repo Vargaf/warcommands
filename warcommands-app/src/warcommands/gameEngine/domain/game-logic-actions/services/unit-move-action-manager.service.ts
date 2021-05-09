@@ -66,22 +66,29 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
 
     initializeAction(currentAction: GameLogicActionDTO): GameLogicActionDTO {
 
-        currentAction.status = GameLogicActionStatusENUM.Initializing;
+        if(this.isFindingPathNecessary(<GameLogicActionMoveToDTO>currentAction)) {
+            currentAction.status = GameLogicActionStatusENUM.Initializing;
 
-        const action: GameLogicActionMoveToDTO = <GameLogicActionMoveToDTO>_.clone(currentAction);
+            this.pathFindingManager.findPath(currentAction.data.from, currentAction.data.to).then((path) => {
+                // It could be that the action has been removed during path finding, in that case we
+                // ignore the result
+                const actualAction = this.gamelogicActionRepository.findById(currentAction.id);
 
-        this.pathFindingManager.findPath(action.data.from, action.data.to).then((path) => {
-
-            if(this.isARaceToFindTheNextFreeTile(action, path)) {
-                const unit = this.unitsRepositoryService.findById(action.ownerId);
-                this.updateTheActionToTheNearestFreeTile(unit, action);
-            } else {
-                action.data.path = path;
-                this.initialize(<GameLogicActionMoveToDTO>action);
-                this.gamelogicActionRepository.save(action);
-            }
-            
-        });
+                if(actualAction) {
+                    if(this.isARaceToFindTheNextFreeTile(<GameLogicActionMoveToDTO>actualAction, path)) {
+                        const unit = this.unitsRepositoryService.findById(actualAction.ownerId);
+                        this.updateTheActionToTheNearestFreeTile(unit, <GameLogicActionMoveToDTO>actualAction);
+                    } else {
+                        actualAction.data.path = path;
+                        this.initialize(<GameLogicActionMoveToDTO>actualAction);
+                        this.gamelogicActionRepository.save(actualAction);
+                    }
+                }
+            });
+        } else {
+            currentAction.status = GameLogicActionStatusENUM.Finished;
+        }
+        
         
         return currentAction;
     }
@@ -134,6 +141,10 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
         throw new Error("Method not implemented.");
     }
 
+    private isFindingPathNecessary(action: GameLogicActionMoveToDTO): boolean {
+        return action.data.from.xCoordinate !== action.data.to.xCoordinate ||
+            action.data.from.yCoordinate !== action.data.to.yCoordinate;
+    }
 
     private updateTheActionToTheNearestFreeTile(unit: UnitGenericDTO, action: GameLogicActionMoveToDTO): GameLogicActionMoveToDTO {
         const nearestFreeTile = this.findNearestFreeTile(unit);
@@ -166,8 +177,7 @@ export class UnitMoveActionManager implements GameLogicActionManagerInterface {
         action = this.setTimesToPath(action, unit);
         action.status = GameLogicActionStatusENUM.InProgress;
         action.data.currentPathStep = 0;
-        unit.action = action;
-
+        
         this.mapBlockedTilesManagerService.freeTileByUnit(unit);
         const nextTileIndex = action.data.currentPathStep + 1;
         unit.xCoordinate = action.data.path[nextTileIndex].xCoordinate;

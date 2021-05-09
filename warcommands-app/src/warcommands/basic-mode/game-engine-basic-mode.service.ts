@@ -66,24 +66,24 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
     }
 
     spawningUnit(unit: UnitGenericDTOMiddleware, spawnFinish: number, spawnStart: number): void {
-        this.buildingsManagerService.spawningUnit(<UnitGenericDTO>unit, spawnFinish, spawnStart);
+        //this.buildingsManagerService.spawningUnit(<UnitGenericDTO>unit, spawnFinish, spawnStart);
     }
 
     queueingUnit(unit: UnitGenericDTOMiddleware): void {
-        this.buildingsManagerService.queueingUnit(<UnitGenericDTO>unit);
+        //this.buildingsManagerService.queueingUnit(<UnitGenericDTO>unit);
     }
 
     buildingRemoveUnitFromQueue(unit: UnitGenericDTOMiddleware): void {
-        this.buildingsManagerService.removingUnitFromQueue(<UnitGenericDTO>unit);
+        //this.buildingsManagerService.removingUnitFromQueue(<UnitGenericDTO>unit);
     }
 
     unitSpawned(unit: UnitGenericDTOMiddleware): void {
-        this.buildingsManagerService.unitSpawned(<UnitGenericDTO>unit);
-        this.unitsManagerService.unitSpawned(<UnitGenericDTO>unit);
+        //this.buildingsManagerService.unitSpawned(<UnitGenericDTO>unit);
+        //this.unitsManagerService.unitSpawned(<UnitGenericDTO>unit);
     }
 
     unitMoving(unit: UnitGenericDTOMiddleware): void {
-        this.unitsManagerService.unitMoving(<UnitGenericDTO>unit);
+        //this.unitsManagerService.unitMoving(<UnitGenericDTO>unit);
     }
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {

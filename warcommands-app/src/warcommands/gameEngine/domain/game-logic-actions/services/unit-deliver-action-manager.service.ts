@@ -56,7 +56,6 @@ export class UnitDeliverActionManager implements GameLogicActionManagerInterface
         (action as GameLogicActionUnitDeliverDTO).data.finished = actionFinishIn;
         action.status = GameLogicActionStatusENUM.InProgress;
 
-        unit.action = action;
         this.unitsRepositoryService.save(unit);
 
         return action;

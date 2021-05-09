@@ -15,6 +15,9 @@ export class GameLogicUnitActionsManager {
             case GameLogicActionTypeENUM.MoveTo:
                 this.unitsManagerService.unitMoving(action as GameLogicActionMoveToDTO);
                 break;
+            case GameLogicActionTypeENUM.Void:
+                this.unitsManagerService.updateAction(action);
+                break;
             default:
                 throw new Error('Game logic action type not recognized');
         }

@@ -4,16 +4,19 @@ import { InMemoryGameLogicActionsRepositoryService } from '../../../memory-repos
 import { GameLogicActionManagerFactory } from 'src/warcommands/gameEngine/domain/game-logic-actions/services/game-logic-action-manager-factory.service';
 import { UnitsRepositoryService } from 'src/warcommands/gameEngine/domain/units/services/units-repository.service';
 import { InMemoryUnitsRepositoryService } from '../../../memory-repository/unit/in-memory-units-repository-service';
+import { GameEventBusService } from 'src/warcommands/gameEngine/domain/game-event-bus/services/game-event-bus.service';
 
 const factory = (
     gameLogicActionsRepositoryService: GameLogicActionsRepositoryInterface,
     gameLogicActionManagerFactory: GameLogicActionManagerFactory,
     unitsRepository: UnitsRepositoryService,
+    gameEventBusService: GameEventBusService
 ) => {
     return new GameLogicActionsManagerService(
         gameLogicActionsRepositoryService,
         gameLogicActionManagerFactory,
         unitsRepository,
+        gameEventBusService
     );
 };
 
@@ -24,5 +27,6 @@ export const provider = {
         InMemoryGameLogicActionsRepositoryService,
         GameLogicActionManagerFactory,
         InMemoryUnitsRepositoryService,
+        GameEventBusService,
     ]
 };

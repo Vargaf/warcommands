@@ -5,6 +5,10 @@ import { GameLogicActionManagerFactory } from '../../game-logic-actions/services
 import { UnitsRepositoryService } from '../../units/services/units-repository.service';
 import { GameLogicActionOwnerTypeENUM } from '../../game-logic-actions/model/game-logic-action-owner-type.enum';
 import { GameLogicActionTypeENUM } from '../../game-logic-actions/model/game-logic-action-type.enum';
+import { UnitGenericDTO } from '../../units/model/unit-generic.dto';
+import { GameEventBusService } from '../../game-event-bus/services/game-event-bus.service';
+import { GameLogicActionVoidCreator } from '../../game-logic-actions/model/game-logic-action-void.dto';
+import { GameLogicActionUpdatedEvent } from '../events/game-logic-action-updated.event';
 
 export class GameLogicActionsManagerService {
 
@@ -12,6 +16,7 @@ export class GameLogicActionsManagerService {
         private readonly gameLogicActionsRepositoryService: GameLogicActionsRepositoryInterface,
         private readonly gameLogicActionManagerFactory: GameLogicActionManagerFactory,
         private readonly unitsRepository: UnitsRepositoryService,
+        private readonly gameEventBusService: GameEventBusService,
     ) {}
 
     processActions(): void {
@@ -26,6 +31,14 @@ export class GameLogicActionsManagerService {
                 }
             }
         }
+    }
+
+    removeUnitAction(unit: UnitGenericDTO): UnitGenericDTO {
+        const action = this.gameLogicActionsRepositoryService.findById(unit.actionId);
+        this.removeAction(action);
+
+        unit.actionId = '';
+        return unit;
     }
 
     private processAction(action: GameLogicActionDTO): GameLogicActionDTO {
@@ -59,20 +72,6 @@ export class GameLogicActionsManagerService {
             action.status === GameLogicActionStatusENUM.InProgress ||
             action.status === GameLogicActionStatusENUM.Finished) &&
             action.parentActionId === null;
-    }
-
-    private removeAction(action: GameLogicActionDTO): void {
-
-        const actionManager = this.gameLogicActionManagerFactory.getActionManager(action);
-        actionManager.tearDownAction(action);
-
-        this.gameLogicActionsRepositoryService.remove(action);
-        
-        if(this.isUnitOwner(action)) {
-            const unit = this.unitsRepository.findById(action.ownerId);
-            unit.action = null;
-            this.unitsRepository.save(unit);
-        }
     }
 
     private isUnitOwner(action: GameLogicActionDTO): boolean {
@@ -115,5 +114,23 @@ export class GameLogicActionsManagerService {
     private isActionInWrongState(action: GameLogicActionDTO): boolean {
         return action.subActionsIdList.length > 0 &&
             action.subActionsIdList.length <= action.activeAction
+    }
+
+    private removeAction(action: GameLogicActionDTO): void {
+
+        const actionManager = this.gameLogicActionManagerFactory.getActionManager(action);
+        actionManager.tearDownAction(action);
+
+        this.gameLogicActionsRepositoryService.remove(action);
+        
+        if(this.isUnitOwner(action)) {
+            const unit = this.unitsRepository.findById(action.ownerId);
+            unit.actionId = '';
+            this.unitsRepository.save(unit);
+        }
+
+        const voidAction = GameLogicActionVoidCreator.create(action.ownerId, action.ownerType);
+        const event: GameLogicActionUpdatedEvent = new GameLogicActionUpdatedEvent(voidAction);
+        this.gameEventBusService.cast(event);
     }
 }

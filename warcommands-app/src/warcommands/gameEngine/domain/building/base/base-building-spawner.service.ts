@@ -38,7 +38,7 @@ export class BaseBuildingSpawnerService implements BuildingSpawnerService {
             spawnerBuildingId: <string>spawnerBuilding.id,
             spawningStatus: UnitSpawningStatusENUM.Enqueued,
             type: UnitTypeENUM.Worker,
-            action: null,
+            actionId: '',
             role: null,
             size: {
                 height: 1,

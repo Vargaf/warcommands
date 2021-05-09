@@ -31,11 +31,11 @@ export class IdleUnitsManager {
 
         for(let unit of unitList) {
             if(this.isSpawned(unit) && !this.hasAction(unit)) {
-                if(this.isInTheSpawningTile(unit)) {
-                    this.moveUnitToFreeTile(unit);
+                if(this.canHarvest(unit)) {
+                    this.putUnitToHarvest(unit);
                 } else {
-                    if(this.canHarvest(unit)) {
-                        this.putUnitToHarvest(unit);
+                    if(this.isInTheSpawningTile(unit)) {
+                        this.moveUnitToFreeTile(unit);
                     }
                 }
             }
@@ -55,7 +55,7 @@ export class IdleUnitsManager {
     }
 
     private hasAction(worker: UnitGenericDTO): boolean {
-        return worker.action !== null;
+        return worker.actionId !== '';
     }
 
     private moveUnitToFreeTile(unit: UnitGenericDTO): void {
@@ -71,15 +71,17 @@ export class IdleUnitsManager {
             checkIfEndPathIsOccupied: true,
         }
         
-        unit.action = this.unitMoveActionManager.createAction(actionParams);
+        const action = this.unitMoveActionManager.createAction(actionParams);
+        unit.actionId = action.id;
         this.unitsRepositoryService.save(unit);
-        this.gamelogicActionRepository.save(unit.action);
+        this.gamelogicActionRepository.save(action);
     }
 
     private putUnitToHarvest(unit: UnitGenericDTO): void {
-        unit.action = this.unitGoHarvestAndComeBackActionManager.createAction(unit as WorkerUnitDTO);
+        const action = this.unitGoHarvestAndComeBackActionManager.createAction(unit as WorkerUnitDTO);
+        unit.actionId = action.id;
         this.unitsRepositoryService.save(unit);
-        this.gamelogicActionRepository.save(unit.action);
+        this.gamelogicActionRepository.save(action);
     }
 
     private isFarmingUnit(unit: UnitGenericDTO): boolean {

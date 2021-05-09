@@ -5,9 +5,9 @@ import { EnergyFarmBuildingDTO as ResponseEnergyFarmBuildingDTO } from '../gameE
 import { BuildingDTO } from './model/building/building.dto';
 import { BuildingTypeEnum } from './model/building/building-type.enum';
 import { BaseEntityInterface } from './model/building/base-entity-interface';
-import { UnitGenericDTO } from './model/unit/unit-generic.dto';
 import { MatterFarmBuildingDTO } from './model/building/matter-farm-building.dto';
 import { EnergyFarmBuildingDTO } from './model/building/energy-farm-building.dto';
+import { UnitObjectTranslatorFactory } from './unit-object-translator.factory';
 
 export class BuildingObjectTranslatorFactory {
 
@@ -41,7 +41,7 @@ export class BuildingObjectTranslatorFactory {
         const base: BaseEntityInterface = {
             type: BuildingTypeEnum.Base,
             name: responseBuilding.name,
-            queueList: <UnitGenericDTO[]>responseBuilding.queueList,
+            queueList: UnitObjectTranslatorFactory.translateUnitListType(responseBuilding.queueList),
             spawnRelativeCoordinates: responseBuilding.spawnRelativeCoordinates,
             id: <string>responseBuilding.id,
             sizeHeight: responseBuilding.sizeHeight,

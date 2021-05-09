@@ -6,4 +6,5 @@ export enum GameLogicActionTypeENUM {
     Rewind,
     WaitingToInitialize,
     UnitGoHarvestAndComeBack,
+    Void,
 }

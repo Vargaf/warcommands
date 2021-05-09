@@ -64,7 +64,6 @@ export class UnitHarvestActionManager implements GameLogicActionManagerInterface
         (action as GameLogicActionUnitHarvestDTO).data.finished = actionFinishIn;
         action.status = GameLogicActionStatusENUM.InProgress;
 
-        unit.action = action;
         this.unitsRepositoryService.save(unit);
 
         return action;

@@ -10,7 +10,7 @@ export interface UnitGenericDTO extends CoordinatesEntity {
     spawnerBuildingId: string;
     spawningStatus: UnitSpawningStatusENUM;
     type: UnitTypeENUM;
-    action: GameLogicActionDTO | null,
+    actionId: string,
     size: {
         height: number,
         width: number
