@@ -12,8 +12,13 @@
         height: 100vh;
         z-index: 10;
 
-        button:hover {
+        
+        .mat-button-base:hover {
             color: #F8F8F2;
+        }
+
+        .mat-button-disabled:hover {
+            color: #6272A4;
         }
     }
 

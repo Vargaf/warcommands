@@ -5,6 +5,7 @@ import { ToggleCommandListPanelService } from 'src/warcommands/commands-panel/do
 import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { AFrameStatsService } from 'src/warcommands/vr-mode/infrastructure/aframe/a-frame-stats.service';
+import { AframeSceneService } from 'src/warcommands/vr-mode/infrastructure/aframe/aframe-scene.service';
 
 
 @Component({
@@ -22,11 +23,14 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
     isGamePaused = true;
 
+    isGameLoaded = false;
+
     constructor(
         private readonly toggleCommandsPanelService: ToggleCommandsPanelService,
         private readonly aframeStatsPanelService: AFrameStatsService,
         private readonly toggleCommandListPanelService: ToggleCommandListPanelService,
         private readonly gameMiddlewareService: GameMiddlewareService,
+        private readonly afameSceneService: AframeSceneService,
     ) { }
 
     ngOnInit(): void {
@@ -35,6 +39,10 @@ export class VrModeComponent implements OnInit, OnDestroy {
             this.toggleCommandsPanelService.commandPanelVisibleListener().subscribe((isCommandsPanelOppened) => {
                 this.isCommandsPanelOppened = isCommandsPanelOppened;
             });
+
+        this.afameSceneService.isLoaded().then((isLoaded: boolean) => {
+            this.isGameLoaded = isLoaded;
+        });
     }
 
     ngOnDestroy() {

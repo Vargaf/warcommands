@@ -8,7 +8,7 @@
             <button mat-icon-button aria-label="Show code panel" (click)="toggleCommandsPanel()" *ngIf="!isCommandsPanelOppened">
                 <mat-icon>code</mat-icon>
             </button>
-            <button mat-icon-button aria-label="Starts game" (click)="onResumeGame()" *ngIf="isGamePaused">
+            <button mat-icon-button aria-label="Starts game" [disabled]="!isGameLoaded" (click)="onResumeGame()" *ngIf="isGamePaused">
                 <mat-icon>play_arrow</mat-icon>
             </button>
             <button mat-icon-button aria-label="Pause game" (click)="onPauseGame()" *ngIf="!isGamePaused">
