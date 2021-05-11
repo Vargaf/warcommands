@@ -12,6 +12,13 @@
         height: 100vh;
         z-index: 10;
 
+        .buttons-group {
+            border-bottom: 1px solid #191A21;
+        }
+
+        .game-speed {
+            text-align: center;
+        }
         
         .mat-button-base:hover {
             color: #F8F8F2;

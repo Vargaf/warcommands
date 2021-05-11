@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from "rxjs";
 
-export class GameLogicTimeFrameService {
+export class GameLogicClockService {
 
     private previousTime: number = 0;
     private currentTime: number = 0;
@@ -66,5 +66,5 @@ export class GameLogicTimeFrameService {
 
     private getCurrentSpeed(): number {
         return this.availableSpeeds[this.currentSpeedIndex];
-    }   
+    }
 }

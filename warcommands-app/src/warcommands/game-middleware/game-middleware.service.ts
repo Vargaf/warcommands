@@ -42,9 +42,6 @@ export class GameMiddlewareService {
         this.gameService.initialize();
 
         this.fileManagerService.loadFiles();
-
-        //this.gameEngine.start();
-        //this.gameService.start();
     }
 
     pauseGame(): void {
@@ -55,6 +52,16 @@ export class GameMiddlewareService {
     resumeGame(): void {
         this.gameEngine?.resumeGame();
         this.gameService.resumeGame();
+    }
+
+    speedUp(): void {
+        this.gameEngine?.speedUp();
+        this.gameService.speedUp();
+    }
+
+    slowDown(): void {
+        this.gameEngine?.slowDown();
+        this.gameService.slowDown();
     }
 
 }

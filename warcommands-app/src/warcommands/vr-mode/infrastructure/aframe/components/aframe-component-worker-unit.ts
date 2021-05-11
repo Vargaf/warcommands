@@ -48,10 +48,15 @@ export class AFrameComponentWorkerUnit {
 
                 if(this.data.worker?.action) {
                     const worker: UnitGenericDTO = this.data.worker;
-                    if (worker.action?.type === GameLogicActionTypeENUM.MoveTo) {
-                        const object3d = this.el.getObject3D('mesh');
-                        const movement = scope.moveUnit(worker, object3d.position);
-                        object3d.position.set(movement.x, movement.y, movement.z);
+                    switch(worker.action.type) {
+                        case GameLogicActionTypeENUM.MoveTo:
+                            const object3d = this.el.getObject3D('mesh');
+                            scope.moveUnit(worker, object3d);
+                            break;
+                        case GameLogicActionTypeENUM.Void:
+                            break;
+                        default:
+                            throw new Error('Unrecognized action: ' + worker.action.type);
                     }
                 }
             },
@@ -79,11 +84,12 @@ export class AFrameComponentWorkerUnit {
         });
     }
 
-    moveUnit(worker: UnitGenericDTO, actualPosition: THREE.Vector3): THREE.Vector3 {
+    moveUnit(worker: UnitGenericDTO, object3d: THREE.Object3D) {
+        const actualPosition = object3d.position;
         const path: PathFindingCoordinate[] = (worker.action as GameLogicActionMoveToDTO).data.path;
         const time = this.gameClockService.getElapsedTime();
 
-        let currentTileIndex = null;
+        let currentTileIndex = 0;
         let nextTileIndex = 0;
         let xCoordinateNew = actualPosition.x;
         let yCoordinateNew = actualPosition.z;
@@ -97,7 +103,7 @@ export class AFrameComponentWorkerUnit {
         }
 
         if(currentTileIndex !== null && currentTileIndex < path.length - 1) {
-            if(path[currentTileIndex].time <= time && time <= path[nextTileIndex].time) {
+            if(path[currentTileIndex] && path[currentTileIndex].time <= time && time <= path[nextTileIndex].time) {
                 const xFrom = path[currentTileIndex].xCoordinate;
                 const yFrom = path[currentTileIndex].yCoordinate;
                 const xTo = path[nextTileIndex].xCoordinate;
@@ -122,6 +128,6 @@ export class AFrameComponentWorkerUnit {
             }
         }
 
-        return new THREE.Vector3(xCoordinateNew, actualPosition.y, yCoordinateNew);
+        object3d.position.set(xCoordinateNew, actualPosition.y, yCoordinateNew);
     }
 }

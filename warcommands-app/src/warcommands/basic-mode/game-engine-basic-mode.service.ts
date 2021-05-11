@@ -55,6 +55,14 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
         });
     }
 
+    speedUp(): void {
+
+    }
+
+    slowDown(): void {
+        
+    }
+
     generateMap(map: MapDTO): void {
         for (const tile of map.tiles) {
             this.domElementIjenctorService.addTile(tile);

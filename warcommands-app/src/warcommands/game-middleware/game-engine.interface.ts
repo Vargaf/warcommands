@@ -18,6 +18,10 @@ export abstract class GameEngineInterface {
 
     abstract resumeGame(): void;
 
+    abstract speedUp(): void;
+
+    abstract slowDown(): void;
+
     abstract generateMap(map: MapDTO): void;
 
     abstract addBuilding(building: BuildingDTO): void;

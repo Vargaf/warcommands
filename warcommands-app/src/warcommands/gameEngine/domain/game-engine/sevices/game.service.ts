@@ -93,6 +93,14 @@ export class GameService {
         this.playerCommandsManagerService.addFile(file);
     }
 
+    speedUp(): void {
+        this.gameLogicTimeFrameService.speedUp();
+    }
+
+    slowDown(): void {
+        this.gameLogicTimeFrameService.slowDown();
+    }
+
     private runGame(): void {
         this.warcommandsNgZoneService.runOutsideAngular(() => {
             this.gameLogicTimeFrameService.start();

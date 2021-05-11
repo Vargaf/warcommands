@@ -24,7 +24,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
         private readonly buildingManagerService: BuildingsManagerService,
         private readonly playerRepository: PlayerRepositoryService,
         private readonly unitsManagerService: UnitsManagerService,
-        private readonly timeFrameService: GameLogicClockService,
+        private readonly gameLogicClockService: GameLogicClockService,
         private readonly gameLogicActionsManager: GameLogicActionsManager,
     ) {
         super();
@@ -52,13 +52,21 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
     
     pauseGame(): void {
-        this.timeFrameService.stop();
+        this.gameLogicClockService.stop();
         this.aframeSceneService.pause();
     }
     
     resumeGame(): void {
-        this.timeFrameService.start();
+        this.gameLogicClockService.start();
         this.aframeSceneService.resume();
+    }
+
+    speedUp(): void {
+        this.gameLogicClockService.speedUp();
+    }
+
+    slowDown(): void {
+        this.gameLogicClockService.slowDown();
     }
 
     generateMap(map: MapDTO): void {
