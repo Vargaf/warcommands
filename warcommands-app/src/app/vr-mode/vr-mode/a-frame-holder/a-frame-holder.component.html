@@ -1,6 +1,6 @@
 <div class="a-frame-holder-content">
     <div class="vr-mode-map">
-        <a-scene #sceneElement 
+        <a-scene #sceneElement
             clock-component
             fog="type: loinear; color: #282a36; near: 5; far: 20"
             vr-mode-ui="enterVRButton: #enterVRButton; enterARButton: #enterARButton;">
@@ -16,32 +16,33 @@
                 <a-asset-item id="EnergyFarm" src="assets/Buildings/EnergyFarm_v2.gltf"></a-asset-item>
                 <a-asset-item id="Base" src="assets/Buildings/Base_v1.gltf"></a-asset-item>
                 <a-asset-item id="Worker" src="assets/Unities/Worker_v1.gltf"></a-asset-item>
-    
+
                 <a-mixin id="base_building" base-building-component></a-mixin>
                 <a-mixin id="matter_farm_building" matter-farm-building-component></a-mixin>
                 <a-mixin id="energy_farm_building" energy-farm-building-component></a-mixin>
                 <a-mixin id="worker_unit" worker-unit-component></a-mixin>
             </a-assets>
-    
+
             <a-entity pausable-content-component
                 pool__matter_farm_building="mixin: matter_farm_building; size: 4; dynamic: true"
                 pool__base_building="mixin: base_building; size: 2; dynamic: true"
                 pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true"
-                pool__worker_unit="mixin: worker_unit; size: 10; dynamic: true"
-                >
+                pool__worker_unit="mixin: worker_unit; size: 10; dynamic: true">
             </a-entity>
-    
+
             <!--
     <a-gltf-model src="#MatterFarm" position="7 0 3"></a-gltf-model>
     <a-gltf-model src="#EnergyFarm" position="1 0 3"></a-gltf-model>
     <a-gltf-model src="#Base" position="4 0 2"></a-gltf-model>
     -->
-    
+
             <a-light type="ambient" color="#ECECEC"></a-light>
             <a-light type="point" color="#ECECEC" intensity="0.5" position="20 20 20"></a-light>
-    
+
             <a-entity id="rig" movement-controls="constrainToNavMesh: true">
-                <a-entity camera="far: 21" position="10 4 10" look-controls="pointerLockEnabled: true">
+                <a-entity camera="far: 21" look-controls="pointerLockEnabled: true" camera-component>
+                    <a-entity geometry="primitive: plane; height: 0.2; width: 0.2" position="0 0 -1"
+                        material="color: gray; opacity: 0.5"></a-entity>
                 </a-entity>
             </a-entity>
         </a-scene>

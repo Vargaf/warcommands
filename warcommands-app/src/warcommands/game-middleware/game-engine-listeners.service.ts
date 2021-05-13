@@ -23,6 +23,7 @@ export class GameEngineListenersService {
     ) {}
 
     setListeners(): void {
+        this.onGameInitializedEvent();
         this.setMapGeneratingListeners();
         this.onBuildingSpawningUnit();
         this.onBuildingUnitSpawned();
@@ -31,6 +32,12 @@ export class GameEngineListenersService {
         this.onBuildingCreatedEvent();
         this.onResourcesUpdateEvent();
         this.onGameLogicActionUpdate();
+    }
+
+    private onGameInitializedEvent(): void {
+        this.gameEventBusService.on(EventType.Initialized).subscribe((event) => {
+            this.gameEngine.setGameHasBeenInitialized();
+        })
     }
 
     private setMapGeneratingListeners(): void {

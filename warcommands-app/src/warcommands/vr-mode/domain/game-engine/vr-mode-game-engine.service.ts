@@ -10,8 +10,6 @@ import { AframeSceneService } from "../../infrastructure/aframe/aframe-scene.ser
 import { AFrameComponentsHub } from "../../infrastructure/aframe/components/aframe-components-hub";
 import { BuildingsManagerService } from '../buildings/service/buildings-manager-service';
 import { GameLogicActionsManager } from "../game-logic-actions/services/game-logic-actions-manager.service";
-import { PlayerDTO } from "../players/model/player.dto";
-import { PlayerRepositoryService } from "../players/services/player-repository.service";
 import { UnitsManagerService } from "../units/services/units-manager.service";
 import { GameLogicClockService } from "./game-logic-clock.service";
 
@@ -22,7 +20,6 @@ export class VrModeGameEngineService extends GameEngineInterface {
         private readonly aframeSceneService: AframeSceneService,
         private readonly aframeMapService: AframeMapService,
         private readonly buildingManagerService: BuildingsManagerService,
-        private readonly playerRepository: PlayerRepositoryService,
         private readonly unitsManagerService: UnitsManagerService,
         private readonly gameLogicClockService: GameLogicClockService,
         private readonly gameLogicActionsManager: GameLogicActionsManager,
@@ -31,7 +28,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
         this.aframeComponentsHub.initialize();
     }
 
-    waitTillSceneInitializes(sceneElement: Scene): Promise<boolean> {
+    waitTillSceneIsLoaded(sceneElement: Scene): Promise<boolean> {
 
         this.aframeSceneService.setSceneElement(sceneElement);
 
@@ -41,14 +38,11 @@ export class VrModeGameEngineService extends GameEngineInterface {
         
         return new Promise((resolve, reject) => {
             sceneElement.addEventListener('loaded', () => {
+                this.pauseGame();
                 this.isInitialized = true;
                 resolve(true);
             });
         });
-    }
-
-    loadAssets() {
-
     }
     
     pauseGame(): void {
@@ -97,12 +91,11 @@ export class VrModeGameEngineService extends GameEngineInterface {
         console.log("updateBaseResources not implemented.");
     }
 
-    setCurrentPlayer(player: PlayerDTO): void {
-        this.playerRepository.save(player);
-    }
-
     gameLogicActionUpdate(action: GameLogicActionDTO): void {
         this.gameLogicActionsManager.processAction(action);
     }
-    
+
+    setGameHasBeenInitialized(): void {
+        this.aframeSceneService.setGameHasBeenInitialized();
+    }
 }

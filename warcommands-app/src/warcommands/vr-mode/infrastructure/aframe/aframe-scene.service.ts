@@ -1,5 +1,4 @@
-import { Renderer2, RendererFactory2 } from '@angular/core';
-import { Entity, Scene } from 'aframe';
+import { Scene } from 'aframe';
 import { Subject } from 'rxjs';
 import { AFrameStatsService } from './a-frame-stats.service';
 import { AFramePausableContentService } from './game-engine/aframe-pausable-content.service';
@@ -9,6 +8,8 @@ export class AframeSceneService {
     private sceneElement!: Scene;
     private _isLoaded = false;
     private isLoadedSubject: Subject<boolean> = new Subject();
+    private _isInitialized = false;
+    private isInitializedSubject: Subject<boolean> = new Subject();
     
     constructor(
         private readonly aframeStatsService: AFrameStatsService,
@@ -52,6 +53,24 @@ export class AframeSceneService {
             });
         });
     }
+
+    isInitialized(): Promise<boolean> {
+        if(this._isInitialized) {
+            return Promise.resolve(true);
+        }
+        
+        return new Promise((resolve, reject) => {
+            this.isInitializedSubject.subscribe(() => {
+                resolve(true);
+                this.isInitializedSubject.unsubscribe();
+            });
+        });
+    }
+
+    setGameHasBeenInitialized(): void {
+        this.isInitializedSubject.next(true);
+    }
+
 
     pause(): void {
         this.pausableContentService.pause();

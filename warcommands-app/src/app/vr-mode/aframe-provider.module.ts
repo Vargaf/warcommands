@@ -12,6 +12,7 @@ import * as AframeComponentPausableContentProvider from 'src/warcommands/vr-mode
 import * as AframePausableContentProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/game-engine/aframe-pausable-content.provider';
 import * as AframeComponentWorkerUnitProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-worker-unit.provider';
 import * as AframeWorkerUnitManagerProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/units/aframe-worker-unit-manager.provider';
+import * as AframeComponentCameraProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-camera.provider';
 
 
 
@@ -30,6 +31,7 @@ import * as AframeWorkerUnitManagerProvider from 'src/warcommands/vr-mode/infras
         AframeComponentWorkerUnitProvider.provider,
         AframeWorkerUnitManagerProvider.provider,
         AframeComponentClockProvider.provider,
+        AframeComponentCameraProvider.provider,
     ]
 })
 export class AframeProviderModule { }

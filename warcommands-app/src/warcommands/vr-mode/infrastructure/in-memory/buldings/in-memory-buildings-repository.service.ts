@@ -35,4 +35,9 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositoryIn
         return filteredList;
     }
     
+    findOneBy(filter: BuildingFilterDTO): BuildingDTO {
+        const buildingList: BuildingDTO[] = this.findBy(filter);
+
+        return buildingList[0];
+    }
 }

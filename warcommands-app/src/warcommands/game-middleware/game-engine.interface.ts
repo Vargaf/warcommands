@@ -37,4 +37,6 @@ export abstract class GameEngineInterface {
     abstract updateBaseResources(baseId: string, resources: ResourcesDTO): void;
 
     abstract gameLogicActionUpdate(action: GameLogicActionDTO): void;
+
+    abstract setGameHasBeenInitialized(): void;
 }

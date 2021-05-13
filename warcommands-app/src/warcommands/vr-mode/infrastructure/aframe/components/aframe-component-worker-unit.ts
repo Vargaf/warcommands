@@ -4,7 +4,6 @@ import { PlayerRepositoryService } from "src/warcommands/vr-mode/domain/players/
 import { AframeComponentPainterByPlayer } from "./aframe-component-painter-by-player";
 import * as _ from 'lodash';
 import { CoordinatesEntity } from "src/warcommands/game-middleware/model/map/coordinates.entity";
-import { THREE } from "aframe";
 import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
 import { GameLogicActionTypeENUM } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-type.enum";
 import { GameLogicActionMoveToDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-move-to.dto";

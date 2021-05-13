@@ -6,4 +6,6 @@ export interface BuildingFilterDTO {
 
     type?: BuildingTypeEnum;
 
+    playerId?: string;
+
 }

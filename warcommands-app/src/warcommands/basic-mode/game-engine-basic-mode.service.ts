@@ -123,4 +123,8 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
     gameLogicActionUpdate(action: GameLogicActionDTO): void {
         throw new Error('Method not implemented.');
     }
+
+    setGameHasBeenInitialized(): void {
+        throw new Error('Method not implemented.');
+    }
 }

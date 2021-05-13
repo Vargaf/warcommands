@@ -7,4 +7,5 @@ export abstract class BuildingsRepositoryInterface {
 
     abstract findBy(filter: BuildingFilterDTO): BuildingDTO[];
 
+    abstract findOneBy(filter: BuildingFilterDTO): BuildingDTO;
 }
