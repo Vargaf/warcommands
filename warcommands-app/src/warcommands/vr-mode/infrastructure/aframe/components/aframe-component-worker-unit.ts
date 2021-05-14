@@ -8,6 +8,8 @@ import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engin
 import { GameLogicActionTypeENUM } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-type.enum";
 import { GameLogicActionMoveToDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-move-to.dto";
 import { PathFindingCoordinate } from "src/warcommands/game-middleware/model/map/path-finding-coordinate.dto";
+import { GameLogicActionUnitHarvestDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-unit-harvest.dto";
+import { GameLogicActionUnitDeliverDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-unit-deliver.dto";
 
 
 export class AFrameComponentWorkerUnit {
@@ -47,10 +49,16 @@ export class AFrameComponentWorkerUnit {
 
                 if(this.data.worker?.action) {
                     const worker: UnitGenericDTO = this.data.worker;
+                    const object3d = this.el.getObject3D('mesh');
                     switch(worker.action.type) {
                         case GameLogicActionTypeENUM.MoveTo:
-                            const object3d = this.el.getObject3D('mesh');
                             scope.moveUnit(worker, object3d);
+                            break;
+                        case GameLogicActionTypeENUM.Harvest:
+                            scope.setWorkerOnFarmingPlace(worker, object3d);
+                            break;
+                        case GameLogicActionTypeENUM.Deliver:
+                            scope.setWorkerOnDeliverPlace(worker, object3d);
                             break;
                         case GameLogicActionTypeENUM.Void:
                             break;
@@ -83,7 +91,7 @@ export class AFrameComponentWorkerUnit {
         });
     }
 
-    moveUnit(worker: UnitGenericDTO, object3d: THREE.Object3D) {
+    private moveUnit(worker: UnitGenericDTO, object3d: THREE.Object3D) {
         const actualPosition = object3d.position;
         const path: PathFindingCoordinate[] = (worker.action as GameLogicActionMoveToDTO).data.path;
         const time = this.gameClockService.getElapsedTime();
@@ -128,5 +136,31 @@ export class AFrameComponentWorkerUnit {
         }
 
         object3d.position.set(xCoordinateNew, actualPosition.y, yCoordinateNew);
+    }
+
+    private setWorkerOnFarmingPlace(worker: UnitGenericDTO, object3d: THREE.Object3D): void {
+        const currentX = object3d.position.x;
+        const currentY = object3d.position.z;
+
+        const action = <GameLogicActionUnitHarvestDTO>worker.action;
+        const endX = action.data.coordinates.xCoordinate + this.positionOffset.xCoordinate;
+        const endY = action.data.coordinates.yCoordinate + this.positionOffset.yCoordinate;
+        if(currentX !== endX || currentY !== endY) {
+            const actualY = object3d.position.y;
+            object3d.position.set(endX, actualY, endY);
+        }
+    }
+
+    private setWorkerOnDeliverPlace(worker: UnitGenericDTO, object3d: THREE.Object3D): void {
+        const currentX = object3d.position.x;
+        const currentY = object3d.position.z;
+
+        const action = <GameLogicActionUnitDeliverDTO>worker.action;
+        const endX = action.data.coordinates.xCoordinate + this.positionOffset.xCoordinate;
+        const endY = action.data.coordinates.yCoordinate + this.positionOffset.yCoordinate;
+        if(currentX !== endX || currentY !== endY) {
+            const actualY = object3d.position.y;
+            object3d.position.set(endX, actualY, endY);
+        }
     }
 }

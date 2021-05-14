@@ -12,10 +12,14 @@ import { WorkerUnitRoleENUM } from "../../units/worker/worker-unit-role.enum";
 import { BuildingsRepositoryService } from "../../building/services/buildings-repository.service";
 import { FarmBuildingManager } from "../../building/services/farm-building-manager.service";
 import { FarmBuildingDTO } from "../../building/model/farm-building.dto";
+import { GameEventBusService } from "../../game-event-bus/services/game-event-bus.service";
+import { GameLogicActionUpdatedEvent } from "../../game-engine/events/game-logic-action-updated.event";
 
 export interface UnitHarvestActionManagerCreateActionsParams {
     unitId: string;
     buildingId: string;
+    xCoordinate: number;
+    yCoordinate: number;
 }
 
 export class UnitHarvestActionManager implements GameLogicActionManagerInterface {
@@ -25,6 +29,7 @@ export class UnitHarvestActionManager implements GameLogicActionManagerInterface
         private readonly gameLogicTimeFrameService: GameLogicTimeFrameService,
         private readonly buildingsRepositoryService: BuildingsRepositoryService,
         private readonly farmBuildingManager: FarmBuildingManager,
+        private readonly gameEventBusService: GameEventBusService,
     ) {}
 
     createAction(params: UnitHarvestActionManagerCreateActionsParams): GameLogicActionDTO {
@@ -40,6 +45,10 @@ export class UnitHarvestActionManager implements GameLogicActionManagerInterface
                 started: 0,
                 finished: 0,
                 buildingId: params.buildingId,
+                coordinates: {
+                    xCoordinate: params.xCoordinate,
+                    yCoordinate: params.yCoordinate
+                }
             },
             activeAction: 0,
             subActionsIdList: []
@@ -65,6 +74,9 @@ export class UnitHarvestActionManager implements GameLogicActionManagerInterface
         action.status = GameLogicActionStatusENUM.InProgress;
 
         this.unitsRepositoryService.save(unit);
+
+        const event: GameLogicActionUpdatedEvent = new GameLogicActionUpdatedEvent(action);
+        this.gameEventBusService.cast(event);
 
         return action;
     }

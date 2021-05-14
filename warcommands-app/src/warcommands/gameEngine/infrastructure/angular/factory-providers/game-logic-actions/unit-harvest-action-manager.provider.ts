@@ -5,18 +5,21 @@ import { UnitHarvestActionManager } from 'src/warcommands/gameEngine/domain/game
 import { BuildingsRepositoryService } from 'src/warcommands/gameEngine/domain/building/services/buildings-repository.service';
 import { FarmBuildingManager } from 'src/warcommands/gameEngine/domain/building/services/farm-building-manager.service';
 import { InMemoryBuildingsRepositoryService } from '../../../memory-repository/build/in-memory-buildings-repository.service';
+import { GameEventBusService } from 'src/warcommands/gameEngine/domain/game-event-bus/services/game-event-bus.service';
 
 const factory = (
     unitsRepositoryService: UnitsRepositoryService,
     gameLogicTimeFrameService: GameLogicTimeFrameService,
     buildingsRepositoryService: BuildingsRepositoryService,
     farmBuildingManager: FarmBuildingManager,
+    gameEventBusService: GameEventBusService
 ) => {
     return new UnitHarvestActionManager(
         unitsRepositoryService,
         gameLogicTimeFrameService,
         buildingsRepositoryService,
         farmBuildingManager,
+        gameEventBusService,
     );
 };
 
@@ -28,5 +31,6 @@ export const provider = {
         GameLogicTimeFrameService,
         InMemoryBuildingsRepositoryService,
         FarmBuildingManager,
+        GameEventBusService,
     ]
 };

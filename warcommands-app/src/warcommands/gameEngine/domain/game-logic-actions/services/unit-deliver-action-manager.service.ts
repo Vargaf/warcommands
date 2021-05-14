@@ -2,18 +2,25 @@ import { v4 as uuid } from 'uuid';
 import { BaseBuildingDTO } from '../../building/base/base-building.dto';
 import { BuildingsRepositoryService } from '../../building/services/buildings-repository.service';
 import { BaseResourcesUpdateEvent } from '../../game-engine/events/base-resources-updated.event';
+import { GameLogicActionUpdatedEvent } from '../../game-engine/events/game-logic-action-updated.event';
 import { GameLogicTimeFrameService } from '../../game-engine/sevices/game-logic-time-frame.service';
 import { GameEventBusService } from '../../game-event-bus/services/game-event-bus.service';
+import { CoordinatesEntity } from '../../maps/model/coordinates.entity';
 import { UnitsRepositoryService } from '../../units/services/units-repository.service';
 import { WorkerUnitRoleENUM } from '../../units/worker/worker-unit-role.enum';
 import { WorkerUnitDTO } from '../../units/worker/worker-unit.dto';
 import { GameLogicActionOwnerTypeENUM } from '../model/game-logic-action-owner-type.enum';
 import { GameLogicActionStatusENUM } from '../model/game-logic-action-status.enum';
 import { GameLogicActionTypeENUM } from '../model/game-logic-action-type.enum';
-import { GameLogicActionUnitDeliverDTO } from '../model/game-logic-action-unit-deliver.dto copy';
+import { GameLogicActionUnitDeliverDTO } from '../model/game-logic-action-unit-deliver.dto';
 import { GameLogicActionDTO } from '../model/game-logic-action.dto';
 import { GameLogicActionManagerInterface } from "./game-logic-action-manager.interface";
 
+export interface UnitDeliverActionManagerCreateActionParams {
+    ownerId: string;
+    xCoordinate: number;
+    yCoordinate: number;
+}
 
 export class UnitDeliverActionManager implements GameLogicActionManagerInterface {
     
@@ -24,16 +31,20 @@ export class UnitDeliverActionManager implements GameLogicActionManagerInterface
         private readonly gameEventBusService: GameEventBusService,
     ) {}
 
-    createAction(worker: WorkerUnitDTO): GameLogicActionDTO {
+    createAction(params: UnitDeliverActionManagerCreateActionParams): GameLogicActionDTO {
         const action: GameLogicActionUnitDeliverDTO = {
             id: uuid(),
             type: GameLogicActionTypeENUM.Deliver,
-            ownerId: worker.id,
+            ownerId: params.ownerId,
             ownerType: GameLogicActionOwnerTypeENUM.Unit,
             status: GameLogicActionStatusENUM.Created,
             data: {
                 started: 0,
-                finished: 0
+                finished: 0,
+                coordinates: {
+                    xCoordinate: params.xCoordinate,
+                    yCoordinate: params.yCoordinate
+                }
             },
             activeAction: 0,
             parentActionId: null,
@@ -57,6 +68,9 @@ export class UnitDeliverActionManager implements GameLogicActionManagerInterface
         action.status = GameLogicActionStatusENUM.InProgress;
 
         this.unitsRepositoryService.save(unit);
+
+        const event: GameLogicActionUpdatedEvent = new GameLogicActionUpdatedEvent(action);
+        this.gameEventBusService.cast(event);
 
         return action;
     }

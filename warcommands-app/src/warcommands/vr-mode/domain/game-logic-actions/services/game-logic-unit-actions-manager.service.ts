@@ -16,6 +16,8 @@ export class GameLogicUnitActionsManager {
                 this.unitsManagerService.unitMoving(action as GameLogicActionMoveToDTO);
                 break;
             case GameLogicActionTypeENUM.Void:
+            case GameLogicActionTypeENUM.Deliver:
+            case GameLogicActionTypeENUM.Harvest:
                 this.unitsManagerService.updateAction(action);
                 break;
             default:

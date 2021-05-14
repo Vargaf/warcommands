@@ -1,4 +1,4 @@
-import { CoordinatesEntity } from "../../maps/model/coordinates.entity";
+import { CoordinatesEntity } from "../map/coordinates.entity";
 import { GameLogicActionTypeENUM } from "./game-logic-action-type.enum";
 import { GameLogicActionDTO } from "./game-logic-action.dto";
 

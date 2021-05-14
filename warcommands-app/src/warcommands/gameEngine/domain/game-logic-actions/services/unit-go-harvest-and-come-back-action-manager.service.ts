@@ -13,8 +13,7 @@ import { UnitsRepositoryService } from "../../units/services/units-repository.se
 import { UnitHarvestActionManager, UnitHarvestActionManagerCreateActionsParams } from "./unit-harvest-action-manager.service";
 import { UnitMoveActionManager, UnitMoveActionManagerCreateActionsParams } from "./unit-move-action-manager.service";
 import { FarmBuildingManager } from "../../building/services/farm-building-manager.service";
-import { UnitDeliverActionManager } from "./unit-deliver-action-manager.service";
-import { GameLogicActionRewindInitializer } from "../model/game-logic-action-rewind.dto";
+import { UnitDeliverActionManager, UnitDeliverActionManagerCreateActionParams } from "./unit-deliver-action-manager.service";
 import { GameLogicActionsRepositoryInterface } from "./game-logic-actions-repository.interface";
 import { GameLogicActionMoveToDTO } from "../model/game-logic-action-move-to.dto";
 import { GameLogicActionUnitHarvestDTO } from "../model/game-logic-action-unit-harvest.dto";
@@ -91,15 +90,23 @@ export class UnitGoHarvestAndComeBackActionManager implements GameLogicActionMan
                     checkIfEndPathIsOccupied: false,
                 }
 
-                const unitHarvestActionManagerCreateActionsParams: UnitHarvestActionManagerCreateActionsParams = {
+                const harvestActionParams: UnitHarvestActionManagerCreateActionsParams = {
                     unitId: worker.id,
                     buildingId: <string>farmBuilding.id,
+                    xCoordinate: <number>farmingCoordinates?.xCoordinate,
+                    yCoordinate: <number>farmingCoordinates?.yCoordinate 
+                };
+
+                const deliverActionParams: UnitDeliverActionManagerCreateActionParams = {
+                    ownerId: worker.id,
+                    xCoordinate: base.xCoordinate + base.spawnRelativeCoordinates.xCoordinate,
+                    yCoordinate: base.yCoordinate + base.spawnRelativeCoordinates.yCoordinate 
                 };
 
                 const moveToFarmAction = this.unitMoveActionManager.createAction(moveToFarmParams);
-                const harvestAction = this.unitHarvestActionManager.createAction(unitHarvestActionManagerCreateActionsParams);
+                const harvestAction = this.unitHarvestActionManager.createAction(harvestActionParams);
                 const moveToBaseAction = this.unitMoveActionManager.createAction(moveToBaseParams);
-                const deliverAction = this.unitDeliverActionManager.createAction(worker);
+                const deliverAction = this.unitDeliverActionManager.createAction(deliverActionParams);
                 //const rewindAction = GameLogicActionRewindInitializer.create(worker.id, GameLogicActionOwnerTypeENUM.Unit);
 
                 moveToFarmAction.parentActionId = action.id;
