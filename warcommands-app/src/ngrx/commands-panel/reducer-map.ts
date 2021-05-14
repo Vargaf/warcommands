@@ -3,6 +3,7 @@ import * as CommandContainerReducer from './command-container/reducers';
 import * as CommandReducer from './command/reducers';
 import * as PlayerListReducer from './player-list/reducers';
 import * as UxUiReducer from './ux-ui/reducers';
+import * as BuildingsReducer from './buildings/reducers';
 import { InjectionToken } from '@angular/core';
 import { ActionReducerMap } from '@ngrx/store';
 
@@ -14,6 +15,7 @@ interface State {
     [CommandReducer.CommandStoreKey]: CommandReducer.CommandState;
     [PlayerListReducer.PlayerListStoreKey]: PlayerListReducer.PlayerListState;
     [UxUiReducer.UxUiStoreKey]: UxUiReducer.UxUiState;
+    [BuildingsReducer.BuildingListStoreKey]: BuildingsReducer.BuildingListState;
 }
 
 export const COMMANDS_FILE_REDUCER_MAP_TOKEN = new InjectionToken<ActionReducerMap<State>>('Commands panel reducers');
@@ -25,12 +27,14 @@ export function reducers(): ActionReducerMap<State> {
     const commandKey = CommandReducer.CommandStoreKey;
     const currentPlayerKey = PlayerListReducer.PlayerListStoreKey;
     const uxUiKey = UxUiReducer.UxUiStoreKey;
+    const buildingsKey = BuildingsReducer.BuildingListStoreKey;
 
     return {
         [fileStoreKey]: FileReducer.reducer,
         [commandContainerKey]: CommandContainerReducer.reducer,
         [commandKey]: CommandReducer.reducer,
         [currentPlayerKey]: PlayerListReducer.reducer,
-        [uxUiKey]: UxUiReducer.reducer
+        [uxUiKey]: UxUiReducer.reducer,
+        [buildingsKey]: BuildingsReducer.reducer,
     };
 }

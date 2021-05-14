@@ -3,7 +3,7 @@ import { BuildingTypeEnum } from './building-type.enum';
 import { SpawnerDTO } from './spawner.dto';
 
 export interface BuildingDTO extends CoordinatesEntity {
-    id: string | null;
+    id: string;
     type: BuildingTypeEnum;
     sizeWidth: number;
     sizeHeight: number;

@@ -11,6 +11,7 @@ import { BuildingObjectTranslatorFactory } from './building-object-translator.fa
 import { BaseResourcesUpdateEvent } from '../gameEngine/domain/game-engine/events/base-resources-updated.event';
 import { GameEngineInterface } from './game-engine.interface';
 import { GameLogicActionUpdatedEvent } from '../gameEngine/domain/game-engine/events/game-logic-action-updated.event';
+import { BuildingsNgrxRepositoryService } from './buildings-ngrx-repository.service';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,7 @@ export class GameEngineListenersService {
     constructor(
         private readonly gameEngine: GameEngineInterface,
         private readonly gameEventBusService: GameEventBusService,
+        private readonly buildingsNgrxRepository: BuildingsNgrxRepositoryService,
     ) {}
 
     setListeners(): void {
@@ -52,6 +54,7 @@ export class GameEngineListenersService {
             <BuildingCreaedEvent>event;
             const translateBuilding = BuildingObjectTranslatorFactory.translateBuildingType(event.data);
             this.gameEngine.addBuilding(translateBuilding);
+            this.buildingsNgrxRepository.save(translateBuilding);
         });
     }
 
@@ -73,6 +76,7 @@ export class GameEngineListenersService {
         this.gameEventBusService.on(EventType.BuildingQueueingUnit).subscribe((event) => {
             <BuildingQueueingUnitEvent>event;
             this.gameEngine.queueingUnit(event.data.unit);
+            this.buildingsNgrxRepository.addUnitToQueue(event.data.unit);
         });
     }
 
@@ -80,6 +84,7 @@ export class GameEngineListenersService {
         this.gameEventBusService.on(EventType.BuildingRemovedUnitFromQueue).subscribe((event) => {
             <BuildingRemovedUnitFromQueueEvent>event;
             this.gameEngine.buildingRemoveUnitFromQueue(event.data);
+            this.buildingsNgrxRepository.removeUnitFromQueue(event.data);
         });
     }
 
@@ -87,6 +92,7 @@ export class GameEngineListenersService {
         this.gameEventBusService.on(EventType.BaseResourcesUpdated).subscribe((event) => {
             <BaseResourcesUpdateEvent>event;
             this.gameEngine.updateBaseResources(event.data.baseId, event.data.resources);
+            this.buildingsNgrxRepository.updateBaseResources(event.data.baseId, event.data.resources);
         })
     }
 
