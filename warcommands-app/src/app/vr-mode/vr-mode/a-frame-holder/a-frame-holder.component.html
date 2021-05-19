@@ -2,6 +2,7 @@
     <div class="vr-mode-map">
         <a-scene #sceneElement
             clock-component
+            hud-component
             fog="type: loinear; color: #282a36; near: 5; far: 20"
             vr-mode-ui="enterVRButton: #enterVRButton; enterARButton: #enterARButton;">
             <a-assets>
@@ -40,10 +41,7 @@
             <a-light type="point" color="#ECECEC" intensity="0.5" position="20 20 20"></a-light>
 
             <a-entity id="rig" movement-controls="constrainToNavMesh: true">
-                <a-entity camera="far: 21" look-controls="pointerLockEnabled: true" camera-component>
-                    <a-entity geometry="primitive: plane; height: 0.2; width: 0.2" position="0 0 -1"
-                        material="color: gray; opacity: 0.5"></a-entity>
-                </a-entity>
+                <a-entity camera="far: 21" look-controls="pointerLockEnabled: true" camera-component></a-entity>
             </a-entity>
         </a-scene>
     </div>
