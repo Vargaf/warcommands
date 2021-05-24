@@ -14,8 +14,8 @@ export class AFrameComponentBaseBuilding {
     ) {
 
         const scope = this;
-        const baseXOffset = 1;
-        const baseZOffset = 1;
+        const baseXOffset = 2.5;
+        const baseZOffset = -0.5;
 
         const defaultBase: BuildingDTO = {
             id: '',

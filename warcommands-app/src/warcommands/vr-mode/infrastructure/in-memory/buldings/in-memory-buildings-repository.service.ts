@@ -40,4 +40,8 @@ export class InMemoryBuildingsRepositoryService implements BuildingsRepositoryIn
 
         return buildingList[0];
     }
+
+    findOneById(buildingId: string): BuildingDTO {
+        return <BuildingDTO>_.clone(this.buildingList.get(buildingId));
+    }
 }

@@ -16,8 +16,8 @@ export class AFrameComponentWorkerUnit {
     
     private componentName = 'worker-unit-component';
     private positionOffset: CoordinatesEntity = {
-        xCoordinate : 1.065,
-        yCoordinate : 0.41
+        xCoordinate : -0.15,
+        yCoordinate : -0.15
     }
     
     constructor(

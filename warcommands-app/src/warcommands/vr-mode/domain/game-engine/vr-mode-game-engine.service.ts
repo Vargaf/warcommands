@@ -88,7 +88,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {
-        console.log("updateBaseResources not implemented.");
+        this.buildingManagerService.updateBaseResources(baseId, resources);
     }
 
     gameLogicActionUpdate(action: GameLogicActionDTO): void {

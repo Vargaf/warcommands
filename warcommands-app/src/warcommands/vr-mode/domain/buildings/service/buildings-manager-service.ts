@@ -4,6 +4,8 @@ import { BaseBuildingManagerService } from "./base-building-manager.service";
 import { BuildingsRepositoryInterface } from "./buildings-repository.interface";
 import { MatterFarmBuildingManagerService } from "./matter-farm-building-manager.service";
 import { EnergyFarmBuildingManagerService } from "./energy-farm-building-manager.service";
+import { ResourcesDTO } from "src/warcommands/game-middleware/model/resources/reources.dto";
+import { BaseBuildingDTO } from "src/warcommands/game-middleware/model/building/base-building.dto";
 
 
 export class BuildingsManagerService {
@@ -31,6 +33,12 @@ export class BuildingsManagerService {
             this.energyFarmBuildingManager.addFarm(building);
         }
         
+    }
+
+    updateBaseResources(baseId: string, resources: ResourcesDTO): void {
+        const base: BaseBuildingDTO = <BaseBuildingDTO>this.buildingsRepositoy.findOneById(baseId);
+        base.resources = resources;
+        this.buildingsRepositoy.save(base);
     }
 
 }
