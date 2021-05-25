@@ -14,6 +14,7 @@ import * as AframeComponentWorkerUnitProvider from 'src/warcommands/vr-mode/infr
 import * as AframeWorkerUnitManagerProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/units/aframe-worker-unit-manager.provider';
 import * as AframeComponentCameraProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-camera.provider';
 import * as AframeComponentHudProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-hud.provider';
+import * as AframeComponentPlayerColorProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-player-color.provider';
 
 
 
@@ -34,6 +35,7 @@ import * as AframeComponentHudProvider from 'src/warcommands/vr-mode/infrastruct
         AframeComponentClockProvider.provider,
         AframeComponentCameraProvider.provider,
         AframeComponentHudProvider.provider,
+        AframeComponentPlayerColorProvider.provider,
     ]
 })
 export class AframeProviderModule { }

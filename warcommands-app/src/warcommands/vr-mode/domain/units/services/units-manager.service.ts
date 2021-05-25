@@ -11,6 +11,10 @@ export class UnitsManagerService {
         private readonly workerManager: WorkerUnitManagerInterface
     ) {}
 
+    spawningUnit(unit: UnitGenericDTO): void {
+        this.workerManager.wokerSpawning(unit);
+    }
+
     unitSpawned(unit: UnitGenericDTO): void {
         this.workerManager.addWorker(unit);
         this.unitsRepository.save(unit);

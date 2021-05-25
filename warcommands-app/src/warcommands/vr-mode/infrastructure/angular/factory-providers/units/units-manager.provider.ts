@@ -5,7 +5,7 @@ import { WorkerUnitManagerInterface } from "src/warcommands/vr-mode/domain/units
 
 const factory = (
     unitsRepository: UnitsRepositoryInterface,
-    workerManager: WorkerUnitManagerInterface
+    workerManager: WorkerUnitManagerInterface,
 ) => {
     return new UnitsManagerService(
         unitsRepository,

@@ -1,14 +1,14 @@
-import { PlayerRepositoryService } from "src/warcommands/vr-mode/domain/players/services/player-repository.service";
+import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
 import { AFrameComponentBaseBuilding } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-base-building";
 import { AframeGtlfModelLoader } from "src/warcommands/vr-mode/infrastructure/aframe/game-engine/aframe-gtlf-model-loader.service";
 
 const factory = (
     modelLoader: AframeGtlfModelLoader,
-    playerRepository: PlayerRepositoryService,
+    gameClockService: GameLogicClockService,
 ) => {
     return new AFrameComponentBaseBuilding(
         modelLoader,
-        playerRepository,
+        gameClockService,
     );
 };
 
@@ -17,6 +17,6 @@ export const provider = {
     useFactory: factory,
     deps: [
         AframeGtlfModelLoader,
-        PlayerRepositoryService,
+        GameLogicClockService,
     ]
 };

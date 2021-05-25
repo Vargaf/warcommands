@@ -38,7 +38,6 @@ export class VrModeGameEngineService extends GameEngineInterface {
         
         return new Promise((resolve, reject) => {
             sceneElement.addEventListener('loaded', () => {
-                this.pauseGame();
                 this.isInitialized = true;
                 resolve(true);
             });
@@ -72,7 +71,8 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
 
     spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
-        console.log("spawningUnit not implemented.");
+        this.buildingManagerService.spawningUnit(unit, spawnFinish, spawnStart);
+        this.unitsManagerService.spawningUnit(unit);
     }
 
     queueingUnit(unit: UnitGenericDTO): void {
@@ -85,6 +85,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
 
     unitSpawned(unit: UnitGenericDTO): void {
         this.unitsManagerService.unitSpawned(unit);
+        console.log('remove the unit from the spawning building');
     }
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {

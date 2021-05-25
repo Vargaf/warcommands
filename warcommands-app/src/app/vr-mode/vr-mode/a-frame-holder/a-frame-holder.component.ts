@@ -41,6 +41,9 @@ export class AFrameHolderComponent implements OnInit {
 
         this.gameEngine.waitTillSceneIsLoaded(this.sceneElement.nativeElement as unknown as Scene).then(() => {
             this.gameMiddlewareService.initialize(this.gameEngine);
+        }).then(() => {
+            // Since the chosen graphic engine starts automatically we need to pause it once its loaded
+            this.gameEngine.pauseGame();
         });
     }
 }

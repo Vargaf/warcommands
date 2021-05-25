@@ -1,4 +1,5 @@
 import { Component, Entity } from "aframe";
+import { WorkerUnitDTO } from "src/warcommands/game-middleware/model/unit/worker-unit.dto";
 import { AFrameComponentPausableContent } from "../components/aframe-component-pausable-content";
 
 export class AFramePausableContentService {
@@ -34,6 +35,10 @@ export class AFramePausableContentService {
 
     getWorkerFromPool():any {
         return this.getPoolEntity('pool__worker_unit');
+    }
+
+    returnWorkerToPool(worker: WorkerUnitDTO):any {
+        (this.pausableContentElement.components['pool__worker_unit'] as any).returnEntity(worker);
     }
 
     private getPoolEntity(poolName: string): Component {

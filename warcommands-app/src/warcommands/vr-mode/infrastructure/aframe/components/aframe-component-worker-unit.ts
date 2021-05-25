@@ -1,8 +1,5 @@
 import { UnitGenericDTO } from "src/warcommands/game-middleware/model/unit/unit-generic.dto";
 import { ModelLoaderInterfaceService } from "src/warcommands/vr-mode/domain/game-engine/model-loader-abstract.service";
-import { PlayerRepositoryService } from "src/warcommands/vr-mode/domain/players/services/player-repository.service";
-import { AframeComponentPainterByPlayer } from "./aframe-component-painter-by-player";
-import * as _ from 'lodash';
 import { CoordinatesEntity } from "src/warcommands/game-middleware/model/map/coordinates.entity";
 import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
 import { GameLogicActionTypeENUM } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-type.enum";
@@ -10,11 +7,12 @@ import { GameLogicActionMoveToDTO } from "src/warcommands/game-middleware/model/
 import { PathFindingCoordinate } from "src/warcommands/game-middleware/model/map/path-finding-coordinate.dto";
 import { GameLogicActionUnitHarvestDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-unit-harvest.dto";
 import { GameLogicActionUnitDeliverDTO } from "src/warcommands/game-middleware/model/game-logic-actions/game-logic-action-unit-deliver.dto";
+import { AFrameComponentNameListENUM } from "./aframe-component-name-list.enum";
 
 
 export class AFrameComponentWorkerUnit {
     
-    private componentName = 'worker-unit-component';
+    private componentName = AFrameComponentNameListENUM.Worker;
     private positionOffset: CoordinatesEntity = {
         xCoordinate : -0.15,
         yCoordinate : -0.15
@@ -22,7 +20,6 @@ export class AFrameComponentWorkerUnit {
     
     constructor(
         private readonly modelLoader: ModelLoaderInterfaceService,
-        private readonly playerRepository: PlayerRepositoryService,
         private readonly gameClockService: GameLogicClockService,
     ) {
 
@@ -30,19 +27,19 @@ export class AFrameComponentWorkerUnit {
 
         AFRAME.registerComponent(this.componentName, {
             
-            workerId: '',
             movePath: [],
             position: {},
 
             schema: {
                 worker: { default: '' },
+                isJustSpawned: { type: 'boolean', default: false }
             },
 
             init: function() {
                 scope.modelLoader.loadPreloadedModel('Worker').then((data) => {
                     this.el.setObject3D('mesh', data);
                     this.initializeObject3D();
-                })
+                });
             },
 
             tick: function (time, timeDelta) {
@@ -74,18 +71,16 @@ export class AFrameComponentWorkerUnit {
 
             initializeObject3D: function() {
                 
-                const currentObject3D:THREE.Object3D = this.el.getObject3D('mesh');
-                const worker: UnitGenericDTO = this.data.worker;
+                if(this.data.isJustSpawned) {
+                    const currentObject3D:THREE.Object3D = this.el.getObject3D('mesh');
+                    const worker: UnitGenericDTO = this.data.worker;
 
-                if(currentObject3D && worker.id && this.workerId !== worker.id) {
-                    currentObject3D.position.setX(worker.xCoordinate + scope.positionOffset.xCoordinate)
-                    currentObject3D.position.setZ(worker.yCoordinate + scope.positionOffset.yCoordinate);
-                    this.workerId = worker.id;
-   
-                    if(worker.playerId !== scope.playerRepository.findCurrentPlayer().id) {
-                        const newObject3D = AframeComponentPainterByPlayer.paintObject3D(currentObject3D);
-                        this.el.setObject3D('mesh', newObject3D);
+                    if(currentObject3D && worker.id) {
+                        currentObject3D.position.setX(worker.xCoordinate + scope.positionOffset.xCoordinate)
+                        currentObject3D.position.setZ(worker.yCoordinate + scope.positionOffset.yCoordinate);
                     }
+
+                    this.el.setAttribute(scope.componentName, { isJustSpawned: false });
                 }
             },
         });

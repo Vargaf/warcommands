@@ -6,4 +6,6 @@ export abstract class WorkerUnitManagerInterface {
 
     abstract updateWorker(worker: UnitGenericDTO): void;
 
+    abstract wokerSpawning(worker: UnitGenericDTO): void;
+
 }

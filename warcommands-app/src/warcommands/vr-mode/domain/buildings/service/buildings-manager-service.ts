@@ -1,11 +1,12 @@
 import { BuildingTypeEnum } from "src/warcommands/game-middleware/model/building/building-type.enum";
-import { BuildingDTO } from "src/warcommands/game-middleware/model/building/building.dto";
+import { BuildingDTO, SpawnerBuildingDTO } from "src/warcommands/game-middleware/model/building/building.dto";
 import { BaseBuildingManagerService } from "./base-building-manager.service";
 import { BuildingsRepositoryInterface } from "./buildings-repository.interface";
 import { MatterFarmBuildingManagerService } from "./matter-farm-building-manager.service";
 import { EnergyFarmBuildingManagerService } from "./energy-farm-building-manager.service";
 import { ResourcesDTO } from "src/warcommands/game-middleware/model/resources/reources.dto";
 import { BaseBuildingDTO } from "src/warcommands/game-middleware/model/building/base-building.dto";
+import { UnitGenericDTO } from "src/warcommands/game-middleware/model/unit/unit-generic.dto";
 
 
 export class BuildingsManagerService {
@@ -39,6 +40,20 @@ export class BuildingsManagerService {
         const base: BaseBuildingDTO = <BaseBuildingDTO>this.buildingsRepositoy.findOneById(baseId);
         base.resources = resources;
         this.buildingsRepositoy.save(base);
+    }
+
+    spawningUnit(unit: UnitGenericDTO, spawnFinish: number, spawnStart: number): void {
+        const building: SpawnerBuildingDTO = <SpawnerBuildingDTO>this.buildingsRepositoy.findOneById(unit.spawnerBuildingId);
+        building.unitSpawning = {
+            unit,
+            spawnFinish,
+            spawnStart
+        };
+        this.buildingsRepositoy.save(building);
+
+        if(building.type === BuildingTypeEnum.Base) {
+            this.baseBuildingManager.spawnUnit(building);
+        }
     }
 
 }

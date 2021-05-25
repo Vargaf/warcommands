@@ -5,6 +5,7 @@ import { AFrameComponentEnergyFarmBuilding } from "./aframe-component-energy-far
 import { AFrameComponentHud } from "./aframe-component-hud";
 import { AFrameComponentMatterFarmBuilding } from "./aframe-component-matter-farm-building";
 import { AFrameComponentPausableContent } from "./aframe-component-pausable-content";
+import { AFrameComponentPlayerColor } from "./aframe-component-player-color";
 import { AFrameComponentWorkerUnit } from "./aframe-component-worker-unit";
 
 export class AFrameComponentsHub {
@@ -18,6 +19,7 @@ export class AFrameComponentsHub {
         private readonly gameClockService: AFrameComponentClock,
         private readonly cameraComponent: AFrameComponentCamera,
         private readonly hudComponent: AFrameComponentHud,
+        private readonly playerColorComponent: AFrameComponentPlayerColor,
     ) {}
 
     initialize(): void {
