@@ -5,4 +5,5 @@ export enum AFrameComponentNameListENUM {
     PlayerColor = 'player-color-component',
     MatterFarm = 'matter-farm-building-component',
     EnergyFarm = 'energy-farm-building-component',
+    SpawningUnit = 'spawning-unit-component',
 }

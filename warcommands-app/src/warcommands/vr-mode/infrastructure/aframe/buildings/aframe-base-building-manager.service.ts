@@ -30,7 +30,14 @@ export class AframeBaseBuildingManagerService implements BaseBuildingManagerServ
 
     spawnUnit(building: SpawnerBuildingDTO): void {
         const aframeBaseElement = this.aframeBaseList.get(building.id);
-        aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'unitSpawning': building.unitSpawning });
+        const component = aframeBaseElement.components[AFrameComponentNameListENUM.SpawningUnit];
+        component.spawnUnit(building.unitSpawning.spawnStart, building.unitSpawning.spawnFinish);
+    }
+
+    unitSpawned(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
+        const aframeBaseElement = this.aframeBaseList.get(building.id);
+        const component = aframeBaseElement.components[AFrameComponentNameListENUM.SpawningUnit];
+        component.unitSpawned();
     }
 
     addUnitToQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
@@ -38,7 +45,7 @@ export class AframeBaseBuildingManagerService implements BaseBuildingManagerServ
         aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'building': building });
     }
 
-    buildingRemoveUnitFromQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
+    removeUnitFromQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
         const aframeBaseElement = this.aframeBaseList.get(building.id);
         aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'building': building });
     }

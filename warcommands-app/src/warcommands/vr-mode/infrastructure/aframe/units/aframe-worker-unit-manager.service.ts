@@ -39,7 +39,7 @@ export class AFrameWorkerUnitManagerService implements WorkerUnitManagerInterfac
         const workerComponent = this.pausableContentService.getWorkerFromPool();
         workerComponent.setAttribute(AFrameComponentNameListENUM.Worker, { 'worker': worker });
         workerComponent.setAttribute(AFrameComponentNameListENUM.PlayerColor, { 'playerId': worker.playerId });
-        workerComponent.setAttribute('position', { x: base.xCoordinate + 1, y: 1.5, z: base.yCoordinate + 1 });
+        workerComponent.setAttribute('position', { x: base.xCoordinate + 1, y: 1.375, z: base.yCoordinate + 1 });
         workerComponent.play();
         this.workerComponentList.set(worker.id, workerComponent);
     }

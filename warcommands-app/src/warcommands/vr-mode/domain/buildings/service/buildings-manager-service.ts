@@ -56,6 +56,20 @@ export class BuildingsManagerService {
         }
     }
 
+    unitSpawned(unit: UnitGenericDTO): void {
+        const building: SpawnerBuildingDTO = <SpawnerBuildingDTO>this.buildingsRepositoy.findOneById(unit.spawnerBuildingId);
+        building.unitSpawning = {
+            unit: null,
+            spawnFinish: null,
+            spawnStart: null
+        };
+        this.buildingsRepositoy.save(building);
+
+        if(building.type === BuildingTypeEnum.Base) {
+            this.baseBuildingManager.unitSpawned(unit, building);
+        }
+    }
+
     queueingUnit(unit: UnitGenericDTO): void {
         const building: SpawnerBuildingDTO = <SpawnerBuildingDTO>this.buildingsRepositoy.findOneById(unit.spawnerBuildingId);
         building.queueList.push(unit);
@@ -77,7 +91,7 @@ export class BuildingsManagerService {
         this.buildingsRepositoy.save(building);
 
         if(building.type === BuildingTypeEnum.Base) {
-            this.baseBuildingManager.buildingRemoveUnitFromQueue(unit, building);
+            this.baseBuildingManager.removeUnitFromQueue(unit, building);
         }
     }
 

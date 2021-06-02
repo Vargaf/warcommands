@@ -6,6 +6,7 @@ import { AFrameComponentHud } from "src/warcommands/vr-mode/infrastructure/afram
 import { AFrameComponentMatterFarmBuilding } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-matter-farm-building";
 import { AFrameComponentPausableContent } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-pausable-content";
 import { AFrameComponentPlayerColor } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-player-color";
+import { AFrameComponentSpawningUnit } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-spawning-unit";
 import { AFrameComponentWorkerUnit } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-component-worker-unit";
 import { AFrameComponentsHub } from "src/warcommands/vr-mode/infrastructure/aframe/components/aframe-components-hub";
 
@@ -19,6 +20,7 @@ const factory = (
     cameraComponent: AFrameComponentCamera,
     hudComponent: AFrameComponentHud,
     playerColorComponent: AFrameComponentPlayerColor,
+    spawningComponent: AFrameComponentSpawningUnit
 ) => {
     return new AFrameComponentsHub(
         baseBuildingComponent,
@@ -29,7 +31,8 @@ const factory = (
         gameClockService,
         cameraComponent,
         hudComponent,
-        playerColorComponent
+        playerColorComponent,
+        spawningComponent,
     );
 };
 
@@ -46,5 +49,6 @@ export const provider = {
         AFrameComponentCamera,
         AFrameComponentHud,
         AFrameComponentPlayerColor,
+        AFrameComponentSpawningUnit,
     ]
 };

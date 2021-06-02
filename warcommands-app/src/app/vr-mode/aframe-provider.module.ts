@@ -15,7 +15,7 @@ import * as AframeWorkerUnitManagerProvider from 'src/warcommands/vr-mode/infras
 import * as AframeComponentCameraProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-camera.provider';
 import * as AframeComponentHudProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-hud.provider';
 import * as AframeComponentPlayerColorProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-player-color.provider';
-
+import * as AframeComponentSpawningUnitProvider from 'src/warcommands/vr-mode/infrastructure/angular/factory-providers/aframe/components/aframe-component-spawning-unit.provider';
 
 
 @NgModule({
@@ -36,6 +36,7 @@ import * as AframeComponentPlayerColorProvider from 'src/warcommands/vr-mode/inf
         AframeComponentCameraProvider.provider,
         AframeComponentHudProvider.provider,
         AframeComponentPlayerColorProvider.provider,
+        AframeComponentSpawningUnitProvider.provider,
     ]
 })
 export class AframeProviderModule { }

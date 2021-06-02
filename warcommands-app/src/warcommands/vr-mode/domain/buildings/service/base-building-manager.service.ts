@@ -7,7 +7,9 @@ export abstract class BaseBuildingManagerService {
 
     abstract spawnUnit(building: SpawnerBuildingDTO): void;
 
+    abstract unitSpawned(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void;
+
     abstract addUnitToQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void;
 
-    abstract buildingRemoveUnitFromQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void;
+    abstract removeUnitFromQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void;
 }

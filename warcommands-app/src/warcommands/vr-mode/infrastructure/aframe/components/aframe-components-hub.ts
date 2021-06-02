@@ -6,6 +6,7 @@ import { AFrameComponentHud } from "./aframe-component-hud";
 import { AFrameComponentMatterFarmBuilding } from "./aframe-component-matter-farm-building";
 import { AFrameComponentPausableContent } from "./aframe-component-pausable-content";
 import { AFrameComponentPlayerColor } from "./aframe-component-player-color";
+import { AFrameComponentSpawningUnit } from "./aframe-component-spawning-unit";
 import { AFrameComponentWorkerUnit } from "./aframe-component-worker-unit";
 
 export class AFrameComponentsHub {
@@ -20,6 +21,7 @@ export class AFrameComponentsHub {
         private readonly cameraComponent: AFrameComponentCamera,
         private readonly hudComponent: AFrameComponentHud,
         private readonly playerColorComponent: AFrameComponentPlayerColor,
+        private readonly spawningUnitComponent: AFrameComponentSpawningUnit,
     ) {}
 
     initialize(): void {

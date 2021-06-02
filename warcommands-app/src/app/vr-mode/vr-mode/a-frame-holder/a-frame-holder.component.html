@@ -18,17 +18,17 @@
                 <a-asset-item id="Base" src="assets/Buildings/Base_v3.gltf"></a-asset-item>
                 <a-asset-item id="Worker" src="assets/Units/Worker_v2.gltf"></a-asset-item>
 
-                <a-mixin id="base_building" base-building-component player-color-component></a-mixin>
+                <a-mixin id="base_building" base-building-component spawning-unit-component player-color-component></a-mixin>
                 <a-mixin id="matter_farm_building" matter-farm-building-component player-color-component></a-mixin>
                 <a-mixin id="energy_farm_building" energy-farm-building-component player-color-component></a-mixin>
                 <a-mixin id="worker_unit" worker-unit-component player-color-component></a-mixin>
             </a-assets>
 
             <a-entity id="pausable-content" pausable-content-component
-                pool__matter_farm_building="mixin: matter_farm_building; size: 4; dynamic: true"
+                pool__matter_farm_building="mixin: matter_farm_building; size: 2; dynamic: true"
                 pool__base_building="mixin: base_building; size: 2; dynamic: true"
                 pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true"
-                pool__worker_unit="mixin: worker_unit; size: 10; dynamic: true">
+                pool__worker_unit="mixin: worker_unit; size: 2; dynamic: true">
             </a-entity>
 
             <!--

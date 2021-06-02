@@ -85,7 +85,7 @@ export class VrModeGameEngineService extends GameEngineInterface {
 
     unitSpawned(unit: UnitGenericDTO): void {
         this.unitsManagerService.unitSpawned(unit);
-        console.log('remove the unit from the spawning building');
+        this.buildingManagerService.unitSpawned(unit);
     }
 
     updateBaseResources(baseId: string, resources: ResourcesDTO): void {
