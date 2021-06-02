@@ -56,4 +56,29 @@ export class BuildingsManagerService {
         }
     }
 
+    queueingUnit(unit: UnitGenericDTO): void {
+        const building: SpawnerBuildingDTO = <SpawnerBuildingDTO>this.buildingsRepositoy.findOneById(unit.spawnerBuildingId);
+        building.queueList.push(unit);
+        this.buildingsRepositoy.save(building);
+
+        if(building.type === BuildingTypeEnum.Base) {
+            this.baseBuildingManager.addUnitToQueue(unit, building);
+        }
+    }
+
+    buildingRemoveUnitFromQueue(unit: UnitGenericDTO): void {
+        const building: SpawnerBuildingDTO = <SpawnerBuildingDTO>this.buildingsRepositoy.findOneById(unit.spawnerBuildingId);
+
+        const unitIndex = building.queueList.findIndex((queuedUnit) => {
+            return queuedUnit.id === unit.id;
+        });
+
+        building.queueList.splice(unitIndex, 1);
+        this.buildingsRepositoy.save(building);
+
+        if(building.type === BuildingTypeEnum.Base) {
+            this.baseBuildingManager.buildingRemoveUnitFromQueue(unit, building);
+        }
+    }
+
 }

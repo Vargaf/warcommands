@@ -5,6 +5,7 @@ import { ModelLoaderInterfaceService } from "src/warcommands/vr-mode/domain/game
 import { THREE } from "aframe";
 import { GameLogicClockService } from "src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
 import { AFrameComponentNameListENUM } from "./aframe-component-name-list.enum";
+import { BaseBuildingDTO } from "src/warcommands/game-middleware/model/building/base-building.dto";
 
 
 interface DefaultUnitSpawningDTO {
@@ -16,6 +17,7 @@ interface DefaultUnitSpawningDTO {
 export class AFrameComponentBaseBuilding {
     
     private componentName = AFrameComponentNameListENUM.Base;
+    private rotation = THREE.MathUtils.degToRad(90);
 
     constructor(
         private readonly modelLoader: ModelLoaderInterfaceService,
@@ -40,7 +42,7 @@ export class AFrameComponentBaseBuilding {
             unit: null,
             spawnFinish: 0,
             spawnStart: 0,
-        }
+        };
 
         AFRAME.registerComponent(this.componentName, {
             
@@ -61,12 +63,12 @@ export class AFrameComponentBaseBuilding {
             },
 
             update: function(oldData) {
-                
+                this.updatesUnitsInQueue(oldData);
             },
 
             tick: function() {
                 if(this.data.unitSpawning?.unit !== null) {
-                        this.spawningTick();
+                    this.spawningTick();
                 }
             },
 
@@ -75,7 +77,7 @@ export class AFrameComponentBaseBuilding {
                 const baseModel:THREE.Object3D = this.el.getObject3D('mesh');
 
                 const geometry = new THREE.SphereGeometry( 0.5, 32, 32, 0, Math.PI * 2, 0, Math.PI );
-                const material = new THREE.MeshStandardMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+                const material = new THREE.MeshStandardMaterial( {color: 0xffff00} );
                 const sphere = new THREE.Mesh( geometry, material );
                 sphere.name = 'spawning_sphere';
                 sphere.position.set(-1.5, 1.5, 1.5);
@@ -96,7 +98,7 @@ export class AFrameComponentBaseBuilding {
                     }
                 
                     const spawningTime = spawningFinish - spawningStart;
-                    const spawningStep = Math.PI / spawningTime;
+                    const spawningStep = Math.PI / spawningTime / 2;
                     const elapsedSpawningTime = time - spawningStart;
                     const thetaOffset = elapsedSpawningTime * spawningStep;
 
@@ -106,22 +108,91 @@ export class AFrameComponentBaseBuilding {
                         baseModel.remove(oldSpehereOutside);
                         baseModel.remove(oldSpehereInside);
                     }
-
-                    const geometry = new THREE.SphereGeometry( 0.5, 32, 32, 0, Math.PI * 2, thetaOffset, Math.PI - thetaOffset );
+                    
+                    const geometry = new THREE.SphereGeometry( 0.5, 32, 32, 0, Math.PI * 2, thetaOffset, Math.PI - thetaOffset * 2 );
                     const materialOutside = new THREE.MeshStandardMaterial( {color: 0xffcc00} );
                     const sphereOutside = new THREE.Mesh( geometry, materialOutside );
                     sphereOutside.name = 'spawning_sphere_outside';
                     sphereOutside.position.set(-1.5, 1.5, 1.5);
+                    sphereOutside.rotateX(scope.rotation);
                     
                     const materialInside = new THREE.MeshStandardMaterial( {color: 0xff9900, side: THREE.BackSide} );
                     const sphereInside = new THREE.Mesh( geometry, materialInside );
                     sphereInside.name = 'spawning_sphere_inside';
                     sphereInside.position.set(-1.5, 1.5, 1.5);
+                    sphereInside.rotateX(scope.rotation);
+
 
                     baseModel.add(sphereOutside);
                     baseModel.add(sphereInside);
+                } else if(time > spawningFinish) {
+                    const baseModel:THREE.Object3D = this.el.getObject3D('mesh');
+
+                    if(!baseModel) {
+                        return;
+                    }
+
+                    const oldSpehereOutside = <THREE.Object3D>baseModel.getObjectByName('spawning_sphere_outside');
+                    const oldSpehereInside = <THREE.Object3D>baseModel.getObjectByName('spawning_sphere_inside');
+                    if(oldSpehereOutside) {
+                        baseModel.remove(oldSpehereOutside);
+                        baseModel.remove(oldSpehereInside);
+                    }
                 }
-            }
+            },
+
+            updatesUnitsInQueue: function(oldData: any) {
+                
+                const currentBuilding = <BaseBuildingDTO>this.data.building;
+                
+                if(currentBuilding) {
+                    const previousBuilding = <BaseBuildingDTO>oldData.building;
+
+                    if(previousBuilding) {
+
+                        const currentQueuedUnits = currentBuilding.queueList.length;
+                        const previousQueuedUnits = previousBuilding.queueList.length;
+
+                        if(currentQueuedUnits > previousQueuedUnits) {
+                            this.addUnitToSpawningQueue(currentQueuedUnits);
+                        } else if(previousQueuedUnits > currentQueuedUnits) {
+                            this.removeUnitFromSpawningQueue(previousQueuedUnits);
+                        }
+                    }
+                }
+            },
+
+            addUnitToSpawningQueue: function( unitQueuedIndex:number ) {
+                const baseModel:THREE.Object3D = this.el.getObject3D( 'mesh' );
+
+                const geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 );
+                const material = new THREE.MeshStandardMaterial( {color: 0xff9900} );
+                
+                const quaternion = new THREE.Quaternion();
+                const rotation = THREE.MathUtils.degToRad(36*unitQueuedIndex);
+                
+                quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), rotation );
+                const vector2 = new THREE.Vector3( 0.4, 0, 0 );
+                vector2.applyQuaternion( quaternion );
+
+
+                const box2 = new THREE.Mesh( geometry, material );
+                box2.name = 'queued_unit_' + unitQueuedIndex;
+                box2.position.set(-1.5 + vector2.x, 1.9 + vector2.y, 1.5 + vector2.z);
+                box2.lookAt(-1.5, 1.5, 1.5);
+
+                baseModel.add(box2);
+            },
+
+            removeUnitFromSpawningQueue: function( unitUnqueuedIndex:number )
+            {
+                const baseModel:THREE.Object3D = this.el.getObject3D( 'mesh' );
+
+                const unitUnqueued = <THREE.Object3D>baseModel.getObjectByName('queued_unit_' + unitUnqueuedIndex);
+                if(unitUnqueued) {
+                    baseModel.remove(unitUnqueued);
+                }
+            },
         });
     }
 }

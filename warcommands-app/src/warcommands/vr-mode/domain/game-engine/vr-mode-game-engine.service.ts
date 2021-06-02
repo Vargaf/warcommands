@@ -76,11 +76,11 @@ export class VrModeGameEngineService extends GameEngineInterface {
     }
 
     queueingUnit(unit: UnitGenericDTO): void {
-        console.log("queueingUnit not implemented.");
+        this.buildingManagerService.queueingUnit(unit);
     }
 
     buildingRemoveUnitFromQueue(unit: UnitGenericDTO): void {
-        console.log("buildingRemoveUnitFromQueue not implemented.");
+        this.buildingManagerService.buildingRemoveUnitFromQueue(unit);
     }
 
     unitSpawned(unit: UnitGenericDTO): void {

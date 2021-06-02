@@ -1,4 +1,5 @@
 import { BuildingDTO, SpawnerBuildingDTO } from "src/warcommands/game-middleware/model/building/building.dto";
+import { UnitGenericDTO } from "src/warcommands/game-middleware/model/unit/unit-generic.dto";
 import { BaseBuildingManagerService } from "src/warcommands/vr-mode/domain/buildings/service/base-building-manager.service";
 import { AFrameComponentNameListENUM } from "../components/aframe-component-name-list.enum";
 import { AFramePausableContentService } from "../game-engine/aframe-pausable-content.service";
@@ -6,7 +7,7 @@ import { AFramePausableContentService } from "../game-engine/aframe-pausable-con
 
 export class AframeBaseBuildingManagerService implements BaseBuildingManagerService{
 
-    private aframeBuildingList: Map<string,any> = new Map();
+    private aframeBaseList: Map<string,any> = new Map();
 
     constructor(
         private readonly pausableContentService: AFramePausableContentService
@@ -24,12 +25,21 @@ export class AframeBaseBuildingManagerService implements BaseBuildingManagerServ
         });
 
         base.setAttribute('position', { x: building.xCoordinate, y: 0, z: building.yCoordinate });
-        this.aframeBuildingList.set(building.id, base);
+        this.aframeBaseList.set(building.id, base);
     }
 
     spawnUnit(building: SpawnerBuildingDTO): void {
-        const aframeElement = this.aframeBuildingList.get(building.id);
-        aframeElement.setAttribute(AFrameComponentNameListENUM.Base, { 'unitSpawning': building.unitSpawning });
+        const aframeBaseElement = this.aframeBaseList.get(building.id);
+        aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'unitSpawning': building.unitSpawning });
     }
 
+    addUnitToQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
+        const aframeBaseElement = this.aframeBaseList.get(building.id);
+        aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'building': building });
+    }
+
+    buildingRemoveUnitFromQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
+        const aframeBaseElement = this.aframeBaseList.get(building.id);
+        aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'building': building });
+    }
 }
