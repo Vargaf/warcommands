@@ -6,4 +6,5 @@ export enum AFrameComponentNameListENUM {
     MatterFarm = 'matter-farm-building-component',
     EnergyFarm = 'energy-farm-building-component',
     SpawningUnit = 'spawning-unit-component',
+    SpawningQueue = 'spawning-queue-component',
 }

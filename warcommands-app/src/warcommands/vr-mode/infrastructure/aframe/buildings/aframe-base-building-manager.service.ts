@@ -42,11 +42,13 @@ export class AframeBaseBuildingManagerService implements BaseBuildingManagerServ
 
     addUnitToQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
         const aframeBaseElement = this.aframeBaseList.get(building.id);
-        aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'building': building });
+        const component = aframeBaseElement.components[AFrameComponentNameListENUM.SpawningQueue];
+        component.addUnitToQueue();
     }
 
     removeUnitFromQueue(unit: UnitGenericDTO, building: SpawnerBuildingDTO): void {
         const aframeBaseElement = this.aframeBaseList.get(building.id);
-        aframeBaseElement.setAttribute(AFrameComponentNameListENUM.Base, { 'building': building });
+        const component = aframeBaseElement.components[AFrameComponentNameListENUM.SpawningQueue];
+        component.removeUnitFromQueue();
     }
 }

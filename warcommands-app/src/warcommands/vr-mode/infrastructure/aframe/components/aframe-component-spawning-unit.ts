@@ -56,11 +56,11 @@ export class AFrameComponentSpawningUnit {
 
                         const sphereOutside = <THREE.Mesh>this.buildSpawningSphere(geometry, 0xffcc00, THREE.FrontSide);
                         sphereOutside.name = 'spawning_sphere_outside';
-                        sphereOutside.rotateZ(spinDregrees);
+                        sphereOutside.rotation.z = spinDregrees;
                         
                         const sphereInside = <THREE.Mesh>this.buildSpawningSphere(geometry, 0xff9900, THREE.BackSide);
                         sphereInside.name = 'spawning_sphere_inside';
-                        sphereInside.rotateZ(spinDregrees);
+                        sphereInside.rotation.z = (spinDregrees);
                         
                         baseModel.add(sphereOutside);
                         baseModel.add(sphereInside);
