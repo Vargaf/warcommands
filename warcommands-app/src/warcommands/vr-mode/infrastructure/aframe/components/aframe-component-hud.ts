@@ -76,6 +76,7 @@ export class AFrameComponentHud {
 
                     this.el.sceneEl.addEventListener('exit-vr', function (evt) {
                         scope.inFullScreenMode = false;
+                        scope.updateHUDSprites();
                         if(utils.device.checkHeadsetConnected()) {
                             scope.resourcesHolder.visible = true;
                         }
@@ -181,7 +182,6 @@ export class AFrameComponentHud {
                 this.spriteMatter = this.createSvgSprite(data, color);
                 this.spriteMatter.position.set(10, -this.resourcesHolderTopMargin, 0);
                 this.resourcesHolder.add(this.spriteMatter);
-                //this.sceneOrtho.add(this.spriteMatter);
                 resolve(true);
             });
         });
@@ -196,7 +196,6 @@ export class AFrameComponentHud {
                 this.spriteEnergy = this.createSvgSprite(data, color);
                 this.spriteEnergy.position.set(10, -this.spriteSize - this.resourcesHolderTopMargin, 0);
                 this.resourcesHolder.add(this.spriteEnergy);
-                //this.sceneOrtho.add(this.spriteEnergy);
                 resolve(true);
             });
         });
@@ -265,9 +264,10 @@ export class AFrameComponentHud {
             this.cameraOrtho.right = width / 2;
             this.cameraOrtho.top = height / 2;
             this.cameraOrtho.bottom = - height / 2;
-            this.cameraOrtho.updateProjectionMatrix();
-
+            
             this.updateHUDSprites();
+
+            this.cameraOrtho.updateProjectionMatrix();
         }
     }
     
