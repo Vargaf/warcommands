@@ -1,12 +1,14 @@
-import { OnDestroy } from '@angular/core';
+import { ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { TutorialOverlayService } from 'src/app/tutorial/tutorial-overlay.service';
 import { ToggleCommandListPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-command-list-panel.service';
 import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { GameLogicClockService } from 'src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service';
 import { AFrameStatsService } from 'src/warcommands/vr-mode/infrastructure/aframe/a-frame-stats.service';
 import { AframeSceneService } from 'src/warcommands/vr-mode/infrastructure/aframe/aframe-scene.service';
+import { TutorialOverlayRefService } from 'src/app/tutorial/tutorial-overlay-ref.service';
 
 
 @Component({
@@ -15,6 +17,9 @@ import { AframeSceneService } from 'src/warcommands/vr-mode/infrastructure/afram
     styleUrls: ['./vr-mode.component.scss']
 })
 export class VrModeComponent implements OnInit, OnDestroy {
+
+    @ViewChild('TutorialButtonElement', { static: true })
+    tutorialButtonElement!: ElementRef<HTMLElement>;
 
     isCommandsPanelOppened!: boolean;
 
@@ -28,6 +33,8 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
     private subscriptionManager: Subscription = new Subscription();
 
+    private tutorialOverlayRef!: TutorialOverlayRefService;
+
     constructor(
         private readonly toggleCommandsPanelService: ToggleCommandsPanelService,
         private readonly aframeStatsPanelService: AFrameStatsService,
@@ -35,6 +42,7 @@ export class VrModeComponent implements OnInit, OnDestroy {
         private readonly gameMiddlewareService: GameMiddlewareService,
         private readonly afameSceneService: AframeSceneService,
         private readonly gameLogicClockService: GameLogicClockService,
+        private readonly tutorialOverlayService: TutorialOverlayService,
     ) { }
 
     ngOnInit(): void {
@@ -57,6 +65,16 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscriptionManager.unsubscribe();
+    }
+
+    // Listen on keydown events on a document level
+    @HostListener('document:keydown', ['$event'])
+    private handleKeydown(event: KeyboardEvent) {
+        if (event.key === 'Escape') {
+            if(this.tutorialOverlayRef) {
+                this.tutorialOverlayRef.close();
+            }
+        }
     }
 
     toggleCommandsPanel(): void {
@@ -87,5 +105,9 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
     slowDown(): void {
         this.gameMiddlewareService.slowDown();
+    }
+
+    openTutorial(): void {
+        this.tutorialOverlayRef = this.tutorialOverlayService.open({}, this.tutorialButtonElement);
     }
 }

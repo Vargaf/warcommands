@@ -163,3 +163,21 @@ $dark-pink: #c94695;
 .rs-base {
     left: 50px !important;
 }
+
+/**
+*
+*   Tutorial overlay styles
+*
+*/
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    &.dark-backdrop {
+      background: #000;
+      opacity: 0.85 !important;
+    }
+  }
+
+.actions-bar {
+    .cdk-test {
+        z-index: 10000 !important;
+    }
+}

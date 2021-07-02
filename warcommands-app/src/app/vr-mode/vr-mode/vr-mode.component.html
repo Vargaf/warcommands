@@ -1,6 +1,10 @@
 <div class="vr-mode-content" [ngClass.gt-sm]="['vr-mode-content-gt-sm']">
 
-    <div fxLayout="row">
+    <div class="game-content">
+        <app-a-frame-holder></app-a-frame-holder>
+    </div>
+
+    <div fxLayout="row" class="game-commands-panels">
         <div fxflex="40" class="actions-bar">
             <div fxLayout="column" class="buttons-group">
                 <button mat-icon-button aria-label="Show game playground" (click)="toggleCommandsPanel()" *ngIf="isCommandsPanelOppened">
@@ -30,19 +34,26 @@
                     <mat-icon>fast_rewind</mat-icon>
                 </button>
             </div>
-            <button mat-icon-button aria-label="Toggle A-Frame statistics panel" (click)="toggleStatsPanel()">
-                <mat-icon>query_stats</mat-icon>
-            </button>
-            <a id="enterARButton">
-                <button mat-icon-button aria-label="View in Augmented Reality">
-                    <mat-icon>view_in_ar</mat-icon>
+            <div fxLayout="column" class="buttons-group">
+                <button mat-icon-button aria-label="Toggle A-Frame statistics panel" (click)="toggleStatsPanel()">
+                    <mat-icon>query_stats</mat-icon>
                 </button>
-            </a>
-            <a id="enterVRButton">
-                <button mat-icon-button aria-label="View in Virtual Reality">
-                    <mat-icon>vrpano</mat-icon>
+                <a id="enterARButton">
+                    <button mat-icon-button aria-label="View in Augmented Reality">
+                        <mat-icon>view_in_ar</mat-icon>
+                    </button>
+                </a>
+                <a id="enterVRButton">
+                    <button mat-icon-button aria-label="View in Virtual Reality">
+                        <mat-icon>vrpano</mat-icon>
+                    </button>
+                </a>
+            </div>
+            <div fxLayout="column" class="buttons-group" #TutorialButtonElement>
+                <button mat-icon-button aria-label="Show tutorial" (click)="openTutorial()">
+                    <mat-icon>school</mat-icon>
                 </button>
-            </a>
+            </div>
         </div>
 
         <div fxFlex class="collapsible-panel">
@@ -52,7 +63,5 @@
         </div>
     </div>
 
-    <div class="game-content">
-        <app-a-frame-holder></app-a-frame-holder>
-    </div>
+    
 </div>

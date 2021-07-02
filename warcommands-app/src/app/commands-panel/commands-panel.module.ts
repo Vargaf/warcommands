@@ -9,6 +9,7 @@ import * as CommandsPanelStore from 'src/ngrx/commands-panel/reducer-map';
 import { StoreListenersModule } from './store-listeners/store-listeners.module';
 import { MaterialModule } from '../share/material/material.module';
 import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/domain/current-player/current-player-manager-service';
+import { TutorialModule } from '../tutorial/tutorial.module';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { CurrentPlayerManagerService } from 'src/warcommands/commands-panel/doma
         StoreListenersModule,
         MaterialModule,
         StoreModule.forFeature(CommandsPanelStore.CommandsPanelStoreKey, CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN),
+        TutorialModule,
     ],
     providers: [
         { provide: CommandsPanelStore.COMMANDS_FILE_REDUCER_MAP_TOKEN, useFactory: CommandsPanelStore.reducers },
