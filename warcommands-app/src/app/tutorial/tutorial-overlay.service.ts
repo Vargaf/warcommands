@@ -1,21 +1,21 @@
 import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
-import { ElementRef, Injectable, Renderer2, RendererFactory2 } from "@angular/core";
-import { Subscription } from "rxjs";
-import { IntroductionComponent } from "./introduction/introduction.component";
+import { ElementRef, Injectable, Type } from "@angular/core";
 import { TutorialOverlayRefService } from "./tutorial-overlay-ref.service";
 
 // Each property can be overridden by the consumer
-interface TutorialOverlayDialogConfig {
+export interface TutorialOverlayDialogConfig {
     panelClass?: string;
     hasBackdrop?: boolean;
     backdropClass?: string;
+    component: Type<any> | null;
 }
 
 const DEFAULT_CONFIG: TutorialOverlayDialogConfig = {
     hasBackdrop: true,
     backdropClass: 'dark-backdrop',
-    panelClass: 'tm-file-preview-dialog-panel'
+    panelClass: 'tm-file-preview-dialog-panel',
+    component: null
 }
 
 @Injectable({
@@ -23,69 +23,46 @@ const DEFAULT_CONFIG: TutorialOverlayDialogConfig = {
 })
 export class TutorialOverlayService {
 
-    private renderer: Renderer2;
+    constructor(private readonly overlay: Overlay) {}
 
-    private afterClosedSubscription!: Subscription;
-
-    constructor(private readonly overlay: Overlay,
-        private readonly renderFactory: RendererFactory2) {
-
-        this.renderer = this.renderFactory.createRenderer(null, null);
-    }
-
-    open(config: TutorialOverlayDialogConfig = {}, relatedElement?: ElementRef<HTMLElement>): TutorialOverlayRefService {
-
-        let overlayRef!: OverlayRef;
-
-        if (!relatedElement) {
-            overlayRef = this.openGlobalPosition(config);
-        } else {
-            overlayRef = this.openConnectedTo(config, relatedElement);
+    openGlobalPosition(config: TutorialOverlayDialogConfig): TutorialOverlayRefService {
+        
+        if(config.component === null) {
+            throw new Error('Tutorial component needed.');
         }
 
-        const tutorialOverlayRef = new TutorialOverlayRefService(overlayRef);
-
-        // Subscribe to a stream that emits when the overlay is closed
-        this.afterClosedSubscription = tutorialOverlayRef.afeterClosedSubscription(() => {
-            if (relatedElement) {
-                this.renderer.removeClass(relatedElement.nativeElement, 'cdk-test');
-            }
-        });
-
-        return tutorialOverlayRef;
-
-    }
-
-    private openGlobalPosition(config: TutorialOverlayDialogConfig): OverlayRef {
         // Override default configuration
         const dialogConfig = { ...DEFAULT_CONFIG, ...config };
 
         const overlayRef = this.createOverlay(dialogConfig);
 
         // Create ComponentPortal that can be attached to a PortalHost
-        const filePreviewPortal = new ComponentPortal(IntroductionComponent);
+        const filePreviewPortal = new ComponentPortal(config.component);
 
         // Attach ComponentPortal to PortalHost
         overlayRef.attach(filePreviewPortal);
 
-        return overlayRef;
+        return new TutorialOverlayRefService(overlayRef);;
     }
 
-    private openConnectedTo(config: TutorialOverlayDialogConfig, relatedElement: ElementRef<HTMLElement>): OverlayRef {
+    openConnectedTo(config: TutorialOverlayDialogConfig, relatedElement: ElementRef<HTMLElement>): TutorialOverlayRefService {
+        
+        if(config.component === null) {
+            throw new Error('Tutorial component needed.');
+        }
+        
         // Override default configuration
         const dialogConfig = { ...DEFAULT_CONFIG, ...config };
 
         const overlayRef = this.createRelaterOverlay(dialogConfig, relatedElement);
 
         // Create ComponentPortal that can be attached to a PortalHost
-        const filePreviewPortal = new ComponentPortal(IntroductionComponent);
+        const filePreviewPortal = new ComponentPortal(config.component);
 
         // Attach ComponentPortal to PortalHost
         overlayRef.attach(filePreviewPortal);
 
-        this.renderer.addClass(relatedElement.nativeElement, 'cdk-test');
-
-        return overlayRef;
+        return new TutorialOverlayRefService(overlayRef);;
     }
 
     private getOverlayConfig(config: TutorialOverlayDialogConfig): OverlayConfig {

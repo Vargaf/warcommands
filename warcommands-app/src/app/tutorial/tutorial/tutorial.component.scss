@@ -1,0 +1,29 @@
+:host {
+    display: block;  
+}
+
+.tutorial-component-content {
+    .close-button-wrapper {
+        padding-right: 20px;
+
+        .close-button-rounded-corner {
+            background: radial-gradient(farthest-corner at top left, transparent 68%, white 65%);
+            width: 10px;
+            height: 10px;
+            margin: 30px 0px 0px 0px;
+        }
+
+        .close-button {
+            background-color: white;
+            border-radius: 10px 10px 0px 0px;
+            display: inline-block;
+        }
+    }
+
+    .tutorial-component-body {
+        background-color: white;
+        border-radius: 10px 0px 10px 10px;
+        padding: 20px;
+        margin: 0px 20px 20px 20px;
+    }
+}

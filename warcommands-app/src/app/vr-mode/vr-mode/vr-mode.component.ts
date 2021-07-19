@@ -1,14 +1,14 @@
 import { ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TutorialOverlayService } from 'src/app/tutorial/tutorial-overlay.service';
 import { ToggleCommandListPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-command-list-panel.service';
 import { ToggleCommandsPanelService } from 'src/warcommands/commands-panel/domain/commands-panel/services/toggle-commands-panel.service';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { GameLogicClockService } from 'src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service';
 import { AFrameStatsService } from 'src/warcommands/vr-mode/infrastructure/aframe/a-frame-stats.service';
 import { AframeSceneService } from 'src/warcommands/vr-mode/infrastructure/aframe/aframe-scene.service';
-import { TutorialOverlayRefService } from 'src/app/tutorial/tutorial-overlay-ref.service';
+import { TutorialComponentService } from 'src/app/tutorial/tutorial-component.service';
+import { TutorialComponent } from 'src/app/tutorial/tutorial/tutorial.component';
 
 
 @Component({
@@ -33,8 +33,6 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
     private subscriptionManager: Subscription = new Subscription();
 
-    private tutorialOverlayRef!: TutorialOverlayRefService;
-
     constructor(
         private readonly toggleCommandsPanelService: ToggleCommandsPanelService,
         private readonly aframeStatsPanelService: AFrameStatsService,
@@ -42,7 +40,7 @@ export class VrModeComponent implements OnInit, OnDestroy {
         private readonly gameMiddlewareService: GameMiddlewareService,
         private readonly afameSceneService: AframeSceneService,
         private readonly gameLogicClockService: GameLogicClockService,
-        private readonly tutorialOverlayService: TutorialOverlayService,
+        private readonly tutorialComponentService: TutorialComponentService,
     ) { }
 
     ngOnInit(): void {
@@ -71,9 +69,7 @@ export class VrModeComponent implements OnInit, OnDestroy {
     @HostListener('document:keydown', ['$event'])
     private handleKeydown(event: KeyboardEvent) {
         if (event.key === 'Escape') {
-            if(this.tutorialOverlayRef) {
-                this.tutorialOverlayRef.close();
-            }
+            this.tutorialComponentService.close();
         }
     }
 
@@ -108,6 +104,6 @@ export class VrModeComponent implements OnInit, OnDestroy {
     }
 
     openTutorial(): void {
-        this.tutorialOverlayRef = this.tutorialOverlayService.open({}, this.tutorialButtonElement);
+        this.tutorialComponentService.open({component: TutorialComponent, hasBackdrop: false});
     }
 }

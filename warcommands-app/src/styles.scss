@@ -176,8 +176,21 @@ $dark-pink: #c94695;
     }
   }
 
-.actions-bar {
-    .cdk-test {
-        z-index: 10000 !important;
+.tutorial-highlight-element {
+    border-radius: 20px;
+	animation: tutorial-highlight-element-animation 2s infinite;
+}
+@keyframes tutorial-highlight-element-animation {
+    0% {
+        background: red;
+        transition: background 0.5s;
+    }
+    50% {
+        background: blue;
+        transition: background 0.5s;
+    }
+    100% {
+        background: red;
+        transition: background 0.8s;
     }
 }
