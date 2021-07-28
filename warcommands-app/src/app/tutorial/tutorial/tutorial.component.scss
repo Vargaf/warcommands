@@ -1,43 +1,15 @@
 :host {
     display: block;  
 }
-/*
-.tutorial-component-content {
-    .close-button-wrapper {
-        padding-right: 20px;
 
-        .close-button-rounded-corner {
-            background: radial-gradient(farthest-corner at top left, transparent 68%, white 65%);
-            width: 10px;
-            height: 10px;
-            margin: 30px 0px 0px 0px;
-        }
-
-        .close-button {
-            background-color: white;
-            border-radius: 10px 10px 0px 0px;
-            display: inline-block;
-        }
-    }
-
-    .tutorial-component-body {
-        background-color: #343746;
-        border-radius: 10px 0px 10px 10px;
-        padding: 20px;
-        margin: 0px 20px 20px 20px;
-        border: 1px solid white;
-        border-top: 1px solid white;
-        color: #6272A4;
-    }
-}
-*/
 .tutorial-component-content {
     background-color: #191A21;
     border-radius: 10px;
-    border: 1px solid yellow;
+    border: 1px solid #6272A4;
     color: #6272A4;
     position: relative;
-    box-shadow: 0px 0px 20px yellow;
+    box-shadow: 0px 0px 20px 5px grey, 0px 0px 20px 10px black;
+    margin: 20px;
 
     .close-button-element {
         position: absolute;
