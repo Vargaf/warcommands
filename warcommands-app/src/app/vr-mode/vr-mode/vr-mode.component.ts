@@ -104,6 +104,6 @@ export class VrModeComponent implements OnInit, OnDestroy {
     }
 
     openTutorial(): void {
-        this.tutorialComponentService.open({component: TutorialComponent, hasBackdrop: false});
+        this.tutorialComponentService.open({component: TutorialComponent, hasBackdrop: true}, this.tutorialButtonElement);
     }
 }
