@@ -15,6 +15,7 @@ build: ### Builds the docker images
 
 .PHONY: run
 run: ### Runs the dockers to bring up the system
+	if [ ! -d "./warcommands-app/node_modules" ]; then docker-compose -f devops/docker/dev/docker-compose.yml run warcommands_app npm install; fi
 	docker-compose -f devops/docker/dev/docker-compose.yml up
 
 .PHONY: bash
