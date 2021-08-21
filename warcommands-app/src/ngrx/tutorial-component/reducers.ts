@@ -8,7 +8,7 @@ export interface TutorialState {
 }
 
 const initialState: TutorialState = {
-    [ TutorialComponentKey ]: false,
+    [ TutorialComponentKey ]: true,
 }
 
 const TutorialReducer = createReducer(

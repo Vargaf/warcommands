@@ -7,9 +7,8 @@ import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-midd
 import { GameLogicClockService } from 'src/warcommands/vr-mode/domain/game-engine/game-logic-clock.service';
 import { AFrameStatsService } from 'src/warcommands/vr-mode/infrastructure/aframe/a-frame-stats.service';
 import { AframeSceneService } from 'src/warcommands/vr-mode/infrastructure/aframe/aframe-scene.service';
-import { TutorialComponentService } from 'src/app/tutorial/tutorial-component.service';
-import { TutorialComponent } from 'src/app/tutorial/tutorial/tutorial.component';
-
+import { TutorialComponentService } from 'src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service';
+import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
 
 @Component({
     selector: 'app-vr-mode',
@@ -41,6 +40,7 @@ export class VrModeComponent implements OnInit, OnDestroy {
         private readonly afameSceneService: AframeSceneService,
         private readonly gameLogicClockService: GameLogicClockService,
         private readonly tutorialComponentService: TutorialComponentService,
+        private tutorialComponentToggleService: TutorialComponentToggleServiceInterface
     ) { }
 
     ngOnInit(): void {
@@ -59,6 +59,11 @@ export class VrModeComponent implements OnInit, OnDestroy {
         this.afameSceneService.isLoaded().then((isLoaded: boolean) => {
             this.isGameLoaded = isLoaded;
         });
+
+        const openTutorialSubscription = this.tutorialComponentToggleService.openListener().subscribe(() => {
+            this.tutorialComponentService.setTutorialPanelRelatedElement(this.tutorialButtonElement);
+        });
+        this.subscriptionManager.add(openTutorialSubscription);
     }
 
     ngOnDestroy() {
@@ -69,7 +74,7 @@ export class VrModeComponent implements OnInit, OnDestroy {
     @HostListener('document:keydown', ['$event'])
     private handleKeydown(event: KeyboardEvent) {
         if (event.key === 'Escape') {
-            this.tutorialComponentService.close();
+            this.tutorialComponentToggleService.close();
         }
     }
 
@@ -104,6 +109,6 @@ export class VrModeComponent implements OnInit, OnDestroy {
     }
 
     openTutorial(): void {
-        this.tutorialComponentService.open({component: TutorialComponent, hasBackdrop: true}, this.tutorialButtonElement);
+        this.tutorialComponentToggleService.open();
     }
 }

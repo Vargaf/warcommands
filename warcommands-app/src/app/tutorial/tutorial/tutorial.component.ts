@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TutorialComponentService } from '../tutorial-component.service';
+import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
 
 @Component({
     selector: 'app-tutorial',
@@ -9,15 +9,14 @@ import { TutorialComponentService } from '../tutorial-component.service';
 export class TutorialComponent implements OnInit {
 
     constructor(
-        private tutorialComponentService: TutorialComponentService,
+        private tutorialComponentToggleService: TutorialComponentToggleServiceInterface
     ) { }
 
     ngOnInit(): void {
     }
 
     close(): void {
-        this.tutorialComponentService.close();
-        console.log('close');
+        this.tutorialComponentToggleService.close();
     }
 
 }

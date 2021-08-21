@@ -2,8 +2,7 @@ import { ViewContainerRef, Injectable, NgZone } from '@angular/core';
 import { StatsService } from './infrastructure/stats.service';
 import { RequestAnimationFrameService } from './domain/request-animation-frame/request-animation-frame.service';
 import { DomElementInjectorService } from './infrastructure/angular/dom-element-injector.service';
-import { MapDTO } from '../gameEngine/domain/maps/model/map.dto';
-import { UnitGenericDTO } from './domain/units/model/unit-generic.dto';
+import { MapDTO } from "src/warcommands/game-middleware/model/map/map.dto";
 import { UnitsManagerService } from './domain/units/services/units-manager.service';
 import { BuildingsManagerService } from './domain/building/services/buildings-manager.service';
 import { BuildingDTO } from './domain/building/model/building.dto';
@@ -13,12 +12,11 @@ import { BuildingDTO as BuildingDTOMiddleware } from 'src/warcommands/game-middl
 import { UnitGenericDTO as UnitGenericDTOMiddleware } from 'src/warcommands/game-middleware/model/unit/unit-generic.dto';
 import { GameLogicActionDTO } from '../game-middleware/model/game-logic-actions/game-logic-action.dto';
 
-
 @Injectable({
     providedIn: 'root'
 })
 export class BasicModeGameEngineService extends GameEngineInterface  {
-    
+
     private isGameRunning: boolean = true;
 
     constructor(
@@ -60,7 +58,7 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
     }
 
     slowDown(): void {
-        
+
     }
 
     generateMap(map: MapDTO): void {
@@ -114,7 +112,7 @@ export class BasicModeGameEngineService extends GameEngineInterface  {
             requestAnimationFrame(() => {
                 this.render();
             });
-    
+
             this.statsService.update();
             this.requestAnimationFrameService.updateFrameTime();
         }

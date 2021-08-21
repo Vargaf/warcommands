@@ -6,8 +6,8 @@ import { MaterialModule } from '../share/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
 import * as TutorialComponentStore from 'src/ngrx/tutorial-component/reducer-map';
-
-
+import { TutorialComponentProviderModule } from "./tutorial-component-provider.module";
+import { TutorialComponentService } from "../../warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service";
 
 @NgModule({
     declarations: [
@@ -19,12 +19,19 @@ import * as TutorialComponentStore from 'src/ngrx/tutorial-component/reducer-map
         MaterialModule,
         FlexLayoutModule,
         StoreModule.forFeature(TutorialComponentStore.TutorialComponentStoreKey, TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN),
+        TutorialComponentProviderModule,
     ],
     providers: [
-        { provide: TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN, useFactory: TutorialComponentStore.reducers }
+        { provide: TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN, useFactory: TutorialComponentStore.reducers },
     ],
     entryComponents: [
         TutorialComponent,
     ]
 })
-export class TutorialModule { }
+export class TutorialModule {
+
+    constructor(
+        private tutorialComponentService: TutorialComponentService
+    ) {
+    }
+}

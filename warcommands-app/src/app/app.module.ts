@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularHomeModule } from './angular-home/angular-home.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TutorialModule } from "./tutorial/tutorial.module";
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
                 '[Game engine basic mode] Update the request animation frame id',
                 '[Building list] update base resources'
             ]
-        })
+        }),
+        TutorialModule, // As we need the tutorial services on dynamic components we have to import it on the root module
     ],
     providers: [],
     bootstrap: [AppComponent]
