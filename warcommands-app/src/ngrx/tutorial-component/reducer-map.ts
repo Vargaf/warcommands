@@ -12,10 +12,10 @@ interface State {
 export const TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN = new InjectionToken<ActionReducerMap<State>>('Tutorial component reducers');
 
 export function reducers(): ActionReducerMap<State> {
-    
+
     // To work with AOT
     const tutorialStoreKey = TutorialComponentReducer.TutorialComponentKey;
-    
+
     return {
         [tutorialStoreKey]: TutorialComponentReducer.isTutorialOpenedReducer,
     }

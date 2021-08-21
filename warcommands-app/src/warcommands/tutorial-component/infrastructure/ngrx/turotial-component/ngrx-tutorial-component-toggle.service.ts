@@ -3,7 +3,6 @@ import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutoria
 import * as TutorialComponentSelector from 'src/ngrx/tutorial-component/selectors';
 import * as TutorialComponentActions from 'src/ngrx/tutorial-component/actions';
 import { Observable, Subject } from "rxjs";
-import { first } from "rxjs/operators";
 
 export class NgrxTutorialComponentToggleService implements TutorialComponentToggleServiceInterface {
 
@@ -15,9 +14,15 @@ export class NgrxTutorialComponentToggleService implements TutorialComponentTogg
     constructor(
         private store: Store<TutorialComponentSelector.TutorialFeatureState>
     ) {
-        this.store.pipe(select(TutorialComponentSelector.isTutorialOpenedSelector)).pipe(first()).subscribe(
+        this.store.pipe(select(TutorialComponentSelector.isTutorialOpenedSelector)).subscribe(
             (isTutorialComponentOpened) => {
                 this.isTutorialComponentOpened = isTutorialComponentOpened;
+
+                if(isTutorialComponentOpened) {
+                    this.openSubject.next();
+                } else {
+                    this.closeSubject.next();
+                }
             }
         );
     }
@@ -28,20 +33,14 @@ export class NgrxTutorialComponentToggleService implements TutorialComponentTogg
         } else {
             this.open();
         }
-
-        this.isTutorialComponentOpened = !this.isTutorialComponentOpened;
     }
 
     open(): void {
         this.store.dispatch(TutorialComponentActions.openTutorial());
-        this.isTutorialComponentOpened = true;
-        this.openSubject.next();
     }
 
     close(): void {
         this.store.dispatch(TutorialComponentActions.closeTutorial());
-        this.isTutorialComponentOpened = false;
-        this.closeSubject.next();
     }
 
     closeListener(): Observable<void> {
