@@ -5,12 +5,12 @@
     </div>
 
     <div fxLayout="row" class="game-commands-panels">
-        <div fxflex="40" class="actions-bar">
+        <div fxFlex="40" class="actions-bar">
             <div fxLayout="column" class="buttons-group">
-                <button mat-icon-button aria-label="Show game playground" (click)="toggleCommandsPanel()" *ngIf="isCommandsPanelOppened">
+                <button mat-icon-button aria-label="Show game playground" (click)="toggleCommandsPanel()" *ngIf="isCommandsPanelOpened">
                     <mat-icon>sports_esports</mat-icon>
                 </button>
-                <button mat-icon-button aria-label="Show code panel" (click)="toggleCommandsPanel()" *ngIf="!isCommandsPanelOppened">
+                <button mat-icon-button aria-label="Show code panel" (click)="toggleCommandsPanel()" *ngIf="!isCommandsPanelOpened">
                     <mat-icon>code</mat-icon>
                 </button>
                 <button mat-icon-button aria-label="Togle command instructions" (click)="toggleCommandList()">
@@ -57,11 +57,9 @@
         </div>
 
         <div fxFlex class="collapsible-panel">
-            <div class="collapsible-content" [ngClass]="{'active': isCommandsPanelOppened}">
+            <div class="collapsible-content" [ngClass]="{'active': isCommandsPanelOpened}">
                 <app-commands-panel></app-commands-panel>
             </div>
         </div>
     </div>
-
-    
 </div>
