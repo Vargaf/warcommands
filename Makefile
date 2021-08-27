@@ -18,6 +18,10 @@ run: ### Runs the dockers to bring up the system
 	if [ ! -d "./warcommands-app/node_modules" ]; then docker-compose -f devops/docker/dev/docker-compose.yml run warcommands_app npm install; fi
 	docker-compose -f devops/docker/dev/docker-compose.yml up
 
+.PHONY: stop
+stop: ### Stop the dockers to shut down the system
+	docker-compose -f devops/docker/dev/docker-compose.yml down
+
 .PHONY: bash
 bash: ### Runs the dockers to bring up the system
 	docker-compose -f devops/docker/dev/docker-compose.yml run warcommands_app bash
