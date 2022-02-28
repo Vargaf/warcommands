@@ -146,7 +146,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
         const viewContainerRef = changeEvent.toArray();
 
-        // tslint:disable-next-line: forin
+        // eslint-disable-next-line guard-for-in
         for (const index in viewContainerRef) {
             const item = viewContainerRef[index];
 
@@ -162,7 +162,7 @@ export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private loadCommandList(): void {
         const commandIdList = this.commandContainer.commands;
-        // tslint:disable-next-line: forin
+        // eslint-disable-next-line guard-for-in
         for (const index in commandIdList) {
             const command = this.commandRepositoryService.findById(commandIdList[index]);
             this.addCommandWrapper(command, +index);

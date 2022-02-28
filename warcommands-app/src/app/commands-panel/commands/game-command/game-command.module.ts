@@ -21,9 +21,6 @@ import { ClassDefinitionModule } from '../../class-definition/class-definition.m
     ],
     exports: [
         GameCommandComponent
-    ],
-    entryComponents: [
-        GameCommandComponent
     ]
 })
 export class GameCommandModule { }

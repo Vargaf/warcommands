@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterContentInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BasicModeComponentDirective } from './basic-mode.directive';
 import { GameMiddlewareService } from 'src/warcommands/game-middleware/game-middleware.service';
 import { MapType } from 'src/warcommands/gameEngine/domain/maps/model/map-type.enum';
@@ -14,12 +14,12 @@ import { BasicModeGameEngineService } from 'src/warcommands/basic-mode/game-engi
     templateUrl: './basic-mode.component.html',
     styleUrls: ['./basic-mode.component.scss']
 })
-export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
+export class BasicModeComponent implements OnInit, OnDestroy {
 
     @ViewChild(BasicModeComponentDirective, { static: true })
     public basicModeGraphicsWrapper!: BasicModeComponentDirective;
 
-    isCommandsPanelOppened!: boolean;
+    isCommandsPanelOpened!: boolean;
     commandPanelVisibleListenerSubscription!: Subscription;
 
     constructor(
@@ -39,9 +39,9 @@ export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
         this.gameEngine.setViewContainerRef(viewContainerRef);
         this.gameMiddlewareService.initialize(this.gameEngine);
 
-        this.commandPanelVisibleListenerSubscription = 
+        this.commandPanelVisibleListenerSubscription =
             this.toggleCommandsPanelService.commandPanelVisibleListener().subscribe((isCommandsPanelOppened) => {
-                this.isCommandsPanelOppened = isCommandsPanelOppened;
+                this.isCommandsPanelOpened = isCommandsPanelOppened;
             });
     }
 
@@ -49,12 +49,7 @@ export class BasicModeComponent implements OnInit, OnDestroy, AfterContentInit {
         this.commandPanelVisibleListenerSubscription.unsubscribe();
     }
 
-    ngAfterContentInit() {
-        
-    }
-
     showCommandsPanel(): void {
         this.toggleCommandsPanelService.showPanel();
     }
-
 }

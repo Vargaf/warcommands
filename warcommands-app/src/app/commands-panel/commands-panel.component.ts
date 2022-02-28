@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2, HostListener } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, HostListener } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { UxUiNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/ux-ui/ux-ui-ngrx-repository.service';
 import { skip } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { ToggleCommandListPanelService } from 'src/warcommands/commands-panel/do
     templateUrl: './commands-panel.component.html',
     styleUrls: ['./commands-panel.component.scss']
 })
-export class CommandsPanelComponent implements OnInit, AfterViewInit {
+export class CommandsPanelComponent implements AfterViewInit {
 
     @ViewChild('commandListElement')
     commandListElement!: ElementRef<HTMLDivElement>;
@@ -27,15 +27,12 @@ export class CommandsPanelComponent implements OnInit, AfterViewInit {
     commandListPanelWidth = 355;
     windowWidth = 0;
 
-    
     constructor(
         private readonly mediaObserver: MediaObserver,
         private readonly uxUiNgrxRepository: UxUiNgrxRepositoryService,
         private readonly toggleCommandListPanelService: ToggleCommandListPanelService,
         private readonly renderer: Renderer2,
     ) { }
-
-    ngOnInit() {}
 
     ngAfterViewInit() {
         this.uxUiNgrxRepository.watchIsUserDraggingACommandFromCommandList().pipe(skip(1)).subscribe((isDragging: boolean) => {
@@ -58,7 +55,7 @@ export class CommandsPanelComponent implements OnInit, AfterViewInit {
     @HostListener('window:load', ['$event'])
     onLoad(event: any) {
         this.setWindowsSize(event.currentTarget.innerWidth, event.currentTarget.innerHeight);
-    }   
+    }
 
     private setWindowsSize(windowWidth: number, windowHeight:number): void {
         this.uxUiNgrxRepository.loadWindowSize(
@@ -79,7 +76,7 @@ export class CommandsPanelComponent implements OnInit, AfterViewInit {
             this.renderer.setStyle(this.commandEditorElement.nativeElement, 'width', panelsWidth + 'px');
         } else {
             this.isSmallDevice = false;
-            let commandEditorPanelWidth = 0;
+            let commandEditorPanelWidth;
 
             if(this.isCommandListVisible) {
                 commandEditorPanelWidth = this.windowWidth - this.sideButtonBarWidth - this.commandListPanelWidth;

@@ -11,7 +11,7 @@ export interface CommandFeatureState {
 }
 
 export const commandPanelFeatureSelector =
-    createFeatureSelector<CommandFeatureState, CommandStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<CommandStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const commandFeatureSelector = createSelector(
     commandPanelFeatureSelector,

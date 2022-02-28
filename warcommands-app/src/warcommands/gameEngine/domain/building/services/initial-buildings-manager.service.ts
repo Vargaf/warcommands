@@ -21,7 +21,7 @@ export class InitialBuildingsManagerService {
         const playerList = this.playerManagerService.getPlayerList();
         const initialBuildingsList: { [key: string]: any } = mapConfiguration.initialBuildings;
 
-        // tslint:disable-next-line: forin
+        // eslint-disable-next-line guard-for-in
         for (const index in randomizedInitialBuildingsIndexList) {
             const randomIndex = randomizedInitialBuildingsIndexList[index];
             

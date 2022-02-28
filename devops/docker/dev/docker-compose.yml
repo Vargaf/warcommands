@@ -13,17 +13,3 @@ services:
               source: ../../../warcommands-app
               target: /project
         command: ng serve --host 0.0.0.0 --disable-host-check
-
-    warcommands_pwa:
-        build:
-          context: ../../../
-          dockerfile: devops/docker/dev/Dockerfile
-
-        image: warcommands_pwa_dev
-        ports: 
-          - 4480:8080
-        volumes:
-          - type: bind
-            source: ../../../warcommands-app
-            target: /project
-        command: http-server -p 8080 -c-1 dist/warcommands-app

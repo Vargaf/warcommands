@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -6,7 +6,7 @@ import { NgTemplateOutlet } from '@angular/common';
     templateUrl: './variable-preview.component.html',
     styleUrls: ['./variable-preview.component.scss']
 })
-export class VariablePreviewComponent implements OnInit {
+export class VariablePreviewComponent {
 
     @ViewChild('dragCommandPreview', { static: true })
     public previewTemplateRef!: TemplateRef<NgTemplateOutlet>;
@@ -14,10 +14,7 @@ export class VariablePreviewComponent implements OnInit {
     @ViewChild('dragCommandPreview', { static: true, read: ViewContainerRef })
     public previewViewContainerRed!: ViewContainerRef;
 
-    constructor() { }
-
-    ngOnInit() {
-    }
+    constructor() {}
 
     getDragHelperTemplate(): any {
         return {

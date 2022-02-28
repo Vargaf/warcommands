@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -6,7 +6,7 @@ import { NgTemplateOutlet } from '@angular/common';
     templateUrl: './game-command-preview.component.html',
     styleUrls: ['./game-command-preview.component.scss']
 })
-export class GameCommandPreviewComponent implements OnInit {
+export class GameCommandPreviewComponent {
 
     @ViewChild('dragCommandPreview', { static: true })
     public previewTemplateRef!: TemplateRef<NgTemplateOutlet>;
@@ -16,9 +16,6 @@ export class GameCommandPreviewComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() {
-    }
-    
     getDragHelperTemplate(): any {
         return {
             template: this.previewTemplateRef,

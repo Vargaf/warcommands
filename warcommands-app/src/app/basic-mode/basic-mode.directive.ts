@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-    selector: '[basic-mode-component-directive]'
+    selector: '[warcommandsBasicModeComponentDirective]'
 })
 export class BasicModeComponentDirective {
     constructor(public viewContainerRef: ViewContainerRef) {}

@@ -10,8 +10,8 @@ export interface UnitListFeatureState {
     [BasicModeReducerMap.GameEngineBasicModeStoreKey]: UnitStore;
 }
 
-export const basicModeFeatureSelector = 
-    createFeatureSelector<UnitListFeatureState, UnitStore>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
+export const basicModeFeatureSelector =
+    createFeatureSelector<UnitStore>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
 
 const unitListFeatureSelector = createSelector(
     basicModeFeatureSelector,

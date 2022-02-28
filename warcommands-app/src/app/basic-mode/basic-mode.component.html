@@ -1,7 +1,7 @@
 <div class="basic-mode-content" [ngClass.gt-sm]="['basic-mode-content-gt-sm']">
 
     <mat-sidenav-container class="side-nav-container">
-        <mat-sidenav #sidenav mode="over" position="end" disableClose="true" [opened]="isCommandsPanelOppened" style="width: 100%;">
+        <mat-sidenav #sidenav mode="over" position="end" disableClose="true" [opened]="isCommandsPanelOpened" style="width: 100%;">
             <app-commands-panel></app-commands-panel>
         </mat-sidenav>
         <mat-sidenav-content>
@@ -11,7 +11,7 @@
             </div>
             <div>
                 <div class="basic-mode-map">
-                    <ng-template basic-mode-component-directive></ng-template>
+                    <ng-template warcommandsBasicModeComponentDirective></ng-template>
                 </div>
             </div>
         </mat-sidenav-content>

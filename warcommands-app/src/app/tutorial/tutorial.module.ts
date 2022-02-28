@@ -23,9 +23,6 @@ import { TutorialComponentService } from "../../warcommands/tutorial-component/d
     ],
     providers: [
         { provide: TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN, useFactory: TutorialComponentStore.reducers },
-    ],
-    entryComponents: [
-        TutorialComponent,
     ]
 })
 export class TutorialModule {

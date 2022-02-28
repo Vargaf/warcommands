@@ -20,7 +20,7 @@ export class CommandManagerService {
 
     private loadCommandsFromRawFile(fileId: string, rawCommandContainer: CommandContainerJsonDTO): void {
 
-        // tslint:disable-next-line: forin
+        // eslint-disable-next-line guard-for-in
         for (const position in rawCommandContainer.commands) {
             const rawCommand = rawCommandContainer.commands[position];
             const command = CommandDataFromJSONFactory.getCommand(rawCommand, fileId, rawCommandContainer.id);

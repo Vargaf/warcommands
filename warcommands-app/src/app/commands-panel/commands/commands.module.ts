@@ -81,15 +81,6 @@ import { UniqueVarNameValidator } from 'src/warcommands/commands-panel/infrastru
     ],
     exports: [
         CommandsComponent,
-    ],
-    entryComponents: [
-        SetVariableComponent,
-        IfThenComponent,
-        IfThenElseComponent,
-        GameLoopComponent,
-        VariableComponent,
-        SetVariableFromCommandComponent,
-        LogicOperatorCommandComponent
     ]
 })
 export class CommandsModule { }

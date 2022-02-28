@@ -61,7 +61,7 @@ export class CommandContainerDragDropManagerService {
             const parentDragRef = this.commandDraggableElementRepositoryService.getDragItem(parentCommand, parentCommand.parentCommandContainerId);
             dragRefElement.withParent(parentDragRef);
         }
-        
+
         if (command.type !== CommandType.GameLoop) {
             const previewTemplate = this.dragCustomPreviewService.getDragHelperTemplate(command.type);
             dragRefElement.withPreviewTemplate(previewTemplate);
@@ -98,10 +98,10 @@ export class CommandContainerDragDropManagerService {
             let isCommandContainerAvailable = false;
 
             const isTheSameCommandContainerPointedByUser = (drop.element as any).getAttribute('id') === this.mouseHelperService.activeContainerId;
-            
+
             if (isTheSameCommandContainerPointedByUser) {
-                
-                let commandDraggedType = null;
+
+                let commandDraggedType;
                 if (this.isNewCommand(drag)) {
                     commandDraggedType = drag.data;
                 } else {
@@ -109,7 +109,7 @@ export class CommandContainerDragDropManagerService {
                 }
                 const commandContainerId = (drop.element as any).getAttribute('id');
 
-                isCommandContainerAvailable = 
+                isCommandContainerAvailable =
                     this.commandEnterPredicateAvalabilityService.isDraggedCommandAvailableToDrop(commandDraggedType, commandContainerId);
             }
 
@@ -162,7 +162,7 @@ export class CommandContainerDragDropManagerService {
     }
 
     private buildInnerCommandContainers(command: GenericCommandDTO): void {
-        // tslint:disable-next-line: forin
+        // eslint-disable-next-line guard-for-in
         for (const innerCommandContainerIndex in command.innerCommandContainerIdList) {
             const commandContainer: CommandContainerDTO = {
                 id: command.innerCommandContainerIdList[innerCommandContainerIndex],

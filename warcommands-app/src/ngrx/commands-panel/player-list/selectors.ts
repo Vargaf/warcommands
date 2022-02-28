@@ -11,7 +11,7 @@ export interface PlayerListSelector {
 }
 
 export const playerListFeatureSelector =
-    createFeatureSelector<PlayerListSelector, PlayerStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<PlayerStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const playerFeatureSelector = createSelector(
     playerListFeatureSelector,

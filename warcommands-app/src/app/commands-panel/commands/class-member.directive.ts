@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from "@angular/core";
 
 @Directive({
-    selector: '[class-member]'
+    selector: '[warcommandsClassMemberDirective]'
 })
 export class ClassMemberDirective {
     constructor(public viewContainerRef: ViewContainerRef) {}

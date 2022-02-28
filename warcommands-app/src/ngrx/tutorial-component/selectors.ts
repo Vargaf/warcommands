@@ -11,7 +11,7 @@ export interface TutorialFeatureState {
 }
 
 const tutorialComponentFeatureSelector =
-    createFeatureSelector<TutorialFeatureState, TutorialStore>(TutorialComponentReducerMap.TutorialComponentStoreKey);
+    createFeatureSelector<TutorialStore>(TutorialComponentReducerMap.TutorialComponentStoreKey);
 
 export const isTutorialOpenedSelector = createSelector(
     tutorialComponentFeatureSelector,
