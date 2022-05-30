@@ -1,25 +1,59 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { AFrameHolderComponent } from './a-frame-holder.component';
+import {AFrameHolderComponent} from './a-frame-holder.component';
+import {GameMiddlewareService} from "../../../../warcommands/game-middleware/game-middleware.service";
+import {
+    CurrentPlayerManagerService
+} from "../../../../warcommands/commands-panel/domain/current-player/current-player-manager-service";
+import {VrModeGameEngineService} from "../../../../warcommands/vr-mode/domain/game-engine/vr-mode-game-engine.service";
+import {
+    PlayerRepositoryService
+} from "../../../../warcommands/vr-mode/domain/players/services/player-repository.service";
+import {
+    CurrentPlayerDTO as MiddlewareCurrentPlayerDTO
+} from "../../../../warcommands/commands-panel/domain/current-player/model/current-player.dto";
 
 describe('AFrameHolderComponent', () => {
-  let component: AFrameHolderComponent;
-  let fixture: ComponentFixture<AFrameHolderComponent>;
+    let component: AFrameHolderComponent;
+    let fixture: ComponentFixture<AFrameHolderComponent>;
+    let gameMiddlewareServiceSpy;
+    let currentPlayerManagerServiceSpy;
+    let vrModeGameEngineServiceSpy;
+    let playerRepositoryServiceSpy;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ AFrameHolderComponent ]
-    })
-    .compileComponents();
-  });
+    beforeEach(waitForAsync(() => {
+        gameMiddlewareServiceSpy = jasmine.createSpyObj('GameMiddlewareService', ['setMap', 'addPlayer', 'addIAPlayer']);
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AFrameHolderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        currentPlayerManagerServiceSpy = jasmine.createSpyObj('CurrentPlayerManagerService', ['initializePlayer'])
+        const playerDTO: MiddlewareCurrentPlayerDTO = {
+            id: 'identifier',
+        };
+        currentPlayerManagerServiceSpy.initializePlayer.and.returnValue(playerDTO);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        playerRepositoryServiceSpy = jasmine.createSpyObj('PlayerRepositoryService', ['save'])
+
+        vrModeGameEngineServiceSpy = jasmine.createSpyObj('VrModeGameEngineService', ['waitTillSceneIsLoaded']);
+        const mockScene = {};
+        vrModeGameEngineServiceSpy.waitTillSceneIsLoaded.and.returnValue(Promise.resolve(mockScene));
+        TestBed.configureTestingModule({
+            declarations: [AFrameHolderComponent],
+            providers: [
+                {provide: GameMiddlewareService, useValue: gameMiddlewareServiceSpy},
+                {provide: CurrentPlayerManagerService, useValue: currentPlayerManagerServiceSpy},
+                {provide: VrModeGameEngineService, useValue: vrModeGameEngineServiceSpy},
+                {provide: PlayerRepositoryService, useValue: playerRepositoryServiceSpy}
+            ]
+        })
+            .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AFrameHolderComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

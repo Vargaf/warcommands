@@ -1,25 +1,34 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { IfThenElseComponent } from './if-then-else.component';
+import {IfThenElseComponent} from './if-then-else.component';
+import {
+    CommandNgrxRepositoryService
+} from "../../../../warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service";
 
 describe('IfThenElseComponent', () => {
-  let component: IfThenElseComponent;
-  let fixture: ComponentFixture<IfThenElseComponent>;
+    let component: IfThenElseComponent;
+    let fixture: ComponentFixture<IfThenElseComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ IfThenElseComponent ]
-    })
-    .compileComponents();
-  }));
+    let commandNgrxRepositoryServiceSpy;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IfThenElseComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(waitForAsync(() => {
+        commandNgrxRepositoryServiceSpy = jasmine.createSpyObj('CommandNgrxRepositoryService', ['a']);
+        TestBed.configureTestingModule({
+            declarations: [IfThenElseComponent],
+            providers: [
+                {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
+            ]
+        })
+            .compileComponents();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(IfThenElseComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

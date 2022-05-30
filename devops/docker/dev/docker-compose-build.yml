@@ -5,7 +5,7 @@ services:
           context: ../../../
           dockerfile: devops/docker/dev/Dockerfile
 
-        image: warcommands_pwa_dev
+        image: warcommands_pwa
         ports:
           - 4480:8080
         volumes:

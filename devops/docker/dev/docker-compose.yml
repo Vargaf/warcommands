@@ -7,7 +7,7 @@ services:
 
         image: warcommands_app_dev
         ports:
-          - 4400:4200
+          - "4400:4200"
         volumes:
             - type: bind
               source: ../../../warcommands-app

@@ -9,6 +9,7 @@ import { AFrameStatsService } from 'src/warcommands/vr-mode/infrastructure/afram
 import { AframeSceneService } from 'src/warcommands/vr-mode/infrastructure/aframe/aframe-scene.service';
 import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
 import {GameTutorialService} from "../../../warcommands/tutorial-component/domain/tutorial-component/services/game-tutorial.service";
+import { TutorialComponentService } from 'src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service';
 
 @Component({
     selector: 'app-vr-mode',
@@ -39,6 +40,7 @@ export class VrModeComponent implements OnInit, OnDestroy {
         private readonly gameLogicClockService: GameLogicClockService,
         private tutorialComponentToggleService: TutorialComponentToggleServiceInterface,
         private gameTutorialService: GameTutorialService,
+        private tutorialComponentService: TutorialComponentService,
     ) { }
 
     ngOnInit(): void {
@@ -104,5 +106,6 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
     openTutorial(): void {
         this.tutorialComponentToggleService.open();
+        this.tutorialComponentService.setTutorialPanelRelatedElement(this.tutorialButtonElement);
     }
 }

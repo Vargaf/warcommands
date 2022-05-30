@@ -1,12 +1,32 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, Inject, ViewChildren, QueryList, ViewContainerRef, AfterViewInit, Renderer2 } from '@angular/core';
-import { GAME_CONFIG, GameEngineBasicModeConfiguration } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
-import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
-import { BuildingsNgrxRepositoryService } from 'src/warcommands/basic-mode/infrastructure/ngrx/buildings/buildings-ngrx-repository.service';
-import { RequestAnimationFrameService } from 'src/warcommands/basic-mode/domain/request-animation-frame/request-animation-frame.service';
-import { Subscription, Observable, from } from 'rxjs';
-import { UnitGenericDTO } from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
-import { CurrentPlayerRepositoryService } from 'src/warcommands/commands-panel/domain/current-player/services/current-player-repository.service';
-import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/building.dto';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnInit,
+    QueryList,
+    Renderer2,
+    ViewChild,
+    ViewChildren
+} from '@angular/core';
+import {
+    GAME_CONFIG,
+    GameEngineBasicModeConfiguration
+} from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
+import {BaseEntityInterface} from 'src/warcommands/basic-mode/domain/building/base/base-entity-interface';
+import {
+    BuildingsNgrxRepositoryService
+} from 'src/warcommands/basic-mode/infrastructure/ngrx/buildings/buildings-ngrx-repository.service';
+import {
+    RequestAnimationFrameService
+} from 'src/warcommands/basic-mode/domain/request-animation-frame/request-animation-frame.service';
+import {from, Observable, Subscription} from 'rxjs';
+import {UnitGenericDTO} from 'src/warcommands/basic-mode/domain/units/model/unit-generic.dto';
+import {
+    CurrentPlayerRepositoryService
+} from 'src/warcommands/commands-panel/domain/current-player/services/current-player-repository.service';
+import {BuildingDTO} from 'src/warcommands/basic-mode/domain/building/model/building.dto';
 
 interface UnitSpawningDTO {
     unit: UnitGenericDTO;
@@ -44,12 +64,12 @@ export class BaseComponent implements OnInit, AfterViewInit {
     spawningSubscription!: Subscription;
     playerBaseId!: string;
     private spawningQueue: UnitSpawningDTO[] = [];
-    
+
     unitClassColor: string = 'colorBlue';
 
     constructor(
         @Inject(GAME_CONFIG) private gameConfig: GameEngineBasicModeConfiguration,
-        private readonly buildingsNgrxReposioryService: BuildingsNgrxRepositoryService,
+        private readonly buildingsNgrxRepositoryService: BuildingsNgrxRepositoryService,
         private readonly requestAnimationFrameService: RequestAnimationFrameService,
         private readonly currentPlayerRepository: CurrentPlayerRepositoryService,
         private readonly renderer: Renderer2
@@ -67,9 +87,9 @@ export class BaseComponent implements OnInit, AfterViewInit {
             this.playerBaseId = this.base.id;
         }
 
-        this.buildingsNgrxReposioryService.watchBuilding(this.base.id).subscribe((base) => {
+        this.buildingsNgrxRepositoryService.watchBuilding(this.base.id).subscribe((base) => {
             this.base = (base as BaseEntityInterface);
-            
+
             this.queueList = from([this.base.queueList]);
             if (this.isNewSpawning()) {
                 this.manageSpawningSubscription();
@@ -78,7 +98,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
             if (this.isSpawning && !this.base.unitSpawning.unit) {
                 this.unitSpawned();
             }
-            
+
         });
     }
 
@@ -110,11 +130,9 @@ export class BaseComponent implements OnInit, AfterViewInit {
     }
 
     private isUnitAlreadyInSpaningQueue(): boolean {
-        const isUnitAlreadySpawning = this.spawningQueue.some((unitSpawning: UnitSpawningDTO) => {
+        return this.spawningQueue.some((unitSpawning: UnitSpawningDTO) => {
             return unitSpawning.unit.id === this.base.unitSpawning.unit?.id;
         });
-
-        return isUnitAlreadySpawning;
     }
 
     private addNewSpawningToQueue(): void {
@@ -179,7 +197,7 @@ export class BaseComponent implements OnInit, AfterViewInit {
 
         this.spinerElement.nativeElement.style.setProperty('top', spinnerTop + 'px');
         this.spinerElement.nativeElement.style.setProperty('left', spinnerLeft + 'px');
-        
+
        this.tileSize = this.gameConfig.tileSize;
        this.spinerStrokeWidth = this.tileSize / 2;
     }
