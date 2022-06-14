@@ -10,11 +10,27 @@ import {
 } from "../../../../warcommands/commands-panel/domain/command/model/class-definition/class-name.enum";
 import {GenericCommandDTO} from "../../../../warcommands/commands-panel/domain/command/model/generic-command.dto";
 import {of} from "rxjs";
+import {
+    GameClassMemberOptionsListComponent
+} from "../../class-definition/game/game-class-member-options-list/game-class-member-options-list.component";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {
+    CommandPathFinderService
+} from "../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service";
+import {
+    CommandRepositoryService
+} from "../../../../warcommands/commands-panel/domain/command/services/command-repository.service";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('GameCommandComponent', () => {
     let component: GameCommandComponent;
     let fixture: ComponentFixture<GameCommandComponent>;
+
     let commandNgrxRepositoryServiceSpy;
+
+    let formBuilderSpy;
+    let commandPathFinderServiceSpy;
+    let commandRepositoryServiceSpy;
 
     beforeEach(waitForAsync(() => {
         commandNgrxRepositoryServiceSpy = jasmine.createSpyObj('CommandNgrxRepositoryService', ['getCommand']);
@@ -27,10 +43,22 @@ describe('GameCommandComponent', () => {
         };
         commandNgrxRepositoryServiceSpy.getCommand.and.returnValue(of(genericCommandDTOMock));
 
+        formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
+        const controlsConfigMock = new FormGroup({
+            memberSelected: new FormControl('', Validators.required),
+        });
+        formBuilderSpy.group.and.returnValue(controlsConfigMock);
+        commandPathFinderServiceSpy = jasmine.createSpyObj('CommandPathFinderService', ['a']);
+        commandRepositoryServiceSpy = jasmine.createSpyObj('CommandRepositoryService', ['a']);
+
         TestBed.configureTestingModule({
-            declarations: [GameCommandComponent],
+            declarations: [GameCommandComponent, GameClassMemberOptionsListComponent],
+            imports: [MatIconModule],
             providers: [
-                {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy}
+                {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
+                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},
+                {provide: CommandRepositoryService, useValue: commandRepositoryServiceSpy},
             ]
         })
             .compileComponents();

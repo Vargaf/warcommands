@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {SetVariableComponent} from './set-variable.component';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {of} from "rxjs";
 import {
     CommandNgrxRepositoryService
@@ -33,6 +33,11 @@ import {
 } from "../../../../warcommands/commands-panel/domain/command/model/class-definition/class-name.enum";
 import {CommandType} from "../../../../warcommands/commands-panel/domain/command/model/command-type.enum";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {BrowserDynamicTestingModule} from "@angular/platform-browser-dynamic/testing";
+import {MatInputModule} from "@angular/material/input";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('SetVariableComponent', () => {
     let component: SetVariableComponent;
@@ -47,22 +52,19 @@ describe('SetVariableComponent', () => {
     beforeEach(waitForAsync(() => {
 
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = {
-            valueChanges: of(null),
-            valid: true,
-            statusChanges: of(null),
-            get: () => {},
-            updateValueAndValidity: () => {},
-        };
+        const controlsConfigMock = new FormGroup({
+            varName: new FormControl('', Validators.required),
+            varValue: new FormControl('', Validators.required),
+        });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
 
         commandNgrxRepositoryServiceSpy = jasmine.createSpyObj('CommandNgrxRepositoryService', ['getCommand']);
         const setVariableCommandMock: SetVariableCommandDTO = {
             data: {
-                varName: "",
-                varValue: ""
+                varName: "testName",
+                varValue: "testValue"
             },
-            id: "",
+            id: "1",
             innerCommandContainerIdList: {},
             parentCommandContainerId: "",
             playerId: "",
@@ -70,14 +72,14 @@ describe('SetVariableComponent', () => {
         };
         commandNgrxRepositoryServiceSpy.getCommand.and.returnValue(of(setVariableCommandMock));
 
-        commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError']);
+        commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError', 'resetCommandPathError']);
 
         commandPathFinderServiceSpy = jasmine.createSpyObj('CommandPathFinderService', ['getCommandPath']);
 
         uniqueVarNameValidatorSpy = jasmine.createSpyObj('UniqueVarNameValidator', ['createValidator']);
 
         TestBed.configureTestingModule({
-            imports: [MatTooltipModule],
+            imports: [MatTooltipModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule, BrowserDynamicTestingModule, MatIconModule, ReactiveFormsModule],
             declarations: [SetVariableComponent],
             providers: [
                 {provide: FormBuilder, useValue: formBuilderSpy},
@@ -98,11 +100,11 @@ describe('SetVariableComponent', () => {
             commandPathErrorsCounter: 0,
             data: {
                 className: ClassNameENUM.Number,
-                varName: "",
-                varValue: ""
+                varName: "testName",
+                varValue: "testValue"
             },
             fileId: "",
-            id: "",
+            id: "1",
             parentCommandContainerId: "",
             type: CommandType.SetVariable
         };

@@ -6,6 +6,7 @@ import {FormBuilder} from "@angular/forms";
 import {
     CommandPathErrorManagerService
 } from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('WorkerClassMemberOptionListComponent', () => {
     let component: WorkerClassMemberOptionListComponent;
@@ -26,6 +27,7 @@ describe('WorkerClassMemberOptionListComponent', () => {
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
         TestBed.configureTestingModule({
             declarations: [WorkerClassMemberOptionListComponent],
+            imports: [MatIconModule],
             providers: [
                 {provide: FormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},

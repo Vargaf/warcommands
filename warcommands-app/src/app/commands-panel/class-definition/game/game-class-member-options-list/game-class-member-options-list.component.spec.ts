@@ -6,6 +6,7 @@ import {
     CommandPathErrorManagerService
 } from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
 import {of} from "rxjs";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('GameClassMemberOptionsListComponent', () => {
     let component: GameClassMemberOptionsListComponent;
@@ -25,6 +26,7 @@ describe('GameClassMemberOptionsListComponent', () => {
         commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError'])
         TestBed.configureTestingModule({
             declarations: [GameClassMemberOptionsListComponent],
+            imports: [MatIconModule],
             providers: [
                 {provide: FormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy}

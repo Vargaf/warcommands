@@ -7,6 +7,7 @@ import {
 import {BuildingTypeEnum} from "../../../../warcommands/basic-mode/domain/building/model/building-type.enum";
 import {BaseEntityInterface} from "../../../../warcommands/basic-mode/domain/building/base/base-entity-interface";
 import {of} from "rxjs";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('PlayerResourcesComponent', () => {
     let component: PlayerResourcesComponent;
@@ -46,6 +47,7 @@ describe('PlayerResourcesComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [PlayerResourcesComponent],
+            imports: [MatIconModule],
             providers: [
                 { provide: BuildingsNgrxRepositoryService, useValue: buildingsNgrxRepositoryServiceSpy },
             ]

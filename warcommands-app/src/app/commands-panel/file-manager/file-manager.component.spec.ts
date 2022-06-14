@@ -7,6 +7,8 @@ import {
 import {
     CommandDragDropManagerService
 } from "../../../warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTabsModule} from "@angular/material/tabs";
 
 describe('FileManagerComponent', () => {
     let component: FileManagerComponent;
@@ -20,6 +22,7 @@ describe('FileManagerComponent', () => {
         commandDragDropManagerServiceSpy = jasmine.createSpyObj('CommandDragDropManagerService', ['createDeleteCommandDropContainer', 'createCancelCommandDragContainer']);
         TestBed.configureTestingModule({
             declarations: [FileManagerComponent],
+            imports: [MatIconModule, MatTabsModule],
             providers: [
                 {provide: CommandsPanelManagerService, useValue: commandsPanelManagerServiceSpy},
                 {provide: CommandDragDropManagerService, useValue: commandDragDropManagerServiceSpy},

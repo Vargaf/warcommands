@@ -37,7 +37,9 @@ export class GameLoopComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.commandDataSubscription.unsubscribe();
+        if (this.commandData) {
+            this.commandDataSubscription.unsubscribe();
+        }
     }
 
 }

@@ -12,17 +12,19 @@ import {
 import {
     CurrentPlayerDTO as MiddlewareCurrentPlayerDTO
 } from "../../../../warcommands/commands-panel/domain/current-player/model/current-player.dto";
+import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 
 describe('AFrameHolderComponent', () => {
     let component: AFrameHolderComponent;
     let fixture: ComponentFixture<AFrameHolderComponent>;
+
     let gameMiddlewareServiceSpy;
     let currentPlayerManagerServiceSpy;
     let vrModeGameEngineServiceSpy;
     let playerRepositoryServiceSpy;
 
     beforeEach(waitForAsync(() => {
-        gameMiddlewareServiceSpy = jasmine.createSpyObj('GameMiddlewareService', ['setMap', 'addPlayer', 'addIAPlayer']);
+        gameMiddlewareServiceSpy = jasmine.createSpyObj('GameMiddlewareService', ['setMap', 'addPlayer', 'addIAPlayer', 'initialize']);
 
         currentPlayerManagerServiceSpy = jasmine.createSpyObj('CurrentPlayerManagerService', ['initializePlayer'])
         const playerDTO: MiddlewareCurrentPlayerDTO = {
@@ -32,16 +34,17 @@ describe('AFrameHolderComponent', () => {
 
         playerRepositoryServiceSpy = jasmine.createSpyObj('PlayerRepositoryService', ['save'])
 
-        vrModeGameEngineServiceSpy = jasmine.createSpyObj('VrModeGameEngineService', ['waitTillSceneIsLoaded']);
+        vrModeGameEngineServiceSpy = jasmine.createSpyObj('VrModeGameEngineService', ['waitTillSceneIsLoaded', 'pauseGame']);
         const mockScene = {};
         vrModeGameEngineServiceSpy.waitTillSceneIsLoaded.and.returnValue(Promise.resolve(mockScene));
         TestBed.configureTestingModule({
             declarations: [AFrameHolderComponent],
+            schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
             providers: [
                 {provide: GameMiddlewareService, useValue: gameMiddlewareServiceSpy},
                 {provide: CurrentPlayerManagerService, useValue: currentPlayerManagerServiceSpy},
                 {provide: VrModeGameEngineService, useValue: vrModeGameEngineServiceSpy},
-                {provide: PlayerRepositoryService, useValue: playerRepositoryServiceSpy}
+                {provide: PlayerRepositoryService, useValue: playerRepositoryServiceSpy},
             ]
         })
             .compileComponents();

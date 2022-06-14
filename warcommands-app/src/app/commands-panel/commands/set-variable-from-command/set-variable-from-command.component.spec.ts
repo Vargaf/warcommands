@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {SetVariableFromCommandComponent} from './set-variable-from-command.component';
 import {of} from "rxjs";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandContainerNgrxRepositoryService
 } from "../../../../warcommands/commands-panel/infrastructure/ngrx/command-container/command-container-ngrx-repository.service";
@@ -32,6 +32,26 @@ import {
     CommandContainerDTO
 } from "../../../../warcommands/commands-panel/domain/command-container/model/command-container.dto";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {CommandDropComponent} from "../../command-drop/command-drop.component";
+import {
+    CommandListDragDropManagerService
+} from "../../../../warcommands/commands-panel/domain/command-drag-drop/services/command-list-drag-drop-manager.service";
+import {
+    CommandContainerDragDropManagerService
+} from "../../../../warcommands/commands-panel/domain/command-container/services/command-container-drag-drop-manager.service";
+import {
+    CommandComponentManagerService
+} from "../../../../warcommands/commands-panel/domain/command-component/services/command-component-manager.service";
+import {
+    CommandDropRemoveManagerService
+} from "../../../../warcommands/commands-panel/domain/command/services/command-drop-remove-manager.service";
+import {
+    CommandDropCancelManagerService
+} from "../../../../warcommands/commands-panel/domain/command/services/command-drop-cancel-manager.service";
+import {MatInputModule} from "@angular/material/input";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('SetVariableFromCommandComponent', () => {
     let component: SetVariableFromCommandComponent;
@@ -46,6 +66,12 @@ describe('SetVariableFromCommandComponent', () => {
     let uniqueVarNameValidatorSpy;
 
     let setVariableFromCommandCommandEntityMock: SetVariableFromCommandCommandEntity;
+
+    let commandListDragDropManagerServiceSpy;
+    let commandContainerDragDropManagerServiceSpy;
+    let commandComponentManagerServiceSpy;
+    let commandDropRemoveManagerServiceSpy;
+    let commandDropCancelManagerServiceSpy;
 
     beforeEach(waitForAsync(() => {
         setVariableFromCommandCommandEntityMock = {
@@ -74,19 +100,23 @@ describe('SetVariableFromCommandComponent', () => {
         commandNgrxRepositoryServiceSpy = jasmine.createSpyObj('CommandNgrxRepositoryService', ['getCommand']);
         commandNgrxRepositoryServiceSpy.getCommand.and.returnValue(of(setVariableFromCommandCommandEntityMock));
         commandRepositoryServiceSpy = jasmine.createSpyObj('CommandRepositoryService', ['a']);
-        commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError']);
+        commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError', 'resetCommandPathError']);
         commandPathFinderServiceSpy = jasmine.createSpyObj('CommandPathFinderService', ['getCommandPath']);
         uniqueVarNameValidatorSpy = jasmine.createSpyObj('UniqueVarNameValidator', ['createValidator']);
-        const controlsConfigMock = {
-            statusChanges: of(null),
-            valueChanges: of(null),
-            get: () => {},
-            updateValueAndValidity: () => {},
-        };
+        const controlsConfigMock = new FormGroup({
+            varName: new FormControl('', Validators.required),
+            innerCommandId: new FormControl('', Validators.required),
+        });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
+
+        commandContainerDragDropManagerServiceSpy = jasmine.createSpyObj('CommandContainerDragDropManagerService', ['createCommandContainerDrop']);
+        commandListDragDropManagerServiceSpy = jasmine.createSpyObj('CommandListDragDropManagerService', ['a']);
+        commandComponentManagerServiceSpy = jasmine.createSpyObj('CommandComponentManagerService', ['a']);
+        commandDropRemoveManagerServiceSpy = jasmine.createSpyObj('CommandDropRemoveManagerService', ['a']);
+        commandDropCancelManagerServiceSpy = jasmine.createSpyObj('CommandDropCancelManagerService', ['a']);
         TestBed.configureTestingModule({
-            imports: [MatTooltipModule],
-            declarations: [SetVariableFromCommandComponent],
+            imports: [MatTooltipModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule, BrowserAnimationsModule],
+            declarations: [SetVariableFromCommandComponent, CommandDropComponent],
             providers: [
                 {provide: FormBuilder, useValue: formBuilderSpy},
                 {provide: CommandContainerNgrxRepositoryService, useValue: commandContainerNgrxRepositoryServiceSpy},
@@ -95,6 +125,11 @@ describe('SetVariableFromCommandComponent', () => {
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
                 {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},
                 {provide: UniqueVarNameValidator, useValue: uniqueVarNameValidatorSpy},
+                {provide: CommandListDragDropManagerService, useValue: commandListDragDropManagerServiceSpy},
+                {provide: CommandContainerDragDropManagerService, useValue: commandContainerDragDropManagerServiceSpy},
+                {provide: CommandComponentManagerService, useValue: commandComponentManagerServiceSpy},
+                {provide: CommandDropRemoveManagerService, useValue: commandDropRemoveManagerServiceSpy},
+                {provide: CommandDropCancelManagerService, useValue: commandDropCancelManagerServiceSpy},
             ]
         })
             .compileComponents();

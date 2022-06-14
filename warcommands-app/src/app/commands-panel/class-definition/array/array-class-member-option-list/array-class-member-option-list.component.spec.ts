@@ -6,6 +6,7 @@ import {FormBuilder} from "@angular/forms";
 import {
     CommandPathErrorManagerService
 } from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('ArrayClassMemberOptionListComponent', () => {
     let component: ArrayClassMemberOptionListComponent;
@@ -25,6 +26,7 @@ describe('ArrayClassMemberOptionListComponent', () => {
         commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError']);
         TestBed.configureTestingModule({
             declarations: [ArrayClassMemberOptionListComponent],
+            imports: [MatIconModule],
             providers: [
                 {provide: FormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},

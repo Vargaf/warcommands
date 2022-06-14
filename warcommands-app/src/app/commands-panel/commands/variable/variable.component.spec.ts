@@ -17,7 +17,7 @@ import {
     VariableInScopeFinderService
 } from "../../../../warcommands/commands-panel/domain/command/model/variable/services/variables-in-scope-finder.service";
 import {of} from "rxjs";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandRepositoryService
 } from "../../../../warcommands/commands-panel/domain/command/services/command-repository.service";
@@ -32,6 +32,13 @@ import {
 } from "../../../../warcommands/commands-panel/domain/command/model/variable/model/variable-command.entity";
 import {CommandType} from "../../../../warcommands/commands-panel/domain/command/model/command-type.enum";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatIconModule} from "@angular/material/icon";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {
+    CommandPathErrorManagerService
+} from "../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
 
 describe('VariableComponent', () => {
     let component: VariableComponent;
@@ -42,6 +49,7 @@ describe('VariableComponent', () => {
     let commandRepositoryServiceSpy;
     let commandNgrxRepositoryServiceSpy;
     let commandPathFinderServiceSpy;
+    let commandPathErrorManagerServiceSpy;
 
     let variableCommandEntityMock: VariableCommandEntity;
 
@@ -53,20 +61,17 @@ describe('VariableComponent', () => {
                 variableCommandId: ''
             },
             fileId: "",
-            id: "",
+            id: "1",
             innerCommandContainerIdList: {},
             parentCommandContainerId: "",
             type: CommandType.Variable
         };
         variableInScopeFinderServiceSpy = jasmine.createSpyObj('VariableInScopeFinderService', ['getVariablesInPreviuosScope']);
-        variableInScopeFinderServiceSpy.getVariablesInPreviuosScope.and.returnValue([]);
+        variableInScopeFinderServiceSpy.getVariablesInPreviuosScope.and.returnValue([variableCommandEntityMock]);
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = {
-            statusChanges: of(null),
-            valueChanges: of(null),
-            get: () => {return {errors: false}},
-            updateValueAndValidity: () => {},
-        };
+        const controlsConfigMock = new FormGroup({
+            variable: new FormControl('', Validators.required),
+        });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
         commandRepositoryServiceSpy = jasmine.createSpyObj('CommandRepositoryService', ['findById']);
         commandRepositoryServiceSpy.findById.and.returnValue(variableCommandEntityMock);
@@ -74,15 +79,17 @@ describe('VariableComponent', () => {
         commandNgrxRepositoryServiceSpy.getCommand.and.returnValue(of(variableCommandEntityMock));
         commandPathFinderServiceSpy = jasmine.createSpyObj('CommandPathFinderService', ['getCommandPath']);
         commandPathFinderServiceSpy.getCommandPath.and.returnValue([]);
+        commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError', 'resetCommandPathError']);
         TestBed.configureTestingModule({
-            imports: [MatTooltipModule],
             declarations: [VariableComponent],
+            imports: [MatTooltipModule, MatFormFieldModule, MatSelectModule, MatIconModule, ReactiveFormsModule, NoopAnimationsModule],
             providers: [
                 {provide: VariableInScopeFinderService, useValue: variableInScopeFinderServiceSpy},
                 {provide: FormBuilder, useValue: formBuilderSpy},
                 {provide: CommandRepositoryService, useValue: commandRepositoryServiceSpy},
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
                 {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},
+                {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
             ]
         })
             .compileComponents();

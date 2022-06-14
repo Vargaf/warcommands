@@ -6,6 +6,7 @@ import {of} from "rxjs";
 import {
     CommandPathErrorManagerService
 } from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('BaseClassMemberOptionListComponent', () => {
     let component: BaseClassMemberOptionListComponent;
@@ -28,6 +29,7 @@ describe('BaseClassMemberOptionListComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [BaseClassMemberOptionListComponent],
+            imports: [MatIconModule],
             providers: [
                 {provide: FormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},

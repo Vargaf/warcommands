@@ -13,6 +13,7 @@ import {
 } from "../../../../warcommands/basic-mode/domain/building/matter-farm/matter-farm-building.dto";
 import {BuildingTypeEnum} from "../../../../warcommands/basic-mode/domain/building/model/building-type.enum";
 import {of} from "rxjs";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('MatterFarmComponent', () => {
     let component: MatterFarmComponent;
@@ -34,6 +35,7 @@ describe('MatterFarmComponent', () => {
         };
         buildingsNgrxRepositoryServiceSpy.watchBuilding.and.returnValue(of(matterFarmBuildingMock));
         TestBed.configureTestingModule({
+            imports: [MatIconModule],
             declarations: [MatterFarmComponent],
             providers: [
                 {provide: GAME_CONFIG, useValue: GAME_ENGINE_BASIC_MODE_CONFIGURATION},

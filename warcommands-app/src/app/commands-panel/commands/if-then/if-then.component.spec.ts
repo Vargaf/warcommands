@@ -33,6 +33,11 @@ import {
     CommandContainerDTO
 } from "../../../../warcommands/commands-panel/domain/command-container/model/command-container.dto";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {CommandDropComponent} from "../../command-drop/command-drop.component";
+import {MatIconModule} from "@angular/material/icon";
+import {
+    CommandDragDropManagerService
+} from "../../../../warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service";
 
 describe('IfThenComponent', () => {
     let component: IfThenComponent;
@@ -43,6 +48,7 @@ describe('IfThenComponent', () => {
     let commandContainerNgrxRepositoryServiceSpy;
     let commandRepositoryServiceSpy;
     let commandPathFinderServiceSpy;
+    let commandDragDropManagerServiceSpy;
 
     let ifThenCommandMock: IfThenCommandEntity;
 
@@ -77,15 +83,17 @@ describe('IfThenComponent', () => {
         commandRepositoryServiceSpy = jasmine.createSpyObj('CommandRepositoryService', ['a']);
         commandPathFinderServiceSpy = jasmine.createSpyObj('CommandPathFinderService', ['getCommandPath']);
         commandPathFinderServiceSpy.getCommandPath.and.returnValue([]);
+        commandDragDropManagerServiceSpy = jasmine.createSpyObj('CommandDragDropManagerService', ['createCommandContainerDrop']);
         TestBed.configureTestingModule({
-            imports: [MatTooltipModule],
-            declarations: [IfThenComponent],
+            imports: [MatTooltipModule, MatIconModule],
+            declarations: [IfThenComponent, CommandDropComponent],
             providers: [
                 {provide: FormBuilder, useValue: formBuilderSpy},
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
                 {provide: CommandContainerNgrxRepositoryService, useValue: commandContainerNgrxRepositoryServiceSpy},
                 {provide: CommandRepositoryService, useValue: commandRepositoryServiceSpy},
                 {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},
+                {provide: CommandDragDropManagerService, useValue: commandDragDropManagerServiceSpy},
             ]
         })
             .compileComponents();
