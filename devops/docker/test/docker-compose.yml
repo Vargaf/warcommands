@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+    warcommands_app_test:
+        build:
+            context: ../../../
+            dockerfile: devops/docker/test/Dockerfile
+
+        image: warcommands_app_test
+        volumes:
+            - type: bind
+              source: ../../../warcommands-app
+              target: /project

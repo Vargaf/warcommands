@@ -19,38 +19,29 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
-  declarations: [
-    BasicModeComponentDirective,
-    WorkerComponent,
-    TileGrassComponent,
-    TileSandComponent,
-    TileWaterComponent,
-    BaseComponent,
-    MatterFarmComponent,
-    EnergyFarmComponent,
-    PlayerResourcesComponent
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    FlexLayoutModule
-  ],
-  exports: [
-    BasicModeComponentDirective
-  ],
-  entryComponents: [
-    WorkerComponent,
-    TileGrassComponent,
-    TileSandComponent,
-    TileWaterComponent,
-    BaseComponent,
-    MatterFarmComponent,
-    EnergyFarmComponent
-  ],
-  providers: [
-    BasicModeGameEngineService,
-    StatsService,
-    { provide: RequestAnimationFrameService, useClass: RequestAnimationFrameNgrxService }
-  ]
+    declarations: [
+        BasicModeComponentDirective,
+        WorkerComponent,
+        TileGrassComponent,
+        TileSandComponent,
+        TileWaterComponent,
+        BaseComponent,
+        MatterFarmComponent,
+        EnergyFarmComponent,
+        PlayerResourcesComponent
+    ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        FlexLayoutModule
+    ],
+    exports: [
+        BasicModeComponentDirective
+    ],
+    providers: [
+        BasicModeGameEngineService,
+        StatsService,
+        { provide: RequestAnimationFrameService, useClass: RequestAnimationFrameNgrxService }
+    ]
 })
 export class GraphicsModule { }

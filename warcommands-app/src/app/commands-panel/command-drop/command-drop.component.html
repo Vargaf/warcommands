@@ -17,7 +17,7 @@
                         [attr.MouseHelperDetectorCommandContainerId]="commandContainer.id" fxLayout="column" fxLayoutAlign="start start">
                         <div #commandsEditorElement>
                             <div *ngFor="let command of commandList" class="command" [attr.dirty]="true" [attr.itemId]="command.id">
-                                <ng-template command-directive></ng-template>
+                                <ng-template warcommandsCommandDirective></ng-template>
                             </div>
                         </div>
                     </div>

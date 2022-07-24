@@ -42,12 +42,6 @@ import { WorkerClassMemberOptionListComponent } from './worker/worker-class-memb
         ArrayClassMemberOptionListComponent,
         WorkerClassMemberOptionListComponent,
     ],
-    entryComponents: [
-        BaseClassMemberOptionListComponent,
-        GameClassMemberOptionsListComponent,
-        ArrayClassMemberOptionListComponent,
-        WorkerClassMemberOptionListComponent,
-    ],
     providers: [
         { provide: parent, useExisting: forwardRef(() => WorkerClassMemberOptionListComponent) }
     ]

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -6,7 +6,7 @@ import { NgTemplateOutlet } from '@angular/common';
     templateUrl: './logic-operator-command-preview.component.html',
     styleUrls: ['./logic-operator-command-preview.component.scss']
 })
-export class LogicOperatorCommandPreviewComponent implements OnInit {
+export class LogicOperatorCommandPreviewComponent {
 
     @ViewChild('dragCommandPreview', { static: true })
     public previewTemplateRef!: TemplateRef<NgTemplateOutlet>;
@@ -14,10 +14,7 @@ export class LogicOperatorCommandPreviewComponent implements OnInit {
     @ViewChild('dragCommandPreview', { static: true, read: ViewContainerRef })
     public previewViewContainerRed!: ViewContainerRef;
 
-    constructor() { }
-
-    ngOnInit(): void {
-    }
+    constructor() {}
 
     getDragHelperTemplate(): any {
         return {

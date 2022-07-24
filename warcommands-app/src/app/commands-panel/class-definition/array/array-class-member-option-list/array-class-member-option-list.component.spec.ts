@@ -1,25 +1,47 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { ArrayClassMemberOptionListComponent } from './array-class-member-option-list.component';
+import {ArrayClassMemberOptionListComponent} from './array-class-member-option-list.component';
+import {of} from "rxjs";
+import {FormBuilder} from "@angular/forms";
+import {
+    CommandPathErrorManagerService
+} from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('ArrayClassMemberOptionListComponent', () => {
-  let component: ArrayClassMemberOptionListComponent;
-  let fixture: ComponentFixture<ArrayClassMemberOptionListComponent>;
+    let component: ArrayClassMemberOptionListComponent;
+    let fixture: ComponentFixture<ArrayClassMemberOptionListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ArrayClassMemberOptionListComponent ]
-    })
-    .compileComponents();
-  }));
+    let formBuilderSpy;
+    let commandPathErrorManagerServiceSpy;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ArrayClassMemberOptionListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(waitForAsync(() => {
+        formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
+        const controlsConfigMock = {
+            statusChanges: of(null),
+            valueChanges: of(null),
+            get: () => {},
+        };
+        formBuilderSpy.group.and.returnValue(controlsConfigMock);
+        commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError']);
+        TestBed.configureTestingModule({
+            declarations: [ArrayClassMemberOptionListComponent],
+            imports: [MatIconModule],
+            providers: [
+                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
+            ]
+        })
+            .compileComponents();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ArrayClassMemberOptionListComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

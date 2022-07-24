@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -6,7 +6,7 @@ import { NgTemplateOutlet } from '@angular/common';
     templateUrl: './if-then-else-preview.component.html',
     styleUrls: ['./if-then-else-preview.component.scss']
 })
-export class IfThenElsePreviewComponent implements OnInit {
+export class IfThenElsePreviewComponent {
 
     @ViewChild('dragCommandPreview', { static: true })
     public previewTemplateRef!: TemplateRef<NgTemplateOutlet>;
@@ -14,10 +14,7 @@ export class IfThenElsePreviewComponent implements OnInit {
     @ViewChild('dragCommandPreview', { static: true, read: ViewContainerRef })
     public previewViewContainerRed!: ViewContainerRef;
 
-    constructor() { }
-
-    ngOnInit() {
-    }
+    constructor() {}
 
     getDragHelperTemplate(): any {
         return {
@@ -26,5 +23,4 @@ export class IfThenElsePreviewComponent implements OnInit {
             context: null
         };
     }
-
 }

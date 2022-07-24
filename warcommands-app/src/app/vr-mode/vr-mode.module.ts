@@ -7,13 +7,15 @@ import { VrModeProviderModule } from './vr-mode-provider.module';
 import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
 import { InMmeoryModule } from '../commands-panel/in-mmeory/in-mmeory.module';
 import { VrModeAliasProviderModule } from './vr-mode-alias-provider.module';
-import 'aframe-extras';
 import { VrModeInMemoryProviderModule } from './vr-mode-in-memory-provider.module';
 import { MaterialModule } from '../share/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import * as GameEngineStore from '../../ngrx/basic-mode/reducer-map';
 import { StoreModule } from '@ngrx/store';
 import { AFrameHolderComponent } from './vr-mode/a-frame-holder/a-frame-holder.component';
+
+// Needed to be able to move the camera with the arrow keys
+import 'aframe-extras';
 
 //import 'aframe';
 //import 'aframe-event-set-component';

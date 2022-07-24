@@ -163,3 +163,70 @@ $dark-pink: #c94695;
 .rs-base {
     left: 50px !important;
 }
+
+/**
+*
+*   Tutorial overlay styles
+*   
+*   Inspired by https://freefrontend.com/css-ripple-effects/ RIPPLE ANIMATION BUTTON example
+*
+*/
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    &.dark-backdrop {
+      /*background: #000;
+      opacity: 0.85 !important;*/
+    }
+  }
+
+@mixin rings($duration, $delay) {
+    opacity: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: 0;
+    bottom: 0;
+    content: '';
+    height: 100%;
+    width: 100%;
+    border: 8px solid rgba(255,255,255,0.2);
+    border-radius: 100%;
+    animation-name: ripple;
+    animation-duration: $duration;
+    animation-delay: $delay;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(.65,0,.34,1);
+}
+
+.tutorial-highlight-element {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+  
+  &::after {
+    @include rings(2s, 0s);
+  }
+  
+  &::before {
+    @include rings(2s, 0.5s);
+  }
+}
+
+@keyframes ripple {
+  from {
+    opacity: 1;
+    transform: scale3d(0.75,0.75,1);
+  }
+  
+  to {
+    opacity: 0;
+    transform: scale3d(1.5,1.5,1);
+  }
+}

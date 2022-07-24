@@ -10,7 +10,7 @@ export interface RequestAnimationFrameState {
     [BasicModeReducerMap.GameEngineBasicModeStoreKey]: RequestAnimationFrameStore;
 }
 
-export const basicModeFeatureSelector = createFeatureSelector<RequestAnimationFrameState, RequestAnimationFrameStore>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
+export const basicModeFeatureSelector = createFeatureSelector<RequestAnimationFrameStore>(BasicModeReducerMap.GameEngineBasicModeStoreKey);
 
 const requestAnimationFrameSelector = createSelector(
     basicModeFeatureSelector,

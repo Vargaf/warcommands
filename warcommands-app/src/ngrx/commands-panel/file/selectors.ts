@@ -12,7 +12,7 @@ export interface FileSelectorState {
 }
 
 export const commandPanelFeatureSelector =
-    createFeatureSelector<FileSelectorState, FileStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<FileStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const fileFeatureSelector = createSelector(
     commandPanelFeatureSelector,

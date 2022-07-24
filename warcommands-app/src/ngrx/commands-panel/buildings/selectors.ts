@@ -11,7 +11,7 @@ export interface BuildingListFeatureState {
 }
 
 export const basicModeFeatureSelector =
-    createFeatureSelector<BuildingListFeatureState, BuildingStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<BuildingStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const buildingListFeatureSelector = createSelector(
     basicModeFeatureSelector,

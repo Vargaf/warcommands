@@ -21,14 +21,14 @@ export class AFrameHolderComponent implements OnInit {
 
     constructor(
         private readonly gameMiddlewareService: GameMiddlewareService,
-        private readonly currentPlayerMAnager: CurrentPlayerManagerService,
+        private readonly currentPlayerManager: CurrentPlayerManagerService,
         private readonly gameEngine: VrModeGameEngineService,
         private readonly playerRepository: PlayerRepositoryService,
     ) { }
 
     ngOnInit(): void {
 
-        const middlewareCurrentPlayer: MiddlewareCurrentPlayerDTO = this.currentPlayerMAnager.initializePlayer();
+        const middlewareCurrentPlayer: MiddlewareCurrentPlayerDTO = this.currentPlayerManager.initializePlayer();
         const currentPlayer: PlayerDTO = {
             id: middlewareCurrentPlayer.id,
             isCurrentPlayer: true

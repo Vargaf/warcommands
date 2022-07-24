@@ -32,15 +32,6 @@ import { LogicOperatorCommandPreviewComponent } from './logic-operator-command-p
         IfThenPreviewComponent,
         LogicOperatorCommandPreviewComponent,
         VariablePreviewComponent
-    ],
-    entryComponents: [
-        VariablePreviewComponent,
-        SetVariablePreviewComponent,
-        SetVariableFromCommandPreviewComponent,
-        IfThenPreviewComponent,
-        IfThenElsePreviewComponent,
-        GameCommandPreviewComponent,
-        LogicOperatorCommandPreviewComponent
     ]
 })
 export class DragPreviewsModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/domain/command-drag-drop/services/command-drag-drop-manager.service';
 import { CommandType } from 'src/warcommands/commands-panel/domain/command/model/command-type.enum';
 
@@ -7,7 +7,7 @@ import { CommandType } from 'src/warcommands/commands-panel/domain/command/model
     templateUrl: './commands.component.html',
     styleUrls: ['./commands.component.scss']
 })
-export class CommandsComponent implements OnInit, AfterViewInit {
+export class CommandsComponent implements AfterViewInit {
 
     @ViewChildren('command')
     commandList!: QueryList<ElementRef<HTMLDivElement>>;
@@ -21,9 +21,6 @@ export class CommandsComponent implements OnInit, AfterViewInit {
         private readonly commandDragDropManager: CommandDragDropManagerService
     ) { }
 
-    ngOnInit() {
-    }
-
     ngAfterViewInit() {
 
         this.commandDragDropManager.createCommandListDrop(this.commandListDropListRef);
@@ -33,5 +30,4 @@ export class CommandsComponent implements OnInit, AfterViewInit {
             this.commandDragDropManager.addDraggableElementToCommandList(commandHtmlElement, commandType, index);
         });
     }
-
 }

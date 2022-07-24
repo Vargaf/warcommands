@@ -53,12 +53,11 @@ export class JSONFileGeneratorService {
         const classMemberChained = this.buildClassMember(<ClassMemberDTO>command.classMember);
         const commandContainerJsonList: { [index: string]: CommandContainerJsonDTO } = {};
 
-        // tslint:disable-next-line: forin
+        // eslint-disable-next-line guard-for-in
         for (const commandContainerIndex in command.innerCommandContainerIdList) {
             const commandContainerId = command.innerCommandContainerIdList[commandContainerIndex];
-            const commandContainetJson: CommandContainerJsonDTO = this.buildCommandContainerJSON(commandContainerId);
 
-            commandContainerJsonList[commandContainerIndex] = commandContainetJson;
+            commandContainerJsonList[commandContainerIndex] = this.buildCommandContainerJSON(commandContainerId);
         }
 
         return {

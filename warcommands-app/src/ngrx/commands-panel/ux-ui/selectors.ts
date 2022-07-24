@@ -11,7 +11,7 @@ export interface UxUiFeatureState {
 }
 
 export const commandPanelFeatureSelector =
-    createFeatureSelector<UxUiFeatureState, UxUiStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
+    createFeatureSelector<UxUiStore>(CommandsPanelReducerMap.CommandsPanelStoreKey);
 
 const uxUiFeatureSelector = createSelector(
     commandPanelFeatureSelector,

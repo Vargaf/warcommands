@@ -3,7 +3,7 @@ import { THREE } from 'aframe';
 import { MapDTO } from 'src/warcommands/game-middleware/model/map/map.dto';
 import { TileType } from 'src/warcommands/game-middleware/model/map/tile-type.enum';
 import { TileDTO } from 'src/warcommands/game-middleware/model/map/tile.dto';
-import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils';
 import { ModelLoaderInterfaceService } from '../../domain/game-engine/model-loader-abstract.service';
 import { AframeSceneService } from './aframe-scene.service';
 
@@ -188,8 +188,8 @@ export class AframeMapService {
 						const ndx = facePositions.length / 3;
 						for (const pos of corners) {
 							facePositions.push(
-								pos[0] + mapTile.xCoordinate - topTileSize / 2, 
-								pos[1] - 1 - topTileHeight, 
+								pos[0] + mapTile.xCoordinate - topTileSize / 2,
+								pos[1] - 1 - topTileHeight,
 								pos[2] + mapTile.yCoordinate - topTileSize / 2);
 							faceNormals.push(...dir);
 							faceColors.push(dinamicColor.r, dinamicColor.g, dinamicColor.b);
@@ -248,7 +248,7 @@ export class AframeMapService {
 		const color16Size = treeColorAttribute16.count * treeColorAttribute16.itemSize;
 		for(let x = 0; x < color16Size; x++) {
 			if(x < 2 || (x + 1) % 4 != 0) {
-				const glslValue = 1/ 65535 * treeColorAttribute16.array[x]; 
+				const glslValue = 1/ 65535 * treeColorAttribute16.array[x];
 				color16.push(glslValue);
 			}
 		}
@@ -261,9 +261,9 @@ export class AframeMapService {
 
 		return treeClone;
 	}
-	
+
 	private getTileColor(tile: TileDTO): string {
-		
+
 		let tileColor = '';
 		switch (tile.type) {
 			case TileType.Grass:
@@ -284,7 +284,6 @@ export class AframeMapService {
 
 			default:
 				throw new Error('Tile type not recognized.');
-				break;
 		}
 
 		return tileColor;

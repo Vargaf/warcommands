@@ -1,25 +1,48 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { WorkerClassMemberOptionListComponent } from './worker-class-member-option-list.component';
+import {WorkerClassMemberOptionListComponent} from './worker-class-member-option-list.component';
+import {of} from "rxjs";
+import {FormBuilder} from "@angular/forms";
+import {
+    CommandPathErrorManagerService
+} from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('WorkerClassMemberOptionListComponent', () => {
-  let component: WorkerClassMemberOptionListComponent;
-  let fixture: ComponentFixture<WorkerClassMemberOptionListComponent>;
+    let component: WorkerClassMemberOptionListComponent;
+    let fixture: ComponentFixture<WorkerClassMemberOptionListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ WorkerClassMemberOptionListComponent ]
-    })
-    .compileComponents();
-  }));
+    let formBuilderSpy;
+    let commandPathErrorManagerServiceSpy;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(WorkerClassMemberOptionListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(waitForAsync(() => {
+        formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
+        commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError']);
+        const controlsConfigMock = {
+            statusChanges: of(null),
+            valueChanges: of(null),
+            get: () => {
+            }
+        };
+        formBuilderSpy.group.and.returnValue(controlsConfigMock);
+        TestBed.configureTestingModule({
+            declarations: [WorkerClassMemberOptionListComponent],
+            imports: [MatIconModule],
+            providers: [
+                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
+            ]
+        })
+            .compileComponents();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(WorkerClassMemberOptionListComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
