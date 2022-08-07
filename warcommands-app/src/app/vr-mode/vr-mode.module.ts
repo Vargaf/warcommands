@@ -16,7 +16,6 @@ import { AFrameHolderComponent } from './vr-mode/a-frame-holder/a-frame-holder.c
 
 // Needed to be able to move the camera with the arrow keys
 import 'aframe-extras';
-import { VrModeListenersModule } from "./vr-mode-listeners.module";
 
 //import 'aframe';
 //import 'aframe-event-set-component';
@@ -37,7 +36,6 @@ import { VrModeListenersModule } from "./vr-mode-listeners.module";
         VrModeAliasProviderModule,
         VrModeProviderModule,
         BasicModeOnMemoryModule,
-        VrModeListenersModule,
         StoreModule.forFeature( GameEngineStore.GameEngineBasicModeStoreKey, GameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN ),
     ],
     schemas: [

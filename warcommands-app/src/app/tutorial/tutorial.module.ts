@@ -10,6 +10,7 @@ import { TutorialComponentProviderModule } from "./tutorial-component-provider.m
 import { TutorialComponentService } from "../../warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service";
 import {LocalStorageProviderModule} from "./local-storage-provider.module";
 import {LocalStorageAliasModule} from "./local-storage-alias.module";
+import { TutorialListenersModule } from "./tutorial-listeners.module";
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {LocalStorageAliasModule} from "./local-storage-alias.module";
         TutorialComponentProviderModule,
         LocalStorageProviderModule,
         LocalStorageAliasModule,
+        TutorialListenersModule,
     ],
     providers: [
         { provide: TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN, useFactory: TutorialComponentStore.reducers },

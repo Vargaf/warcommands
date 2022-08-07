@@ -1,6 +1,6 @@
 import { GameTutorialRepository } from "./game-tutorial-repository.interface";
 import {EventBusInterface} from "../../../../shared/domain/event-bus/event-bus-interface";
-import {TutorialStartedEvent} from "../events/tutorial-started.event";
+import {TutorialFirstTimeOpenedEvent} from "../events/tutorial-first-time-opened.event";
 
 export class GameTutorialService {
 
@@ -15,6 +15,6 @@ export class GameTutorialService {
 
     start(): void {
         this.gameTutorialRepository.tutorialStarted();
-        this.eventBus.cast(new TutorialStartedEvent());
+        this.eventBus.cast(new TutorialFirstTimeOpenedEvent());
     }
 }

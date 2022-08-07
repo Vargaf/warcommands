@@ -1,6 +1,6 @@
 import {GameTutorialService} from "../../domain/tutorial-component/services/game-tutorial.service";
 import {GameTutorialRepository} from "../../domain/tutorial-component/services/game-tutorial-repository.interface";
-import {TutorialStartedEvent} from "../../domain/tutorial-component/events/tutorial-started.event";
+import {TutorialFirstTimeOpenedEvent} from "../../domain/tutorial-component/events/tutorial-first-time-opened.event";
 
 
 describe('Game tutorial service', () => {
@@ -28,7 +28,7 @@ describe('Game tutorial service', () => {
     it('When starting the tutorial we save it to do not open again and launch the tutoralStart event', () => {
         const {gameTutorialService, gameTutorialRepositorySpy, eventbusSpy} = setup();
 
-        const tutorialStartEvent = new TutorialStartedEvent();
+        const tutorialStartEvent = new TutorialFirstTimeOpenedEvent();
 
         gameTutorialService.start();
 
