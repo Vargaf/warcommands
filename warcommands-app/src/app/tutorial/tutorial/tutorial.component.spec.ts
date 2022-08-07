@@ -4,6 +4,10 @@ import {TutorialComponent} from './tutorial.component';
 import {
     TutorialComponentToggleServiceInterface
 } from "../../../warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
+import {IntroductionComponent} from "../introduction/introduction.component";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTabsModule} from "@angular/material/tabs";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('TutorialComponent', () => {
     let component: TutorialComponent;
@@ -14,7 +18,8 @@ describe('TutorialComponent', () => {
     beforeEach(waitForAsync(() => {
         tutorialComponentToggleServiceInterfaceSpy = jasmine.createSpyObj('TutorialComponentToggleServiceInterface', ['close'])
         TestBed.configureTestingModule({
-            declarations: [TutorialComponent],
+            declarations: [TutorialComponent, IntroductionComponent],
+            imports: [MatIconModule, MatTabsModule, BrowserAnimationsModule],
             providers: [
                 {provide: TutorialComponentToggleServiceInterface, useValue: tutorialComponentToggleServiceInterfaceSpy}
             ]

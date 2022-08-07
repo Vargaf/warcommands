@@ -11,6 +11,7 @@ import { AngularHomeModule } from './angular-home/angular-home.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TutorialModule } from "./tutorial/tutorial.module";
+import {MapSharedEventBusModule} from "./shared-modules/map-shared-event-bus.module";
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { TutorialModule } from "./tutorial/tutorial.module";
             ]
         }),
         TutorialModule, // As we need the tutorial services on dynamic components we have to import it on the root module
+        MapSharedEventBusModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

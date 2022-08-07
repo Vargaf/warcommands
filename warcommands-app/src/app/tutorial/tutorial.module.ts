@@ -8,6 +8,8 @@ import { StoreModule } from '@ngrx/store';
 import * as TutorialComponentStore from 'src/ngrx/tutorial-component/reducer-map';
 import { TutorialComponentProviderModule } from "./tutorial-component-provider.module";
 import { TutorialComponentService } from "../../warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service";
+import {LocalStorageProviderModule} from "./local-storage-provider.module";
+import {LocalStorageAliasModule} from "./local-storage-alias.module";
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import { TutorialComponentService } from "../../warcommands/tutorial-component/d
         FlexLayoutModule,
         StoreModule.forFeature(TutorialComponentStore.TutorialComponentStoreKey, TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN),
         TutorialComponentProviderModule,
+        LocalStorageProviderModule,
+        LocalStorageAliasModule,
     ],
     providers: [
         { provide: TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN, useFactory: TutorialComponentStore.reducers },

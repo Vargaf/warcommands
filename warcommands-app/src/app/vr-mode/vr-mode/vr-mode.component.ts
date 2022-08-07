@@ -36,7 +36,7 @@ export class VrModeComponent implements OnInit, OnDestroy {
         private readonly aframeStatsPanelService: AFrameStatsService,
         private readonly toggleCommandListPanelService: ToggleCommandListPanelService,
         private readonly gameMiddlewareService: GameMiddlewareService,
-        private readonly afameSceneService: AframeSceneService,
+        private readonly aframeSceneService: AframeSceneService,
         private readonly gameLogicClockService: GameLogicClockService,
         private tutorialComponentToggleService: TutorialComponentToggleServiceInterface,
         private gameTutorialService: GameTutorialService,
@@ -56,9 +56,11 @@ export class VrModeComponent implements OnInit, OnDestroy {
         });
         this.subscriptionManager.add(gameSpeedSubscription);
 
-        this.afameSceneService.isLoaded().then((isLoaded: boolean) => {
+        this.aframeSceneService.isLoaded().then((isLoaded: boolean) => {
             this.isGameLoaded = isLoaded;
-            this.gameTutorialService.start();
+            if(isLoaded && this.gameTutorialService.isFirstTime()) {
+                this.gameTutorialService.start();
+            }
         });
     }
 

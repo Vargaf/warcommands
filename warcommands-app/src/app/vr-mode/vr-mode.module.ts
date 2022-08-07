@@ -16,6 +16,7 @@ import { AFrameHolderComponent } from './vr-mode/a-frame-holder/a-frame-holder.c
 
 // Needed to be able to move the camera with the arrow keys
 import 'aframe-extras';
+import { VrModeListenersModule } from "./vr-mode-listeners.module";
 
 //import 'aframe';
 //import 'aframe-event-set-component';
@@ -23,26 +24,28 @@ import 'aframe-extras';
 //import 'aframe-template-component';
 
 
-@NgModule({
-  declarations: [VrModeComponent, AFrameHolderComponent],
-  imports: [
-    CommonModule,
-    VrModeRoutingModule,
-    MaterialModule,
-    FlexLayoutModule,
-    InMmeoryModule,
-    CommandsPanelModule,
-    VrModeInMemoryProviderModule,
-    VrModeAliasProviderModule,
-    VrModeProviderModule,
-    BasicModeOnMemoryModule,
-    StoreModule.forFeature(GameEngineStore.GameEngineBasicModeStoreKey, GameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN),
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA // Tells Angular we will have custom tags in our templates
-  ],
-  providers: [
-    { provide: GameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN, useFactory: GameEngineStore.reducers },
-  ]
-})
-export class VrModeModule { }
+@NgModule( {
+    declarations: [ VrModeComponent, AFrameHolderComponent ],
+    imports: [
+        CommonModule,
+        VrModeRoutingModule,
+        MaterialModule,
+        FlexLayoutModule,
+        InMmeoryModule,
+        CommandsPanelModule,
+        VrModeInMemoryProviderModule,
+        VrModeAliasProviderModule,
+        VrModeProviderModule,
+        BasicModeOnMemoryModule,
+        VrModeListenersModule,
+        StoreModule.forFeature( GameEngineStore.GameEngineBasicModeStoreKey, GameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN ),
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA // Tells Angular we will have custom tags in our templates
+    ],
+    providers: [
+        { provide: GameEngineStore.BASIC_MODE_REDUCER_MAP_TOKEN, useFactory: GameEngineStore.reducers },
+    ]
+} )
+export class VrModeModule {
+}

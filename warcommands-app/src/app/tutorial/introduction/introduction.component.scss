@@ -1,0 +1,29 @@
+.wrap {
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    max-width: 800px;
+    &.vert {
+        :host ::ng-deep {
+        .mat-tab-labels {
+          flex-direction: column;
+        }
+        .mat-tab-group {
+          flex-direction: row;
+        }
+        .mat-ink-bar {
+          height: 100%;
+          left: calc(100% - 2px) !important;
+          width: 2px !important;
+        }
+        .mat-tab-header {
+          border-bottom: none;
+        }
+        .mat-tab-body-wrapper {
+          flex: 1 1 auto;
+        }
+        .mat-tab-header-pagination {
+          display: none !important;
+        }
+      }
+    }
+  }
