@@ -40,6 +40,7 @@ describe('VrModeComponent', () => {
     let currentPlayerManagerServiceSpy;
     let vrModeGameEngineServiceSpy;
     let playerRepositoryServiceSpy;
+    let eventBusSpy;
 
     beforeEach(waitForAsync(() => {
         aFrameStatsServiceSpy = jasmine.createSpyObj('AFrameStatsService', ['togglePanel']);
@@ -61,6 +62,7 @@ describe('VrModeComponent', () => {
         vrModeGameEngineServiceSpy = jasmine.createSpyObj('VrModeGameEngineService', ['waitTillSceneIsLoaded', 'pauseGame']);
         vrModeGameEngineServiceSpy.waitTillSceneIsLoaded.and.returnValue(Promise.resolve(null));
         playerRepositoryServiceSpy = jasmine.createSpyObj('PlayerRepositoryService', ['save']);
+        eventBusSpy = jasmine.createSpyObj('EventBusInterface', ['on']);
         TestBed.configureTestingModule({
             declarations: [VrModeComponent, AFrameHolderComponent],
             imports: [
@@ -79,6 +81,7 @@ describe('VrModeComponent', () => {
                 {provide: CurrentPlayerManagerService, useValue: currentPlayerManagerServiceSpy},
                 {provide: VrModeGameEngineService, useValue: vrModeGameEngineServiceSpy},
                 {provide: PlayerRepositoryService, useValue: playerRepositoryServiceSpy},
+                {provide: 'EventBusInterface', useValue: eventBusSpy},
             ]
         })
             .compileComponents();

@@ -13,8 +13,10 @@ export class GameTutorialService {
         return !this.gameTutorialRepository.hasGameTutorialAlreadyStarted();
     }
 
-    start(): void {
-        this.gameTutorialRepository.tutorialStarted();
-        this.eventBus.cast(new TutorialFirstTimeOpenedEvent());
+    openTutorialFirstTime(): void {
+        if(this.isFirstTime()) {
+            this.gameTutorialRepository.tutorialStarted();
+            this.eventBus.cast(new TutorialFirstTimeOpenedEvent());
+        }
     }
 }

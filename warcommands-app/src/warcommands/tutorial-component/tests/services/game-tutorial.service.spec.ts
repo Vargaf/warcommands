@@ -30,7 +30,7 @@ describe('Game tutorial service', () => {
 
         const tutorialStartEvent = new TutorialFirstTimeOpenedEvent();
 
-        gameTutorialService.start();
+        gameTutorialService.openTutorialFirstTime();
 
         expect(eventbusSpy.cast).toHaveBeenCalledOnceWith(tutorialStartEvent);
         expect(gameTutorialRepositorySpy.tutorialStarted).toHaveBeenCalled();
