@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
 import * as TutorialComponentStore from 'src/ngrx/tutorial-component/reducer-map';
 import { TutorialComponentProviderModule } from "./tutorial-component-provider.module";
-import { TutorialComponentService } from "../../warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service";
+import { TutorialComponentService } from "../../warcommands/tutorial/domain/tutorial/services/tutorial-component.service";
 import {LocalStorageProviderModule} from "./local-storage-provider.module";
 import {LocalStorageAliasModule} from "./local-storage-alias.module";
 import { TutorialListenersModule } from "./tutorial-listeners.module";

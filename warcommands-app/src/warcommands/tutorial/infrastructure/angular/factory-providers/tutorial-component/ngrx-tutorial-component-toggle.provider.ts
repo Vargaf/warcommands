@@ -1,4 +1,4 @@
-import { NgrxTutorialComponentToggleService } from "src/warcommands/tutorial-component/infrastructure/ngrx/turotial-component/ngrx-tutorial-component-toggle.service";
+import { NgrxTutorialComponentToggleService } from "src/warcommands/tutorial/infrastructure/ngrx/turotial-component/ngrx-tutorial-component-toggle.service";
 import { Store } from "@ngrx/store";
 import * as TutorialComponentSelector from "src/ngrx/tutorial-component/selectors";
 

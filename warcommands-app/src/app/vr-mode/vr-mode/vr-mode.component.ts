@@ -13,17 +13,17 @@ import { AFrameStatsService } from 'src/warcommands/vr-mode/infrastructure/afram
 import { AframeSceneService } from 'src/warcommands/vr-mode/infrastructure/aframe/aframe-scene.service';
 import {
     TutorialComponentToggleServiceInterface
-} from "src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
+} from "src/warcommands/tutorial/domain/tutorial/services/tutorial-component-toggle-service.interface";
 import {
     GameTutorialService
-} from "../../../warcommands/tutorial-component/domain/tutorial-component/services/game-tutorial.service";
+} from "../../../warcommands/tutorial/domain/tutorial/services/game-tutorial.service";
 import {
     TutorialComponentService
-} from 'src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service';
+} from 'src/warcommands/tutorial/domain/tutorial/services/tutorial-component.service';
 import { EventBusInterface } from "../../../warcommands/shared/domain/event-bus/event-bus-interface";
 import {
     TutorialEventTypes
-} from "../../../warcommands/tutorial-component/domain/tutorial-component/events/tutorial-event-types.enum";
+} from "../../../warcommands/tutorial/domain/tutorial/events/tutorial-event-types.enum";
 
 @Component( {
     selector: 'app-vr-mode',

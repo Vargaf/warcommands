@@ -1,5 +1,5 @@
 import { select, Store } from "@ngrx/store";
-import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
+import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial/domain/tutorial/services/tutorial-component-toggle-service.interface";
 import * as TutorialComponentSelector from 'src/ngrx/tutorial-component/selectors';
 import * as TutorialComponentActions from 'src/ngrx/tutorial-component/actions';
 import { Observable, Subject } from "rxjs";
@@ -15,7 +15,7 @@ export class NgrxTutorialComponentToggleService implements TutorialComponentTogg
         private store: Store<TutorialComponentSelector.TutorialFeatureState>
     ) {
         this.store.pipe(select(TutorialComponentSelector.isTutorialOpenedSelector)).subscribe(
-            (isTutorialComponentOpened) => {
+            (isTutorialComponentOpened: boolean) => {
                 this.isTutorialComponentOpened = isTutorialComponentOpened;
 
                 if(isTutorialComponentOpened) {

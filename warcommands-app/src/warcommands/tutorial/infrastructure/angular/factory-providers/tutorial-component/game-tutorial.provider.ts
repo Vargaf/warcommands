@@ -1,7 +1,7 @@
-import { GameTutorialService } from "src/warcommands/tutorial-component/domain/tutorial-component/services/game-tutorial.service";
+import { GameTutorialService } from "src/warcommands/tutorial/domain/tutorial/services/game-tutorial.service";
 import {
     GameTutorialRepository
-} from "../../../../domain/tutorial-component/services/game-tutorial-repository.interface";
+} from "../../../../domain/tutorial/services/game-tutorial-repository.interface";
 import {EventBusInterface} from "../../../../../shared/domain/event-bus/event-bus-interface";
 
 const factory = (

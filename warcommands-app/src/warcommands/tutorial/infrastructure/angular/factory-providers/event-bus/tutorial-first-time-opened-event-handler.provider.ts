@@ -2,7 +2,7 @@ import { TutorialFirstTimeOpenedEventHandler } from "../../../event-bus/tutorial
 import { EventBusInterface } from "../../../../../shared/domain/event-bus/event-bus-interface";
 import {
     TutorialComponentToggleServiceInterface
-} from "../../../../domain/tutorial-component/services/tutorial-component-toggle-service.interface";
+} from "../../../../domain/tutorial/services/tutorial-component-toggle-service.interface";
 
 const factory = (
     eventBus: EventBusInterface,

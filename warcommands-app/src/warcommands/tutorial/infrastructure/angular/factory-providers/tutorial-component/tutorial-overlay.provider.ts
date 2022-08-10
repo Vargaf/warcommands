@@ -1,6 +1,6 @@
-import { TutorialOverlayService } from "src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-overlay.service";
+import { TutorialOverlayService } from "src/warcommands/tutorial/domain/tutorial/services/tutorial-overlay.service";
 import { Overlay } from "@angular/cdk/overlay";
-import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
+import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial/domain/tutorial/services/tutorial-component-toggle-service.interface";
 
 const factory = (
     overlay: Overlay,

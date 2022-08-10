@@ -1,6 +1,6 @@
-import {GameTutorialService} from "../../domain/tutorial-component/services/game-tutorial.service";
-import {GameTutorialRepository} from "../../domain/tutorial-component/services/game-tutorial-repository.interface";
-import {TutorialFirstTimeOpenedEvent} from "../../domain/tutorial-component/events/tutorial-first-time-opened.event";
+import {GameTutorialService} from "../../domain/tutorial/services/game-tutorial.service";
+import {GameTutorialRepository} from "../../domain/tutorial/services/game-tutorial-repository.interface";
+import {TutorialFirstTimeOpenedEvent} from "../../domain/tutorial/events/tutorial-first-time-opened.event";
 
 
 describe('Game tutorial service', () => {

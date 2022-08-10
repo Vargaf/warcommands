@@ -7,13 +7,13 @@ import {AframeSceneService} from "../../../warcommands/vr-mode/infrastructure/af
 import {GameLogicClockService} from "../../../warcommands/vr-mode/domain/game-engine/game-logic-clock.service";
 import {
     TutorialComponentToggleServiceInterface
-} from "../../../warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component-toggle-service.interface";
+} from "../../../warcommands/tutorial/domain/tutorial/services/tutorial-component-toggle-service.interface";
 import {
     GameTutorialService
-} from "../../../warcommands/tutorial-component/domain/tutorial-component/services/game-tutorial.service";
+} from "../../../warcommands/tutorial/domain/tutorial/services/game-tutorial.service";
 import {
     TutorialComponentService
-} from "../../../warcommands/tutorial-component/domain/tutorial-component/services/tutorial-component.service";
+} from "../../../warcommands/tutorial/domain/tutorial/services/tutorial-component.service";
 import {of} from "rxjs";
 import {AFrameHolderComponent} from "./a-frame-holder/a-frame-holder.component";
 import {
@@ -60,7 +60,7 @@ describe('VrModeComponent', () => {
         const playerMock: PlayerDTO = {id: '', isCurrentPlayer: true};
         currentPlayerManagerServiceSpy.initializePlayer.and.returnValue(playerMock);
         vrModeGameEngineServiceSpy = jasmine.createSpyObj('VrModeGameEngineService', ['waitTillSceneIsLoaded', 'pauseGame']);
-        vrModeGameEngineServiceSpy.waitTillSceneIsLoaded.and.returnValue(Promise.resolve(null));
+        vrModeGameEngineServiceSpy.waitTillSceneIsLoaded.and.returnValue(Promise.resolve());
         playerRepositoryServiceSpy = jasmine.createSpyObj('PlayerRepositoryService', ['save']);
         eventBusSpy = jasmine.createSpyObj('EventBusInterface', ['on']);
         TestBed.configureTestingModule({

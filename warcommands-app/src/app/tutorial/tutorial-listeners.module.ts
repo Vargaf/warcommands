@@ -1,10 +1,10 @@
 import { forwardRef, Inject, NgModule } from "@angular/core";import {
     TutorialEventRegister
-} from "../../warcommands/tutorial-component/infrastructure/event-bus/tutorial-event-register";
+} from "../../warcommands/tutorial/infrastructure/event-bus/tutorial-event-register";
 import * as TutorialEventRegisterProvider
-    from "src/warcommands/tutorial-component/infrastructure/angular/factory-providers/event-bus/tutorial-event-register.provider";
+    from "src/warcommands/tutorial/infrastructure/angular/factory-providers/event-bus/tutorial-event-register.provider";
 import { EventRegisterInterface } from "../../warcommands/shared/domain/event-bus/event-register.interface";
-import * as TutorialFirstTimeOpenEventHandlerProvider from "src/warcommands/tutorial-component/infrastructure/angular/factory-providers/event-bus/tutorial-first-time-opened-event-handler.provider";
+import * as TutorialFirstTimeOpenEventHandlerProvider from "src/warcommands/tutorial/infrastructure/angular/factory-providers/event-bus/tutorial-first-time-opened-event-handler.provider";
 
 @NgModule( {
     providers: [

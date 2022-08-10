@@ -1,4 +1,4 @@
-import { GameTutorialRepository } from "../../domain/tutorial-component/services/game-tutorial-repository.interface";
+import { GameTutorialRepository } from "../../domain/tutorial/services/game-tutorial-repository.interface";
 
 const GAME_TUTORIAL_ALREADY_STARTED = 'gameTutorialAlreadyStarted';
 
