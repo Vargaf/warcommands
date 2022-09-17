@@ -1,6 +1,6 @@
 import { TutorialEventRegister } from "../../../event-bus/tutorial-event-register";
 import { EventHandlerInterface } from "../../../../../shared/domain/event-bus/event-handler.interface";
-import { TutorialFirstTimeOpenedEventHandler } from "../../../event-bus/tutorial-first-time-opened-event-handler";
+import { TutorialUserFirstTimeArrivedEventHandler } from "../../../event-bus/tutorial-user-first-time-arrived-event-handler";
 
 const factory = (
     tutorialFirstTimeOpenedEventHandler: EventHandlerInterface,
@@ -13,5 +13,5 @@ const factory = (
 export const provider = {
     provide: TutorialEventRegister,
     useFactory: factory,
-    deps: [TutorialFirstTimeOpenedEventHandler]
+    deps: [TutorialUserFirstTimeArrivedEventHandler]
 };

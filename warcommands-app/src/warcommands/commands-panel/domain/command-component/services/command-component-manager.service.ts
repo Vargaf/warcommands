@@ -33,5 +33,4 @@ export class CommandComponentManagerService {
             this.commandComponentRepositoryService.remove(commandId);
         }
     }
-
 }

@@ -1,28 +1,31 @@
 <div class="introduction-component-content">
-    <h1>Welcome to War Commands!!</h1>
+    <mat-stepper orientation="vertical">
+        <mat-step label="Your first worker">
+            <ng-template matStepContent>
+                <app-first-worker></app-first-worker>
+            </ng-template>
+        </mat-step>
+        <mat-step label="Resources">
+            <ng-template matStepContent>
+                <app-welcome></app-welcome>
+            </ng-template>
+        </mat-step>
+        <mat-step label="Harvest">
+            <ng-template matStepContent>
+                <app-welcome></app-welcome>
+            </ng-template>
+        </mat-step>
+        <mat-step label="Harvest">
+            <ng-template matStepContent>
+                <app-welcome></app-welcome>
+            </ng-template>
+        </mat-step>
+    </mat-stepper>
 
-    <p>
-        Here you will have fun and learn to program.
-    </p>
-    <p>
-        Don't panic, it will be easy, and fun, for everybody, and for all ages, from the youngest to the most senior at home.
-    </p>
-</div>
-<div>
-    <div class="wrap vert2">
-        <mat-tab-group headerPosition="below">
-          <mat-tab label="First"> Content 1 </mat-tab>
-          <mat-tab label="Second"> Content 2 </mat-tab>
-          <mat-tab label="Third"> Content 3 </mat-tab>
-          <mat-tab label="Fouth"> Content 4 </mat-tab>
-          <mat-tab label="Fifth"> Content 5 </mat-tab>
-          <mat-tab label="Sixth"> Content 6 </mat-tab>
-          <mat-tab label="First"> Content 1 </mat-tab>
-          <mat-tab label="Second"> Content 2 </mat-tab>
-          <mat-tab label="Third"> Content 3 </mat-tab>
-          <mat-tab label="Fouth"> Content 4 </mat-tab>
-          <mat-tab label="Fifth"> Content 5 </mat-tab>
-          <mat-tab label="Sixth"> Content 6 </mat-tab>
-        </mat-tab-group>
-      </div>      
+    <!-- Icon overrides. -->
+    <ng-template matStepperIcon="none">
+    </ng-template>
+    <ng-template matStepperIcon="edit">
+        <mat-icon>school</mat-icon>
+    </ng-template>
 </div>

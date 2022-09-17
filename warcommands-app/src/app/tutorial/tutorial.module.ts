@@ -7,15 +7,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
 import * as TutorialComponentStore from 'src/ngrx/tutorial-component/reducer-map';
 import { TutorialComponentProviderModule } from "./tutorial-component-provider.module";
-import { TutorialComponentService } from "../../warcommands/tutorial/domain/tutorial/services/tutorial-component.service";
 import {LocalStorageProviderModule} from "./local-storage-provider.module";
 import {LocalStorageAliasModule} from "./local-storage-alias.module";
 import { TutorialListenersModule } from "./tutorial-listeners.module";
+import { WelcomeComponent } from './welcome/welcome.component';
+import { FirstWorkerComponent } from './first-worker/first-worker.component';
 
 @NgModule({
     declarations: [
         IntroductionComponent,
         TutorialComponent,
+        WelcomeComponent,
+        FirstWorkerComponent,
     ],
     imports: [
         CommonModule,
@@ -31,10 +34,4 @@ import { TutorialListenersModule } from "./tutorial-listeners.module";
         { provide: TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN, useFactory: TutorialComponentStore.reducers },
     ]
 })
-export class TutorialModule {
-
-    constructor(
-        private tutorialComponentService: TutorialComponentService
-    ) {
-    }
-}
+export class TutorialModule {}

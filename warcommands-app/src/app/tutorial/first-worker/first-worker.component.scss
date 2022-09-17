@@ -1,0 +1,8 @@
+.tutorial-first-worker-content {
+    background-color: #343746;
+    border-radius: 10px;
+}
+
+:host ::ng-deep .mat-stepper-horizontal {
+    background: none;
+}

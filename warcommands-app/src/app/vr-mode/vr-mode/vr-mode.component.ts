@@ -17,13 +17,12 @@ import {
 import {
     GameTutorialService
 } from "../../../warcommands/tutorial/domain/tutorial/services/game-tutorial.service";
-import {
-    TutorialComponentService
-} from 'src/warcommands/tutorial/domain/tutorial/services/tutorial-component.service';
 import { EventBusInterface } from "../../../warcommands/shared/domain/event-bus/event-bus-interface";
 import {
     TutorialEventTypes
 } from "../../../warcommands/tutorial/domain/tutorial/events/tutorial-event-types.enum";
+import {ModalPanelService} from "../../modal-panel/modal-panel.service";
+import {IntroductionComponent} from "../../tutorial/introduction/introduction.component";
 
 @Component( {
     selector: 'app-vr-mode',
@@ -54,8 +53,9 @@ export class VrModeComponent implements OnInit, OnDestroy {
         private gameLogicClockService: GameLogicClockService,
         private tutorialComponentToggleService: TutorialComponentToggleServiceInterface,
         private gameTutorialService: GameTutorialService,
-        private tutorialComponentService: TutorialComponentService,
+        //private tutorialComponentService: TutorialComponentService,
         @Inject('EventBusInterface') private eventBus: EventBusInterface,
+        private modalPanelService: ModalPanelService
     ) {
     }
 
@@ -74,12 +74,12 @@ export class VrModeComponent implements OnInit, OnDestroy {
 
         this.aframeSceneService.isLoaded().then( ( isLoaded: boolean ) => {
             this.isGameLoaded = isLoaded;
-            if( isLoaded && this.gameTutorialService.isFirstTime() ) {
-                this.gameTutorialService.openTutorialFirstTime();
+            if( isLoaded && !this.gameTutorialService.isWelcomeStepFinished() ) {
+                this.gameTutorialService.openWelcomeStep();
             }
         } );
 
-        this.registerOpenTutorialFirstTime();
+        this.registerTutorialWelcomePageOpenedEvent();
     }
 
     ngOnDestroy() {
@@ -125,14 +125,14 @@ export class VrModeComponent implements OnInit, OnDestroy {
     }
 
     openTutorial(): void {
-        this.tutorialComponentToggleService.open();
+        this.modalPanelService.create(IntroductionComponent);
     }
 
-    registerOpenTutorialFirstTime(): void {
-        this.eventBus.on(TutorialEventTypes.TutorialFirstTimeOpened, () => { this.setTutorialButtonAsPanelRelatedElement() });
+    registerTutorialWelcomePageOpenedEvent(): void {
+        this.eventBus.on(TutorialEventTypes.TutorialWelcomePageOpened, () => { this.setTutorialButtonAsPanelRelatedElement() });
     }
 
     setTutorialButtonAsPanelRelatedElement(): void {
-        this.tutorialComponentService.setTutorialPanelRelatedElement( this.tutorialButtonElement );
+        this.modalPanelService.attachToElement(this.tutorialButtonElement);
     }
 }

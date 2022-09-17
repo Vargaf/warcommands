@@ -1,6 +1,6 @@
 import { GameTutorialRepository } from "./game-tutorial-repository.interface";
 import {EventBusInterface} from "../../../../shared/domain/event-bus/event-bus-interface";
-import {TutorialFirstTimeOpenedEvent} from "../events/tutorial-first-time-opened.event";
+import {TutorialUserFirstTimeArrivedEvent} from "../events/tutorial-user-first-time-arrived.event";
 
 export class GameTutorialService {
 
@@ -9,14 +9,17 @@ export class GameTutorialService {
         private eventBus: EventBusInterface
     ) {}
 
-    isFirstTime(): boolean {
-        return !this.gameTutorialRepository.hasGameTutorialAlreadyStarted();
+    isWelcomeStepFinished(): boolean {
+        return this.gameTutorialRepository.isWelcomeStepFinished();
     }
 
-    openTutorialFirstTime(): void {
-        if(this.isFirstTime()) {
-            this.gameTutorialRepository.tutorialStarted();
-            this.eventBus.cast(new TutorialFirstTimeOpenedEvent());
+    openWelcomeStep(): void {
+        if(!this.isWelcomeStepFinished()) {
+            this.eventBus.cast(new TutorialUserFirstTimeArrivedEvent());
         }
+    }
+
+    finishWelcomeStep(): void {
+        this.gameTutorialRepository.finishWelcomeStep();
     }
 }

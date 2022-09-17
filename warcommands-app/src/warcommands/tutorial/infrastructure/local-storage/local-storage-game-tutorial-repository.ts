@@ -1,19 +1,19 @@
 import { GameTutorialRepository } from "../../domain/tutorial/services/game-tutorial-repository.interface";
 
-const GAME_TUTORIAL_ALREADY_STARTED = 'gameTutorialAlreadyStarted';
+const TUTORIAL_WELCOME_STEP_FINISHED = 'tutorialWelcomeStepFinished';
 
 export class LocalStorageGameTutorialRepository implements GameTutorialRepository {
 
-    hasGameTutorialAlreadyStarted(): boolean {
-        let gameTutorialAlreadyStarted = localStorage.getItem( GAME_TUTORIAL_ALREADY_STARTED );
+    isWelcomeStepFinished(): boolean {
+        let tutorialWelcomeStepFinished = localStorage.getItem( TUTORIAL_WELCOME_STEP_FINISHED );
         let result = false;
-        if( gameTutorialAlreadyStarted === '1' ) {
+        if( tutorialWelcomeStepFinished === '1' ) {
             result = true;
         }
         return result;
     }
 
-    tutorialStarted(): void {
-        localStorage.setItem( GAME_TUTORIAL_ALREADY_STARTED, '1' );
+    finishWelcomeStep(): void {
+        localStorage.setItem( TUTORIAL_WELCOME_STEP_FINISHED, '1' );
     }
 }

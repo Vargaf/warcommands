@@ -4,12 +4,12 @@ import { forwardRef, Inject, NgModule } from "@angular/core";import {
 import * as TutorialEventRegisterProvider
     from "src/warcommands/tutorial/infrastructure/angular/factory-providers/event-bus/tutorial-event-register.provider";
 import { EventRegisterInterface } from "../../warcommands/shared/domain/event-bus/event-register.interface";
-import * as TutorialFirstTimeOpenEventHandlerProvider from "src/warcommands/tutorial/infrastructure/angular/factory-providers/event-bus/tutorial-first-time-opened-event-handler.provider";
+import * as TutorialUserFirstTimeArrivedEventHandlerProvider from "src/warcommands/tutorial/infrastructure/angular/factory-providers/event-bus/tutorial-user-first-time-arrived-event-handler.provider";
 
 @NgModule( {
     providers: [
         TutorialEventRegisterProvider.provider,
-        TutorialFirstTimeOpenEventHandlerProvider.provider,
+        TutorialUserFirstTimeArrivedEventHandlerProvider.provider,
         { provide: 'EventRegisterInterface', useExisting: forwardRef( () => TutorialEventRegister ) }
     ]
 } )

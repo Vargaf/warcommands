@@ -10,10 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverlayModule } from '@angular/cdk/overlay';
-
-
-
-
+import {MatStepperModule} from "@angular/material/stepper";
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
 @NgModule({
     exports: [
@@ -28,6 +26,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
         MatProgressSpinnerModule,
         MatTooltipModule,
         OverlayModule,
+        MatStepperModule,
+    ],
+    providers: [
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { displayDefaultIndicatorType: false }
+        }
     ]
 })
 export class MaterialModule { }

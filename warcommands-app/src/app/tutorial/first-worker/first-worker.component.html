@@ -1,0 +1,38 @@
+<div class="tutorial-first-worker-content">
+    <mat-stepper labelPosition="bottom">
+        <mat-step>
+            <h2>¡Welcome to Warcommands!</h2>
+            <p>
+                Here you will learn how to think as a problem solver.
+                <br>
+                Don't panic, it will be easy, for everybody,
+                <br>
+                and for all ages and don't forget, funny!!
+            </p>
+            <div>
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <p>
+                There is no need to have any developer skill,
+                <br>
+                you will learn everything from zero to hero,
+                <br>
+                the only thing you need is passion and be willing to learn while playing.
+            </p>
+            <div>
+                <button mat-raised-button matStepperPrevious>Back</button>
+                &nbsp;
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+
+        <!-- Icon overrides. -->
+        <ng-template matStepperIcon="none">
+        </ng-template>
+        <ng-template matStepperIcon="edit">
+            <mat-icon>school</mat-icon>
+        </ng-template>
+    </mat-stepper>
+</div>

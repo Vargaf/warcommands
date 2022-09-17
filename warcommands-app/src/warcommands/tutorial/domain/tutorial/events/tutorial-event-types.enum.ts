@@ -1,4 +1,5 @@
 
 export enum TutorialEventTypes {
-    TutorialFirstTimeOpened = 'tutorial:firstTimeOpened',
+    TutorialUserFirstTimeArrived = 'tutorial:userFirstTimeArrived',
+    TutorialWelcomePageOpened = 'tutorial:welcomePageOpened',
 }

@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .commands-drop-container .command {
     margin: 0 0 10px 10px;
@@ -26,11 +32,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .draggable-command, .drag-command-preview {
         margin-bottom: 10px;
     }
-    
+
 }
 
 .warcommands-command-panel-loader {
-    .mat-progress-spinner circle,.mat-spinner circle {
+    .mat-progress-spinner circle, .mat-spinner circle {
         stroke: #6272A4;
     }
 }
@@ -65,7 +71,7 @@ $dark-pink: #c94695;
 
     .mat-form-field {
         line-height: 1em;
-        
+
     }
 
     .mat-form-field-wrapper {
@@ -107,16 +113,16 @@ $dark-pink: #c94695;
         min-height: 60px;
         background-color: $backgroundColor;
     }
-    
+
     &__color {
         color: $fontColor;
-        
+
         @include warcommands-command-panel-command-mat-form($fontColor)
     }
 }
 
 @mixin command-panel-command($backgroundColor, $fontColor) {
-    
+
     &__valid {
         @include command-panel-command-components($backgroundColor, $fontColor)
     }
@@ -137,6 +143,7 @@ $dark-pink: #c94695;
 .game--command {
     @include command-panel-command($cyan, $black);
 }
+
 .game-loop--command {
     @include command-panel-command($green, $black);
 }
@@ -167,16 +174,22 @@ $dark-pink: #c94695;
 /**
 *
 *   Tutorial overlay styles
-*   
-*   Inspired by https://freefrontend.com/css-ripple-effects/ RIPPLE ANIMATION BUTTON example
 *
 */
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
     &.dark-backdrop {
-      /*background: #000;
-      opacity: 0.85 !important;*/
+        /*background: #000;
+        opacity: 0.85 !important;*/
     }
-  }
+}
+
+.modal-panel-component {
+    display: block;
+
+    .modal-panel-component-with-backdrop {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+}
 
 @mixin rings($duration, $delay) {
     opacity: 0;
@@ -192,41 +205,46 @@ $dark-pink: #c94695;
     content: '';
     height: 100%;
     width: 100%;
-    border: 8px solid rgba(255,255,255,0.2);
+    border: 8px solid rgba(255, 255, 255, 0.2);
     border-radius: 100%;
     animation-name: ripple;
     animation-duration: $duration;
     animation-delay: $delay;
     animation-iteration-count: infinite;
-    animation-timing-function: cubic-bezier(.65,0,.34,1);
+    animation-timing-function: cubic-bezier(.65, 0, .34, 1);
 }
 
 .tutorial-highlight-element {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100%;
-  box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
-  
-  &::after {
-    @include rings(2s, 0s);
-  }
-  
-  &::before {
-    @include rings(2s, 0.5s);
-  }
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+
+    &::after {
+        @include rings(2s, 0s);
+    }
+
+    &::before {
+        @include rings(2s, 0.5s);
+    }
 }
 
+/**
+ *
+ *  Inspired by https://freefrontend.com/css-ripple-effects/ RIPPLE ANIMATION BUTTON example
+ *
+ */
 @keyframes ripple {
-  from {
-    opacity: 1;
-    transform: scale3d(0.75,0.75,1);
-  }
-  
-  to {
-    opacity: 0;
-    transform: scale3d(1.5,1.5,1);
-  }
+    from {
+        opacity: 1;
+        transform: scale3d(0.75, 0.75, 1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale3d(1.5, 1.5, 1);
+    }
 }

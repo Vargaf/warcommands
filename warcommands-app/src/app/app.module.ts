@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -12,10 +11,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TutorialModule } from "./tutorial/tutorial.module";
 import {MapSharedEventBusModule} from "./shared-modules/map-shared-event-bus.module";
+import {ModalPanelModule} from "./modal-panel/modal-panel.module";
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,
@@ -40,6 +40,7 @@ import {MapSharedEventBusModule} from "./shared-modules/map-shared-event-bus.mod
         }),
         TutorialModule, // As we need the tutorial services on dynamic components we have to import it on the root module
         MapSharedEventBusModule,
+        ModalPanelModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

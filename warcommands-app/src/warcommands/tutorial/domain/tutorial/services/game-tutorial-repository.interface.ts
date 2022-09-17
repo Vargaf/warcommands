@@ -1,7 +1,7 @@
 export interface GameTutorialRepository {
 
-    hasGameTutorialAlreadyStarted(): boolean;
+    isWelcomeStepFinished(): boolean;
 
-    tutorialStarted(): void;
+    finishWelcomeStep(): void;
 
 }

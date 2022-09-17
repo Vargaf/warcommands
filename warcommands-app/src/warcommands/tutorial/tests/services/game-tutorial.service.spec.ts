@@ -1,6 +1,6 @@
 import {GameTutorialService} from "../../domain/tutorial/services/game-tutorial.service";
 import {GameTutorialRepository} from "../../domain/tutorial/services/game-tutorial-repository.interface";
-import {TutorialFirstTimeOpenedEvent} from "../../domain/tutorial/events/tutorial-first-time-opened.event";
+import {TutorialUserFirstTimeArrivedEvent} from "../../domain/tutorial/events/tutorial-user-first-time-arrived.event";
 
 
 describe('Game tutorial service', () => {
@@ -9,30 +9,41 @@ describe('Game tutorial service', () => {
         const eventbusSpy = jasmine.createSpyObj('SharedEventBus', ['cast']);
 
         const gameTutorialRepositorySpy =
-            jasmine.createSpyObj('GameTutorialRepository', ['hasGameTutorialAlreadyStarted', 'tutorialStarted']);
+            jasmine.createSpyObj('GameTutorialRepository', ['isWelcomeStepFinished', 'finishWelcomeStep']);
 
         const gameTutorialService = new GameTutorialService(gameTutorialRepositorySpy, eventbusSpy);
 
         return {gameTutorialService, gameTutorialRepositorySpy, eventbusSpy};
     }
 
-    it("Check the tutorial has not been already opened the first time", () => {
+    it("Check the tutorial welcome step has not been already finished", () => {
         const {gameTutorialService, gameTutorialRepositorySpy} = setup();
 
-        gameTutorialRepositorySpy.hasGameTutorialAlreadyStarted.and.returnValue(false);
+        gameTutorialRepositorySpy.isWelcomeStepFinished.and.returnValue(false);
 
-        let isFirstTime = gameTutorialService.isFirstTime();
-        expect(true).toEqual(isFirstTime);
+        let isWelcomeStepFinished = gameTutorialService.isWelcomeStepFinished();
+        expect(false).toEqual(isWelcomeStepFinished);
     });
 
-    it('When starting the tutorial we save it to do not open again and launch the tutoralStart event', () => {
+    it('Open the tutorial welcome step if it is not already finished', () => {
         const {gameTutorialService, gameTutorialRepositorySpy, eventbusSpy} = setup();
 
-        const tutorialStartEvent = new TutorialFirstTimeOpenedEvent();
+        gameTutorialRepositorySpy.isWelcomeStepFinished.and.returnValue(false);
+        
+        const tutorialStartEvent = new TutorialUserFirstTimeArrivedEvent();
 
-        gameTutorialService.openTutorialFirstTime();
+        gameTutorialService.openWelcomeStep();
 
         expect(eventbusSpy.cast).toHaveBeenCalledOnceWith(tutorialStartEvent);
-        expect(gameTutorialRepositorySpy.tutorialStarted).toHaveBeenCalled();
+    });
+
+    it('Do not open the tutorial welcome step when is already been finished', () => {
+        const {gameTutorialService, gameTutorialRepositorySpy, eventbusSpy} = setup();
+
+        gameTutorialRepositorySpy.isWelcomeStepFinished.and.returnValue(true);
+
+        gameTutorialService.openWelcomeStep();
+
+        expect(eventbusSpy.cast).toHaveBeenCalledTimes(0);
     });
 });

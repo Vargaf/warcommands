@@ -11,9 +11,6 @@ import {
 import {
     GameTutorialService
 } from "../../../warcommands/tutorial/domain/tutorial/services/game-tutorial.service";
-import {
-    TutorialComponentService
-} from "../../../warcommands/tutorial/domain/tutorial/services/tutorial-component.service";
 import {of} from "rxjs";
 import {AFrameHolderComponent} from "./a-frame-holder/a-frame-holder.component";
 import {
@@ -25,6 +22,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {PlayerDTO} from "../../../warcommands/vr-mode/domain/players/model/player.dto";
+import {ModalPanelService} from "../../modal-panel/modal-panel.service";
 
 describe('VrModeComponent', () => {
     let component: VrModeComponent;
@@ -36,11 +34,11 @@ describe('VrModeComponent', () => {
     let gameLogicClockServiceSpy;
     let tutorialComponentToggleServiceInterfaceSpy;
     let gameTutorialServiceSpy;
-    let tutorialComponentServiceSpy;
     let currentPlayerManagerServiceSpy;
     let vrModeGameEngineServiceSpy;
     let playerRepositoryServiceSpy;
     let eventBusSpy;
+    let modalPanelServiceSpy;
 
     beforeEach(waitForAsync(() => {
         aFrameStatsServiceSpy = jasmine.createSpyObj('AFrameStatsService', ['togglePanel']);
@@ -55,7 +53,6 @@ describe('VrModeComponent', () => {
         gameLogicClockServiceSpy.currentSpeedObservable.and.returnValue(of(speed));
         tutorialComponentToggleServiceInterfaceSpy = jasmine.createSpyObj('TutorialComponentToggleServiceInterface', ['close', 'open']);
         gameTutorialServiceSpy = jasmine.createSpyObj('GameTutorialService', ['start']);
-        tutorialComponentServiceSpy = jasmine.createSpyObj('TutorialComponentService', ['setTutorialPanelRelatedElement']);
         currentPlayerManagerServiceSpy = jasmine.createSpyObj('CurrentPlayerManagerService', ['initializePlayer']);
         const playerMock: PlayerDTO = {id: '', isCurrentPlayer: true};
         currentPlayerManagerServiceSpy.initializePlayer.and.returnValue(playerMock);
@@ -63,6 +60,8 @@ describe('VrModeComponent', () => {
         vrModeGameEngineServiceSpy.waitTillSceneIsLoaded.and.returnValue(Promise.resolve());
         playerRepositoryServiceSpy = jasmine.createSpyObj('PlayerRepositoryService', ['save']);
         eventBusSpy = jasmine.createSpyObj('EventBusInterface', ['on']);
+        modalPanelServiceSpy = jasmine.createSpyObj('ModalPanelService', ['']);
+
         TestBed.configureTestingModule({
             declarations: [VrModeComponent, AFrameHolderComponent],
             imports: [
@@ -77,11 +76,11 @@ describe('VrModeComponent', () => {
                 {provide: GameLogicClockService, useValue: gameLogicClockServiceSpy},
                 {provide: TutorialComponentToggleServiceInterface, useValue: tutorialComponentToggleServiceInterfaceSpy},
                 {provide: GameTutorialService, useValue: gameTutorialServiceSpy},
-                {provide: TutorialComponentService, useValue: tutorialComponentServiceSpy},
                 {provide: CurrentPlayerManagerService, useValue: currentPlayerManagerServiceSpy},
                 {provide: VrModeGameEngineService, useValue: vrModeGameEngineServiceSpy},
                 {provide: PlayerRepositoryService, useValue: playerRepositoryServiceSpy},
                 {provide: 'EventBusInterface', useValue: eventBusSpy},
+                {provide: ModalPanelService, useValue: modalPanelServiceSpy},
             ]
         })
             .compileComponents();
