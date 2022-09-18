@@ -10,12 +10,12 @@ import {ModalPanelComponentParameters} from "./modal-panel-component-parameters"
 export class ModalPanelService {
 
     private overlayRef!: OverlayRef;
-    private subscriptions: Subscription = new Subscription();
+    private subscriptions!: Subscription;
     private renderer: Renderer2;
     private attachedElement: ElementRef|null = null;
 
     private readonly panelDefaultConfig: ModalPanelOverlayConfiguration = {
-        isClosingModalEnabled: false,
+        isClosingModalEnabled: true,
         backdropClass: 'modal-panel-component-without-backdrop',
         panelClass: 'modal-panel-component'
     };
@@ -28,7 +28,8 @@ export class ModalPanelService {
     }
 
     create(component: ComponentType<any>, overlayConfiguration?: ModalPanelOverlayConfiguration): void {
-        this.remove();
+        this.initializePanelOverlay();
+
         const overlayConfigParams = { ...this.panelDefaultConfig, ...overlayConfiguration };
 
         // Returns an OverlayConfig
@@ -46,32 +47,18 @@ export class ModalPanelService {
         });
 
         // Create ComponentPortal that can be attached to a PortalHost
-        const filePreviewPortal = new ComponentPortal(
+        const componentPortal = new ComponentPortal(
             ModalOuterContainerComponent,
             null,
             portalInjector
         );
 
         // Attach ComponentPortal to PortalHost
-        this.overlayRef.attach(filePreviewPortal);
+        this.overlayRef.attach(componentPortal);
 
-        if(overlayConfigParams.isClosingModalEnabled) {
-             const subscription = this.overlayRef.backdropClick().subscribe(() => {
-                this.remove();
-            });
+        this.addBackdropListener(overlayConfigParams);
 
-            this.subscriptions.add(subscription);
-        }
-
-        const subscription = this.overlayRef.keydownEvents().subscribe((keyBoardEvent: KeyboardEvent) => {
-            if(overlayConfigParams.isClosingModalEnabled && this.isEscaping(keyBoardEvent)) {
-                this.remove();
-            }
-            keyBoardEvent.stopPropagation();
-            return false;
-        });
-
-        this.subscriptions.add(subscription);
+        this.addKeyDownListener(overlayConfigParams);
     }
 
     attachToElement(relatedElement: ElementRef): void {
@@ -100,8 +87,35 @@ export class ModalPanelService {
 
     remove(): void {
         this.overlayRef?.dispose();
-        this.subscriptions.unsubscribe();
+        this.subscriptions?.unsubscribe();
         this.detachElement();
+    }
+
+    private initializePanelOverlay() {
+        this.remove();
+        this.subscriptions = new Subscription();
+    }
+
+    private addKeyDownListener(overlayConfigParams: { panelClass?: string; backdropClass?: string; isClosingModalEnabled?: boolean }) {
+        const subscription = this.overlayRef.keydownEvents().subscribe((keyBoardEvent: KeyboardEvent) => {
+            if (overlayConfigParams.isClosingModalEnabled && this.isEscaping(keyBoardEvent)) {
+                this.remove();
+            }
+            keyBoardEvent.stopPropagation();
+            return false;
+        });
+
+        this.subscriptions.add(subscription);
+    }
+
+    private addBackdropListener(overlayConfigParams: { panelClass?: string; backdropClass?: string; isClosingModalEnabled?: boolean }) {
+        if (overlayConfigParams.isClosingModalEnabled) {
+            const subscription = this.overlayRef.backdropClick().subscribe(() => {
+                this.remove();
+            });
+
+            this.subscriptions.add(subscription);
+        }
     }
 
     private highlightTutorialPanelRelatedElement(relatedElement: ElementRef<HTMLElement>): void {
@@ -135,22 +149,3 @@ export class ModalPanelService {
         return keyboardEvent.key === 'Esc' || keyboardEvent.key === 'Escape';
     }
 }
-
-const factory = (
-    overlay: Overlay,
-    rendererFactory: RendererFactory2
-) => {
-    return new ModalPanelService(
-        overlay,
-        rendererFactory
-    );
-};
-
-export const provider = {
-    provide: ModalPanelService,
-    useFactory: factory,
-    deps: [
-        Overlay,
-        RendererFactory2
-    ]
-};

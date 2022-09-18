@@ -3,7 +3,7 @@ import {ModalOuterContainerComponent} from './modal-outer-container/modal-outer-
 import { ModalDynamicContentDirective } from './modal-dynamic-content.directive';
 import {MaterialModule} from "../share/material/material.module";
 import {CommonModule} from "@angular/common";
-import * as ModalPanelOverlayServiceProvider from "./modal-panel.service";
+import * as ModalPanelOverlayServiceProvider from "./modal-panel-service.provider";
 
 @NgModule({
     declarations: [
