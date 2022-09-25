@@ -1,7 +1,9 @@
 <div class="modal-outer-container-component-content">
     <div class="modal-outer-container-box-shadow">
         <div class="modal-outer-container-component-body" [ngClass]="{'close-button-element-margins': isClosingModalEnabled}">
-            <ng-template appModalDynamicContent=""></ng-template>
+            <div class="model-outer-container-component-template">
+                <ng-template appModalDynamicContent=""></ng-template>
+            </div>
         </div>
         <div *ngIf="isClosingModalEnabled" class="close-button-element">
             <button mat-icon-button aria-label="Show code panel" (click)="close()" class="button-background">

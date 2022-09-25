@@ -8,7 +8,6 @@
 
     .modal-outer-container-box-shadow {
         max-height: 94vh;
-        overflow: auto;
         background-color: #191A21;
         border-radius: 10px;
         border: 1px solid #6272A4;
@@ -30,12 +29,16 @@
 
         .modal-outer-container-component-body{
             padding: 13px;
-            overflow: auto;
             display: grid;
+            max-height: 86vh;
+
+            .model-outer-container-component-template {
+                overflow: auto;
+            }
         }
 
         .close-button-element-margins {
-            padding: 40px 13px 0px 13px;
+            padding: 40px 13px 13px 13px;
         }
     }
 

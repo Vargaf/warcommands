@@ -30,7 +30,7 @@ boton del tutorial
 # Newcomers
 ## Your first worker
 ### Step 1
-As you will see you have to develop a discovery strategy as the Commander in charge, so you have to give commands by typing commands,
+As you will see you have to develop a survival strategy as the Commander in charge, so you have to give commands by typing commands,
 remember this is Developer Commands!
 
 As you may have guessed, this is a war, and you are the Commander in charge, so you must give commands by typing commands, 

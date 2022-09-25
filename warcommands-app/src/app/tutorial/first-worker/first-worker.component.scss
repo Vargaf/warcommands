@@ -1,8 +1,50 @@
 .tutorial-first-worker-content {
     background-color: #343746;
     border-radius: 10px;
+
+    .button-holder {
+        padding-top: 20px;
+
+        button {
+            margin-right: 10px;
+        }
+    }
+
+    .worker-img-placeholder {
+        text-align: center;
+    }
+
+    .game-loop-command {
+        color: #50FA7B;
+    }
+
+    .game-command {
+        color: #8BE9FD;
+    }
+
+    .icon-placeholder {
+        text-align: center;
+        font-size: 48px;
+
+        .icon {
+            font-size: 48px;
+        }
+
+        .play-pause-buttons div {
+            width: 48px;
+            text-align: center;
+        }
+    }
 }
 
-:host ::ng-deep .mat-stepper-horizontal {
-    background: none;
+:host ::ng-deep {
+
+    .mat-stepper-horizontal {
+        background: none;
+
+    }
+
+    .mat-step-header {
+        padding-bottom: 0px;
+    }
 }

@@ -1,30 +1,87 @@
 <div class="tutorial-first-worker-content">
     <mat-stepper labelPosition="bottom">
         <mat-step>
-            <h2>¡Welcome to Warcommands!</h2>
             <p>
-                Here you will learn how to think as a problem solver.
-                <br>
-                Don't panic, it will be easy, for everybody,
-                <br>
-                and for all ages and don't forget, funny!!
+                As you will see you have to develop a survival strategy as the Commander in charge.
             </p>
-            <div>
+            <p>
+                So you have to give commands by typing commands.
+            </p>
+            <p>
+                Remember this is War Commands!
+            </p>
+            <div class="button-holder">
                 <button mat-raised-button matStepperNext>Next</button>
             </div>
         </mat-step>
         <mat-step>
             <p>
-                There is no need to have any developer skill,
-                <br>
-                you will learn everything from zero to hero,
-                <br>
-                the only thing you need is passion and be willing to learn while playing.
+                So your first command will be to create a worker to harvest resources
             </p>
-            <div>
+            <div class="worker-img-placeholder">
+                <img src="assets/img/worker.png">
+            </div>
+            <div class="button-holder">
                 <button mat-raised-button matStepperPrevious>Back</button>
-                &nbsp;
                 <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <p>
+                Drag the <span class="game-command">Game</span> command inside the <span class="game-loop-command">gameLoop()</span> command.
+            </p>
+            <div class="button-holder">
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <p>
+                From <span class="game-command">Game</span> command select the <span class="game-command">getBaseByName</span> and then <span class="game-command">createWorker</span>.
+            </p>
+            <div class="button-holder">
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <p>
+                Save the file by clicking this icon on the top bar
+            </p>
+            <p>
+            <div class="icon-placeholder">
+                <mat-icon class="icon">save</mat-icon>
+            </div>
+            <div class="button-holder">
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <p>
+                Go to the game world by clicking this icon on the left bar
+            </p>
+            <p>
+            <div class="icon-placeholder">
+                <mat-icon class="icon">sports_esports</mat-icon>
+            </div>
+            <div class="button-holder">
+                <button mat-raised-button matStepperPrevious>Back</button>
+                <button mat-raised-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <p>
+                Lets go to rock & roll, to execute or pause our command we have to click to this icons on the left bar
+            </p>
+            <p>
+            <div class="icon-placeholder">
+                <mat-icon class="icon">play_arrow</mat-icon>
+                &nbsp;
+                <mat-icon class="icon">pause</mat-icon>
+            </div>
+            <div class="button-holder">
+                <button mat-raised-button matStepperPrevious>Back</button>
             </div>
         </mat-step>
 
