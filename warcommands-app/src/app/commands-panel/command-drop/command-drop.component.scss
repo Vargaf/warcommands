@@ -16,20 +16,18 @@ table td {
 
 .command-editor-wrapper {
     border:dashed 1px #6272A4;
-
     border-radius:10px;
     background-color: #343746;
-
     min-width: fit-content;
-
     margin-bottom: 20px;
+    display: inline-block;
 
     &:hover {
         background-color: #21222C;
     }
 
     .command-drop-number-lines {
-        
+
         .line-number {
             margin: 21px 10px 29px 10px;
             color: #6272A4;
@@ -38,7 +36,7 @@ table td {
         .line-number:first-child {
             margin: 28px 10px 29px 10px;
         }
-    
+
         .line-number:last-child {
             margin: 22px 10px 0 10px;
         }

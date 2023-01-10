@@ -1,5 +1,5 @@
 <div class="tutorial-first-worker-content">
-    <mat-stepper labelPosition="bottom">
+    <mat-stepper labelPosition="bottom" #stepper selectedIndex={{selectedIndex}}>
         <mat-step>
             <p>
                 As you will see you have to develop a survival strategy as the Commander in charge.
@@ -11,7 +11,7 @@
                 Remember this is War Commands!
             </p>
             <div class="button-holder">
-                <button mat-raised-button matStepperNext>Next</button>
+                <button mat-raised-button (click)="next()">Next</button>
             </div>
         </mat-step>
         <mat-step>
@@ -22,8 +22,8 @@
                 <img src="assets/img/worker.png">
             </div>
             <div class="button-holder">
-                <button mat-raised-button matStepperPrevious>Back</button>
-                <button mat-raised-button matStepperNext>Next</button>
+                <button mat-raised-button (click)="back()">Back</button>
+                <button mat-raised-button (click)="next()">Next</button>
             </div>
         </mat-step>
         <mat-step>
@@ -72,7 +72,10 @@
         </mat-step>
         <mat-step>
             <p>
-                Lets go to rock & roll, to execute or pause our command we have to click to this icons on the left bar
+                To execute or pause our command we have to click to this icons on the left bar:
+            </p>
+            <p>
+                Lets go to rock & roll!
             </p>
             <p>
             <div class="icon-placeholder">
