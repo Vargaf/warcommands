@@ -5,7 +5,7 @@ import { AframeSceneService } from "../aframe-scene.service";
 
 
 export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
-    
+
     private renderer: Renderer2;
 
     private modelLoaderElement: any;
@@ -73,7 +73,7 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
                     this.renderer.removeChild(this.modelLoaderElement, data.srcElement);
                     resolve(modelNode);
                     setTimeout(() => {
-                        modelLoadedSubscription.unsubscribe();    
+                        modelLoadedSubscription.unsubscribe();
                     }, 0);
                 }
             });
@@ -95,10 +95,10 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
     }
 
     private createModelLoaderStorageElement(): Promise<any> {
-        
-        var modelLoaderElementPromise = new Promise<any>((resolve, reject) => {
+
+        return new Promise<any>((resolve, reject) => {
             this.sceneService.isLoaded().then(() => {
-                var modelLoaderElement = this.renderer.createElement('a-entity');
+                let modelLoaderElement = this.renderer.createElement('a-entity');
                 modelLoaderElement.setAttribute('id', this.modelLoaderelementId);
                 modelLoaderElement.setAttribute('visible', false);
                 this.scene().appendChild(modelLoaderElement);
@@ -107,8 +107,6 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
                 resolve(modelLoaderElement);
             })
         });
-        
-        return modelLoaderElementPromise;
     }
 
     private scene() {
@@ -124,16 +122,16 @@ export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
     }
 
     private isModelLoadedByThisService(modelData: any): boolean {
-        let isMoldelLoadedByThisService = false;
+        let isModelLoadedByThisService = false;
 
-        const parentElement = (modelData as any).path[1];
+        const parentElement = (modelData as any).target.parentElement ;
         const elementId = (parentElement as any).getAttribute('id');
-        
+
         if(elementId === this.modelLoaderelementId) {
-            isMoldelLoadedByThisService = true;
+            isModelLoadedByThisService = true;
         }
 
-        return isMoldelLoadedByThisService;
+        return isModelLoadedByThisService;
     }
-    
+
 }

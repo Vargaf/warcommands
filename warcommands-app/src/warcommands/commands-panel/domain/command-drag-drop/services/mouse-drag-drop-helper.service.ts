@@ -14,7 +14,10 @@ export class MouseDragDropHelperService {
     ) { }
 
     saveActiveCommandContainerByMouse(event: MouseEvent) {
-        this.setActiveCommandContainer((event as any).path);
+        let htmlElement = (event.target as HTMLElement);
+        if(htmlElement) {
+            this.setActiveCommandContainer(htmlElement);
+        }
     }
 
     saveActiveCommandContainerByTouchDevice(event: TouchEvent): void {
@@ -25,29 +28,25 @@ export class MouseDragDropHelperService {
         this.setActiveCommandContainer(path);
     }
 
-    private setActiveCommandContainer(path: any[]): void {
+    private setActiveCommandContainer(htmlElement: HTMLElement): void {
 
-        if (path.length > 0) {
-            const index = 0;
+        if (htmlElement.hasAttribute('MouseHelperDetectorCommandContainerId')) {
+            const commandContainerId = htmlElement.getAttribute('MouseHelperDetectorCommandContainerId');
+            if (commandContainerId !== this.activeContainerId) {
+                this.activeContainerId = commandContainerId;
 
-            //for (const index in path) {
-            const item = path[index];
-            if (item.hasAttribute && item.hasAttribute('MouseHelperDetectorCommandContainerId')) {
-                const commandContainerId = item.getAttribute('MouseHelperDetectorCommandContainerId');
-                if (commandContainerId !== this.activeContainerId) {
-                    this.activeContainerId = commandContainerId;
+                const dropList: DropListRef[] = this.commandsDropRepository.getDropItemList();
 
-                    const dropList: DropListRef[] = this.commandsDropRepository.getDropItemList();
-
-                    for (let dropItem of dropList) {
-                        const dropListItem = dropItem as any;
-                        dropListItem._cacheParentPositions();
-                    }
+                for (let dropItem of dropList) {
+                    const dropListItem = dropItem as any;
+                    dropListItem._cacheParentPositions();
                 }
-
-                //        break;
             }
-            //}
+        } else {
+            let parentHtmlElement = htmlElement.parentElement;
+            if(parentHtmlElement) {
+                this.setActiveCommandContainer(parentHtmlElement);
+            }
         }
     }
 }
