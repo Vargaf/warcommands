@@ -1,6 +1,6 @@
 <div class="tutorial-first-worker-content">
     <mat-stepper labelPosition="bottom" #stepper selectedIndex={{selectedIndex}}>
-        <mat-step>
+        <mat-step label="introduction">
             <p>
                 As you will see you have to develop a survival strategy as the Commander in charge.
             </p>
@@ -13,8 +13,10 @@
             <div class="button-holder">
                 <button mat-raised-button (click)="next()">Next</button>
             </div>
+            <ng-template matStepLabel>
+            </ng-template>
         </mat-step>
-        <mat-step>
+        <mat-step label="first_command">
             <p>
                 So your first command will be to create a worker to harvest resources
             </p>
@@ -25,8 +27,10 @@
                 <button mat-raised-button (click)="back()">Back</button>
                 <button mat-raised-button (click)="next()">Next</button>
             </div>
+            <ng-template matStepLabel>
+            </ng-template>
         </mat-step>
-        <mat-step>
+        <mat-step label="drag_game_command">
             <p>
                 Drag the <span class="game-command">Game</span> command inside the <span class="game-loop-command">gameLoop()</span> command.
             </p>
@@ -34,8 +38,10 @@
                 <button mat-raised-button matStepperPrevious>Back</button>
                 <button mat-raised-button matStepperNext>Next</button>
             </div>
+            <ng-template matStepLabel>
+            </ng-template>
         </mat-step>
-        <mat-step>
+        <mat-step label="select_create_worker">
             <p>
                 From <span class="game-command">Game</span> command select the <span class="game-command">getBaseByName</span> and then <span class="game-command">createWorker</span>.
             </p>
@@ -43,8 +49,10 @@
                 <button mat-raised-button matStepperPrevious>Back</button>
                 <button mat-raised-button matStepperNext>Next</button>
             </div>
+            <ng-template matStepLabel>
+            </ng-template>
         </mat-step>
-        <mat-step>
+        <mat-step label="save_file">
             <p>
                 Save the file by clicking this icon on the top bar
             </p>
@@ -56,8 +64,10 @@
                 <button mat-raised-button matStepperPrevious>Back</button>
                 <button mat-raised-button matStepperNext>Next</button>
             </div>
+            <ng-template matStepLabel>
+            </ng-template>
         </mat-step>
-        <mat-step>
+        <mat-step label="go_gameworld">
             <p>
                 Go to the game world by clicking this icon on the left bar
             </p>
@@ -69,8 +79,10 @@
                 <button mat-raised-button matStepperPrevious>Back</button>
                 <button mat-raised-button matStepperNext>Next</button>
             </div>
+            <ng-template matStepLabel>
+            </ng-template>
         </mat-step>
-        <mat-step>
+        <mat-step label="play_game_button">
             <p>
                 To execute or pause our command we have to click to this icons on the left bar:
             </p>
@@ -86,6 +98,8 @@
             <div class="button-holder">
                 <button mat-raised-button matStepperPrevious>Back</button>
             </div>
+            <ng-template matStepLabel>
+            </ng-template>
         </mat-step>
 
         <!-- Icon overrides. -->

@@ -1,23 +1,35 @@
 <div class="introduction-component-content">
-    <mat-stepper orientation="vertical">
-        <mat-step label="Your first worker">
+    <mat-stepper #stepper orientation="vertical">
+        <mat-step label="your_first_worker">
             <ng-template matStepContent>
                 <app-first-worker></app-first-worker>
             </ng-template>
+            <ng-template matStepLabel>
+                Your first worker
+            </ng-template>
         </mat-step>
-        <mat-step label="Resources">
+        <mat-step label="resources">
             <ng-template matStepContent>
                 <app-first-worker></app-first-worker>
             </ng-template>
+            <ng-template matStepLabel>
+                Resources
+            </ng-template>
         </mat-step>
-        <mat-step label="Harvest">
+        <mat-step label="harvest_1">
             <ng-template matStepContent>
                 <app-first-worker></app-first-worker>
             </ng-template>
+            <ng-template matStepLabel>
+                Harvest 1
+            </ng-template>
         </mat-step>
-        <mat-step label="Harvest">
+        <mat-step label="harvest_2">
             <ng-template matStepContent>
                 <app-first-worker></app-first-worker>
+            </ng-template>
+            <ng-template matStepLabel>
+                Harvest 2
             </ng-template>
         </mat-step>
     </mat-stepper>

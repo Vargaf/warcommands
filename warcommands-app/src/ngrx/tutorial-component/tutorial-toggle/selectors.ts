@@ -1,4 +1,4 @@
-import * as TutorialComponentReducerMap from './reducer-map';
+import * as TutorialComponentReducerMap from '../reducer-map';
 import { TutorialComponentKey } from './reducers'
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 

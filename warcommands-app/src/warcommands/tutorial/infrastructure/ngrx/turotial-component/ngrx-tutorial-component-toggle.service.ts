@@ -1,7 +1,7 @@
 import { select, Store } from "@ngrx/store";
 import { TutorialComponentToggleServiceInterface } from "src/warcommands/tutorial/domain/tutorial/services/tutorial-component-toggle-service.interface";
-import * as TutorialComponentSelector from 'src/ngrx/tutorial-component/selectors';
-import * as TutorialComponentActions from 'src/ngrx/tutorial-component/actions';
+import * as TutorialComponentSelector from 'src/ngrx/tutorial-component/tutorial-toggle/selectors';
+import * as TutorialComponentActions from 'src/ngrx/tutorial-component/tutorial-toggle/actions';
 import { Observable, Subject } from "rxjs";
 
 export class NgrxTutorialComponentToggleService implements TutorialComponentToggleServiceInterface {

@@ -11,6 +11,9 @@ import {LocalStorageAliasModule} from "./local-storage-alias.module";
 import { TutorialListenersModule } from "./tutorial-listeners.module";
 import { WelcomeComponent } from './welcome/welcome.component';
 import { FirstWorkerComponent } from './first-worker/first-worker.component';
+import { InitializeTutorialStepService } from "./services/initialize-tutorial-step.service";
+import { TutorialStepsRepository } from "./services/tutorial-steps-repository";
+import { TutorialStepsNgrxService } from "./services/tutorial-steps-ngrx.service";
 
 @NgModule({
     declarations: [
@@ -30,6 +33,9 @@ import { FirstWorkerComponent } from './first-worker/first-worker.component';
     ],
     providers: [
         { provide: TutorialComponentStore.TUTORIAL_COMPONENT_REDUCER_MAP_TOKEN, useFactory: TutorialComponentStore.reducers },
+        InitializeTutorialStepService,
+        TutorialStepsRepository,
+        TutorialStepsNgrxService,
     ]
 })
 export class TutorialModule {}
