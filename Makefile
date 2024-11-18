@@ -24,7 +24,7 @@ bash: ### Runs the dockers to bring up the system
 
 .PHONY: dist-build
 dist-build: ### Builds the dist folder and builds the docker image
-	@if [ ! -d "./warcommands-app/warcommands/node_modules" ]; then docker compose -f devops/docker/argo-workflow-test-dev/docker-compose-build.yml run warcommands-app npm install; fi
+	@if [ ! -d "./warcommands-app/warcommands/node_modules" ]; then docker compose -f devops/docker/argo-workflow-test-dev/docker-compose.yml run warcommands-app npm install; fi
 	@docker compose -f devops/docker/argo-workflow-test-dev/docker-compose.yml run warcommands-app ng build
 	@docker buildx build -t registry.warcommands.com/warcommands-prod -f devops/docker/argo-workflow-test-prod/Dockerfile .
 
