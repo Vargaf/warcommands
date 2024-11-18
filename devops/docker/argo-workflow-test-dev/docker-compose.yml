@@ -1,0 +1,14 @@
+services:
+    warcommands-app:
+        build:
+            context: ../../../
+            dockerfile: devops/docker/argo-workflow-test-dev/Dockerfile
+
+        image: warcommands-argo-workflow-test
+        ports:
+          - "4400:4200"
+        volumes:
+            - type: bind
+              source: ../../../warcommands-app/warcommands
+              target: /project
+        command: ng serve --host 0.0.0.0 --disable-host-check
