@@ -3,3 +3,6 @@ docker-compose -f ./devops/docker/dev/docker-compose.yml up
 
 # To execute commands on the docker image
 docker-compose -f ./devops/docker/dev/docker-compose.yml run warcommands-app bash
+
+
+Test argo events 1
