@@ -5,4 +5,4 @@ docker-compose -f ./devops/docker/dev/docker-compose.yml up
 docker-compose -f ./devops/docker/dev/docker-compose.yml run warcommands-app bash
 
 
-Test argo events by a pull request 1
+Test argo events by a pull request 2
