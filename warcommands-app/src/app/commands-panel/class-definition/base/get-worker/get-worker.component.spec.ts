@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {GetWorkerComponent} from './get-worker.component';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandPathErrorManagerService
 } from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
@@ -23,8 +23,8 @@ describe('GetWorkerComponent', () => {
 
     beforeEach(waitForAsync(() => {
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = new FormGroup({
-            worker: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            worker: new UntypedFormControl('', Validators.required),
         });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
         commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError']);
@@ -32,7 +32,7 @@ describe('GetWorkerComponent', () => {
             imports: [MatTooltipModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule, MatInputModule, BrowserAnimationsModule],
             declarations: [GetWorkerComponent, WorkerClassMemberOptionListComponent],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
             ]
         })

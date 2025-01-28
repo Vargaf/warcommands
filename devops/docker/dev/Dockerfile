@@ -1,6 +1,6 @@
-FROM node:16.14.0-stretch
+FROM node:14.15.0-stretch
 
-RUN npm install -g @angular/cli@13.2.3
+RUN npm install -g @angular/cli@14.2.13
 RUN npm install -g http-server
 
 RUN mkdir /project

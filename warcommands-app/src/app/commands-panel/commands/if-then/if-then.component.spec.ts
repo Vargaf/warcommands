@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {IfThenComponent} from './if-then.component';
 import {of} from "rxjs";
-import {FormBuilder} from "@angular/forms";
+import {UntypedFormBuilder} from "@angular/forms";
 import {
     CommandNgrxRepositoryService
 } from "../../../../warcommands/commands-panel/infrastructure/ngrx/command/command-ngrx-repository.service";
@@ -88,7 +88,7 @@ describe('IfThenComponent', () => {
             imports: [MatTooltipModule, MatIconModule],
             declarations: [IfThenComponent, CommandDropComponent],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
                 {provide: CommandContainerNgrxRepositoryService, useValue: commandContainerNgrxRepositoryServiceSpy},
                 {provide: CommandRepositoryService, useValue: commandRepositoryServiceSpy},

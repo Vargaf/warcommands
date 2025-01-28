@@ -4,7 +4,12 @@
             clock-component
             hud-component
             fog="type: loinear; color: #282a36; near: 5; far: 20"
-            vr-mode-ui="enterVRButton: #enterVRButton; enterARButton: #enterARButton;">
+            vr-mode-ui="enterVRButton: #enterVRButton; enterARButton: #enterARButton;"
+            pausable-content-component
+            pool__matter_farm_building="mixin: matter_farm_building; size: 2; dynamic: true"
+            pool__base_building="mixin: base_building; size: 2; dynamic: true"
+            pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true"
+            pool__worker_unit="mixin: worker_unit; size: 2; dynamic: true">
             <a-assets>
                 <a-asset-item id="TopTile" src="assets/TopTile/v4.gltf"></a-asset-item>
                 <a-asset-item id="Tree_01" src="assets/Tree/tree_01_v3.gltf"></a-asset-item>
@@ -24,12 +29,12 @@
                 <a-mixin id="worker_unit" worker-unit-component player-color-component></a-mixin>
             </a-assets>
 
-            <a-entity id="pausable-content" pausable-content-component
-                pool__matter_farm_building="mixin: matter_farm_building; size: 2; dynamic: true"
-                pool__base_building="mixin: base_building; size: 2; dynamic: true"
-                pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true"
-                pool__worker_unit="mixin: worker_unit; size: 2; dynamic: true">
-            </a-entity>
+<!--            <a-scene id="pausable-content" pausable-content-component-->
+<!--                pool__matter_farm_building="mixin: matter_farm_building; size: 2; dynamic: true"-->
+<!--                pool__base_building="mixin: base_building; size: 2; dynamic: true"-->
+<!--                pool__energy_farm_building="mixin: energy_farm_building; size: 2; dynamic: true"-->
+<!--                pool__worker_unit="mixin: worker_unit; size: 2; dynamic: true">-->
+<!--            </a-scene>-->
 
             <!--
     <a-gltf-model src="#MatterFarm" position="7 0 3"></a-gltf-model>

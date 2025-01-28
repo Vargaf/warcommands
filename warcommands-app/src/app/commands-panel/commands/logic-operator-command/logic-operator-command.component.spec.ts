@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {LogicOperatorCommandComponent} from './logic-operator-command.component';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandContainerNgrxRepositoryService
 } from "../../../../warcommands/commands-panel/infrastructure/ngrx/command-container/command-container-ngrx-repository.service";
@@ -87,10 +87,10 @@ describe('LogicOperatorCommandComponent', () => {
 
     beforeEach(waitForAsync(() => {
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = new FormGroup({
-            logicOperator: new FormControl('', Validators.required),
-            firstCommandId: new FormControl('', Validators.required),
-            secondCommandId: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            logicOperator: new UntypedFormControl('', Validators.required),
+            firstCommandId: new UntypedFormControl('', Validators.required),
+            secondCommandId: new UntypedFormControl('', Validators.required),
         });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
 
@@ -126,7 +126,7 @@ describe('LogicOperatorCommandComponent', () => {
             imports: [MatTooltipModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule, MatIconModule, ReactiveFormsModule],
             declarations: [LogicOperatorCommandComponent, CommandDropComponent],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandContainerNgrxRepositoryService, useValue: commandContainerNgrxRepositoryServiceSpy},
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
                 {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},

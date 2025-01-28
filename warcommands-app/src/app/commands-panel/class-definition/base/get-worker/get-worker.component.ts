@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { GetWorkerClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/methods/get-worker-class-method-member';
 import * as _ from 'lodash';
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
@@ -25,7 +25,7 @@ export class GetWorkerComponent implements OnInit, OnDestroy, ClassMemberCompone
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
-    componentFormGroup!: FormGroup;
+    componentFormGroup!: UntypedFormGroup;
     formErrorMessage!: string;
     isCommandValid = true;
 
@@ -37,7 +37,7 @@ export class GetWorkerComponent implements OnInit, OnDestroy, ClassMemberCompone
     private subscriptionManager: Subscription = new Subscription();
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }
 

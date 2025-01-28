@@ -4,7 +4,7 @@ import { WorkerGetWorkerListClassMethodMember } from 'src/warcommands/commands-p
 import { GetClassMemberByclassMemberOption } from 'src/warcommands/commands-panel/domain/command/services/class-definition/get-class-member-by-class-member-option';
 import { BaseClassGetWorkerListMethodOption } from 'src/warcommands/commands-panel/domain/command/model/game-command/base-class-definition/methods/base-class-get-worker-list-method-option';
 import * as _ from 'lodash';
-import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { workerRoleSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-role-select-options';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
@@ -28,7 +28,7 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
 
     workerRoleOptions = workerRoleSelectOptions;
 
-    componentFormGroup!: FormGroup;
+    componentFormGroup!: UntypedFormGroup;
     formErrorMessage!: string;
     isCommandValid = true;
 
@@ -39,7 +39,7 @@ export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberCom
     private subscriptionManager: Subscription = new Subscription();
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }
 

@@ -225,7 +225,7 @@ export class AframeMapService {
 		const meshMaterial = new THREE.MeshStandardMaterial();
 		meshMaterial.vertexColors = true;
 
-		const mergedGeometry = BufferGeometryUtils.mergeBufferGeometries(geometries);
+		const mergedGeometry = BufferGeometryUtils.mergeGeometries(geometries);
 		mergedGeometry.computeBoundingBox();
 
 		const mesh = new THREE.Mesh(mergedGeometry, meshMaterial);

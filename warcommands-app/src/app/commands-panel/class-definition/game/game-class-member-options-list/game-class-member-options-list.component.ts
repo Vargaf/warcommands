@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { GameClassOptionsDefinition } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/game-class-options-definition';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
@@ -34,13 +34,13 @@ export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, C
     private subscriptionManager: Subscription = new Subscription();
     
     memberSelected!: string | null;
-    componentFormGroup!: FormGroup;
+    componentFormGroup!: UntypedFormGroup;
     formErrorMessage!: string;
     isCommandValid = true;
     areMemberOptionsVisible = false;
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }

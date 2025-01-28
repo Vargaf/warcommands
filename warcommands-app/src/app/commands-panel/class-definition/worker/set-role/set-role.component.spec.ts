@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {SetRoleComponent} from './set-role.component';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandPathErrorManagerService
 } from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
@@ -23,8 +23,8 @@ describe('SetRoleComponent', () => {
 
     beforeEach(waitForAsync(() => {
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = new FormGroup({
-            roleSelected: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            roleSelected: new UntypedFormControl('', Validators.required),
         });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
 
@@ -33,7 +33,7 @@ describe('SetRoleComponent', () => {
             declarations: [SetRoleComponent, WorkerClassMemberOptionListComponent],
             imports: [MatFormFieldModule, MatInputModule, MatSelectModule, ReactiveFormsModule, BrowserAnimationsModule, MatIconModule],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy}
             ]
         })

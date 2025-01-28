@@ -17,7 +17,7 @@ import {
     VariableInScopeFinderService
 } from "../../../../warcommands/commands-panel/domain/command/model/variable/services/variables-in-scope-finder.service";
 import {of} from "rxjs";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandRepositoryService
 } from "../../../../warcommands/commands-panel/domain/command/services/command-repository.service";
@@ -69,8 +69,8 @@ describe('VariableComponent', () => {
         variableInScopeFinderServiceSpy = jasmine.createSpyObj('VariableInScopeFinderService', ['getVariablesInPreviuosScope']);
         variableInScopeFinderServiceSpy.getVariablesInPreviuosScope.and.returnValue([variableCommandEntityMock]);
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = new FormGroup({
-            variable: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            variable: new UntypedFormControl('', Validators.required),
         });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
         commandRepositoryServiceSpy = jasmine.createSpyObj('CommandRepositoryService', ['findById']);
@@ -85,7 +85,7 @@ describe('VariableComponent', () => {
             imports: [MatTooltipModule, MatFormFieldModule, MatSelectModule, MatIconModule, ReactiveFormsModule, NoopAnimationsModule],
             providers: [
                 {provide: VariableInScopeFinderService, useValue: variableInScopeFinderServiceSpy},
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandRepositoryService, useValue: commandRepositoryServiceSpy},
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
                 {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},

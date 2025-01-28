@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {GetBaseByIndexComponent} from './get-base-by-index.component';
 import {of} from "rxjs";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandPathErrorManagerService
 } from "../../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service";
@@ -40,8 +40,8 @@ describe('GetBaseByIndexComponent', () => {
 
     beforeEach(waitForAsync(() => {
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = new FormGroup({
-            baseName: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            baseName: new UntypedFormControl('', Validators.required),
         });
 
         commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError']);
@@ -59,7 +59,7 @@ describe('GetBaseByIndexComponent', () => {
             imports: [MatTooltipModule, MatFormFieldModule, MatSelectModule, MatIconModule, BrowserAnimationsModule, ReactiveFormsModule, MatInputModule],
             declarations: [GetBaseByIndexComponent, BaseClassMemberOptionListComponent],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
                 {provide: BuildingsNgrxRepositoryService, useValue: buildingsNgrxRepositoryServiceSpy},
                 {provide: BuildingsRepositoryService, useValue: buildingsRepositoryServiceSpy},

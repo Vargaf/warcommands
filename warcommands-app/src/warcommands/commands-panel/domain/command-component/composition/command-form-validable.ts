@@ -1,10 +1,10 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 export abstract class CommandFormValidable {
 
     isCommandValid = true;
     formErrorMessage!: string;
-    commandForm!: FormGroup;
+    commandForm!: UntypedFormGroup;
 
     protected abstract initializeForm(): void;
     protected abstract getCommandErrorMessages(): String[];

@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {BaseClassMemberOptionListComponent} from './base-class-member-option-list.component';
-import {FormBuilder} from "@angular/forms";
+import {UntypedFormBuilder} from "@angular/forms";
 import {of} from "rxjs";
 import {
     CommandPathErrorManagerService
@@ -31,7 +31,7 @@ describe('BaseClassMemberOptionListComponent', () => {
             declarations: [BaseClassMemberOptionListComponent],
             imports: [MatIconModule],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
             ]
         })

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SetVariableFromCommandCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/set-variable-from-command-command.entity';
 import * as _ from 'lodash';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
@@ -35,7 +35,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
     innerCommand!: GenericCommandDTO;
     
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         protected readonly commandUpdatedEvents: CommandUpdatedEvents,
         protected readonly commandMovedEvents: CommandMovedEvents,
         private readonly commandContainerNgrxRepositoryService: CommandContainerNgrxRepositoryService,

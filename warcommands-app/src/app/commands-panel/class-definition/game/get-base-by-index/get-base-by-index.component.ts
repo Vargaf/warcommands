@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { Validators, UntypedFormBuilder, UntypedFormGroup, AbstractControl } from '@angular/forms';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 import { GetBaseByNameClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/game-command-class-definition/methods/get-base-by-name-class-method-member';
 import { Subscription } from 'rxjs';
@@ -32,7 +32,7 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
-    componentFormGroup!: FormGroup;
+    componentFormGroup!: UntypedFormGroup;
     isCommandValid = true;
     formErrorMessage!: string;
     playerBaseList!: String[];
@@ -44,7 +44,7 @@ export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberCo
     baseByNameClassMethodMemberMethodChained!: ClassMemberDTO;
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly commandPathErrorManagerService: CommandPathErrorManagerService,
         private readonly buildingsNgrxRepositoryService: BuildingsNgrxRepositoryService,
         private readonly buildingsRepositoryService: BuildingsRepositoryService,

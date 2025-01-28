@@ -2,7 +2,7 @@ import { Renderer2, RendererFactory2 } from "@angular/core";
 import { Subject } from "rxjs";
 import { ModelLoaderInterfaceService } from "src/warcommands/vr-mode/domain/game-engine/model-loader-abstract.service";
 import { AframeSceneService } from "../aframe-scene.service";
-
+import { THREE } from 'aframe';
 
 export class AframeGtlfModelLoader implements ModelLoaderInterfaceService {
 

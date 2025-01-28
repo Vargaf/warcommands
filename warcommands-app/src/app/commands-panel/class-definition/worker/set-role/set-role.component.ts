@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { workerRoleSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/worker-role-select-options';
 import { SetRoleClassMethodMember } from 'src/warcommands/commands-panel/domain/command/model/game-command/worker-class-definition/methods/set-role-class-method-member';
 import * as _ from 'lodash';
@@ -26,7 +26,7 @@ export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, Class
     @Output()
     classMemberChange = new EventEmitter<ClassMemberDTO>();
 
-    componentFormGroup!: FormGroup;
+    componentFormGroup!: UntypedFormGroup;
     formErrorMessage!: string;
     isCommandValid = true;
 
@@ -40,7 +40,7 @@ export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, Class
     private subscriptionManager: Subscription = new Subscription();
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }
 

@@ -4,7 +4,7 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 import { CommandPathFinderService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service';
 import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/domain/commands-panel/services/command-path-error-manager.service';
 import { CommandComponent } from 'src/warcommands/commands-panel/domain/command-component/composition/command-component';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CommandContainerNgrxRepositoryService } from 'src/warcommands/commands-panel/infrastructure/ngrx/command-container/command-container-ngrx-repository.service';
 import { CommandContainerDTO } from 'src/warcommands/commands-panel/domain/command-container/model/command-container.dto';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
@@ -29,7 +29,7 @@ export class IfThenComponent extends CommandComponent implements OnInit, OnDestr
     conditionCommand!: GenericCommandDTO;
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,
         private readonly commandContainerNgrxRepositoryService: CommandContainerNgrxRepositoryService,
         private readonly commandRepositoryService: CommandRepositoryService,

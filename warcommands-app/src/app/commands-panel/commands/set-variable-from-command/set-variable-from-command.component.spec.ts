@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {SetVariableFromCommandComponent} from './set-variable-from-command.component';
 import {of} from "rxjs";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
     CommandContainerNgrxRepositoryService
 } from "../../../../warcommands/commands-panel/infrastructure/ngrx/command-container/command-container-ngrx-repository.service";
@@ -103,9 +103,9 @@ describe('SetVariableFromCommandComponent', () => {
         commandPathErrorManagerServiceSpy = jasmine.createSpyObj('CommandPathErrorManagerService', ['buildCommandPathError', 'resetCommandPathError']);
         commandPathFinderServiceSpy = jasmine.createSpyObj('CommandPathFinderService', ['getCommandPath']);
         uniqueVarNameValidatorSpy = jasmine.createSpyObj('UniqueVarNameValidator', ['createValidator']);
-        const controlsConfigMock = new FormGroup({
-            varName: new FormControl('', Validators.required),
-            innerCommandId: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            varName: new UntypedFormControl('', Validators.required),
+            innerCommandId: new UntypedFormControl('', Validators.required),
         });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
 
@@ -118,7 +118,7 @@ describe('SetVariableFromCommandComponent', () => {
             imports: [MatTooltipModule, MatFormFieldModule, MatInputModule, MatIconModule, ReactiveFormsModule, BrowserAnimationsModule],
             declarations: [SetVariableFromCommandComponent, CommandDropComponent],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandContainerNgrxRepositoryService, useValue: commandContainerNgrxRepositoryServiceSpy},
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
                 {provide: CommandRepositoryService, useValue: commandRepositoryServiceSpy},

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/command/model/class-member-component';
 import { ClassMemberDTO } from 'src/warcommands/commands-panel/domain/command/model/class-definition/class-member.dto';
 import { MatSelect } from '@angular/material/select';
@@ -32,7 +32,7 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
     baseClassOptionsDefinition = BaseClassOptionsDefinition;
 
     memberSelected!: string | null;
-    componentFormGroup!: FormGroup;
+    componentFormGroup!: UntypedFormGroup;
     formErrorMessage!: string;
     isCommandValid = true;
     areMemberOptionsVisible = false;
@@ -40,7 +40,7 @@ export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, Cl
     private subscriptionManager: Subscription = new Subscription();
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly commandPathErrorManagerService: CommandPathErrorManagerService
     ) { }

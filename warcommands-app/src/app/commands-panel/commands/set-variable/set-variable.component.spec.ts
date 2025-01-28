@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {SetVariableComponent} from './set-variable.component';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {of} from "rxjs";
 import {
     CommandNgrxRepositoryService
@@ -52,9 +52,9 @@ describe('SetVariableComponent', () => {
     beforeEach(waitForAsync(() => {
 
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = new FormGroup({
-            varName: new FormControl('', Validators.required),
-            varValue: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            varName: new UntypedFormControl('', Validators.required),
+            varValue: new UntypedFormControl('', Validators.required),
         });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
 
@@ -82,7 +82,7 @@ describe('SetVariableComponent', () => {
             imports: [MatTooltipModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule, BrowserDynamicTestingModule, MatIconModule, ReactiveFormsModule],
             declarations: [SetVariableComponent],
             providers: [
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
                 {provide: CommandPathErrorManagerService, useValue: commandPathErrorManagerServiceSpy},
                 {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},

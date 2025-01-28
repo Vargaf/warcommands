@@ -13,7 +13,7 @@ import {of} from "rxjs";
 import {
     GameClassMemberOptionsListComponent
 } from "../../class-definition/game/game-class-member-options-list/game-class-member-options-list.component";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {
     CommandPathFinderService
 } from "../../../../warcommands/commands-panel/domain/commands-panel/services/command-path-finder.service";
@@ -44,8 +44,8 @@ describe('GameCommandComponent', () => {
         commandNgrxRepositoryServiceSpy.getCommand.and.returnValue(of(genericCommandDTOMock));
 
         formBuilderSpy = jasmine.createSpyObj('FormBuilder', ['group']);
-        const controlsConfigMock = new FormGroup({
-            memberSelected: new FormControl('', Validators.required),
+        const controlsConfigMock = new UntypedFormGroup({
+            memberSelected: new UntypedFormControl('', Validators.required),
         });
         formBuilderSpy.group.and.returnValue(controlsConfigMock);
         commandPathFinderServiceSpy = jasmine.createSpyObj('CommandPathFinderService', ['a']);
@@ -56,7 +56,7 @@ describe('GameCommandComponent', () => {
             imports: [MatIconModule],
             providers: [
                 {provide: CommandNgrxRepositoryService, useValue: commandNgrxRepositoryServiceSpy},
-                {provide: FormBuilder, useValue: formBuilderSpy},
+                {provide: UntypedFormBuilder, useValue: formBuilderSpy},
                 {provide: CommandPathFinderService, useValue: commandPathFinderServiceSpy},
                 {provide: CommandRepositoryService, useValue: commandRepositoryServiceSpy},
             ]

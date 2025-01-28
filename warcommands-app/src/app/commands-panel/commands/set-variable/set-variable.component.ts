@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SetVariableCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/set-variable-command.entity';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
@@ -26,7 +26,7 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
     varValue!: string;
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         protected readonly commandUpdatedEvents: CommandUpdatedEvents,
         protected readonly commandMovedEvents: CommandMovedEvents,
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,

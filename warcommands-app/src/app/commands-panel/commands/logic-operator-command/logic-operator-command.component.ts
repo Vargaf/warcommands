@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core';
 import { LogicOperatorCommandEntity } from 'src/warcommands/commands-panel/domain/command/model/logic-operator/logic-operator-command.entity';
 import { logicOperatorSelectOptions } from 'src/warcommands/commands-panel/domain/command/model/logic-operator/logic-operator-select-options';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
 import * as _ from 'lodash';
 import { GenericCommandDTO } from 'src/warcommands/commands-panel/domain/command/model/generic-command.dto';
@@ -31,7 +31,7 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
     logicOperatorOptions = logicOperatorSelectOptions;
 
     constructor(
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly commandUpdatedEvents: CommandUpdatedEvents,
         private readonly commandContainerNgrxRepositoryService: CommandContainerNgrxRepositoryService,
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,

@@ -7,7 +7,7 @@ import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/comman
 import { CommandRemovedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-removed-events';
 import { CommandAddedEventDTO } from 'src/warcommands/commands-panel/domain/command/events/command-added-event.dto';
 import { CommandMovedEventDTO } from 'src/warcommands/commands-panel/domain/command/events/command-modeved-event.dto';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CommandUpdatedEvents } from 'src/warcommands/commands-panel/domain/command/events/command-updated-events';
 import * as _ from 'lodash';
 import { CommandRepositoryService } from 'src/warcommands/commands-panel/domain/command/services/command-repository.service';
@@ -38,7 +38,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
     @Input() commandData!: VariableCommandEntity;
     variableCommandData!: VariableCommandEntity;
 
-    commandForm!: FormGroup;
+    commandForm!: UntypedFormGroup;
 
     varSelected!: string;
     hasMemberOptions = false;
@@ -54,7 +54,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
         private readonly commandCreatedEvents: CommandCreatedEvents,
         private readonly commandMovedEvents: CommandMovedEvents,
         private readonly commandRemovedEvents: CommandRemovedEvents,
-        private readonly formBuilder: FormBuilder,
+        private readonly formBuilder: UntypedFormBuilder,
         private readonly commandUpdatedEvents: CommandUpdatedEvents,
         private readonly commandRepositoryService: CommandRepositoryService,
         private readonly classMemberComponentFactory: ClassMemberComponentFactory,
