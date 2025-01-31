@@ -248,3 +248,25 @@ $dark-pink: #c94695;
         transform: scale3d(1.5, 1.5, 1);
     }
 }
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: transparent;
+
+    .mat-mdc-form-field-infix {
+        padding-bottom: 0px !important;
+        padding-top: 24px !important;
+        min-height: 0px;
+
+        .mat-mdc-select-min-line {
+            color: black;
+        }
+
+        .mat-mdc-select-arrow {
+            color: black;
+        }
+    }
+
+    .mdc-line-ripple::before {
+        border-bottom-color: black;
+    }
+}
