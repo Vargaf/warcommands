@@ -24,7 +24,10 @@
           "error",
           {
             "type": "attribute",
-            "prefix": ["app","warcommands"],
+            "prefix": [
+              "app",
+              "warcommands"
+            ],
             "style": "camelCase"
           }
         ],
