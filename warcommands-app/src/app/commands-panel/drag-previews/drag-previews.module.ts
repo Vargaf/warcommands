@@ -6,7 +6,7 @@ import { IfThenPreviewComponent } from './if-then-preview/if-then-preview.compon
 import { IfThenElsePreviewComponent } from './if-then-else-preview/if-then-else-preview.component';
 import { GameCommandPreviewComponent } from './game-command-preview/game-command-preview.component';
 import { SetVariableFromCommandPreviewComponent } from './set-variable-from-command-preview/set-variable-from-command-preview.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { LogicOperatorCommandPreviewComponent } from './logic-operator-command-preview/logic-operator-command-preview.component';
 
 

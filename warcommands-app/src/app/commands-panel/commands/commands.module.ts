@@ -23,7 +23,7 @@ import { CommandDropCancelManagerService } from 'src/warcommands/commands-panel/
 import { CommandRemovalEventChainGeneratorService } from 'src/warcommands/commands-panel/domain/command/services/command-removal-event-chain-generator.service';
 import { GameCommandModule } from './game-command/game-command.module';
 import { DragPreviewsModule } from '../drag-previews/drag-previews.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SetVariableFromCommandComponent } from './set-variable-from-command/set-variable-from-command.component';
 import { LogicOperatorCommandComponent } from './logic-operator-command/logic-operator-command.component';

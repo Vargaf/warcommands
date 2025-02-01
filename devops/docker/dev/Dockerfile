@@ -1,6 +1,6 @@
 FROM node:22.11-alpine
 
-RUN npm install -g @angular/cli@16.2.16
+RUN npm install -g @angular/cli@17.3.11
 RUN npm install -g http-server
 
 RUN mkdir /project

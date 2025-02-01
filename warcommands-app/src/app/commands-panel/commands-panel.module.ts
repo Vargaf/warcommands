@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { CommandsPanelComponent } from './commands-panel.component';
 import { CommandsModule } from './commands/commands.module';
 import { FileManagerModule } from './file-manager/file-manager.module';

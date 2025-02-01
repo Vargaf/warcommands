@@ -54,7 +54,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {
     SetVariableFromCommandPreviewComponent
 } from "../commands-panel/drag-previews/set-variable-from-command-preview/set-variable-from-command-preview.component";
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {FlexLayoutModule} from "@ngbracket/ngx-layout";
 
 describe('BasicModeComponent', () => {
     let component: BasicModeComponent;

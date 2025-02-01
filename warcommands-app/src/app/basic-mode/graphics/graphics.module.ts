@@ -14,7 +14,7 @@ import { MaterialModule } from 'src/app/share/material/material.module';
 import { MatterFarmComponent } from './matter-farm/matter-farm.component';
 import { EnergyFarmComponent } from './energy-farm/energy-farm.component';
 import { PlayerResourcesComponent } from './player-resources/player-resources.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 
 
 

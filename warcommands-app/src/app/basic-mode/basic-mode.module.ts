@@ -12,7 +12,7 @@ import { DomElementComponentFactoryService } from 'src/warcommands/basic-mode/in
 import { GAME_ENGINE_BASIC_MODE_CONFIGURATION, GAME_CONFIG } from 'src/warcommands/basic-mode/game-engine-basic-mode-configurations';
 import { BasicModeOnMemoryModule } from '../share/basic-mode-on-memory/basic-mode-on-memory.module';
 import { CommandsPanelModule } from '../commands-panel/commands-panel.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { UnitsManagerService } from 'src/warcommands/basic-mode/domain/units/services/units-manager.service';
 import { BuildingsManagerService } from 'src/warcommands/basic-mode/domain/building/services/buildings-manager.service';
 import { BasicModeInMemoryProvidersModule } from './basic-mode-in-memory-providers.module';

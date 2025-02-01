@@ -20,7 +20,7 @@ import {VrModeGameEngineService} from "../../../warcommands/vr-mode/domain/game-
 import {PlayerRepositoryService} from "../../../warcommands/vr-mode/domain/players/services/player-repository.service";
 import {MatIconModule} from "@angular/material/icon";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {FlexLayoutModule} from "@ngbracket/ngx-layout";
 import {PlayerDTO} from "../../../warcommands/vr-mode/domain/players/model/player.dto";
 import {ModalPanelService} from "../../modal-panel/modal-panel.service";
 

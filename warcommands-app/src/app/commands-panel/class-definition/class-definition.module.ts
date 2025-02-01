@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BaseClassMemberOptionListComponent } from './base/base-class-member-option-list/base-class-member-option-list.component';
 import { MaterialModule } from 'src/app/share/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { CreateWorkerComponent } from './base/create-worker/create-worker.component';
 import { GetWorkerListComponent } from './base/get-worker-list/get-worker-list.component';
 import { GameClassMemberOptionsListComponent } from './game/game-class-member-options-list/game-class-member-options-list.component';

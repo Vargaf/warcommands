@@ -9,7 +9,7 @@ import { InMmeoryModule } from '../commands-panel/in-mmeory/in-mmeory.module';
 import { VrModeAliasProviderModule } from './vr-mode-alias-provider.module';
 import { VrModeInMemoryProviderModule } from './vr-mode-in-memory-provider.module';
 import { MaterialModule } from '../share/material/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import * as GameEngineStore from '../../ngrx/basic-mode/reducer-map';
 import { StoreModule } from '@ngrx/store';
 import { AFrameHolderComponent } from './vr-mode/a-frame-holder/a-frame-holder.component';

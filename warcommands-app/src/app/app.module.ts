@@ -37,7 +37,7 @@ import {ModalPanelModule} from "./modal-panel/modal-panel.module";
                 '[Game engine basic mode] Update the request animation frame id',
                 '[Building list] update base resources'
             ]
-        }),
+        , connectInZone: true}),
         TutorialModule, // As we need the tutorial services on dynamic components we have to import it on the root module
         MapSharedEventBusModule,
         ModalPanelModule,
