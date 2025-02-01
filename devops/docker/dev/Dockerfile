@@ -1,6 +1,6 @@
 FROM node:22.11-bookworm
 
-RUN npm install -g @angular/cli@18.2.14
+RUN npm install -g @angular/cli@19.1.5
 RUN npm install -g http-server
 
 RUN mkdir /project
