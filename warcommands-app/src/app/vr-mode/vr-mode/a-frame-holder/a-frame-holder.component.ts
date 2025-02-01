@@ -12,7 +12,8 @@ import { PlayerRepositoryService } from 'src/warcommands/vr-mode/domain/players/
 @Component({
     selector: 'app-a-frame-holder',
     templateUrl: './a-frame-holder.component.html',
-    styleUrls: ['./a-frame-holder.component.scss']
+    styleUrls: ['./a-frame-holder.component.scss'],
+    standalone: false
 })
 export class AFrameHolderComponent implements OnInit {
 

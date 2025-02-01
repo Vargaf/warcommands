@@ -4,9 +4,10 @@ import { TileDTO } from 'src/warcommands/gameEngine/domain/maps/model/tile.dto';
 import { TileType } from 'src/warcommands/gameEngine/domain/maps/model/tile-type.enum';
 
 @Component({
-  selector: 'app-tile-grass',
-  templateUrl: './tile-grass.component.html',
-  styleUrls: ['./tile-grass.component.scss']
+    selector: 'app-tile-grass',
+    templateUrl: './tile-grass.component.html',
+    styleUrls: ['./tile-grass.component.scss'],
+    standalone: false
 })
 export class TileGrassComponent implements OnInit {
 

@@ -9,7 +9,8 @@ import * as _ from 'lodash';
 @Component({
     selector: 'app-create-worker',
     templateUrl: './create-worker.component.html',
-    styleUrls: ['./create-worker.component.scss']
+    styleUrls: ['./create-worker.component.scss'],
+    standalone: false
 })
 export class CreateWorkerComponent implements OnInit, ClassMemberComponent {
 

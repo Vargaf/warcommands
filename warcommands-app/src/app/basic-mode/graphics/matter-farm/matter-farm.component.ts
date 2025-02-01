@@ -7,7 +7,8 @@ import { BuildingsNgrxRepositoryService } from 'src/warcommands/basic-mode/infra
 @Component({
     selector: 'app-matter-farm',
     templateUrl: './matter-farm.component.html',
-    styleUrls: ['./matter-farm.component.scss']
+    styleUrls: ['./matter-farm.component.scss'],
+    standalone: false
 })
 export class MatterFarmComponent implements OnInit {
 

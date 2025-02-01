@@ -4,7 +4,8 @@ import { NgTemplateOutlet } from '@angular/common';
 @Component({
     selector: 'app-variable-preview',
     templateUrl: './variable-preview.component.html',
-    styleUrls: ['./variable-preview.component.scss']
+    styleUrls: ['./variable-preview.component.scss'],
+    standalone: false
 })
 export class VariablePreviewComponent {
 

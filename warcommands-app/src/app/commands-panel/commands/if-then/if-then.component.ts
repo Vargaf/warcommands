@@ -14,7 +14,8 @@ import * as _ from 'lodash';
 @Component({
     selector: 'app-if-then',
     templateUrl: './if-then.component.html',
-    styleUrls: ['./if-then.component.scss']
+    styleUrls: ['./if-then.component.scss'],
+    standalone: false
 })
 export class IfThenComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
     

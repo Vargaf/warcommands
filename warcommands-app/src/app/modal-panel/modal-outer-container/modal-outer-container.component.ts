@@ -7,7 +7,8 @@ import {ModalPanelComponentParameters} from "../modal-panel-component-parameters
 @Component({
     selector: 'app-modal-outer-container',
     templateUrl: './modal-outer-container.component.html',
-    styleUrls: ['./modal-outer-container.component.scss']
+    styleUrls: ['./modal-outer-container.component.scss'],
+    standalone: false
 })
 export class ModalOuterContainerComponent implements OnInit {
 

@@ -4,7 +4,8 @@ import { NgTemplateOutlet } from '@angular/common';
 @Component({
     selector: 'app-game-command-preview',
     templateUrl: './game-command-preview.component.html',
-    styleUrls: ['./game-command-preview.component.scss']
+    styleUrls: ['./game-command-preview.component.scss'],
+    standalone: false
 })
 export class GameCommandPreviewComponent {
 

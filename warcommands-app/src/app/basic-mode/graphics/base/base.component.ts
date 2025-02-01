@@ -37,7 +37,8 @@ interface UnitSpawningDTO {
 @Component({
     selector: 'app-base',
     templateUrl: './base.component.html',
-    styleUrls: ['./base.component.scss']
+    styleUrls: ['./base.component.scss'],
+    standalone: false
 })
 export class BaseComponent implements OnInit, AfterViewInit {
 

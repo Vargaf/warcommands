@@ -8,7 +8,8 @@ import { CommandDragDropManagerService } from 'src/warcommands/commands-panel/do
 @Component({
     selector: 'app-file-manager',
     templateUrl: './file-manager.component.html',
-    styleUrls: ['./file-manager.component.scss']
+    styleUrls: ['./file-manager.component.scss'],
+    standalone: false
 })
 export class FileManagerComponent implements OnInit {
 

@@ -28,7 +28,8 @@ interface VariableOption { value: string, label: string };
 @Component({
     selector: 'app-variable',
     templateUrl: './variable.component.html',
-    styleUrls: ['./variable.component.scss']
+    styleUrls: ['./variable.component.scss'],
+    standalone: false
 })
 export class VariableComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
     

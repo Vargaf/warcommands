@@ -9,7 +9,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-game-command',
     templateUrl: './game-command.component.html',
-    styleUrls: ['./game-command.component.scss']
+    styleUrls: ['./game-command.component.scss'],
+    standalone: false
 })
 export class GameCommandComponent implements OnInit, OnDestroy {
 

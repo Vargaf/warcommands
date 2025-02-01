@@ -12,7 +12,8 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 @Component({
     selector: 'app-array-class-member-option-list',
     templateUrl: './array-class-member-option-list.component.html',
-    styleUrls: ['./array-class-member-option-list.component.scss']
+    styleUrls: ['./array-class-member-option-list.component.scss'],
+    standalone: false
 })
 export class ArrayClassMemberOptionListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 

@@ -6,6 +6,7 @@ import { InitializeTutorialStepService } from "../services/initialize-tutorial-s
     selector: 'app-introduction',
     templateUrl: './introduction.component.html',
     styleUrls: ['./introduction.component.scss'],
+    standalone: false
 })
 export class IntroductionComponent implements AfterViewInit {
 

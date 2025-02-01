@@ -13,7 +13,8 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 @Component({
     selector: 'app-get-worker-list',
     templateUrl: './get-worker-list.component.html',
-    styleUrls: ['./get-worker-list.component.scss']
+    styleUrls: ['./get-worker-list.component.scss'],
+    standalone: false
 })
 export class GetWorkerListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 

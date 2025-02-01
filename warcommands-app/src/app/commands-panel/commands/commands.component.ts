@@ -5,7 +5,8 @@ import { CommandType } from 'src/warcommands/commands-panel/domain/command/model
 @Component({
     selector: 'app-commands',
     templateUrl: './commands.component.html',
-    styleUrls: ['./commands.component.scss']
+    styleUrls: ['./commands.component.scss'],
+    standalone: false
 })
 export class CommandsComponent implements AfterViewInit {
 

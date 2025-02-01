@@ -19,7 +19,8 @@ import { BaseEntityInterface } from 'src/warcommands/basic-mode/domain/building/
 @Component({
     selector: 'app-get-base-by-index',
     templateUrl: './get-base-by-index.component.html',
-    styleUrls: ['./get-base-by-index.component.scss']
+    styleUrls: ['./get-base-by-index.component.scss'],
+    standalone: false
 })
 export class GetBaseByIndexComponent implements OnInit, OnDestroy, ClassMemberComponent {
 

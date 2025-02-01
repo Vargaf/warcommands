@@ -12,7 +12,8 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 @Component({
     selector: 'app-worker-class-member-option-list',
     templateUrl: './worker-class-member-option-list.component.html',
-    styleUrls: ['./worker-class-member-option-list.component.scss']
+    styleUrls: ['./worker-class-member-option-list.component.scss'],
+    standalone: false
 })
 export class WorkerClassMemberOptionListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 

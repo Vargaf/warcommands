@@ -14,7 +14,8 @@ import { ContentObserver } from '@angular/cdk/observers';
 @Component({
     selector: 'app-command-drop',
     templateUrl: './command-drop.component.html',
-    styleUrls: ['./command-drop.component.scss']
+    styleUrls: ['./command-drop.component.scss'],
+    standalone: false
 })
 export class CommandDropComponent implements OnInit, AfterViewInit, OnDestroy {
 

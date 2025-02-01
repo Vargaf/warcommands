@@ -15,7 +15,8 @@ import { SetVarCommandComponent } from 'src/warcommands/commands-panel/domain/co
 @Component({
     selector: 'app-set-variable',
     templateUrl: './set-variable.component.html',
-    styleUrls: ['./set-variable.component.scss']
+    styleUrls: ['./set-variable.component.scss'],
+    standalone: false
 })
 export class SetVariableComponent extends SetVarCommandComponent implements OnInit, OnDestroy, AfterViewInit {
 

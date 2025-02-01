@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-if-then-else',
     templateUrl: './if-then-else.component.html',
-    styleUrls: ['./if-then-else.component.scss']
+    styleUrls: ['./if-then-else.component.scss'],
+    standalone: false
 })
 export class IfThenElseComponent implements OnInit, OnDestroy {
 

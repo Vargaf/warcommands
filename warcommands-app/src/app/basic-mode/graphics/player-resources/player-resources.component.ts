@@ -8,7 +8,8 @@ import { BuildingDTO } from 'src/warcommands/basic-mode/domain/building/model/bu
 @Component({
     selector: 'app-player-resources',
     templateUrl: './player-resources.component.html',
-    styleUrls: ['./player-resources.component.scss']
+    styleUrls: ['./player-resources.component.scss'],
+    standalone: false
 })
 export class PlayerResourcesComponent implements OnInit {
 

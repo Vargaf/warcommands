@@ -15,7 +15,8 @@ import * as _ from 'lodash';
 @Component({
     selector: 'app-worker',
     templateUrl: './worker.component.html',
-    styleUrls: ['./worker.component.scss']
+    styleUrls: ['./worker.component.scss'],
+    standalone: false
 })
 export class WorkerComponent implements OnInit {
 

@@ -5,7 +5,8 @@ import { UxUiNgrxRepositoryService } from 'src/warcommands/commands-panel/infras
 @Component({
     selector: 'app-file',
     templateUrl: './file.component.html',
-    styleUrls: ['./file.component.scss']
+    styleUrls: ['./file.component.scss'],
+    standalone: false
 })
 export class FileComponent implements OnInit, AfterContentInit {
 

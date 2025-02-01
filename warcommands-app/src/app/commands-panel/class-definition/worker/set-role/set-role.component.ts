@@ -13,7 +13,8 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 @Component({
     selector: 'app-set-role',
     templateUrl: './set-role.component.html',
-    styleUrls: ['./set-role.component.scss']
+    styleUrls: ['./set-role.component.scss'],
+    standalone: false
 })
 export class SetRoleComponent implements OnInit, OnDestroy, AfterViewInit, ClassMemberComponent {
 

@@ -7,7 +7,8 @@ import { ToggleCommandListPanelService } from 'src/warcommands/commands-panel/do
 @Component({
     selector: 'app-commands-panel',
     templateUrl: './commands-panel.component.html',
-    styleUrls: ['./commands-panel.component.scss']
+    styleUrls: ['./commands-panel.component.scss'],
+    standalone: false
 })
 export class CommandsPanelComponent implements AfterViewInit {
 

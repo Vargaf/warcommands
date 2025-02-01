@@ -1,7 +1,8 @@
 import {Directive, ViewContainerRef} from '@angular/core';
 
 @Directive({
-  selector: '[appModalDynamicContent]'
+    selector: '[appModalDynamicContent]',
+    standalone: false
 })
 export class ModalDynamicContentDirective {
 

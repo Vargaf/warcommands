@@ -6,9 +6,10 @@ import {ModalPanelService} from "../../modal-panel/modal-panel.service";
 import {GameTutorialService} from "../../../warcommands/tutorial/domain/tutorial/services/game-tutorial.service";
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+    selector: 'app-welcome',
+    templateUrl: './welcome.component.html',
+    styleUrls: ['./welcome.component.scss'],
+    standalone: false
 })
 export class WelcomeComponent implements OnInit {
 

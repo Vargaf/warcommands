@@ -12,7 +12,8 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 @Component({
     selector: 'app-game-class-member-options-list',
     templateUrl: './game-class-member-options-list.component.html',
-    styleUrls: ['./game-class-member-options-list.component.scss']
+    styleUrls: ['./game-class-member-options-list.component.scss'],
+    standalone: false
 })
 export class GameClassMemberOptionsListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 

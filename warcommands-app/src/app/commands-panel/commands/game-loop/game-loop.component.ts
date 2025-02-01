@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-game-loop',
     templateUrl: './game-loop.component.html',
-    styleUrls: ['./game-loop.component.scss']
+    styleUrls: ['./game-loop.component.scss'],
+    standalone: false
 })
 export class GameLoopComponent implements OnInit, OnDestroy {
 

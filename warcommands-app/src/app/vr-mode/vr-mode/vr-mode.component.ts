@@ -27,7 +27,8 @@ import {IntroductionComponent} from "../../tutorial/introduction/introduction.co
 @Component( {
     selector: 'app-vr-mode',
     templateUrl: './vr-mode.component.html',
-    styleUrls: [ './vr-mode.component.scss' ]
+    styleUrls: ['./vr-mode.component.scss'],
+    standalone: false
 } )
 export class VrModeComponent implements OnInit, OnDestroy {
 

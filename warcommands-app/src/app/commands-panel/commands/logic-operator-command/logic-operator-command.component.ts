@@ -14,7 +14,8 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 @Component({
     selector: 'app-logic-operator-command',
     templateUrl: './logic-operator-command.component.html',
-    styleUrls: ['./logic-operator-command.component.scss']
+    styleUrls: ['./logic-operator-command.component.scss'],
+    standalone: false
 })
 export class LogicOperatorCommandComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
 

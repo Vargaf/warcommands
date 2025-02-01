@@ -12,7 +12,8 @@ import { BasicModeGameEngineService } from 'src/warcommands/basic-mode/game-engi
 @Component({
     selector: 'app-basic-mode',
     templateUrl: './basic-mode.component.html',
-    styleUrls: ['./basic-mode.component.scss']
+    styleUrls: ['./basic-mode.component.scss'],
+    standalone: false
 })
 export class BasicModeComponent implements OnInit, OnDestroy {
 

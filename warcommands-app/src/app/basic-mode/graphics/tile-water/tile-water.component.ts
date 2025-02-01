@@ -4,9 +4,10 @@ import { TileDTO } from 'src/warcommands/gameEngine/domain/maps/model/tile.dto';
 import { TileType } from 'src/warcommands/gameEngine/domain/maps/model/tile-type.enum';
 
 @Component({
-  selector: 'app-tile-water',
-  templateUrl: './tile-water.component.html',
-  styleUrls: ['./tile-water.component.scss']
+    selector: 'app-tile-water',
+    templateUrl: './tile-water.component.html',
+    styleUrls: ['./tile-water.component.scss'],
+    standalone: false
 })
 export class TileWaterComponent implements OnInit {
 

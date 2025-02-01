@@ -20,7 +20,8 @@ import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/comman
 @Component({
     selector: 'app-set-variable-from-command',
     templateUrl: './set-variable-from-command.component.html',
-    styleUrls: ['./set-variable-from-command.component.scss']
+    styleUrls: ['./set-variable-from-command.component.scss'],
+    standalone: false
 })
 export class SetVariableFromCommandComponent extends SetVarCommandComponent implements OnInit, OnDestroy, AfterViewInit {
 

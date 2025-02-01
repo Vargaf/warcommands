@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { StatsService } from 'src/warcommands/basic-mode/infrastructure/stats.service';
 
 @Component({
-  selector: 'app-stats',
-  templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.scss']
+    selector: 'app-stats',
+    templateUrl: './stats.component.html',
+    styleUrls: ['./stats.component.scss'],
+    standalone: false
 })
 export class StatsComponent implements OnInit {
 

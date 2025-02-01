@@ -4,7 +4,8 @@ import { NgTemplateOutlet } from '@angular/common';
 @Component({
     selector: 'app-if-then-preview',
     templateUrl: './if-then-preview.component.html',
-    styleUrls: ['./if-then-preview.component.scss']
+    styleUrls: ['./if-then-preview.component.scss'],
+    standalone: false
 })
 export class IfThenPreviewComponent {
 

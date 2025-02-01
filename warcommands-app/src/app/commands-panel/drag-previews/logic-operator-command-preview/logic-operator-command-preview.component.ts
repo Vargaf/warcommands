@@ -4,7 +4,8 @@ import { NgTemplateOutlet } from '@angular/common';
 @Component({
     selector: 'app-logic-operator-command-preview',
     templateUrl: './logic-operator-command-preview.component.html',
-    styleUrls: ['./logic-operator-command-preview.component.scss']
+    styleUrls: ['./logic-operator-command-preview.component.scss'],
+    standalone: false
 })
 export class LogicOperatorCommandPreviewComponent {
 

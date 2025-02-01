@@ -12,7 +12,8 @@ import { CommandPathErrorManagerService } from 'src/warcommands/commands-panel/d
 @Component({
     selector: 'app-base-class-member-option-list',
     templateUrl: './base-class-member-option-list.component.html',
-    styleUrls: ['./base-class-member-option-list.component.scss']
+    styleUrls: ['./base-class-member-option-list.component.scss'],
+    standalone: false
 })
 export class BaseClassMemberOptionListComponent implements OnInit, OnDestroy, ClassMemberComponent {
 

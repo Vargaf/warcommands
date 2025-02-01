@@ -4,7 +4,8 @@ import { NgTemplateOutlet } from '@angular/common';
 @Component({
     selector: 'app-set-variable-from-command-preview',
     templateUrl: './set-variable-from-command-preview.component.html',
-    styleUrls: ['./set-variable-from-command-preview.component.scss']
+    styleUrls: ['./set-variable-from-command-preview.component.scss'],
+    standalone: false
 })
 export class SetVariableFromCommandPreviewComponent {
 

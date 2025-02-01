@@ -7,7 +7,8 @@ import { ClassMemberComponent } from 'src/warcommands/commands-panel/domain/comm
 @Component({
     selector: 'app-array-count',
     templateUrl: './array-count.component.html',
-    styleUrls: ['./array-count.component.scss']
+    styleUrls: ['./array-count.component.scss'],
+    standalone: false
 })
 export class ArrayCountComponent implements OnInit, ClassMemberComponent {
 

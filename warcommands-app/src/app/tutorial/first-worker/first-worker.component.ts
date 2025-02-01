@@ -8,7 +8,8 @@ import { Subscriber } from "rxjs";
 @Component({
     selector: 'app-first-worker',
     templateUrl: './first-worker.component.html',
-    styleUrls: ['./first-worker.component.scss']
+    styleUrls: ['./first-worker.component.scss'],
+    standalone: false
 })
 export class FirstWorkerComponent implements AfterViewInit, OnDestroy {
 
