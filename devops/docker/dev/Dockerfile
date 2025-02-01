@@ -1,4 +1,4 @@
-FROM node:22.11-alpine
+FROM node:22.11-bookworm
 
 RUN npm install -g @angular/cli@17.3.11
 RUN npm install -g http-server
