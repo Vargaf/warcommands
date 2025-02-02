@@ -25,16 +25,17 @@ import { CommandMovedEvents } from 'src/warcommands/commands-panel/domain/comman
 })
 export class SetVariableFromCommandComponent extends SetVarCommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() commandData!: GenericCommandDTO;
+    @Input()
+    declare commandData: GenericCommandDTO;
     setVariableCommand!: SetVariableFromCommandCommandEntity;
 
     varName!: string;
     setVarCommandContainerId!: string;
 
     private commandWatcherSubscription!: Subscription;
-    
+
     innerCommand!: GenericCommandDTO;
-    
+
     constructor(
         private readonly formBuilder: UntypedFormBuilder,
         protected readonly commandUpdatedEvents: CommandUpdatedEvents,
@@ -57,7 +58,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
 
     ngOnDestroy(): void {
         this.commandWatcherSubscription?.unsubscribe();
-        
+
         this.commandComponentDestroy();
     }
 
@@ -69,7 +70,7 @@ export class SetVariableFromCommandComponent extends SetVarCommandComponent impl
 
     private setCommandContainerWatcher(): void {
         const commandContainerId = (this.commandData as SetVariableFromCommandCommandEntity).innerCommandContainerIdList.command;
-        const subscription = 
+        const subscription =
             this.commandContainerNgrxRepositoryService.getCommandContainer(commandContainerId).subscribe((commandContainer) => {
             if (this.isANewCommand(commandContainer)) {
                 this.innerCommand = this.commandRepositoryService.findById(commandContainer.commands[0]);

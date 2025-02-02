@@ -42,7 +42,9 @@
             "allowedCommonJsDependencies": [
               "lodash",
               "easystarjs",
-              "aframe-extras"
+              "aframe-extras",
+              "stats.js",
+              "aframe"
             ],
             "browser": "src/main.ts"
           },

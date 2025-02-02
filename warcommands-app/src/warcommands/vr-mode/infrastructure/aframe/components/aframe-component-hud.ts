@@ -7,7 +7,7 @@ import { BuildingDTO, SpawnerBuildingDTO } from 'src/warcommands/game-middleware
 import { BuildingFilterDTO } from 'src/warcommands/vr-mode/domain/buildings/model/building-filter.dto';
 import { BuildingsRepositoryInterface } from 'src/warcommands/vr-mode/domain/buildings/service/buildings-repository.interface';
 import { PlayerRepositoryService } from 'src/warcommands/vr-mode/domain/players/services/player-repository.service';
-import { SVGLoader, SVGResult } from 'three/examples/jsm/loaders/SVGLoader';
+import { SVGLoader, SVGResult } from 'three/examples/jsm/loaders/SVGLoader.js';
 import { Text } from 'troika-three-text/dist/troika-three-text.esm';
 import { AframeSceneService } from '../aframe-scene.service';
 
@@ -62,7 +62,7 @@ export class AFrameComponentHud {
                 scope.createHudBackground();
                 scope.loadResourceIcons();
                 scope.createResourceTextFileds();
-                
+
                 // Set fullScreen listeners
                 if (this.el.sceneEl) {
                     this.el.sceneEl.renderer.autoClear = false;
@@ -118,7 +118,7 @@ export class AFrameComponentHud {
         energyText.color = '#4242FA';
         this.resourcesHolder.add(energyText);
         energyText.sync();
-        
+
         this.aframeSceneService.isInitialized().then(() => {
             const player = this.playerRepository.findCurrentPlayer();
             const filter: BuildingFilterDTO = {
@@ -264,13 +264,13 @@ export class AFrameComponentHud {
             this.cameraOrtho.right = width / 2;
             this.cameraOrtho.top = height / 2;
             this.cameraOrtho.bottom = - height / 2;
-            
+
             this.updateHUDSprites();
 
             this.cameraOrtho.updateProjectionMatrix();
         }
     }
-    
+
     private isInVrMode(): boolean {
         // AFrame has a problem, it says the player is in VR when is playing on in full screen descktop
         // so we have to check if the player is really in VR

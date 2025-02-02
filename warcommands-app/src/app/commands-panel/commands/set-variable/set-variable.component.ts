@@ -20,7 +20,8 @@ import { SetVarCommandComponent } from 'src/warcommands/commands-panel/domain/co
 })
 export class SetVariableComponent extends SetVarCommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() commandData!: GenericCommandDTO;
+    @Input()
+    declare commandData: GenericCommandDTO;
     setVariableCommand!: SetVariableCommandEntity;
 
     varName!: string;
@@ -34,7 +35,7 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
         protected readonly commandPathErrorManagerService: CommandPathErrorManagerService,
         protected readonly commandPathFinderService: CommandPathFinderService,
         protected readonly uniqueVarNameValidator: UniqueVarNameValidator,
-    ) { 
+    ) {
         super(commandPathFinderService, commandPathErrorManagerService, commandUpdatedEvents, commandMovedEvents);
     }
 
@@ -50,7 +51,7 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
         setTimeout(() => {
             this.commandForm.updateValueAndValidity();
         });
-        
+
     }
 
     protected initializeForm(): void {
@@ -123,11 +124,11 @@ export class SetVariableComponent extends SetVarCommandComponent implements OnIn
             this.setVariableCommand = (_.cloneDeep(command) as SetVariableCommandEntity);
 
             this.handleInvalidCommandBackground(command);
-            
+
         });
 
         this.subscriptionManager.add(subscription);
-        
+
     }
 
 }

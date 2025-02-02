@@ -3,7 +3,7 @@ import { THREE } from 'aframe';
 import { MapDTO } from 'src/warcommands/game-middleware/model/map/map.dto';
 import { TileType } from 'src/warcommands/game-middleware/model/map/tile-type.enum';
 import { TileDTO } from 'src/warcommands/game-middleware/model/map/tile.dto';
-import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils';
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { ModelLoaderInterfaceService } from '../../domain/game-engine/model-loader-abstract.service';
 import { AframeSceneService } from './aframe-scene.service';
 

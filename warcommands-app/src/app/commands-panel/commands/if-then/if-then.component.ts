@@ -18,9 +18,10 @@ import * as _ from 'lodash';
     standalone: false
 })
 export class IfThenComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
-    
-    
-    @Input() commandData!: GenericCommandDTO;
+
+
+    @Input()
+    declare commandData: GenericCommandDTO;
     ifThenCommand!: IfThenCommandEntity;
 
     thenCommandContainerId!: string;
@@ -60,7 +61,7 @@ export class IfThenComponent extends CommandComponent implements OnInit, OnDestr
 
         this.conditionCommandContainerId = this.ifThenCommand.innerCommandContainerIdList.conditionCommandContainerId;
         this.thenCommandContainerId = this.ifThenCommand.innerCommandContainerIdList.thenCommandContainerId;
-        
+
         const commandWatcherSubscription = this.commandNgrxRepositoryService.getCommand(this.ifThenCommand.id).subscribe((command) => {
             this.ifThenCommand = (command as IfThenCommandEntity);
             this.handleInvalidCommandBackground(command);
@@ -96,7 +97,7 @@ export class IfThenComponent extends CommandComponent implements OnInit, OnDestr
 
     private setCommandContainerWatcher(): void {
         const commandContainerId = this.conditionCommandContainerId;
-        const subscription = 
+        const subscription =
             this.commandContainerNgrxRepositoryService.getCommandContainer(commandContainerId).subscribe((commandContainer) => {
             if (this.isANewCommand(commandContainer)) {
                 this.conditionCommand = this.commandRepositoryService.findById(commandContainer.commands[0]);

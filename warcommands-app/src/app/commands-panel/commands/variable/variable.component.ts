@@ -32,19 +32,20 @@ interface VariableOption { value: string, label: string };
     standalone: false
 })
 export class VariableComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
-    
+
     @ViewChild(ClassMemberDirective)
     classMemberDirecitve!: ClassMemberDirective;
 
-    @Input() commandData!: VariableCommandEntity;
+    @Input()
+    declare commandData: VariableCommandEntity;
     variableCommandData!: VariableCommandEntity;
 
-    commandForm!: UntypedFormGroup;
+    declare commandForm: UntypedFormGroup;
 
     varSelected!: string;
     hasMemberOptions = false;
     classMemberComponent!: ComponentRef<any>;
-    
+
     variableOptionList: VariableOption[] = [];
 
     private currentClassName!: string | null;
@@ -63,7 +64,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,
         protected readonly commandPathFinderService: CommandPathFinderService,
         protected readonly commandPathErrorManagerService: CommandPathErrorManagerService,
-        
+
     ) {
         super(commandPathFinderService, commandPathErrorManagerService);
      }
@@ -83,7 +84,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
         setTimeout(() => {
             this.commandForm.updateValueAndValidity();
         });
-        
+
     }
 
     protected initializeForm(): void {
@@ -121,7 +122,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
                     this.commandUpdatedEvents.commandUpdatedDispatch(this.variableCommandData);
                 }
             }
-            
+
             this.loadClassMembersIfNeeded();
         });
 
@@ -145,7 +146,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
         this.subscriptionManager.add(subscription);
 
         this.varSelected = this.variableCommandData.data?.variableCommandId || '';
-        this.loadClassMembersIfNeeded();        
+        this.loadClassMembersIfNeeded();
     }
 
     private loadClassMembersIfNeeded(): void {
@@ -158,7 +159,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
             switch (variable.data.className) {
                 case ClassNameENUM.Game:
                 case ClassNameENUM.Array:
-                case ClassNameENUM.Worker: 
+                case ClassNameENUM.Worker:
                 case ClassNameENUM.Base: {
                     this.hasMemberOptions = true;
                     break;
@@ -167,8 +168,8 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
                     this.hasMemberOptions = false;
                     if (this.variableCommandData.classMember) {
                         this.variableCommandData.classMember = null;
-                        this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, null);   
-                        
+                        this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, null);
+
                     }
                 }
             }
@@ -198,7 +199,7 @@ export class VariableComponent extends CommandComponent implements OnInit, OnDes
             (this.classMemberComponent.instance as ClassMemberComponent).classMemberChange.subscribe((componentClassMember: ClassMemberDTO) => {
                 if (!_.isEqual(this.variableCommandData.classMember, componentClassMember)) {
                     this.variableCommandData.classMember = componentClassMember;
-                    this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, componentClassMember);   
+                    this.commandClassMemberAddedEvent.commandClassMemberAddedDispatch(this.variableCommandData.id, componentClassMember);
                 }
             });
         }

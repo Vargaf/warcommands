@@ -19,7 +19,8 @@ import { CommandNgrxRepositoryService } from 'src/warcommands/commands-panel/inf
 })
 export class LogicOperatorCommandComponent extends CommandComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @Input() commandData!: GenericCommandDTO;
+    @Input()
+    declare commandData: GenericCommandDTO;
     logicOperatorCommandData!: LogicOperatorCommandEntity;
 
     firstCommandContainerId!: string;
@@ -38,7 +39,7 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
         private readonly commandNgrxRepositoryService: CommandNgrxRepositoryService,
         protected readonly commandPathFinderService: CommandPathFinderService,
         protected readonly commandPathErrorManagerService: CommandPathErrorManagerService,
-    ) { 
+    ) {
         super(commandPathFinderService, commandPathErrorManagerService);
     }
 
@@ -127,7 +128,7 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
     }
 
     private setFirstCommandWatcher(): void {
-        const subscription = 
+        const subscription =
             this.commandContainerNgrxRepositoryService.getCommandContainer(this.firstCommandContainerId).subscribe((commandContainer) => {
                 const commandId = commandContainer.commands[0] || null;
 
@@ -142,7 +143,7 @@ export class LogicOperatorCommandComponent extends CommandComponent implements O
     }
 
     private setSecondCommandWatcher(): void {
-        const subscription = 
+        const subscription =
             this.commandContainerNgrxRepositoryService.getCommandContainer(this.secondCommandContainerId).subscribe((commandContainer) => {
                 const commandId = commandContainer.commands[0] || null;
 
