@@ -250,7 +250,7 @@ $dark-pink: #c94695;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: transparent;
+    background-color: transparent !important;
 
     .mat-mdc-form-field-infix {
         padding-bottom: 0px !important;
@@ -267,6 +267,6 @@ $dark-pink: #c94695;
     }
 
     .mdc-line-ripple::before {
-        border-bottom-color: black;
+        border-bottom-color: black !important;
     }
 }

@@ -27,7 +27,7 @@ stop: ### Stop the dockers to shut down the system
 
 .PHONY: bash
 bash: ### Runs the dockers to bring up the system
-	@docker compose -f devops/docker/dev/docker-compose.yml run warcommands_app sh
+	@docker compose -f devops/docker/dev/docker-compose.yml run --remove-orphans warcommands_app bash
 
 .PHONY: prod
 prod: ### Runs the dockers to bring up the system
