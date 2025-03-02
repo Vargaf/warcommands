@@ -1,39 +1,54 @@
-.PHONY: help
-help: ## This help.
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
-
-.DEFAULT_GOAL := help
-
-# Targets
+################################################################################
+# To be able to run this Makefile you need to have installed the gawk library
 #
-.PHONY: build
-build: ### Builds the docker images
-	@docker compose -f devops/docker/dev/docker-compose.yml build
+# Format found at https://gist.github.com/prwhite/8168133?permalink_comment_id=4700889#gistcomment-4700889
+################################################################################
 
-.PHONY: run
-run: ### Runs the dockers to bring up the system
-	@if [ ! -d "./warcommands-app/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yml run warcommands_app npm install; fi
-	@docker compose -f devops/docker/dev/docker-compose.yml up
+##
+## To work on development environment
+##
 
-.PHONY: run-build
-run-build: ### Builds the dist and serves it
-	@if [ ! -d "./warcommands-app/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose-build.yml run warcommands_pwa npm install; fi
-	@docker compose -f devops/docker/dev/docker-compose-build.yml run warcommands_pwa ng build --configuration production
-	@docker compose -f devops/docker/dev/docker-compose-build.yml up
+build: ## Builds the docker images
+	@docker compose -f devops/docker/dev/docker-compose.yaml build
 
-.PHONY: stop
-stop: ### Stop the dockers to shut down the system
-	@docker compose -f devops/docker/dev/docker-compose.yml down
+run: ## Runs the dockers to bring up the system
+	@if [ ! -d "./project/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yaml run warcommands-dev npm install; fi
+	@docker compose -f devops/docker/dev/docker-compose.yaml up
 
-.PHONY: bash
-bash: ### Runs the dockers to bring up the system
-	@docker compose -f devops/docker/dev/docker-compose.yml run --remove-orphans warcommands_app bash
+run-detached: ## Runs the dockers to bring up the system in background
+	@if [ ! -d "./project/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yaml run warcommands-dev npm install; fi
+	@docker compose -f devops/docker/dev/docker-compose.yaml up --detach
 
-.PHONY: prod
-prod: ### Runs the dockers to bring up the system
-	@docker compose -f devops/docker/dev/docker-compose.yml run warcommands_app ng build --configuration production
+logs: ## Show the logs of the running container
+	@docker compose -f devops/docker/dev/docker-compose.yaml logs -f
 
-.PHONY: test
-test: ### Runs the tests
-	@if [ ! -d "./warcommands-app/node_modules" ]; then docker compose -f ddevops/docker/test/docker-compose.yml run warcommands_app_test npm install; fi
-	@docker compose -f devops/docker/test/docker-compose.yml run -p 127.0.0.1:9876:9876 warcommands_app_test ng test
+bash: ## To access to the running project container
+	@docker compose -f devops/docker/dev/docker-compose.yaml run --remove-orphans warcommands-dev bash
+
+stop: ## Stop the dockers to shut down the system
+	@docker compose -f devops/docker/dev/docker-compose.yaml down --remove-orphans
+
+##
+## To work as on production environment
+##
+
+prod-build: ## Builds the dist folder to go to production
+	@if [ ! -d "./project/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yaml run warcommands-dev npm install; fi
+	@docker compose -f devops/docker/dev/docker-compose.yaml run --remove-orphans warcommands-dev npm run build
+
+prod-preview: ## To preview the dist folder
+	@if [ ! -d "./project/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yaml run warcommands-dev npm install; fi
+	@docker compose -f devops/docker/dev/docker-compose.yaml run -p 4173:4173 --remove-orphans warcommands-dev npm run preview
+
+################################################################################
+# Help target
+################################################################################
+help:: ## show this help text
+	@gawk -vG=$$(tput setaf 2) -vR=$$(tput sgr0) ' \
+		match($$0, "^(([^#:]*[^ :]) *:)?([^#]*)##([^#].+|)$$",a) { \
+			if (a[2] != "") { printf "    make %s%-18s%s %s\n", G, a[2], R, a[4]; next }\
+			if (a[3] == "") { print a[4]; next }\
+			printf "\n%-36s %s\n","",a[4]\
+		}' $(MAKEFILE_LIST)
+	@echo "" # blank line at the end
+.DEFAULT_GOAL := help

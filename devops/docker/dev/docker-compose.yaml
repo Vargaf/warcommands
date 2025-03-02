@@ -1,0 +1,13 @@
+services:
+  warcommands-dev:
+    build:
+      context: ../../../
+      dockerfile: devops/docker/dev/Dockerfile
+    image: warcommands-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - type: bind
+        source: ../../../project
+        target: /project
+    command: npm run dev

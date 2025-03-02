@@ -1,0 +1,14 @@
+services:
+    warcommands_app:
+        build:
+            context: ../../../
+            dockerfile: /Dockerfile
+
+        image: warcommands_app_dev
+        ports:
+          - "4400:4200"
+        volumes:
+            - type: bind
+              source: ../../../warcommands-app
+              target: /project
+        command: ng serve --host 0.0.0.0 --disable-host-check

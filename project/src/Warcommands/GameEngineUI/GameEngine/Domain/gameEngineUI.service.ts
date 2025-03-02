@@ -1,0 +1,9 @@
+import "reflect-metadata";
+import { injectable } from 'inversify';
+import { GameMap } from "../../GameService/Domain/model/gameMap.ts";
+
+@injectable()
+export abstract class GameEngineUIService {
+    abstract drawCube(): void;
+    abstract drawMap(map: GameMap): void;
+}
