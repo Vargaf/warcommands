@@ -10,11 +10,14 @@ export class MapService {
     }
 
     initializeMap(mapSize: number): void {
+        if (mapSize < 3) {
+            mapSize = 3;
+        }
         this.buildMap(mapSize);
+        this.setBase();
     }
 
     private buildMap(rings: number): void {
-        let hexagonCount: number = 0;
         const mapTiles: Array<HexTile> = new Array<HexTile>();
 
         if(rings == 1) {
@@ -25,13 +28,15 @@ export class MapService {
                     for (let s = -rings+1; s < rings; s++) {
                         if(q+r+s == 0) {
                             mapTiles.push(new HexTile(q, r, s));
-                            hexagonCount++;
                         }
                     }
                 }
             }
-            console.log(hexagonCount);
         }
-        this.map = new GameMap(mapTiles);
+        this.map = new GameMap(mapTiles, rings);
+    }
+
+    private setBase(): void {
+        this.map.setBase();
     }
 }

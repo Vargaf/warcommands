@@ -4,6 +4,6 @@ import { GameMap } from "../../GameService/Domain/model/gameMap.ts";
 
 @injectable()
 export abstract class GameEngineUIService {
-    abstract drawCube(): void;
+    abstract initializeScene(): void;
     abstract drawMap(map: GameMap): void;
 }
