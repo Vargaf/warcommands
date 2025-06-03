@@ -15,7 +15,7 @@ it whenever you want with this button
 
 ## Create workers
 ### Step 1
-Lets create some workers to harvest resources
+Let us create some workers to harvest resources
 
 > Gif about to drag the Game command to the game Loop and create worker
 

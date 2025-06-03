@@ -6,7 +6,7 @@ services:
 
         image: warcommands_pwa
         ports:
-          - 4480:8080
+          - "4480:8080"
         volumes:
           - type: bind
             source: ../../../warcommands-app

@@ -1,0 +1,7 @@
+# This service is only to enable Webstorm to access to the Node configuration without interfering with the development container
+services:
+  warcommands-webstorm:
+    build:
+      context: ../../../
+      dockerfile: devops/docker/dev/Dockerfile
+    image: warcommands-webstorm

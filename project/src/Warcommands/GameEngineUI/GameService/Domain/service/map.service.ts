@@ -3,7 +3,7 @@ import { GameMap } from "../model/gameMap.ts";
 
 export class MapService {
 
-    private map: GameMap;
+    private map: GameMap = new GameMap([],0);
 
     gameMap(): GameMap {
         return this.map;

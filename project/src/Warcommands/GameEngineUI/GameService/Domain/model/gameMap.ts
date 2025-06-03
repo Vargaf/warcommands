@@ -56,14 +56,37 @@ export class GameMap {
         let hexTile: HexTile =  this.map[this.fromCubeCoordinatesToArrayIndex(centerTile)];
         hexTile.setTerrain(terrain);
 
-        for (let i = 1; i < rings; i++) {
+        switch (terrain) {
+            case TileType.Water:
+                hexTile.setHeight(-1);
+                break;
+            case TileType.Rock:
+                hexTile.setHeight((rings +1) * 2);
+                break;
+            default:
+                hexTile.setHeight(0);
+        }
+
+        for (let i = 1; i <= rings; i++) {
             const ring: number[] = this.buildRing(centerTile, i);
 
             for (const tileIndex of ring) {
                 hexTile = this.map[tileIndex];
                 hexTile.setTerrain(terrain);
+
+                switch (terrain) {
+                    case TileType.Water:
+                        hexTile.setHeight(-1);
+                        break;
+                    case TileType.Rock:
+                        hexTile.setHeight((rings +1 -i) * 2);
+                        break;
+                    default:
+                        hexTile.setHeight(0);
+                }
             }
         }
+        
     }
 
     private buildRing(centerTile: HexTileCoordinates, radius: number): number[] {

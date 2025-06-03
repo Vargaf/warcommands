@@ -1,51 +1,52 @@
 import "reflect-metadata";
 import { inject, injectable } from 'inversify';
 import * as THREE from 'three';
-import { MathUtils } from 'three';
 import { GameEngineUIService } from "../../Domain/gameEngineUI.service.ts";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GameMap } from "../../../GameService/Domain/model/gameMap.ts";
-import { HexTile } from "../../../GameService/Domain/model/hexTile.ts";
-import { ThreeHexTileBuilderService } from "./threeHexTileBuilder.service.ts";
-import Stats from 'three/examples/jsm/libs/stats.module'
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
-import { TileType } from "../../../GameService/Domain/model/tileType.enum.ts";
+import { ThreeHexMapBuilderService } from "./threeHexMapBuilderService.ts";
+import Stats from "three/examples/jsm/libs/stats.module.js";
+import { MapControls } from "three/examples/jsm/Addons.js";
+
 
 @injectable()
 export class ThreeGameEngineUIService implements GameEngineUIService {
 
-    private scene: THREE.Scene;
-    private camera: THREE.PerspectiveCamera;
-    private renderer: THREE.WebGLRenderer;
+    private readonly scene: THREE.Scene;
+    private readonly camera: THREE.PerspectiveCamera;
+    private readonly renderer: THREE.WebGLRenderer;
 
-    constructor(@inject(ThreeHexTileBuilderService) private readonly threeHexTileBuilderService: ThreeHexTileBuilderService) {
+    constructor(@inject(ThreeHexMapBuilderService) private readonly threeHexMapBuilderService: ThreeHexMapBuilderService) {
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+        this.renderer = new THREE.WebGLRenderer();
+        this.threeHexMapBuilderService.setScene(this.scene);
     }
 
     initializeScene(): void {
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
+        
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( this.renderer.domElement );
 
         const stats = new Stats();
         document.body.appendChild(stats.dom)
 
-        const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-        const controls = new OrbitControls( camera, renderer.domElement );
-        camera.position.set( 0, 0, 50 );
+        
+        const controls = new MapControls( this.camera, this.renderer.domElement );
+        this.camera.position.set( 0, 5, 10 );
+        this.camera.lookAt(0,0,0);
         controls.update();
 
-        const scene = new THREE.Scene();
-        const stats2	= new rendererStats();
+        
+        const stats2 = rendererStats();
         document.body.appendChild(stats2.domElement)
         stats2.domElement.style.position	= 'absolute'
         stats2.domElement.style.left	= '0px'
         stats2.domElement.style.bottom	= '0px'
 
+        const scene = this.scene;
+        const camera = this.camera;
+        const renderer = this.renderer;
         function animate() {
-
-            // required if controls.enableDamping or controls.autoRotate are set to true
-            controls.update();
 
             renderer.render( scene, camera );
             stats.update();
@@ -53,81 +54,20 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
 
         }
 
-        renderer.setAnimationLoop( animate );
+        this.renderer.setAnimationLoop( animate );
         animate();
-
-        this.scene = scene;
-        this.camera = camera;
-        this.renderer = renderer;
 
         window.addEventListener( 'resize', this.onWindowResize() );
     }
 
     drawMap(map: GameMap): void {
-        // Draw a hexagon
-        const innerHexagonalGeometry = new THREE.CircleGeometry( 1, 6 );
+        this.threeHexMapBuilderService.drawMap(map);
 
-        // Instance all the hexagons of the map
-        const mesh = new THREE.InstancedMesh( innerHexagonalGeometry, new THREE.MeshBasicMaterial(  ), map.getMap().length );
 
-        // To transform the position of the hexagons on the instance
-        const transform = new THREE.Object3D();
-
-        // Make the hexagons point to top
-        transform.rotation.z = MathUtils.degToRad(30);
-
-        let x: number = 0;
-        let y: number = 0;
-        let z: number = 0;
-        let index: number = 0;
-
-        for (const tile: HexTile of map.getMap()) {
-
-            // Calculate the position of the hexagon by their cube coordinated
-            x = Math.sqrt(3) * tile.getCoordinates().q + Math.sqrt(3) / 2 * tile.getCoordinates().r;
-            y = 3 / 2 * tile.getCoordinates().r;
-            z = 0;
-
-            if(tile.terrain() == TileType.Water) {
-                z = -0.5;
-            }
-
-            transform.position.set(x, y, z);
-            transform.updateMatrix();
-            mesh.setMatrixAt(index, transform.matrix);
-
-            let color: string = '';
-            switch (tile.terrain()) {
-                case TileType.Grass:
-                    color = `hsl(120, 100%, ${MathUtils.randFloat(30, 35) }%)`;
-                    break;
-                case TileType.Water:
-                    color = `hsl(240, 100%, ${MathUtils.randFloat(30, 35) }%)`;
-                    break;
-                case TileType.Base:
-                    color = `hsl(120, 100%, ${MathUtils.randFloat(26, 28) }%)`;
-                    break;
-                case TileType.Rock:
-                    color = `hsl(0, 0%, ${MathUtils.randFloat(30, 35) }%)`;
-                    break;
-                case TileType.Sand:
-                    color = `hsl(24, 100%, ${MathUtils.randFloat(32, 35) }%)`;
-                    break;
-                default:
-                    throw new Error('Invalid terrain');
-            }
-
-            mesh.setColorAt(index, new THREE.Color(color));
-
-            index++;
-        }
-        mesh.instanceMatrix.needsUpdate = true;
-        mesh.computeBoundingSphere();
-        this.scene.add(mesh);
 
         // Greys = `hsl(0, 0%, ${MathUtils.randFloat(30, 35) }%)`;
         // Greens = `hsl(120, 100%, ${MathUtils.randFloat(30, 35) }%)`
-        // Dark Greens = `hsl(120, 50%, ${MathUtils.randFloat(13, 15) }%)`
+        // Dark Greens = `hsl(120, 60%, ${MathUtils.randFloat(30, 35) }%)``
         // Brown = `hsl(24, 100%, ${MathUtils.randFloat(32, 35) }%)`
         // Blue = `hsl(240, 100%, ${MathUtils.randFloat(30, 35) }%)`
 
@@ -150,12 +90,12 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
 
                     // Calculate the position of the hexagon by their cube coordinated
                     x = Math.sqrt(3) * tile.getCoordinates().q + Math.sqrt(3) / 2 * tile.getCoordinates().r;
-                    y = 3 / 2 * tile.getCoordinates().r;
+                    z = 3 / 2 * tile.getCoordinates().r;
 
-                    that.drawIndex(font, "i:" + index.toString(),x - 0.2,y, 0xffffff);
-                    that.drawIndex(font, "r:" + tile.getCoordinates().r.toString(),x + 0.3,y, 0x1111ff);
-                    that.drawIndex(font, "q:" + tile.getCoordinates().q.toString(),x - 0.5,y + 0.3, 0x11ff11);
-                    that.drawIndex(font, "s:" + tile.getCoordinates().s.toString(),x - 0.5,y - 0.3, 0xff1111);
+                    that.drawIndex(font, "i:" + index.toString(),x - 0.2,z, 0xffffff);
+                    that.drawIndex(font, "r:" + tile.getCoordinates().r.toString(),x + 0.3,z, 0x1111ff);
+                    that.drawIndex(font, "q:" + tile.getCoordinates().q.toString(),x - 0.5,z + 0.3, 0x11ff11);
+                    that.drawIndex(font, "s:" + tile.getCoordinates().s.toString(),x - 0.5,z - 0.3, 0xff1111);
                     index++;
 
                 }
@@ -181,10 +121,36 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
         //this.testCubeCoordinatesToArrayIndex(map);
     }
 
+
+
+    private onWindowResize(): any {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
     /**
      * The next functions were created for testing purposes to draw the outer lines of the hexagons
      * Both of them add a lot of burden to the draw system so they have been discarded
      */
+
+    /*
+    private drawIndex(font: any, text: any,x: any,z: any, color: any):void {
+        const geometry = new TextGeometry( text, {
+            font: font,
+            size: 0.1,
+            depth: 0,
+        } );
+
+        geometry.computeBoundingBox();
+
+        const material = new THREE.MeshBasicMaterial( { color } );
+        const textMesh1 = new THREE.Mesh( geometry, material );
+        textMesh1.position.set( x, 0.1, z );
+        textMesh1.rotation.x = -Math.PI / 2;
+        this.scene.add(textMesh1);
+    }
 
     // With a radius of 500 hexagons this functions launch a performance of 44 FPS
     private drawHexOuterLinesByRingGeometry(map: GameMap): void {
@@ -198,7 +164,7 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
         let index: number = 0;
         const transform = new THREE.Object3D();
 
-        for (const tile: HexTile of map.getMap()) {
+        for (const tile of map.getMap()) {
 
             x = Math.sqrt(3) * tile.getCoordinates().q + Math.sqrt(3) / 2 * tile.getCoordinates().r;
             y = 3 / 2 * tile.getCoordinates().r;
@@ -225,7 +191,7 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
         let x: number = 0;
         let y: number = 0;
 
-        for (const tile: HexTile of map.getMap()) {
+        for (const tile of map.getMap()) {
 
             for (const outerHexagonPoint of outerHexagonPoints) {
                 x = Math.sqrt(3) * tile.getCoordinates().q + Math.sqrt(3) / 2 * tile.getCoordinates().r + outerHexagonPoint.x;
@@ -243,13 +209,7 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
         this.scene.add(hexagon);
 
     }
-
-    private onWindowResize(): any {
-        this.camera.aspect = window.innerWidth / window.innerHeight;
-        this.camera.updateProjectionMatrix();
-
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
-    }
+    */
 }
 
 const rendererStats = function (){
@@ -266,7 +226,7 @@ const rendererStats = function (){
     msText.innerHTML= 'WebGLRenderer';
     msDiv.appendChild( msText );
 
-    const msTexts	= [];
+    const msTexts: any[]	= [];
     let nLines	= 11;
     for(let i = 0; i < nLines; i++){
         msTexts[i]	= document.createElement( 'div' );
@@ -280,7 +240,7 @@ const rendererStats = function (){
     return {
         domElement: container,
 
-        update: function(webGLRenderer){
+        update: function(webGLRenderer: any){
             // sanity check
             console.assert(webGLRenderer instanceof THREE.WebGLRenderer)
 

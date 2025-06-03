@@ -132,7 +132,7 @@ the second worker on the position 1.
 > show a gif of the selecting the correct action and setting values, we have to create 2 gif, desktop and mobile screen sizes
 
 ### Step 6
-Now that we have selected the second worker we will set it to work as a
+Now that we have selected the second worker we will set it to work
 Energy harvester by selecting the energyHarvester role.
 
 > show a gif of the selecting the energyHarvester role, we have to create 2 gif, desktop and mobile screen sizes

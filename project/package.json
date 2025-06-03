@@ -9,9 +9,11 @@
     "preview": "vite preview --host 0.0.0.0"
   },
   "devDependencies": {
+    "@types/stats": "^0.16.30",
     "@types/three": "^0.173.0",
+    "@typescript-eslint/eslint-plugin": "^8.29.1",
     "typescript": "~5.7.2",
-    "vite": "^6.1.0"
+    "vite": "^6.3.5"
   },
   "dependencies": {
     "inversify": "^6.2.2",
