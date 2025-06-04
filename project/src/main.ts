@@ -22,7 +22,6 @@ import './style.css'
 // `
 //
 // setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
-import 'reflect-metadata';
 import { diContainer } from "./config/dependencyInjection/diContainer";
 import {GameService} from "./Warcommands/GameEngineUI/GameService/Domain/service/game.service.ts";
 

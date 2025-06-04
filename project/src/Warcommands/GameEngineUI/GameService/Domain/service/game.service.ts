@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { inject, injectable } from 'inversify';
 import { GameEngineUIService } from "../../../GameEngine/Domain/gameEngineUI.service.ts";
 import { MapService } from "./map.service.ts";

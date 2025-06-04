@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { injectable } from 'inversify';
 import { GameMap } from "../../GameService/Domain/model/gameMap.ts";
 

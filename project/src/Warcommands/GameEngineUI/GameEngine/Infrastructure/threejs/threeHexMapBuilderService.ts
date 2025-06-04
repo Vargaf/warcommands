@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import * as THREE from "three";
 import {GameMap} from "../../../GameService/Domain/model/gameMap.ts";
 import { MathUtils } from 'three';
@@ -67,10 +66,10 @@ export class ThreeHexMapBuilderService {
         mesh.instanceMatrix.needsUpdate = true;
         mesh.computeBoundingSphere();
         this.scene.add(mesh);
-        //this.drawWaterAndRockWalls(waterTiles, rockTiles);
+        this.drawWaterAndRockWalls(waterTiles, rockTiles);
     }
 
-    /*private drawWaterAndRockWalls(waterTiles: number[], rockTiles: number[]): void {
+    private drawWaterAndRockWalls(waterTiles: number[], rockTiles: number[]): void {
 
     }
 

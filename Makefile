@@ -13,11 +13,11 @@ build: ## Builds the docker images
 
 run: ## Runs the dockers to bring up the system
 	@if [ ! -d "./project/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yaml run warcommands-dev npm install; fi
-	@docker compose -f devops/docker/dev/docker-compose.yaml up
+	@docker compose -f devops/docker/dev/docker-compose.yaml up --remove-orphans
 
 run-detached: ## Runs the dockers to bring up the system in background
 	@if [ ! -d "./project/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yaml run warcommands-dev npm install; fi
-	@docker compose -f devops/docker/dev/docker-compose.yaml up --detach
+	@docker compose -f devops/docker/dev/docker-compose.yaml up --detach --remove-orphans
 
 logs: ## Show the logs of the running container
 	@docker compose -f devops/docker/dev/docker-compose.yaml logs -f
@@ -39,6 +39,23 @@ prod-build: ## Builds the dist folder to go to production
 prod-preview: ## To preview the dist folder
 	@if [ ! -d "./project/node_modules" ]; then docker compose -f devops/docker/dev/docker-compose.yaml run warcommands-dev npm install; fi
 	@docker compose -f devops/docker/dev/docker-compose.yaml run -p 4173:4173 --remove-orphans warcommands-dev npm run preview
+
+################################################################################
+# To handle the npm dependencies
+# https://www.npmjs.com/package/npm-check-updates
+################################################################################
+
+##
+## To handle the npm dependencies
+##
+npm-outdated: ## List the outdated node packages
+	@docker compose -f devops/docker/dev/docker-compose.yaml run --remove-orphans warcommands-dev npx npm-check-updates
+
+npm-update: ## List the outdated node packages an asks which ones you want to update
+	@docker compose -f devops/docker/dev/docker-compose.yaml run --remove-orphans warcommands-dev npx npm-check-updates --interactive --format group
+##
+## Help
+##
 
 ################################################################################
 # Help target

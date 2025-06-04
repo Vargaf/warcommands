@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { inject, injectable } from 'inversify';
 import * as THREE from 'three';
 import { GameEngineUIService } from "../../Domain/gameEngineUI.service.ts";
@@ -57,7 +56,12 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
         this.renderer.setAnimationLoop( animate );
         animate();
 
-        window.addEventListener( 'resize', this.onWindowResize() );
+        window.addEventListener( 'resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize( window.innerWidth, window.innerHeight );
+        } );
     }
 
     drawMap(map: GameMap): void {
@@ -119,15 +123,6 @@ export class ThreeGameEngineUIService implements GameEngineUIService {
         //this.drawHexOuterLinesByLineGeometry(map);
 
         //this.testCubeCoordinatesToArrayIndex(map);
-    }
-
-
-
-    private onWindowResize(): any {
-        this.camera.aspect = window.innerWidth / window.innerHeight;
-        this.camera.updateProjectionMatrix();
-
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
     }
 
     /**
