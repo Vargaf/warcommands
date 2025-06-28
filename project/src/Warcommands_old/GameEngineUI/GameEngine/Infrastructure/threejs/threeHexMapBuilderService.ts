@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {GameMap} from "../../../GameService/Domain/model/gameMap.ts";
+import { GameMap } from "../../../GameService/Domain/model/gameMap.ts";
 import { MathUtils } from 'three';
 import { TileType } from "../../../GameService/Domain/model/tileType.enum.ts";
 
@@ -14,9 +14,8 @@ export class ThreeHexMapBuilderService {
 
     public drawMap(map: GameMap): void {
 
-        if(this.scene == undefined) {
-            throw new Error('The scene is undefined!');
-        }
+        this.sceneGuard()
+
         // Draw a hexagon
         const innerHexagonalGeometry = new THREE.CircleGeometry( 1, 6 );
 
@@ -65,12 +64,15 @@ export class ThreeHexMapBuilderService {
         }
         mesh.instanceMatrix.needsUpdate = true;
         mesh.computeBoundingSphere();
+
+        // @ts-ignore, is already checked
         this.scene.add(mesh);
         this.drawWaterAndRockWalls(waterTiles, rockTiles);
     }
 
     private drawWaterAndRockWalls(waterTiles: number[], rockTiles: number[]): void {
-
+        console.log(waterTiles);
+        console.log(rockTiles);
     }
 
     /*private getWaterNeighbours(): void {
@@ -80,4 +82,10 @@ export class ThreeHexMapBuilderService {
     private getRockNeighbours(): void {
 
     }*/
+
+    private sceneGuard(): void {
+        if(this.scene == undefined) {
+            throw new Error('The scene is undefined!');
+        }
+    }
 }

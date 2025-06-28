@@ -12,8 +12,6 @@ export class GameService {
     }
 
     public play(): void {
-        console.log('Play Game Service');
-
         this.mapService.initializeMap(14);
         this.gameEngine.initializeScene();
         this.gameEngine.drawMap(this.mapService.gameMap())

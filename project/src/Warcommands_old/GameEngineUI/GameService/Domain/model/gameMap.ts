@@ -25,7 +25,7 @@ export class GameMap {
         return this.map;
     }
 
-    fromCubeCoordinatesToArrayIndex(hexTile: HexTileCoordinates): number {
+    private fromCubeCoordinatesToArrayIndex(hexTile: HexTileCoordinates): number {
 
         const hexCubeCoordinateQOffset = this.hexCubeCoordinateQOffset(hexTile.q);
 

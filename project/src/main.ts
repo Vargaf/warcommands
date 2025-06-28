@@ -1,4 +1,5 @@
 import './style.css'
+import {GameUIService} from "./Warcommands/GameUI/Domain/GameUI.service.ts";
 // import typescriptLogo from './typescript.svg'
 // import viteLogo from '/vite.svg'
 // import { setupCounter } from './counter.ts'
@@ -22,9 +23,13 @@ import './style.css'
 // `
 //
 // setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+
 import { diContainer } from "./config/dependencyInjection/diContainer";
-import {GameService} from "./Warcommands/GameEngineUI/GameService/Domain/service/game.service.ts";
+//import {GameService} from "./Warcommands_old/GameEngineUI/GameService/Domain/service/game.service.ts";
 
 
-const gameService: GameService = diContainer.get(GameService);
-gameService.play();
+//const gameService: GameService = diContainer.get(GameService);
+//gameService.play();
+
+const gameUI: GameUIService = diContainer.get(GameUIService);
+gameUI.initialize();
