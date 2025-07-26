@@ -33,6 +33,8 @@ import {GameUIService} from "./Warcommands/GameUI/Domain/GameUI.service.ts";
 //const gameService: GameService = diContainer.get(GameService);
 //gameService.play();
 
+
+
 const gameUI: GameUIService = diContainer.get(GameUIService);
 const gameEngine: GameEngineService = diContainer.get(GameEngineService);
 gameUI.initialize();

@@ -6,6 +6,8 @@ import {CameraService} from "../../Domain/Camera.service.ts";
 import {THREECamera} from "../../Infrastructure/THREE.Camera.ts";
 import {RendererService} from "../../Domain/Renderer.service.ts";
 import {THREERenderer} from "../../Infrastructure/THREE.Renderer.ts";
+import {MessageBrokerService} from "../../Domain/Service/MessageBroker.service.ts";
+import {SharedMessageBrokerService} from "../../Infrastructure/SharedMessageBroker.service.ts";
 
 export const GameUIModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
@@ -13,5 +15,6 @@ export const GameUIModule = new ContainerModule(
         options.bind<SceneService>(SceneService).to(THREEScene).inSingletonScope();
         options.bind<CameraService>(CameraService).to(THREECamera).inSingletonScope();
         options.bind<RendererService>(RendererService).to(THREERenderer).inSingletonScope();
+        options.bind<MessageBrokerService>(MessageBrokerService).to(SharedMessageBrokerService);
     }
 );

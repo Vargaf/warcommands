@@ -3,6 +3,7 @@ import * as THREE from "three";
 import {SceneService} from "./Scene.service.ts";
 import {CameraService} from "./Camera.service.ts";
 import {RendererService} from "./Renderer.service.ts";
+import {MessageBrokerService} from "./Service/MessageBroker.service.ts";
 
 @injectable()
 export class GameUIService {
@@ -10,7 +11,10 @@ export class GameUIService {
     constructor(
         @inject(SceneService) private readonly _sceneService: SceneService,
         @inject(CameraService) private readonly _cameraService: CameraService,
-        @inject(RendererService) private readonly _rendererService: RendererService,) {
+        @inject(RendererService) private readonly _rendererService: RendererService,
+        @inject(MessageBrokerService) private readonly _messageBrokerService: MessageBrokerService,) {
+
+        this._messageBrokerService.subscribe('map.generated', this.onMapReady.bind(this));
     }
 
     initialize() {
@@ -37,5 +41,9 @@ export class GameUIService {
 
             this._rendererService.setSize( window.innerWidth, window.innerHeight );
         } );
+    }
+
+    private onMapReady(data: any) {
+        console.log(data);
     }
 }

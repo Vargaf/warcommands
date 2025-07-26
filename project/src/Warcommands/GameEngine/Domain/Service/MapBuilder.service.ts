@@ -2,12 +2,18 @@ import {HexTileDTO} from "../Model/HexTile.dto.ts";
 import {HexTileCoordinates} from "../Model/HexTileCoordinates.ts";
 import {TileType} from "../Model/tileType.enum.ts";
 import {MathUtils} from "three";
+import {inject} from "inversify";
+import {MessageBrokerService} from "./MessageBroker.service.ts";
+import {MapGeneratedEvent} from "../Events/MapGenerated.event.ts";
 
 export class MapBuilderService {
 
     private _numberOfTiles: number = 0;
     private _centerTileIndex: number = 0;
     private _mapRingsSize: number = 0;
+
+    constructor(@inject(MessageBrokerService) private readonly messageBroker: MessageBrokerService) {
+    }
 
     private readonly hexTileDirectionVectors = [
         new HexTileCoordinates(1, 0, -1), new HexTileCoordinates(1, -1, 0), new HexTileCoordinates(0, -1, 1),
@@ -30,7 +36,9 @@ export class MapBuilderService {
         gridMap = this.buildGrassTiles(gridMap);
 
         // TODO: Calcular y añadir los vecinos de todos los hexagonos
-        
+
+        const generatedMapEvent = new MapGeneratedEvent(gridMap);
+        this.messageBroker.publish(generatedMapEvent);
         
     }
 
