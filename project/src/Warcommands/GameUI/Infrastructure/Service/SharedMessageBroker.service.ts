@@ -1,14 +1,15 @@
 import {inject} from "inversify";
-import {MessageBrokerService} from "../Domain/Service/MessageBroker.service.ts";
-import {MessageBroker} from "../../Shared/MessageBroker/Domain/Service/messageBroker.ts";
+import {MessageBrokerService} from "../../Domain/Service/MessageBroker.service.ts";
+import {MessageBroker} from "../../../Shared/MessageBroker/Domain/Service/messageBroker.ts";
+import {EventInterface} from "../../../GameEngine/Domain/Events/Event.interface.ts";
 
 export class SharedMessageBrokerService implements MessageBrokerService {
 
     constructor(@inject(MessageBroker) private readonly messageBroker: MessageBroker) {
     }
 
-    publish(topic: string, data: any): void {
-        this.messageBroker.publish(topic, data);
+    publish(event: EventInterface): Promise<void> {
+        return this.messageBroker.publish(event);
     }
 
     subscribe(topic: string, cb: FunctionStringCallback): void {

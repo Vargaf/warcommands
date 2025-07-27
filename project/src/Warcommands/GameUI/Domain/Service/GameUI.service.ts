@@ -1,9 +1,10 @@
 import {inject, injectable} from "inversify";
-import * as THREE from "three";
 import {SceneService} from "./Scene.service.ts";
 import {CameraService} from "./Camera.service.ts";
 import {RendererService} from "./Renderer.service.ts";
-import {MessageBrokerService} from "./Service/MessageBroker.service.ts";
+import {MessageBrokerService} from "./MessageBroker.service.ts";
+import {MapBuilderService} from "./MapBuilder.service.ts";
+import {CameraControlsService} from "./CameraControls.service.ts";
 
 @injectable()
 export class GameUIService {
@@ -12,25 +13,22 @@ export class GameUIService {
         @inject(SceneService) private readonly _sceneService: SceneService,
         @inject(CameraService) private readonly _cameraService: CameraService,
         @inject(RendererService) private readonly _rendererService: RendererService,
-        @inject(MessageBrokerService) private readonly _messageBrokerService: MessageBrokerService,) {
+        @inject(MessageBrokerService) private readonly _messageBrokerService: MessageBrokerService,
+        @inject(CameraControlsService) private readonly _cameraControlsService: CameraControlsService,
+        @inject(MapBuilderService) private readonly _mapBuilderService: MapBuilderService) {
 
         this._messageBrokerService.subscribe('map.generated', this.onMapReady.bind(this));
     }
 
     initialize() {
+
+        this.initializeCamera();
+        this._cameraControlsService.update();
+
         this._rendererService.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this._rendererService.domElement());
 
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        const cube = new THREE.Mesh( geometry, material );
-        this._sceneService.add( cube );
-
-        this._cameraService.positionZ(5);
-
         let animate = () => {
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
             this._rendererService.render( this._sceneService.scene(), this._cameraService.camera() );
         }
         this._rendererService.setAnimationLoop( animate );
@@ -44,6 +42,11 @@ export class GameUIService {
     }
 
     private onMapReady(data: any) {
-        console.log(data);
+        this._mapBuilderService.drawMap(data);
+    }
+
+    private initializeCamera(): void {
+        this._cameraService.position( 0, 5, 10 );
+        this._cameraService.lookAt(0,0,0);
     }
 }

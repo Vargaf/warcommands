@@ -25,7 +25,7 @@ import './style.css'
 
 import { diContainer } from "./config/dependencyInjection/diContainer";
 import {GameEngineService} from "./Warcommands/GameEngine/Domain/Service/GameEngine.service.ts";
-import {GameUIService} from "./Warcommands/GameUI/Domain/GameUI.service.ts";
+import {GameUIService} from "./Warcommands/GameUI/Domain/Service/GameUI.service.ts";
 
 //import {GameService} from "./Warcommands_old/GameEngineUI/GameService/Domain/service/game.service.ts";
 

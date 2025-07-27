@@ -5,6 +5,7 @@ import {MathUtils} from "three";
 import {inject} from "inversify";
 import {MessageBrokerService} from "./MessageBroker.service.ts";
 import {MapGeneratedEvent} from "../Events/MapGenerated.event.ts";
+import {hexTileReflection} from "../../../../Warcommands_old/GameEngineUI/GameService/Domain/Helpers/hexTile.helper.ts";
 
 export class MapBuilderService {
 
@@ -21,6 +22,7 @@ export class MapBuilderService {
     ];
 
     buildMap(mapRingsSize: number): void {
+
         if (mapRingsSize < 10) {
             mapRingsSize = 10;
         }
@@ -29,11 +31,13 @@ export class MapBuilderService {
         this._numberOfTiles = this.calculateNumberOfTiles(mapRingsSize);
         this._centerTileIndex = Math.floor(this._numberOfTiles / 2);
 
-        let gridMap: HexTileDTO[] = this.buildBaseGridMap(mapRingsSize);
+        let gridMap: HexTileDTO[] = this.buildGridMap(mapRingsSize);
         gridMap = this.buildWaterTiles(gridMap);
         gridMap = this.buildSandTiles(gridMap);
         gridMap = this.buildRockTiles(gridMap);
         gridMap = this.buildGrassTiles(gridMap);
+
+        gridMap = this.buildPlayerBases(gridMap);
 
         // TODO: Calcular y añadir los vecinos de todos los hexagonos
 
@@ -42,7 +46,7 @@ export class MapBuilderService {
         
     }
 
-    private buildBaseGridMap(rings: number): HexTileDTO[] {
+    private buildGridMap(rings: number): HexTileDTO[] {
         const gridMap: Array<HexTileDTO> = [];
 
         for (let q = -rings+1; q < rings; q++) {
@@ -204,5 +208,21 @@ export class MapBuilderService {
         }
 
         return this.hexTileDirectionVectors[direction];
+    }
+
+    private buildPlayerBases(gridMap: HexTileDTO[]): HexTileDTO[] {
+
+        const ringToPlaceBase: number = Math.ceil(this._mapRingsSize / 2);
+        const ring: number[] = this.buildRing(gridMap[this._centerTileIndex].coordinates, ringToPlaceBase);
+
+        const playerBaseTileIndex: number = ring[MathUtils.randInt(0, ring.length - 1)];
+        const playerBaseTile: HexTileDTO = gridMap[playerBaseTileIndex];
+        gridMap = this.buildSpiralTerrain(gridMap, playerBaseTile.coordinates, 6, TileType.Base);
+
+        const enemyBaseTileIndex: number = this.fromCubeCoordinatesToArrayIndex(hexTileReflection(playerBaseTile.coordinates));
+        const enemyBaseTile: HexTileDTO = gridMap[enemyBaseTileIndex];
+        gridMap = this.buildSpiralTerrain(gridMap, enemyBaseTile.coordinates, 6, TileType.Base);
+
+        return gridMap;
     }
 }

@@ -1,4 +1,4 @@
-import {CameraService} from "../Domain/Camera.service.ts";
+import {CameraService} from "../../Domain/Service/Camera.service.ts";
 import * as THREE from "three";
 
 export class THREECamera extends CameraService {
@@ -18,8 +18,12 @@ export class THREECamera extends CameraService {
         return this._camera;
     }
 
-    positionZ(position: number): void {
-        this._camera.position.z = position;
+    position(x: number, y: number, z: number): void {
+        this._camera.position.set(x, y, z);
+    }
+
+    lookAt(x: number, y: number, z: number) {
+        this._camera.lookAt(x, y, z);
     }
 
     updateProjectionMatrix(): void {

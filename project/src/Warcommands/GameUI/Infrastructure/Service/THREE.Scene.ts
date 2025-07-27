@@ -1,4 +1,4 @@
-import {SceneService} from "../Domain/Scene.service.ts";
+import {SceneService} from "../../Domain/Service/Scene.service.ts";
 import * as THREE from "three";
 
 export class THREEScene extends SceneService {

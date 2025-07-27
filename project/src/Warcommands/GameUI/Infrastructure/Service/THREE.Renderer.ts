@@ -1,4 +1,4 @@
-import {RendererService} from "../Domain/Renderer.service.ts";
+import {RendererService} from "../../Domain/Service/Renderer.service.ts";
 import * as THREE from "three";
 
 export class THREERenderer implements RendererService {
